@@ -1,0 +1,76 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import LeadForm from '../components/LeadForm.astro';
+
+const sessions = [
+  { date: '13.10.2026', day: 'יום שלישי', time: '10:00–11:00' },
+  { date: '15.10.2026', day: 'יום חמישי', time: '19:00–20:00' },
+];
+
+const agenda = [
+  'מה השתנה בשולחן העבודה של היועץ בשנה האחרונה.',
+  'הדגמה חיה: תיק לקוח מתחילתו ועד הדוח, עם Plan-t AI.',
+  'איפה AI עוזר — ואיפה הוא לא מחליף את שיקול הדעת שלכם.',
+  'שאלות ותשובות פתוחות.',
+];
+---
+
+<BaseLayout
+  title="וובינר השקה של Plan-t AI — 13 ו-15 באוקטובר 2026 | Plan-T"
+  description="וובינר ההשקה של Plan-t AI: הדגמה חיה, שאלות ותשובות ושני מועדים לבחירה — 13.10.2026 ו-15.10.2026. ההשתתפות ללא עלות."
+>
+  <section class="bg-gradient-to-b from-brand-950 to-brand-800 text-white">
+    <div class="mx-auto max-w-4xl px-4 py-20 text-center">
+      <p class="text-sm font-bold tracking-wide text-accent-300">וובינר השקה</p>
+      <h1 class="mt-4 text-4xl font-black md:text-5xl">
+        <span class="ltr">Plan-t AI</span> — ההדגמה הראשונה
+      </h1>
+      <p class="mt-6 text-lg text-brand-100">
+        שעה אחת, הדגמה חיה על תיק אמיתי, ושאלות פתוחות. ההשתתפות ללא עלות.
+      </p>
+
+      <div class="mt-10 grid gap-4 sm:grid-cols-2">
+        {
+          sessions.map((session) => (
+            <div class="rounded-2xl border border-brand-600 bg-brand-900/60 p-6">
+              <p class="text-2xl font-black text-accent-300 ltr">{session.date}</p>
+              <p class="mt-1 text-brand-100">{session.day}</p>
+              <p class="mt-1 text-brand-100 ltr">{session.time}</p>
+            </div>
+          ))
+        }
+      </div>
+
+      <a
+        href="#lead-form"
+        class="mt-10 inline-block rounded-full bg-accent-500 px-10 py-4 text-lg font-bold text-brand-950 transition-colors hover:bg-accent-400"
+      >
+        להרשמה
+      </a>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-3xl px-4 py-16" aria-labelledby="agenda-title">
+    <h2 id="agenda-title" class="text-3xl font-black text-brand-900">מה יהיה בוובינר</h2>
+    <ol class="mt-6 space-y-3">
+      {
+        agenda.map((item, index) => (
+          <li class="flex gap-4 rounded-xl border border-brand-100 bg-white p-4 shadow-sm">
+            <span class="ltr font-black text-brand-500" aria-hidden="true">{index + 1}</span>
+            <span class="text-ink-700">{item}</span>
+          </li>
+        ))
+      }
+    </ol>
+    <p class="mt-8 rounded-xl bg-brand-50 p-4 text-sm text-ink-700">
+      הוובינר מיועד ליועצים פיננסיים, סוכני ביטוח ויועצים פנסיוניים. קישור ההשתתפות
+      יישלח בדוא״ל לפני המועד שנבחר.
+    </p>
+  </section>
+
+  <LeadForm
+    source="website-webinar"
+    heading="הרשמה לוובינר"
+    cta="שריינו לי מקום"
+  />
+</BaseLayout>

@@ -1,0 +1,93 @@
+@import "tailwindcss";
+
+/*
+  Design tokens — Plan-T marketing site.
+  NOTE: the greens below are a stand-in palette until the exact hex list is
+  extracted from plan-t.org.il (see README → "Design tokens"). Swap the
+  --color-brand-* values only; components reference tokens, not raw hexes.
+*/
+@theme {
+  --font-sans: "Heebo", "Arial Hebrew", "Segoe UI", system-ui, sans-serif;
+
+  --color-brand-50: #eef7f2;
+  --color-brand-100: #d7ecdf;
+  --color-brand-200: #b0d9c2;
+  --color-brand-300: #82c1a0;
+  --color-brand-400: #4fa47a;
+  --color-brand-500: #2c8560;
+  --color-brand-600: #1d6b4d;
+  --color-brand-700: #17553e;
+  --color-brand-800: #124232;
+  --color-brand-900: #0c2f24;
+  --color-brand-950: #071e17;
+
+  --color-accent-300: #f2d492;
+  --color-accent-400: #e7bd62;
+  --color-accent-500: #d9a441;
+  --color-accent-600: #b98527;
+
+  --color-ink-900: #131a17;
+  --color-ink-700: #3a4540;
+  --color-ink-500: #5c6a63;
+
+  --color-surface: #f7faf8;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--color-ink-900);
+  background-color: var(--color-surface);
+}
+
+/* Numbers, phone numbers and dates must render LTR inside RTL text */
+.ltr {
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+
+/* Visible keyboard focus everywhere */
+:focus-visible {
+  outline: 3px solid var(--color-accent-500);
+  outline-offset: 2px;
+}
+
+/* Skip-to-content link: hidden until focused */
+.skip-link {
+  position: absolute;
+  inset-inline-start: 0.5rem;
+  top: -100%;
+  z-index: 100;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  background: var(--color-brand-800);
+  color: #fff;
+  transition: top 0.15s ease;
+}
+
+.skip-link:focus {
+  top: 0.5rem;
+}
+
+/* Subtle scroll reveal — motion-safe only */
+@media (prefers-reduced-motion: no-preference) {
+  .reveal {
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+
+  .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+}

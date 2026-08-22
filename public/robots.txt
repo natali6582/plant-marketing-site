@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://plan-t.co.il/sitemap-index.xml

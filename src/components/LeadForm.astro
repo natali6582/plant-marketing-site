@@ -1,0 +1,168 @@
+---
+/*
+  Lead form → Make webhook → monday CRM.
+  The webhook URL comes from PUBLIC_LEAD_WEBHOOK_URL (see .env.example / config.md).
+  Submissions are never stored on the site — leads live in monday only.
+*/
+interface Props {
+  source?: string;
+  heading?: string;
+  cta?: string;
+}
+
+const {
+  source = 'website',
+  heading = 'רוצים לראות איך זה עובד אצלכם במשרד?',
+  cta = 'שלחו ונחזור אליכם',
+} = Astro.props;
+
+const webhookUrl = import.meta.env.PUBLIC_LEAD_WEBHOOK_URL ?? '';
+---
+
+<section id="lead-form" class="bg-brand-900 py-16" aria-labelledby="lead-form-title">
+  <div class="mx-auto max-w-2xl px-4">
+    <h2 id="lead-form-title" class="text-center text-3xl font-black text-white">{heading}</h2>
+    <p class="mt-3 text-center text-brand-100">
+      השאירו פרטים ונחזור אליכם לתיאום שיחה או הדגמה — בלי התחייבות.
+    </p>
+
+    <form
+      class="lead-form mt-8 grid gap-4 rounded-2xl bg-white p-6 shadow-xl sm:grid-cols-2"
+      data-webhook={webhookUrl}
+      data-source={source}
+      novalidate
+    >
+      <div class="sm:col-span-1">
+        <label for={`name-${source}`} class="mb-1 block text-sm font-bold">שם מלא <span aria-hidden="true" class="text-brand-600">*</span></label>
+        <input id={`name-${source}`} name="name" type="text" required autocomplete="name"
+          class="w-full rounded-lg border border-brand-200 px-3 py-2 focus:border-brand-500" />
+      </div>
+      <div class="sm:col-span-1">
+        <label for={`phone-${source}`} class="mb-1 block text-sm font-bold">טלפון <span aria-hidden="true" class="text-brand-600">*</span></label>
+        <input id={`phone-${source}`} name="phone" type="tel" required autocomplete="tel" dir="ltr"
+          class="w-full rounded-lg border border-brand-200 px-3 py-2 text-left focus:border-brand-500" />
+      </div>
+      <div class="sm:col-span-1">
+        <label for={`email-${source}`} class="mb-1 block text-sm font-bold">דוא״ל <span aria-hidden="true" class="text-brand-600">*</span></label>
+        <input id={`email-${source}`} name="email" type="email" required autocomplete="email" dir="ltr"
+          class="w-full rounded-lg border border-brand-200 px-3 py-2 text-left focus:border-brand-500" />
+      </div>
+      <div class="sm:col-span-1">
+        <label for={`office-${source}`} class="mb-1 block text-sm font-bold">שם המשרד</label>
+        <input id={`office-${source}`} name="office" type="text" autocomplete="organization"
+          class="w-full rounded-lg border border-brand-200 px-3 py-2 focus:border-brand-500" />
+      </div>
+      <div class="sm:col-span-2">
+        <label for={`role-${source}`} class="mb-1 block text-sm font-bold">תפקיד</label>
+        <select id={`role-${source}`} name="role" class="w-full rounded-lg border border-brand-200 bg-white px-3 py-2 focus:border-brand-500">
+          <option value="">בחרו תפקיד…</option>
+          <option value="advisor">יועץ/ת פיננסי/ת</option>
+          <option value="agent">סוכן/ת ביטוח</option>
+          <option value="pension">יועץ/ת פנסיוני/ת</option>
+          <option value="other">אחר</option>
+        </select>
+      </div>
+      <div class="sm:col-span-2">
+        <label for={`message-${source}`} class="mb-1 block text-sm font-bold">הודעה</label>
+        <textarea id={`message-${source}`} name="message" rows="3"
+          class="w-full rounded-lg border border-brand-200 px-3 py-2 focus:border-brand-500"></textarea>
+      </div>
+
+      <!-- Honeypot: invisible to people, bots fill it -->
+      <div class="hp-field" aria-hidden="true" style="position:absolute; inset-inline-start:-9999px; height:0; overflow:hidden;">
+        <label for={`company-${source}`}>אל תמלאו שדה זה</label>
+        <input id={`company-${source}`} name="company_website" type="text" tabindex="-1" autocomplete="off" />
+      </div>
+
+      <div class="sm:col-span-2">
+        <label class="flex items-start gap-2 text-sm">
+          <input name="privacy" type="checkbox" required class="mt-1 h-4 w-4 accent-brand-700" />
+          <span>
+            קראתי ואני מסכים/ה ל<a href="/privacy/" class="font-bold text-brand-700 underline">מדיניות הפרטיות</a>
+            <span aria-hidden="true" class="text-brand-600">*</span>
+          </span>
+        </label>
+      </div>
+
+      <div class="sm:col-span-2">
+        <button type="submit"
+          class="w-full rounded-full bg-brand-700 px-6 py-3 text-lg font-bold text-white transition-colors hover:bg-brand-600 disabled:opacity-60">
+          {cta}
+        </button>
+      </div>
+
+      <p class="form-status sm:col-span-2 hidden rounded-lg px-4 py-3 text-sm font-medium" role="status" aria-live="polite"></p>
+    </form>
+  </div>
+</section>
+
+<script>
+  function getUtm(param: string): string {
+    return new URLSearchParams(window.location.search).get(param) ?? '';
+  }
+
+  document.querySelectorAll<HTMLFormElement>('form.lead-form').forEach((form) => {
+    const status = form.querySelector<HTMLElement>('.form-status')!;
+    const button = form.querySelector<HTMLButtonElement>('button[type="submit"]')!;
+
+    function show(message: string, ok: boolean) {
+      status.textContent = message;
+      status.classList.remove('hidden', 'bg-brand-50', 'text-brand-800', 'bg-red-50', 'text-red-800');
+      status.classList.add(...(ok ? ['bg-brand-50', 'text-brand-800'] : ['bg-red-50', 'text-red-800']));
+    }
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+
+      if (!form.reportValidity()) return;
+
+      const data = new FormData(form);
+
+      // Honeypot filled → silently pretend success, send nothing
+      if (data.get('company_website')) {
+        form.reset();
+        show('תודה! קיבלנו את הפנייה ונחזור אליכם בהקדם.', true);
+        return;
+      }
+
+      const webhook = form.dataset.webhook ?? '';
+      if (!webhook) {
+        show('הטופס עדיין לא מחובר. אפשר לפנות אלינו בדוא״ל: info@plan-t.co.il', false);
+        return;
+      }
+
+      const payload = {
+        name: data.get('name'),
+        phone: data.get('phone'),
+        email: data.get('email'),
+        office: data.get('office'),
+        role: data.get('role'),
+        message: data.get('message'),
+        source: form.dataset.source ?? 'website',
+        page: window.location.pathname,
+        utm_source: getUtm('utm_source'),
+        utm_medium: getUtm('utm_medium'),
+        utm_campaign: getUtm('utm_campaign'),
+      };
+
+      button.disabled = true;
+      try {
+        const response = await fetch(webhook, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        if (response.ok) {
+          form.reset();
+          show('תודה! קיבלנו את הפנייה ונחזור אליכם בהקדם.', true);
+        } else {
+          show('משהו השתבש בשליחה. נסו שוב, או כתבו לנו לדוא״ל: info@plan-t.co.il', false);
+        }
+      } catch {
+        show('משהו השתבש בשליחה. נסו שוב, או כתבו לנו לדוא״ל: info@plan-t.co.il', false);
+      } finally {
+        button.disabled = false;
+      }
+    });
+  });
+</script>

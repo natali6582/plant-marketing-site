@@ -1,0 +1,37 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import LeadForm from '../components/LeadForm.astro';
+---
+
+<BaseLayout
+  title="יצירת קשר ותיאום הדגמה | Plan-T"
+  description="השאירו פרטים ונחזור אליכם לתיאום הדגמה של Plan-T ו-Plan-t AI, או כתבו לנו ישירות בדוא״ל."
+>
+  <section class="bg-brand-900 text-white">
+    <div class="mx-auto max-w-4xl px-4 py-16 text-center">
+      <h1 class="text-4xl font-black md:text-5xl">בואו נדבר</h1>
+      <p class="mt-5 text-lg text-brand-100">
+        השאירו פרטים ונחזור אליכם תוך יום עסקים אחד לתיאום הדגמה קצרה.
+      </p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-4xl px-4 py-12">
+    <div class="grid gap-6 sm:grid-cols-2">
+      <div class="rounded-2xl border border-brand-100 bg-white p-6 shadow-sm">
+        <h2 class="text-lg font-bold text-brand-900">דוא״ל</h2>
+        <p class="mt-2">
+          <a href="mailto:info@plan-t.co.il" class="ltr font-medium text-brand-700 underline">info@plan-t.co.il</a>
+        </p>
+      </div>
+      <div class="rounded-2xl border border-brand-100 bg-white p-6 shadow-sm">
+        <h2 class="text-lg font-bold text-brand-900">טלפון</h2>
+        <p class="mt-2">
+          <a href="tel:+97230000000" class="ltr font-medium text-brand-700 underline">03-000-0000</a>&#32;<span class="text-ink-500">[TBD]</span>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <LeadForm source="website-contact" heading="השאירו פרטים" />
+</BaseLayout>

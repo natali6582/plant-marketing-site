@@ -1,0 +1,60 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import LeadForm from '../components/LeadForm.astro';
+
+const principles = [
+  {
+    title: 'מהשטח, לא מהמעבדה',
+    body: 'הפלטפורמה נבנית מתוך עבודה יומיומית עם משרדי ייעוץ וסוכנויות בישראל, ומשתנה לפי מה שבאמת חוסך להם זמן.',
+  },
+  {
+    title: 'בלי הבטחות באוויר',
+    body: 'אנחנו מראים מה המערכת עושה, ואומרים בפירוש מה היא לא עושה. אין תחליף לשיקול הדעת המקצועי שלכם.',
+  },
+  {
+    title: 'הנתונים הם שלכם',
+    body: 'המידע של הלקוחות נשאר בסביבת העבודה של המשרד ומשמש אך ורק לצרכיו.',
+  },
+];
+---
+
+<BaseLayout
+  title="אודות Plan-T"
+  description="מי אנחנו: פלטפורמה ישראלית שנבנית יחד עם משרדי ייעוץ, סוכנויות ביטוח ויועצים פנסיוניים."
+>
+  <section class="bg-brand-900 text-white">
+    <div class="mx-auto max-w-4xl px-4 py-16 text-center">
+      <h1 class="text-4xl font-black md:text-5xl">אודות <span class="ltr">Plan-T</span></h1>
+      <p class="mt-5 text-lg text-brand-100">
+        אנחנו בונים את שולחן העבודה של היועץ הישראלי — כדי שהזמן ילך ללקוחות, לא לניירת.
+      </p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-3xl px-4 py-16">
+    <h2 class="text-3xl font-black text-brand-900">הסיפור</h2>
+    <p class="mt-4 leading-relaxed text-ink-700">
+      [TBD — פסקת רקע על החברה: שנת הקמה, המייסדים והסיבה שבגללה Plan-T קמה. הטקסט
+      יאושר על ידי אחראי/ת התוכן לפני העלייה לאוויר.]
+    </p>
+
+    <h2 class="mt-12 text-3xl font-black text-brand-900">מה מנחה אותנו</h2>
+    <div class="mt-6 grid gap-5">
+      {
+        principles.map((item) => (
+          <article class="reveal rounded-2xl border border-brand-100 bg-white p-6 shadow-sm">
+            <h3 class="text-lg font-bold text-brand-900">{item.title}</h3>
+            <p class="mt-2 leading-relaxed text-ink-700">{item.body}</p>
+          </article>
+        ))
+      }
+    </div>
+
+    <h2 class="mt-12 text-3xl font-black text-brand-900">הצוות</h2>
+    <p class="mt-4 rounded-xl border border-dashed border-brand-300 bg-brand-50 p-6 text-ink-500">
+      [TBD — תמונות, שמות ותפקידים של חברי ההנהלה, באישורם.]
+    </p>
+  </section>
+
+  <LeadForm source="website-about" heading="רוצים להכיר מקרוב?" />
+</BaseLayout>

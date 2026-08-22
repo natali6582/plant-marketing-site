@@ -2,35 +2,66 @@
 
 /*
   Design tokens — Plan-T marketing site.
-  NOTE: the greens below are a stand-in palette until the exact hex list is
-  extracted from plan-t.org.il (see README → "Design tokens"). Swap the
-  --color-brand-* values only; components reference tokens, not raw hexes.
+
+  The three brand colours are sampled from the official Plan-T mark
+  (the circle-and-T logo on plan-t.org.il):
+
+    navy   #101228  the wordmark and the upper segment
+    blue   #249FDA  the lower-left quadrant
+    green  #8DC63F  the lower-right quadrant
+
+  They map to token families here: ink = navy (grounds and text),
+  brand = blue (primary interactive), accent = green (calls to action).
+  Components reference tokens, never raw hex values.
 */
 @theme {
   --font-sans: "Heebo", "Arial Hebrew", "Segoe UI", system-ui, sans-serif;
 
-  --color-brand-50: #eef7f2;
-  --color-brand-100: #d7ecdf;
-  --color-brand-200: #b0d9c2;
-  --color-brand-300: #82c1a0;
-  --color-brand-400: #4fa47a;
-  --color-brand-500: #2c8560;
-  --color-brand-600: #1d6b4d;
-  --color-brand-700: #17553e;
-  --color-brand-800: #124232;
-  --color-brand-900: #0c2f24;
-  --color-brand-950: #071e17;
+  /* Navy — grounds, headings, body text */
+  --color-ink-50: #f5f6fa;
+  --color-ink-100: #e8eaf2;
+  --color-ink-200: #ccd0e2;
+  --color-ink-300: #a5abc9;
+  --color-ink-400: #777fa8;
+  --color-ink-500: #565f8b;
+  --color-ink-600: #414872;
+  --color-ink-700: #31365a;
+  --color-ink-800: #1f2340;
+  --color-ink-900: #101228;
+  --color-ink-950: #080918;
 
-  --color-accent-300: #f2d492;
-  --color-accent-400: #e7bd62;
-  --color-accent-500: #d9a441;
-  --color-accent-600: #b98527;
+  /* Blue — links, primary buttons, brand furniture */
+  --color-brand-50: #eef8fd;
+  --color-brand-100: #d5eefa;
+  --color-brand-200: #b0e0f5;
+  --color-brand-300: #79ccee;
+  --color-brand-400: #45b4e4;
+  --color-brand-500: #249fda;
+  --color-brand-600: #1478ae;
+  --color-brand-700: #136694;
+  --color-brand-800: #15567a;
+  --color-brand-900: #164866;
+  --color-brand-950: #0e2d43;
 
-  --color-ink-900: #131a17;
-  --color-ink-700: #3a4540;
-  --color-ink-500: #5c6a63;
+  /* Green — calls to action and highlights */
+  --color-accent-50: #f4faea;
+  --color-accent-100: #e6f4d0;
+  --color-accent-200: #cfe9a7;
+  --color-accent-300: #b2db75;
+  --color-accent-400: #9bcf4e;
+  --color-accent-500: #8dc63f;
+  --color-accent-600: #6ba32c;
+  --color-accent-700: #527d25;
+  --color-accent-800: #426223;
+  --color-accent-900: #395221;
+  --color-accent-950: #1c2e0d;
 
-  --color-surface: #f7faf8;
+  /* Amber — editorial warnings only (the pre-launch banners). Not a brand colour. */
+  --color-warn-100: #fdf1d4;
+  --color-warn-500: #c07f0c;
+  --color-warn-700: #8a5a06;
+
+  --color-surface: #f6f8fb;
 }
 
 html {
@@ -57,7 +88,7 @@ body {
 
 /* Visible keyboard focus everywhere */
 :focus-visible {
-  outline: 3px solid var(--color-accent-500);
+  outline: 3px solid var(--color-brand-500);
   outline-offset: 2px;
 }
 
@@ -69,7 +100,7 @@ body {
   z-index: 100;
   padding: 0.5rem 1rem;
   border-radius: 0.5rem;
-  background: var(--color-brand-800);
+  background: var(--color-ink-900);
   color: #fff;
   transition: top 0.15s ease;
 }

@@ -1,4 +1,11 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <rect width="32" height="32" rx="9" fill="#17553e"/>
-  <path d="M16 24V13m0 0c0-3.4 2.9-5.7 7-5.7 0 4-2.9 6.1-7 5.7Zm0 1.8c0-2.9-2.3-4.6-5.8-4.6 0 3.4 2.3 4.6 5.8 4.6Z" stroke="#fff" stroke-width="2" stroke-linecap="round" fill="none"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 768 768">
+  <rect width="768" height="768" rx="140" fill="#ffffff"/>
+  <g transform="translate(96 96) scale(0.75)">
+    <clipPath id="pt"><circle cx="384" cy="384" r="384"/></clipPath>
+    <g clip-path="url(#pt)">
+      <rect x="0" y="0" width="768" height="319" fill="#101228"/>
+      <rect x="0" y="407" width="340" height="361" fill="#249FDA"/>
+      <rect x="428" y="407" width="340" height="361" fill="#8DC63F"/>
+    </g>
+  </g>
 </svg>

@@ -10,11 +10,16 @@ const current = Astro.url.pathname;
 
 <header class="sticky top-0 z-50 border-b border-brand-100 bg-white/90 backdrop-blur">
   <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3">
-    <a href="/" class="flex items-center gap-2 text-xl font-black text-brand-800" aria-label="Plan-T — דף הבית">
-      <!-- Placeholder mark until the official SVG logo is added (see README → Brand assets) -->
-      <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-        <rect width="28" height="28" rx="8" fill="var(--color-brand-700)" />
-        <path d="M14 21V11M14 11c0-3 2.5-5 6-5 0 3.5-2.5 5.5-6 5M14 13c0-2.5-2-4-5-4 0 3 2 4 5 4" stroke="#fff" stroke-width="1.8" stroke-linecap="round" />
+    <a href="/" class="flex items-center gap-2 text-xl font-black text-ink-900" aria-label="Plan-T — דף הבית">
+      <!-- The Plan-T mark: circle with the T in negative space. Geometry and
+           colours taken from the official logo on plan-t.org.il. -->
+      <svg width="30" height="30" viewBox="0 0 768 768" fill="none" aria-hidden="true">
+        <clipPath id="plant-mark"><circle cx="384" cy="384" r="384" /></clipPath>
+        <g clip-path="url(#plant-mark)">
+          <rect x="0" y="0" width="768" height="319" fill="#101228" />
+          <rect x="0" y="407" width="340" height="361" fill="#249FDA" />
+          <rect x="428" y="407" width="340" height="361" fill="#8DC63F" />
+        </g>
       </svg>
       <span class="ltr">Plan-T</span>
     </a>

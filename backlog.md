@@ -4,17 +4,23 @@ Scope lock (§4 of the build plan): anything noticed outside the agreed scope
 goes here rather than being fixed silently. Move an item out of this file only
 after it has been agreed.
 
+## Resolved — pulled from the live site (plan-t.org.il)
+
+- [x] **Brand palette.** Sampled from the official Plan-T mark: navy `#101228`,
+      blue `#249FDA`, green `#8DC63F`. Mapped to the `ink` / `brand` / `accent`
+      token families in `src/styles/global.css`. All 21 foreground/background
+      pairs the site renders were checked against WCAG AA.
+- [x] **Logo.** The mark is reproduced as inline SVG in `Header.astro` and
+      `public/favicon.svg`, geometry measured from the original artwork
+      (1.5% pixel difference, anti-aliasing only).
+- [x] **Phone number.** `073-3861711`, the number published on plan-t.org.il.
+- [x] **Email.** `sales@plan-t.org.il`, likewise.
+- [x] **OG image.** Rebuilt on the navy ground with the real mark.
+
 ## Blocking launch — must be filled before go-live
 
 These are placeholders currently visible on the site.
 
-- [ ] **Brand palette.** `--color-brand-*` in `src/styles/global.css` is a
-      stand-in green scale. Replace with the hex list extracted from
-      plan-t.org.il, then re-check contrast.
-- [ ] **Logo.** The mark in `src/components/Header.astro` and
-      `public/favicon.svg` is a placeholder. Drop in the official SVG.
-- [ ] **OG image.** `public/og.png` is a generated placeholder rendered in a
-      fallback font. Replace with the real 1200×630 asset once brand assets land.
 - [ ] **Product-tour screenshots.** `public/images/tour-*.svg` are wireframe
       placeholders. Replace with real product screenshots (and update the alt
       text and captions in `src/pages/index.astro`).
@@ -24,11 +30,7 @@ These are placeholders currently visible on the site.
 - [ ] **Privacy policy.** `/privacy/` is a skeleton with a visible warning
       banner. Needs the legally approved Hebrew text (ambiguity #7).
 - [ ] **Accessibility statement.** `/accessibility/` needs the coordinator's
-      name, a real phone number, the audit date and the known-limitations list
-      (ambiguity #6).
-- [ ] **Phone number.** `03-000-0000` appears in the footer, `/contact/` and
-      `/accessibility/`. Replace with the real number.
-- [ ] **Email address.** Confirm `info@plan-t.co.il` exists and is monitored.
+      name, the audit date and the known-limitations list (ambiguity #6).
 - [ ] **Company story and team.** `/about/` has two `[TBD]` blocks.
 - [ ] **Webhook URL.** `PUBLIC_LEAD_WEBHOOK_URL` must be set in the Cloudflare
       Pages environment before the form works in production.
@@ -36,6 +38,19 @@ These are placeholders currently visible on the site.
       (ambiguity #5).
 - [ ] **Final page list.** Built to the eight pages in §1; confirm nothing is
       missing (ambiguity #2).
+
+## Decisions needed on the contact details
+
+- [ ] **Which email on the new domain?** The site currently shows
+      `sales@plan-t.org.il` because that is what is published today. If a
+      `@plan-t.co.il` mailbox is being set up, say which address should appear
+      and it is a one-line change.
+- [ ] **Which phone?** `073-3861711` is the number in the site's contact block.
+      `03-9707070` is registered as the business phone in the Wix settings.
+      Confirm which one belongs on the marketing site.
+- [ ] **OG image typography.** The image is set in a fallback face because the
+      build sandbox cannot reach Google Fonts. If it matters, re-render it with
+      Heebo, or supply a designed 1200×630 asset.
 
 ## Post-launch backlog (§8 — not now)
 

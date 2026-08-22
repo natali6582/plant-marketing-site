@@ -47,14 +47,26 @@ npm run preview           # serve dist/ locally
 
 ## Design tokens
 
-Tokens live in the `@theme` block of `src/styles/global.css` — colors, the
-Hebrew font stack (Heebo), and the helpers. Components reference tokens
-(`bg-brand-700`, `text-accent-300`), never raw hex values, so re-skinning the
-site means editing that one block.
+Tokens live in the `@theme` block of `src/styles/global.css`. The three brand
+colours are sampled from the official Plan-T mark on plan-t.org.il:
 
-> **Before launch:** the `--color-brand-*` greens are a stand-in. Replace them
-> with the palette extracted from plan-t.org.il, and drop the real logo SVG in
-> place of the placeholder mark in `Header.astro` and `public/favicon.svg`.
+| Colour | Hex | Token family | Used for |
+| --- | --- | --- | --- |
+| Navy | `#101228` | `ink-*` | Dark grounds, headings, body text |
+| Blue | `#249FDA` | `brand-*` | Links, primary buttons, borders |
+| Green | `#8DC63F` | `accent-*` | Calls to action, highlights |
+
+A fourth family, `warn-*` (amber), is UI-semantic rather than brand — it is used
+only by the pre-launch warning banners on the privacy and accessibility pages.
+
+Components reference tokens (`bg-ink-900`, `text-accent-300`), never raw hex
+values, so re-skinning the site means editing that one block. Each brand colour
+is expanded into a 50–950 ramp; `brand-600` is set one step darker than a
+straight interpolation so that white-on-blue clears 4.5:1 in its hover state.
+
+The mark itself is inline SVG in `src/components/Header.astro` and
+`public/favicon.svg` — a circle clipped into three segments, with the T formed
+by the negative space. Its geometry was measured off the original artwork.
 
 ## RTL rules this site follows
 
@@ -93,9 +105,12 @@ heading order, a skip-to-content link, visible focus rings, labels on every
 field, alt text on every image, and `prefers-reduced-motion` support (the
 scroll reveal is inert when reduced motion is requested).
 
-Still to do before launch: real contrast measurement on the final palette, a
-keyboard pass over every page, and filling the `[TBD]` fields in
-`/accessibility/` (coordinator name, phone, audit date).
+Every foreground/background pair the site renders was checked against WCAG AA
+and all 21 pass; the tightest is `ink-400` on the footer ground at 5.07:1.
+
+Still to do before launch: a keyboard pass over every page on real hardware, and
+filling the `[TBD]` fields in `/accessibility/` (coordinator name, audit date,
+known limitations).
 
 ## Deploying to Cloudflare Pages
 

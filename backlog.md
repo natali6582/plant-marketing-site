@@ -16,17 +16,21 @@ after it has been agreed.
 - [x] **Phone number.** `073-3861711`, the number published on plan-t.org.il.
 - [x] **Email.** `sales@plan-t.org.il`, likewise.
 - [x] **OG image.** Rebuilt on the navy ground with the real mark.
+- [x] **Product-tour screenshots (2 of 3).** מסך לקוח ראשי and מסך ראשי from the
+      מסכי המערכת gallery, full-resolution originals, optimised to WebP with a
+      JPEG fallback. The gallery publishes two screens, so the third tour slot
+      keeps its wireframe.
+- [x] **Social proof.** One published testimonial (רווית, סוכנת ביטוח ופיננסים
+      עצמאית). Wording and punctuation verbatim; whitespace normalised and CRM
+      wrapped in `.ltr`.
 
 ## Blocking launch — must be filled before go-live
 
 These are placeholders currently visible on the site.
 
-- [ ] **Product-tour screenshots.** `public/images/tour-*.svg` are wireframe
-      placeholders. Replace with real product screenshots (and update the alt
-      text and captions in `src/pages/index.astro`).
-- [ ] **Social proof.** Home page has three `[TBD]` cards. Either supply real
-      testimonials, numbers and client logos — with written permission — or
-      remove the section. No invented claims (ambiguity #8).
+- [ ] **Third product-tour screenshot.** Slot three still shows
+      `tour-report.svg`, a wireframe. Only two screens are published in the
+      מסכי המערכת gallery. Supply a third, or drop the slot to a two-up.
 - [ ] **Privacy policy.** `/privacy/` is a skeleton with a visible warning
       banner. Needs the legally approved Hebrew text (ambiguity #7).
 - [ ] **Accessibility statement.** `/accessibility/` needs the coordinator's
@@ -59,6 +63,18 @@ These are placeholders currently visible on the site.
 - Blog / content hub for the LinkedIn and TikTok posts from the marketing plan.
 - Conversion tracking: form submission → GA4 event, campaign UTM reporting.
 - Move hosting or add a second admin as the company's accounts are opened.
+
+## Noticed while adding the real screenshots (not touched)
+
+- The screenshots are dense dashboards shown at roughly 362px in the three-up
+  grid, so the detail is not legible at rest. A lightbox or a wider single-column
+  presentation would fix it, but that is a layout change and out of this PR's
+  scope.
+- The tour now mixes two photographic screenshots with one flat wireframe. It
+  reads as unfinished until the third screenshot lands or the grid drops to two.
+- `public/images/tour-report.svg` is the only wireframe left in the repo, and it
+  still uses the old stand-in green rather than the real brand palette. Not worth
+  restyling if it is about to be replaced by a real screenshot.
 
 ## Noticed during the build
 

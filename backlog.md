@@ -64,6 +64,27 @@ These are placeholders currently visible on the site.
 - Conversion tracking: form submission → GA4 event, campaign UTM reporting.
 - Move hosting or add a second admin as the company's accounts are opened.
 
+## Resolved by the imagery PR (Phase 1 mapping approved 22.08)
+
+- [x] **Home hero** — מסך לקוח ראשי in a browser frame under the headline (M1).
+- [x] **Webinar strip** — brand mood image (seedlings on coins, from
+      plan-t.org.il) under a navy duotone; green now appears only on the CTA,
+      per design law 2 (M2, colour change approved).
+- [x] **About hero** — the wide mood crop, same treatment (M3).
+- [x] **OG image** — rebuilt 1200×630 on the duotone mood ground, moved to
+      `public/images/og.png`, wired site-wide. Licence use approved by owner.
+
+## Ideas noted from Orion and the old site (copy/structure — separate tasks)
+
+- A named "Meet Plan-t AI" product-shot moment on /product/ — needs an AI
+  screen published as a file first.
+- A short FAQ above the lead form (the old site has a שאלות-ותשובות page).
+- Team block on /about/ — the three headshots published on the old site are
+  right for it, but it needs names, roles and approved copy.
+- The hero screenshot now also appears as tour slot 1 on the same page. Not
+  wrong, but once a third product screen exists, tour slot 1 could take it and
+  end the duplication.
+
 ## Noticed while adding the real screenshots (not touched)
 
 - The screenshots are dense dashboards shown at roughly 362px in the three-up

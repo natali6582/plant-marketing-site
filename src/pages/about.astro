@@ -22,8 +22,24 @@ const principles = [
   title="אודות Plan-T"
   description="מי אנחנו: פלטפורמה ישראלית שנבנית יחד עם משרדי ייעוץ, סוכנויות ביטוח ויועצים פנסיוניים."
 >
-  <section class="bg-ink-900 text-white">
-    <div class="mx-auto max-w-4xl px-4 py-16 text-center">
+  <!-- M3 — same artwork family and treatment as the webinar strip, so the
+       site's two photographic moments read as one brand. Decorative: empty alt. -->
+  <section class="relative isolate overflow-hidden bg-ink-950 text-white">
+    <picture>
+      <source srcset="/images/mood-growth-wide.webp" type="image/webp" />
+      <img
+        src="/images/mood-growth-wide.jpg"
+        alt=""
+        width="1920"
+        height="847"
+        loading="eager"
+        decoding="async"
+        class="absolute inset-0 -z-10 h-full w-full object-cover opacity-40"
+        aria-hidden="true"
+      />
+    </picture>
+    <div class="absolute inset-0 -z-10 bg-gradient-to-b from-ink-950/70 to-ink-950/90" aria-hidden="true"></div>
+    <div class="mx-auto max-w-4xl px-4 py-20 text-center md:py-24">
       <h1 class="text-4xl font-black md:text-5xl">אודות <span class="ltr">Plan-T</span></h1>
       <p class="mt-5 text-lg text-ink-200">
         אנחנו בונים את שולחן העבודה של היועץ הישראלי — כדי שהזמן ילך ללקוחות, לא לניירת.

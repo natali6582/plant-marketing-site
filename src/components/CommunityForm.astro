@@ -1,0 +1,113 @@
+---
+/*
+  Community join request → PUBLIC_COMMUNITY_WEBHOOK_URL (dedicated; never the
+  lead webhook, so join requests cannot mix into the sales pipeline).
+
+  Two visible fields only — full name and mobile — by decision. Campaign
+  attribution rides in hidden fields, sanitised, never from user input; with no
+  UTM the source_channel is 'direct'. submission_id and submitted_at are
+  server-generated and deliberately absent from the client payload.
+  While the webhook is unset the form shows the approved failure message and
+  performs no network request at all.
+*/
+const webhookUrl = import.meta.env.PUBLIC_COMMUNITY_WEBHOOK_URL ?? '';
+---
+
+<section id="join" class="bg-ink-900 py-16" aria-labelledby="join-title">
+  <div class="mx-auto max-w-xl px-4">
+    <h2 id="join-title" class="text-center text-3xl font-bold text-white">מעוניינים להצטרף לקהילת Plan-T?</h2>
+    <p class="mt-3 text-center text-ink-200">השאירו שם ונייד ונשלח לכם את פרטי ההצטרפות.</p>
+
+    <form
+      class="community-form mt-8 grid gap-4 rounded-2xl bg-white p-6 shadow-xl"
+      data-webhook={webhookUrl}
+      novalidate
+    >
+      <div>
+        <label for="community-full-name" class="mb-1 block text-sm font-bold">שם מלא <span aria-hidden="true" class="text-brand-600">*</span></label>
+        <input id="community-full-name" name="full_name" type="text" required autocomplete="name" minlength="2"
+          class="w-full rounded-lg border border-brand-200 px-3 py-2 focus:border-brand-500" />
+      </div>
+      <div>
+        <label for="community-mobile" class="mb-1 block text-sm font-bold">מספר נייד <span aria-hidden="true" class="text-brand-600">*</span></label>
+        <input id="community-mobile" name="mobile" type="tel" required autocomplete="tel" dir="ltr" inputmode="tel"
+          class="w-full rounded-lg border border-brand-200 px-3 py-2 text-left focus:border-brand-500" />
+      </div>
+
+      <!-- Campaign attribution — populated by script, never by the visitor -->
+      <input type="hidden" name="source_channel" value="direct" />
+      <input type="hidden" name="utm_source" value="" />
+      <input type="hidden" name="utm_medium" value="" />
+      <input type="hidden" name="utm_campaign" value="" />
+      <input type="hidden" name="utm_content" value="" />
+
+      <!-- Honeypot: invisible to people, bots fill it -->
+      <div class="hp-field" aria-hidden="true" style="position:absolute; inset-inline-start:-9999px; height:0; overflow:hidden;">
+        <label for="community-website">אל תמלאו שדה זה</label>
+        <input id="community-website" name="company_website" type="text" tabindex="-1" autocomplete="off" />
+      </div>
+
+      <button type="submit"
+        class="w-full rounded-full bg-accent-500 px-6 py-3 text-lg font-bold text-ink-950 transition-colors hover:bg-accent-400 disabled:opacity-60">
+        אני רוצה להצטרף
+      </button>
+
+      <p class="text-center text-xs text-ink-500">
+        בהשארת הפרטים אני מבקש/ת לקבל מידע על ההצטרפות לקהילת Plan-T.
+        <a href="/privacy/" class="font-bold text-brand-700 underline">מדיניות הפרטיות</a>
+      </p>
+
+      <p class="form-status hidden rounded-lg px-4 py-3 text-sm font-medium" role="status" aria-live="polite"></p>
+    </form>
+  </div>
+</section>
+
+<script>
+  import { wireLeadForm, cleanTrackingValue } from '../scripts/lead-submit';
+
+  const form = document.querySelector<HTMLFormElement>('form.community-form');
+  if (form) {
+    // Attribution into the hidden fields: sanitised UTM values, 'direct' without one.
+    const params = new URLSearchParams(window.location.search);
+    for (const key of ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content']) {
+      const input = form.querySelector<HTMLInputElement>(`input[name="${key}"]`);
+      if (input) input.value = cleanTrackingValue(params.get(key));
+    }
+    const sourceChannel = form.querySelector<HTMLInputElement>('input[name="source_channel"]');
+    if (sourceChannel) sourceChannel.value = cleanTrackingValue(params.get('utm_source')) || 'direct';
+
+    const validMobile = (raw: string): boolean => {
+      const digits = raw.replace(/[\s-]/g, '');
+      return /^05\d{8}$/.test(digits) || /^\+9725\d{8}$/.test(digits);
+    };
+
+    wireLeadForm(form, {
+      honeypot: 'company_website',
+      messages: {
+        success: 'תודה! קיבלנו את הפרטים ונשלח לכם את פרטי ההצטרפות בהקדם.',
+        notConnected: 'לא הצלחנו לקבל את הפרטים כרגע. אפשר לנסות שוב מאוחר יותר.',
+        failure: 'לא הצלחנו לקבל את הפרטים כרגע. אפשר לנסות שוב מאוחר יותר.',
+      },
+      validate: (data) => {
+        const name = String(data.get('full_name') ?? '').trim();
+        if (name.length < 2) return 'נא למלא שם מלא.';
+        if (!validMobile(String(data.get('mobile') ?? ''))) {
+          return 'נא להזין מספר נייד תקין (05XXXXXXXX או ‎+972).';
+        }
+        return null;
+      },
+      payload: (data) => ({
+        request_type: 'community_join_request',
+        full_name: data.get('full_name'),
+        mobile: data.get('mobile'),
+        source_channel: data.get('source_channel'),
+        utm_source: data.get('utm_source'),
+        utm_medium: data.get('utm_medium'),
+        utm_campaign: data.get('utm_campaign'),
+        utm_content: data.get('utm_content'),
+        landing_page_version: 'community-v1',
+        privacy_notice_version: '2026-08',
+      }),
+    });
+  }
+</script>

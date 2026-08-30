@@ -97,72 +97,38 @@ const webhookUrl = import.meta.env.PUBLIC_LEAD_WEBHOOK_URL ?? '';
 </section>
 
 <script>
+  /*
+    Behaviour lives in src/scripts/lead-submit.ts, shared with the community
+    form. The messages and the payload here are the original ones, verbatim —
+    changing either is a content decision, not a refactor.
+  */
+  import { wireLeadForm } from '../scripts/lead-submit';
+
   function getUtm(param: string): string {
     return new URLSearchParams(window.location.search).get(param) ?? '';
   }
 
   document.querySelectorAll<HTMLFormElement>('form.lead-form').forEach((form) => {
-    const status = form.querySelector<HTMLElement>('.form-status')!;
-    const button = form.querySelector<HTMLButtonElement>('button[type="submit"]')!;
-
-    function show(message: string, ok: boolean) {
-      status.textContent = message;
-      status.classList.remove('hidden', 'bg-brand-50', 'text-brand-800', 'bg-red-50', 'text-red-800');
-      status.classList.add(...(ok ? ['bg-brand-50', 'text-brand-800'] : ['bg-red-50', 'text-red-800']));
-    }
-
-    form.addEventListener('submit', async (event) => {
-      event.preventDefault();
-
-      if (!form.reportValidity()) return;
-
-      const data = new FormData(form);
-
-      // Honeypot filled → silently pretend success, send nothing
-      if (data.get('company_website')) {
-        form.reset();
-        show('תודה! קיבלנו את הפנייה ונחזור אליכם בהקדם.', true);
-        return;
-      }
-
-      const webhook = form.dataset.webhook ?? '';
-      if (!webhook) {
-        show('הטופס עדיין לא מחובר. אפשר לפנות אלינו בדוא״ל: sales@plan-t.org.il', false);
-        return;
-      }
-
-      const payload = {
+    wireLeadForm(form, {
+      honeypot: 'company_website',
+      messages: {
+        success: 'תודה! קיבלנו את הפנייה ונחזור אליכם בהקדם.',
+        notConnected: 'הטופס עדיין לא מחובר. אפשר לפנות אלינו בדוא״ל: sales@plan-t.org.il',
+        failure: 'משהו השתבש בשליחה. נסו שוב, או כתבו לנו לדוא״ל: sales@plan-t.org.il',
+      },
+      payload: (data, f) => ({
         name: data.get('name'),
         phone: data.get('phone'),
         email: data.get('email'),
         office: data.get('office'),
         role: data.get('role'),
         message: data.get('message'),
-        source: form.dataset.source ?? 'website',
+        source: f.dataset.source ?? 'website',
         page: window.location.pathname,
         utm_source: getUtm('utm_source'),
         utm_medium: getUtm('utm_medium'),
         utm_campaign: getUtm('utm_campaign'),
-      };
-
-      button.disabled = true;
-      try {
-        const response = await fetch(webhook, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload),
-        });
-        if (response.ok) {
-          form.reset();
-          show('תודה! קיבלנו את הפנייה ונחזור אליכם בהקדם.', true);
-        } else {
-          show('משהו השתבש בשליחה. נסו שוב, או כתבו לנו לדוא״ל: sales@plan-t.org.il', false);
-        }
-      } catch {
-        show('משהו השתבש בשליחה. נסו שוב, או כתבו לנו לדוא״ל: sales@plan-t.org.il', false);
-      } finally {
-        button.disabled = false;
-      }
+      }),
     });
   });
 </script>

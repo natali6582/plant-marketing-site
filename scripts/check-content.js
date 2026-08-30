@@ -40,7 +40,14 @@ const ROUTES = [
 // /webinar/ is edit-forbidden. Two source strings — its title and its description —
 // reach four DOM fields, because BaseLayout copies them into og:title and
 // og:description. The bundle of all four is pinned by hash.
-const WEBINAR_MAIN_HASH = '6659a1175630902a';
+//
+// The <main> pin deliberately strips <script> tags before hashing: the shared
+// LeadForm component renders inside this page's <main>, and the URL of its
+// bundled script is a build fingerprint, not page content — it changed when the
+// submit logic moved to src/scripts/lead-submit.ts while the rendered content
+// stayed byte-identical (verified against the pre-refactor build: both sides
+// normalise to the same hash and length).
+const WEBINAR_MAIN_HASH = '298250a676c902d6';
 const WEBINAR_META_BUNDLE_HASH = '3e6bf22ecb2c19f8';
 
 const PRODUCT = {
@@ -300,7 +307,7 @@ async function inFrame(route, width = 1280) {
       headerText: norm(header && header.innerText),
       footerText: norm(footer && footer.innerText),
       mainText: norm(main && main.innerText),
-      mainHash: await sha(main ? main.innerHTML : ''),
+      mainHash: await sha((main ? main.innerHTML : '').replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '')),
       webinarLinks: d.querySelectorAll('a[href*="/webinar/"]').length,
       strip: d.querySelectorAll('#webinar-strip-title').length,
       robots: meta(d, 'meta[name="robots"]'),

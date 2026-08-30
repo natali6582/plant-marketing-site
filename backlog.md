@@ -81,9 +81,11 @@ These are placeholders currently visible on the site.
 - A short FAQ above the lead form (the old site has a שאלות-ותשובות page).
 - Team block on /about/ — the three headshots published on the old site are
   right for it, but it needs names, roles and approved copy.
-- The hero screenshot now also appears as tour slot 1 on the same page. Not
-  wrong, but once a third product screen exists, tour slot 1 could take it and
-  end the duplication.
+- The hero now shows an interim crop (charts side only) because the full
+  capture has a broken flag-icon slot in the client panel. When a fresh, clean
+  capture of מסך לקוח ראשי arrives: regenerate the hero asset from it (and
+  consider restoring the full-screen framing), and swap tour slot 1 too — the
+  tour still shows the full capture, flag glitch and all, at small size.
 
 ## Noticed while adding the real screenshots (not touched)
 

@@ -2,34 +2,33 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import LeadForm from '../components/LeadForm.astro';
 
-const roles = [
+/*
+  One audience — financial planners. The three stages replace the old
+  role split; every line inside them is existing, verified site copy.
+*/
+const stages = [
   {
-    id: 'advisors',
-    title: 'ליועצים פיננסיים',
-    intro: 'הלקוח מגיע עם שאלה אחת — ומאחוריה תיק שלם. Plan-T מרכז את התמונה כדי שתענו ממקום מבוסס.',
+    id: 'before',
+    title: 'לפני הפגישה',
     points: [
       'תמונת תיק אחת: השקעות, חיסכון וכיסויים במקום אחד.',
       'הכנה לפגישה בדקות במקום בשעות.',
-      'דוח מסודר ללקוח בסוף התהליך, ממותג במיתוג המשרד.',
-    ],
-  },
-  {
-    id: 'agents',
-    title: 'לסוכני ביטוח',
-    intro: 'פחות ניירת, יותר לקוחות. המערכת מסדרת את התהליכים החוזרים ומשאירה לכם את שיחות המכירה והשירות.',
-    points: [
-      'מעקב אחרי מסמכים, חידושים ומשימות פתוחות.',
-      'איתור פערי כיסוי וכפילויות בתיק.',
-      'היסטוריית פניות מרוכזת לפני כל שיחת שירות.',
-    ],
-  },
-  {
-    id: 'pension',
-    title: 'ליועצים פנסיוניים',
-    intro: 'נתוני מסלקה, יצרנים וגיליונות — במקום אחד, בפורמט שאפשר לעבוד איתו.',
-    points: [
       'ריכוז נתוני המסלקה לצד שאר המידע בתיק.',
+    ],
+  },
+  {
+    id: 'during',
+    title: 'במהלך התכנון',
+    points: [
+      'בחינת התיק והחשיפות בצורה ברורה ומסודרת.',
       'השוואה ברורה בין חלופות להצגה מול הלקוח.',
+    ],
+  },
+  {
+    id: 'after',
+    title: 'לאחר הפגישה',
+    points: [
+      'דוח מסודר ללקוח בסוף התהליך, ממותג במיתוג המשרד.',
       'תיעוד מלא של התהליך לצורכי רגולציה ובקרה.',
     ],
   },
@@ -37,40 +36,25 @@ const roles = [
 ---
 
 <BaseLayout
-  title="פתרונות לפי תפקיד — יועצים, סוכנים ויועצים פנסיוניים | Plan-T"
-  description="איך Plan-T עובד עבור יועצים פיננסיים, סוכני ביטוח ויועצים פנסיוניים — התאמה לתהליכי העבודה של כל תפקיד."
+  title="תהליכי עבודה למתכננים פיננסיים | Plan-T"
+  description="איך Plan-T מלווה את תהליך העבודה של מתכננים פיננסיים — מהכנה לפגישה ועד הדוח ללקוח."
 >
   <section class="bg-ink-900 text-white">
     <div class="mx-auto max-w-4xl px-4 py-16 text-center">
-      <h1 class="text-4xl font-bold md:text-5xl">פתרונות לפי תפקיד</h1>
+      <h1 class="text-4xl font-bold md:text-5xl">תהליכי עבודה למתכננים פיננסיים</h1>
       <p class="mt-5 text-lg text-ink-200">
-        אותה פלטפורמה, שלושה תהליכי עבודה שונים. בחרו את התפקיד שלכם.
+        מהכנה לפגישה ועד הדוח ללקוח — כך Plan-T מלווה את העבודה השוטפת.
       </p>
     </div>
   </section>
 
-  <nav aria-label="קיצור דרך לפי תפקיד" class="border-b border-brand-100 bg-white">
-    <ul class="mx-auto flex max-w-6xl flex-wrap justify-center gap-3 px-4 py-4">
-      {
-        roles.map((role) => (
-          <li>
-            <a href={`#${role.id}`} class="rounded-full border border-brand-200 px-4 py-2 text-sm font-medium text-brand-800 hover:bg-brand-50">
-              {role.title}
-            </a>
-          </li>
-        ))
-      }
-    </ul>
-  </nav>
-
   <div class="mx-auto max-w-5xl px-4 py-16">
     {
-      roles.map((role, index) => (
-        <section id={role.id} class:list={['reveal scroll-mt-24 py-10', index > 0 && 'border-t border-brand-100']} aria-labelledby={`${role.id}-title`}>
-          <h2 id={`${role.id}-title`} class="text-3xl font-bold text-ink-900">{role.title}</h2>
-          <p class="mt-3 max-w-2xl leading-relaxed text-ink-700">{role.intro}</p>
+      stages.map((stage, index) => (
+        <section id={stage.id} class:list={['reveal scroll-mt-24 py-10', index > 0 && 'border-t border-brand-100']} aria-labelledby={`${stage.id}-title`}>
+          <h2 id={`${stage.id}-title`} class="text-3xl font-bold text-ink-900">{stage.title}</h2>
           <ul class="mt-6 grid gap-4 md:grid-cols-3">
-            {role.points.map((point) => (
+            {stage.points.map((point) => (
               <li class="rounded-2xl border border-brand-100 bg-white p-5 text-sm leading-relaxed text-ink-700 shadow-sm">
                 {point}
               </li>

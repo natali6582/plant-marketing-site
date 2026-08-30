@@ -90,6 +90,28 @@ const DESCRIPTIONS = {
   '/product/': PRODUCT.description,
 };
 
+// The retired slogan and eyebrow — forbidden everywhere, /webinar/ included
+// (verified absent there), in displayed text and metadata alike.
+const FORBIDDEN_COPY = ['מסוכן למתכנן', 'אל תישאר מאחור', 'תתקדם ל־'];
+
+// The retired audience trio — gone from every route except /webinar/, which
+// keeps its own content by decree.
+const RETIRED_AUDIENCES = ['סוכני ביטוח', 'יועצים פנסיוניים', 'לפי תפקיד'];
+
+// The approved single-audience copy, pinned exactly.
+const HOME_HERO = {
+  eyebrow: 'הפלטפורמה למתכננים פיננסיים',
+  h1: 'כל תיק הלקוח. תמונה אחת ברורה.',
+};
+const SOLUTIONS = {
+  title: 'תהליכי עבודה למתכננים פיננסיים | Plan-T',
+  h1: 'תהליכי עבודה למתכננים פיננסיים',
+  navLabel: 'תהליכי עבודה',
+  h2s: ['לפני הפגישה', 'במהלך התכנון', 'לאחר הפגישה'],
+};
+const FOOTER_BLURB = 'פלטפורמה למתכננים פיננסיים בישראל.';
+const ABOUT_DESCRIPTION = 'מי אנחנו: פלטפורמה ישראלית שנבנית יחד עם מתכננים פיננסיים.';
+
 // Copy that left with the AI section and must not come back anywhere.
 const RETIRED_AI_COPY = [
   'תמצות תיק לקוח', 'טיוטת סיכום פגישה', 'איתור פערים',
@@ -394,6 +416,43 @@ note(page['/product/'].h2sOwn[1] === 'היתרונות המרכזיים', `/prod
 // The home title, in the document and in the Open Graph card built from it.
 note(page['/'].title === HOME_TITLE, `/ title = "${page['/'].title}"`);
 note(page['/'].ogTitle === HOME_TITLE, `/ og:title = "${page['/'].ogTitle}"`);
+
+// --- step 3A: the single-audience contract ---------------------------------
+for (const r of ROUTES) {
+  const p = page[r];
+  const everywhere = [p.title, p.description, p.ogTitle, p.ogDescription,
+    p.headerText, p.footerText, r === '/webinar/' ? '' : p.mainText].map(norm).join(' | ');
+  for (const f of FORBIDDEN_COPY) {
+    note(!everywhere.includes(f), `${r}: forbidden copy present — "${f}"`);
+  }
+  if (r !== '/webinar/') {
+    const own = [p.title, p.description, p.ogTitle, p.ogDescription, p.mainText].map(norm).join(' | ');
+    for (const a of RETIRED_AUDIENCES) {
+      note(!own.includes(a), `${r}: retired audience wording — "${a}"`);
+    }
+  }
+  // the shared navigation carries neither, on any route
+  const navText = norm(p.headerText) + ' | ' + norm(p.footerText);
+  for (const a of RETIRED_AUDIENCES) {
+    note(!navText.includes(a), `${r}: retired audience wording in the navigation — "${a}"`);
+  }
+}
+note(page['/'].mainText.includes(HOME_HERO.eyebrow), `/ hero eyebrow missing`);
+note(page['/'].h1s.length === 1 && page['/'].h1s[0] === HOME_HERO.h1,
+  `/ h1 = ${JSON.stringify(page['/'].h1s)}`);
+note(page['/solutions/'].title === SOLUTIONS.title, `/solutions/ title = "${page['/solutions/'].title}"`);
+note(page['/solutions/'].h1s.length === 1 && page['/solutions/'].h1s[0] === SOLUTIONS.h1,
+  `/solutions/ h1 = ${JSON.stringify(page['/solutions/'].h1s)}`);
+note(JSON.stringify(page['/solutions/'].h2sOwn) === JSON.stringify(SOLUTIONS.h2s),
+  `/solutions/ h2 outline = ${JSON.stringify(page['/solutions/'].h2sOwn)}`);
+note(page['/'].footerText.includes(FOOTER_BLURB), `footer blurb missing or changed`);
+note(norm(page['/about/'].description) === norm(ABOUT_DESCRIPTION),
+  `/about/ description = "${page['/about/'].description}"`);
+// the nav label for /solutions/ on every route
+for (const r of ROUTES) {
+  const d = page[r];
+  note(d.headerText.includes(SOLUTIONS.navLabel), `${r}: nav label "${SOLUTIONS.navLabel}" missing from header`);
+}
 
 // --- 4. nothing renders blank ---------------------------------------------
 for (const r of ['/', '/product/']) {

@@ -16,6 +16,7 @@
 */
 @theme {
   --font-sans: "Heebo", "Arial Hebrew", "Segoe UI", system-ui, sans-serif;
+  --font-display: "Noto Serif Hebrew", "Times New Roman", Georgia, serif;
 
   /* Navy — grounds, headings, body text */
   --color-ink-50: #f5f6fa;
@@ -72,6 +73,14 @@ html {
   html {
     scroll-behavior: auto;
   }
+}
+
+/* Display face for the two top heading levels only; h3 and below stay on the
+   UI face, so the display/text contrast reads as hierarchy rather than decoration. */
+h1,
+h2 {
+  font-family: var(--font-display);
+  font-weight: 700;
 }
 
 body {

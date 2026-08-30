@@ -56,6 +56,11 @@ These are placeholders currently visible on the site.
       build sandbox cannot reach Google Fonts. If it matters, re-render it with
       Heebo, or supply a designed 1200×630 asset.
 
+## Webinar visibility
+
+- `WebinarStrip.astro` — inactive and not rendered.
+- `src/pages/webinar.astro` (`/webinar/`) — active and directly accessible, but intentionally not promoted in the site navigation or primary promotional sections.
+
 ## Post-launch backlog (§8 — not now)
 
 - English version: hreflang, LTR variant of the layout.

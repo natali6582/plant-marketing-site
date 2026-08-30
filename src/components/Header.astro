@@ -1,4 +1,5 @@
 ---
+const { minimal = false } = Astro.props;
 const links = [
   { href: '/product/', label: 'הפלטפורמה' },
   { href: '/solutions/', label: 'תהליכי עבודה' },
@@ -23,6 +24,7 @@ const current = Astro.url.pathname;
       <span class="ltr">Plan-T</span>
     </a>
 
+    {!minimal && (
     <nav aria-label="ניווט ראשי" class="hidden items-center gap-6 md:flex">
       {
         links.map((link) => (
@@ -45,7 +47,9 @@ const current = Astro.url.pathname;
         תיאום הדגמה
       </a>
     </nav>
+    )}
 
+    {!minimal && (
     <details class="relative md:hidden">
       <summary class="flex cursor-pointer list-none items-center rounded-lg p-2 text-brand-800 [&::-webkit-details-marker]:hidden" aria-label="תפריט">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -65,5 +69,6 @@ const current = Astro.url.pathname;
         </a>
       </nav>
     </details>
+    )}
   </div>
 </header>

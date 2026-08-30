@@ -2,78 +2,42 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import LeadForm from '../components/LeadForm.astro';
 
-const capabilities = [
-  {
-    title: 'תמצות תיק לקוח',
-    body: 'Plan-t AI קורא את הנתונים והמסמכים שכבר נמצאים במערכת ומחזיר תמצית קצרה בשפה פשוטה — מי הלקוח, מה יש לו, ומה דורש תשומת לב.',
-  },
-  {
-    title: 'טיוטת סיכום פגישה',
-    body: 'בסוף הפגישה מתקבלת טיוטה מובנית: מה נאמר, מה הוחלט ומה המשימות. אתם עורכים, מאשרים ושולחים.',
-  },
-  {
-    title: 'איתור פערים בתיק',
-    body: 'סימון נקודות לבדיקה — כיסויים חסרים, כפילויות, מסמכים שלא עודכנו. ההמלצה המקצועית נשארת שלכם.',
-  },
-  {
-    title: 'מענה על מסמכים',
-    body: 'שאלה בשפה חופשית על מסמכי הלקוח, ותשובה עם הפניה למקום המדויק במסמך.',
-  },
-  {
-    title: 'הכנה לשיחת שירות',
-    body: 'לפני כל שיחה — תמצית של ההיסטוריה, הפניות הפתוחות והנושאים שדורשים מענה.',
-  },
-  {
-    title: 'שקיפות ובקרה',
-    body: 'כל תוצר של Plan-t AI מסומן ככזה, שמור לתיעוד, וממתין לאישור אנושי לפני שהוא יוצא ללקוח.',
-  },
-];
-
-const governance = [
-  'כל תוצר AI מסומן בבירור ואינו נשלח ללקוח ללא אישור אנושי.',
-  'הנתונים נשארים בסביבת העבודה של המשרד ומשמשים אך ורק לצרכיו.',
-  'כל פעולה מתועדת ומאפשרת מעקב לאחור.',
-  'הכלי מציג מקורות והפניות, כדי שתוכלו לבדוק כל תשובה.',
+const advantages = [
+  'מבט רחב ומקיף על כלל נכסי הלקוח',
+  'ממשק נוח ואינטואיטיבי שנבנה בשיתוף קהילת המשתמשים',
+  'יכולות אנליטיות מתקדמות התומכות בקבלת החלטות',
+  'התאמה לשוק הישראלי ולצרכים של מתכננים פיננסיים',
 ];
 ---
 
 <BaseLayout
-  title="Plan-t AI — עוזר חכם בתוך הפלטפורמה | Plan-T"
-  description="Plan-t AI מתמצת תיקי לקוח, מכין טיוטות סיכום, מאתר פערים ומשיב על מסמכים — עם שקיפות מלאה ואישור אנושי בכל שלב."
+  title="הפלטפורמה | Plan-T"
+  description="Plan-T מרכזת במקום אחד את נתוני הנכסים הפיננסיים והפנסיוניים של הלקוח ושל התא המשפחתי, ומאפשרת למתכננים פיננסיים לקבל תמונה רחבה של החשיפות והקצאת הנכסים."
 >
   <section class="bg-ink-900 text-white">
     <div class="mx-auto max-w-4xl px-4 py-20 text-center">
-      <h1 class="text-4xl font-bold md:text-5xl"><span class="ltr">Plan-t AI</span></h1>
+      <h1 class="text-4xl font-bold md:text-5xl">הפלטפורמה</h1>
       <p class="mt-6 text-lg leading-relaxed text-ink-200">
-        לא עוד כלי נפרד שצריך ללמוד. עוזר חכם שיושב בתוך Plan-T, מכיר את תיק הלקוח,
-        ומכין בשבילכם את העבודה השחורה — כדי שתגיעו לפגישה מוכנים.
+        <span class="ltr">Plan-T</span> מרכזת במקום אחד את נתוני הנכסים הפיננסיים והפנסיוניים של
+        הלקוח ושל התא המשפחתי, ומציגה תמונה רחבה של החשיפות והקצאת הנכסים.
       </p>
     </div>
   </section>
 
-  <section class="mx-auto max-w-6xl px-4 py-16" aria-labelledby="capabilities-title">
-    <h2 id="capabilities-title" class="text-center text-3xl font-bold text-ink-900">היכולות</h2>
-    <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-      {
-        capabilities.map((item) => (
-          <article class="reveal rounded-2xl border border-brand-100 bg-white p-6 shadow-sm">
-            <h3 class="text-lg font-bold text-ink-900">{item.title}</h3>
-            <p class="mt-2 text-sm leading-relaxed text-ink-700">{item.body}</p>
-          </article>
-        ))
-      }
-    </div>
+  <section class="mx-auto max-w-3xl px-4 py-16" aria-labelledby="consolidation-title">
+    <h2 id="consolidation-title" class="text-3xl font-bold text-ink-900">מידע מרוכז. תמונה רחבה.</h2>
+    <p class="mt-4 leading-relaxed text-ink-700">
+      המידע הפיננסי והפנסיוני מפוזר בין מערכות ומקורות שונים. <span class="ltr">Plan-T</span> מרכזת
+      אותו במקום אחד, כך שמתכננים פיננסיים יכולים לבחון את התיק ואת החשיפות בצורה ברורה ומסודרת.
+    </p>
   </section>
 
-  <section class="bg-brand-50 py-16" aria-labelledby="governance-title">
+  <section class="bg-brand-50 py-16" aria-labelledby="advantages-title">
     <div class="mx-auto max-w-3xl px-4">
-      <h2 id="governance-title" class="text-3xl font-bold text-ink-900">אמון, לא קסמים</h2>
-      <p class="mt-4 text-ink-700">
-        עבודה עם נתוני לקוחות מחייבת זהירות. לכן Plan-t AI בנוי סביב ארבעה עקרונות:
-      </p>
+      <h2 id="advantages-title" class="text-3xl font-bold text-ink-900">היתרונות המרכזיים</h2>
       <ul class="mt-6 space-y-3">
         {
-          governance.map((item) => (
+          advantages.map((item) => (
             <li class="flex gap-3 rounded-xl bg-white p-4 shadow-sm">
               <span class="mt-1 text-brand-600" aria-hidden="true">✓</span>
               <span class="text-ink-700">{item}</span>
@@ -84,8 +48,5 @@ const governance = [
     </div>
   </section>
 
-  <LeadForm
-    source="website-product"
-    heading="רוצים לראות את Plan-t AI על תיק אמיתי?"
-  />
+  <LeadForm source="website-product" heading="רוצים לראות את הפלטפורמה בפעולה?" />
 </BaseLayout>

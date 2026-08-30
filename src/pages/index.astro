@@ -17,15 +17,6 @@ const painCards = [
   },
 ];
 
-const aiCards = [
-  { title: 'תמצות תיק לקוח', body: 'תמונה מרוכזת של התיק בשפה פשוטה, מוכנה לפני כל פגישה.' },
-  { title: 'טיוטת סיכום פגישה', body: 'סיכום מובנה של השיחה, לעריכה ואישור שלכם לפני שליחה.' },
-  { title: 'איתור פערים', body: 'סימון פערי כיסוי ונקודות לבדיקה בתיק — ההחלטה תמיד אצלכם.' },
-  { title: 'מענה מהיר למסמכים', body: 'שאלות חופשיות על מסמכי הלקוח ותשובות עם הפניה למקור.' },
-  { title: 'הכנה לשיחת שירות', body: 'נקודות עיקריות והיסטוריית פניות מרוכזות לפני כל שיחה.' },
-  { title: 'שקיפות ובקרה', body: 'כל תוצר AI מסומן, ניתן למעקב וכפוף לאישור אנושי — בלי קסמים.' },
-];
-
 /*
   Product tour. The first two are the real screenshots published in the
   מסכי המערכת gallery on plan-t.org.il; `webp` is served with a jpg fallback.
@@ -58,8 +49,8 @@ const tour = [
 ---
 
 <BaseLayout
-  title="Plan-T — הפלטפורמה ליועצים, סוכנים ומתכננים פיננסיים"
-  description="אל תישאר מאחור. תתקדם ל-Plan-t: פלטפורמה ישראלית ליועצים פיננסיים, סוכני ביטוח ויועצים פנסיוניים, עם Plan-t AI שחוסך שעות עבודה בכל תיק."
+  title="Plan-T — הפלטפורמה למתכננים פיננסיים"
+  description="Plan-T מרכזת במקום אחד את נתוני הנכסים הפיננסיים והפנסיוניים של הלקוח, ומאפשרת למתכננים פיננסיים לראות את התיק בתמונה אחת ברורה."
 >
   <!-- Hero -->
   <section class="bg-gradient-to-b from-ink-950 to-ink-800 text-white">
@@ -129,33 +120,6 @@ const tour = [
           </article>
         ))
       }
-    </div>
-  </section>
-
-  <!-- Plan-t AI capabilities -->
-  <section class="bg-white py-16" aria-labelledby="ai-title">
-    <div class="mx-auto max-w-6xl px-4">
-      <h2 id="ai-title" class="text-center text-3xl font-bold text-ink-900">
-        מה <span class="ltr">Plan-t AI</span> עושה בשבילכם
-      </h2>
-      <p class="mx-auto mt-3 max-w-2xl text-center text-ink-700">
-        עוזר חכם בתוך הפלטפורמה — עם שקיפות מלאה ואישור אנושי בכל שלב. בלי הבטחות באוויר.
-      </p>
-      <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {
-          aiCards.map((card) => (
-            <article class="reveal rounded-2xl border border-brand-100 bg-brand-50 p-6">
-              <div class="flex h-10 w-10 items-center justify-center rounded-full bg-brand-700" aria-hidden="true">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                  <path d="M10 15V7m0 0c0-2.2 1.8-3.7 4.4-3.7 0 2.6-1.8 4-4.4 3.7Zm0 1.5c0-1.8-1.5-3-3.7-3 0 2.2 1.5 3 3.7 3Z" stroke="#fff" stroke-width="1.5" stroke-linecap="round" />
-                </svg>
-              </div>
-              <h3 class="mt-4 text-lg font-bold text-ink-900">{card.title}</h3>
-              <p class="mt-2 text-sm leading-relaxed text-ink-700">{card.body}</p>
-            </article>
-          ))
-        }
-      </div>
     </div>
   </section>
 

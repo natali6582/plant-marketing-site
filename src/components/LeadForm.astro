@@ -53,16 +53,6 @@ const webhookUrl = import.meta.env.PUBLIC_LEAD_WEBHOOK_URL ?? '';
           class="w-full rounded-lg border border-brand-200 px-3 py-2 focus:border-brand-500" />
       </div>
       <div class="sm:col-span-2">
-        <label for={`role-${source}`} class="mb-1 block text-sm font-bold">תפקיד</label>
-        <select id={`role-${source}`} name="role" class="w-full rounded-lg border border-brand-200 bg-white px-3 py-2 focus:border-brand-500">
-          <option value="">בחרו תפקיד…</option>
-          <option value="advisor">יועץ/ת פיננסי/ת</option>
-          <option value="agent">סוכן/ת ביטוח</option>
-          <option value="pension">יועץ/ת פנסיוני/ת</option>
-          <option value="other">אחר</option>
-        </select>
-      </div>
-      <div class="sm:col-span-2">
         <label for={`message-${source}`} class="mb-1 block text-sm font-bold">הודעה</label>
         <textarea id={`message-${source}`} name="message" rows="3"
           class="w-full rounded-lg border border-brand-200 px-3 py-2 focus:border-brand-500"></textarea>
@@ -121,7 +111,6 @@ const webhookUrl = import.meta.env.PUBLIC_LEAD_WEBHOOK_URL ?? '';
         phone: data.get('phone'),
         email: data.get('email'),
         office: data.get('office'),
-        role: data.get('role'),
         message: data.get('message'),
         source: f.dataset.source ?? 'website',
         page: window.location.pathname,

@@ -47,7 +47,7 @@ const ROUTES = [
 // submit logic moved to src/scripts/lead-submit.ts while the rendered content
 // stayed byte-identical (verified against the pre-refactor build: both sides
 // normalise to the same hash and length).
-const WEBINAR_MAIN_HASH = '298250a676c902d6';
+const WEBINAR_MAIN_HASH = '9b6ab007a49d974a';
 const WEBINAR_META_BUNDLE_HASH = '3e6bf22ecb2c19f8';
 
 const PRODUCT = {
@@ -69,8 +69,10 @@ const PRODUCT = {
   ],
 };
 
-// The form contract, measured on the pre-2B build. Only the heading was approved
-// to change; everything the form collects must stay identical.
+// The form contract. Measured on the pre-2B build, then amended once by the
+// approved step-3B data decision: the role field was removed from every lead
+// form (a select offering retired audiences has no place in a single-audience
+// site, and monday/Make will be built to the approved form).
 const PRODUCT_FORM = {
   dataSource: 'website-product',
   novalidate: true,
@@ -80,7 +82,6 @@ const PRODUCT_FORM = {
     { name: 'phone', tag: 'input', type: 'tel', required: true, autocomplete: 'tel' },
     { name: 'email', tag: 'input', type: 'email', required: true, autocomplete: 'email' },
     { name: 'office', tag: 'input', type: 'text', required: false, autocomplete: 'organization' },
-    { name: 'role', tag: 'select', type: 'select-one', required: false, autocomplete: null },
     { name: 'message', tag: 'textarea', type: 'textarea', required: false, autocomplete: null },
     { name: 'company_website', tag: 'input', type: 'text', required: false, autocomplete: 'off' },
     { name: 'privacy', tag: 'input', type: 'checkbox', required: true, autocomplete: null },
@@ -392,6 +393,16 @@ note(page['/product/'].formSubmitText === PRODUCT_FORM.submitText,
   `/product/ submit label = "${page['/product/'].formSubmitText}"`);
 note(JSON.stringify(page['/product/'].formFields) === JSON.stringify(PRODUCT_FORM.fields),
   `/product/ form contract changed: ${JSON.stringify(page['/product/'].formFields)}`);
+// step 3B: the role select is gone from every route, /webinar/ included — the
+// shared component renders there too, and the removal is a data decision.
+for (const r of ROUTES) {
+  const roleFields = (page[r].formFields || []).filter((x) => x.name === 'role').length;
+  note(roleFields === 0, `${r}: a role field is still collected`);
+}
+note(page['/privacy/'].mainText.includes('שם מלא, טלפון, כתובת דוא״ל, שם המשרד ותוכן'),
+  'privacy: the amended data list is missing');
+note(!page['/privacy/'].mainText.includes('שם המשרד, תפקיד'),
+  'privacy: the data list still names the role field');
 /*
   The shared navigation carries exactly three links to /product/ on every route:
   two in the header (the desktop nav and the mobile nav render from one array) and

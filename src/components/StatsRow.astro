@@ -1,0 +1,64 @@
+---
+/*
+  Stats row under the hero — data-driven, and silent until there is data.
+
+  `src/data/stats.json` ships empty on purpose: an unverifiable number on a
+  financial-services site is a liability, so the section renders nothing at all
+  until real figures with real sources are supplied. Each entry is
+  `{ value, label, footnote? }`; a footnote raises a superscript marker beside
+  the label and prints the note under the row.
+*/
+import stats from '../data/stats.json';
+
+interface Stat {
+  value: string;
+  label: string;
+  footnote?: string;
+}
+
+const entries = stats as Stat[];
+const footnotes = entries
+  .map((stat) => stat.footnote)
+  .filter((note): note is string => Boolean(note));
+---
+
+{
+  entries.length > 0 && (
+    <section class="band bg-white" aria-labelledby="stats-title">
+      <div class="mx-auto max-w-6xl px-4">
+        <h2 id="stats-title" class="sr-only">
+          נתונים
+        </h2>
+        <dl class="grid gap-8 text-center sm:grid-cols-2 lg:grid-cols-4">
+          {entries.map((stat) => {
+            const marker = stat.footnote ? footnotes.indexOf(stat.footnote) + 1 : 0;
+            return (
+              <div class="reveal">
+                <dt class="sr-only">{stat.label}</dt>
+                <dd>
+                  <span class="ltr block text-5xl font-black text-brand-600">{stat.value}</span>
+                  <span class="mt-2 block text-sm font-medium text-ink-700">
+                    {stat.label}
+                    {marker > 0 && (
+                      <sup class="ltr text-[9px] font-normal align-super">{marker}</sup>
+                    )}
+                  </span>
+                </dd>
+              </div>
+            );
+          })}
+        </dl>
+
+        {footnotes.length > 0 && (
+          <ol class="mx-auto mt-10 max-w-3xl space-y-1 text-xs text-ink-500">
+            {footnotes.map((note, index) => (
+              <li>
+                <sup class="ltr">{index + 1}</sup> {note}
+              </li>
+            ))}
+          </ol>
+        )}
+      </div>
+    </section>
+  )
+}

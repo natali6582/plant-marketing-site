@@ -1,0 +1,52 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CommunityForm from '../components/CommunityForm.astro';
+import CommunityLogo from '../components/CommunityLogo.astro';
+
+/*
+  Campaign landing page — a request to join the Plan-T community.
+  Step 1 is the skeleton only: hero and the three value lines. The join form
+  (full name + mobile, via the shared submit module and a dedicated
+  PUBLIC_COMMUNITY_WEBHOOK_URL) and the COMMUNITY mark arrive in later steps.
+  Not linked from the site navigation by design; indexable (no noindex).
+*/
+const values = [
+  'שיתוף ידע מקצועי',
+  'עדכונים רלוונטיים',
+  'חיבור בין מתכננים פיננסיים',
+];
+---
+
+<BaseLayout
+  title="קהילת Plan-T למתכננים פיננסיים"
+  description="מקום מקצועי לשיתוף ידע, קבלת עדכונים וחיבור עם מתכננים פיננסיים נוספים."
+  chrome="minimal"
+>
+  <section class="bg-gradient-to-b from-ink-950 to-ink-800 text-white">
+    <div class="mx-auto max-w-4xl px-4 py-20 text-center md:py-24">
+      <div class="flex justify-center">
+        <CommunityLogo />
+      </div>
+      <h1 class="mx-auto mt-4 max-w-3xl text-4xl font-bold leading-tight md:text-5xl">
+        קהילת <span class="ltr">Plan-T</span> למתכננים פיננסיים
+      </h1>
+      <p class="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-ink-200">
+        מקום מקצועי לשיתוף ידע, קבלת עדכונים וחיבור עם מתכננים פיננסיים נוספים.
+      </p>
+    </div>
+  </section>
+
+  <CommunityForm />
+
+  <section class="mx-auto max-w-4xl px-4 py-16" aria-label="מה יש בקהילה">
+    <ul class="grid gap-6 md:grid-cols-3">
+      {
+        values.map((value) => (
+          <li class="reveal rounded-2xl border border-brand-100 bg-white p-6 text-center font-bold text-ink-900 shadow-sm">
+            {value}
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</BaseLayout>

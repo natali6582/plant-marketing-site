@@ -20,7 +20,7 @@ const principles = [
 
 <BaseLayout
   title="אודות Plan-T"
-  description="מי אנחנו: פלטפורמה ישראלית שנבנית יחד עם משרדי ייעוץ, סוכנויות ביטוח ויועצים פנסיוניים."
+  description="מי אנחנו: פלטפורמה ישראלית שנבנית יחד עם מתכננים פיננסיים."
 >
   <!-- M3 — same artwork family and treatment as the webinar strip, so the
        site's two photographic moments read as one brand. Decorative: empty alt. -->
@@ -40,7 +40,7 @@ const principles = [
     </picture>
     <div class="absolute inset-0 -z-10 bg-gradient-to-b from-ink-950/70 to-ink-950/90" aria-hidden="true"></div>
     <div class="mx-auto max-w-4xl px-4 py-20 text-center md:py-24">
-      <h1 class="text-4xl font-black md:text-5xl">אודות <span class="ltr">Plan-T</span></h1>
+      <h1 class="text-4xl font-bold md:text-5xl">אודות <span class="ltr">Plan-T</span></h1>
       <p class="mt-5 text-lg text-ink-200">
         אנחנו בונים את שולחן העבודה של היועץ הישראלי — כדי שהזמן ילך ללקוחות, לא לניירת.
       </p>
@@ -48,17 +48,17 @@ const principles = [
   </section>
 
   <section class="mx-auto max-w-3xl px-4 py-16">
-    <h2 class="text-3xl font-black text-ink-900">הסיפור</h2>
+    <h2 class="text-3xl font-bold text-ink-900">הסיפור</h2>
     <p class="mt-4 leading-relaxed text-ink-700">
       [TBD — פסקת רקע על החברה: שנת הקמה, המייסדים והסיבה שבגללה Plan-T קמה. הטקסט
       יאושר על ידי אחראי/ת התוכן לפני העלייה לאוויר.]
     </p>
 
-    <h2 class="mt-12 text-3xl font-black text-ink-900">מה מנחה אותנו</h2>
+    <h2 class="mt-12 text-3xl font-bold text-ink-900">מה מנחה אותנו</h2>
     <div class="mt-6 grid gap-5">
       {
         principles.map((item) => (
-          <article class="reveal rounded-2xl border border-brand-100 bg-white p-6 shadow-sm">
+          <article class="reveal card-lift rounded-2xl border border-brand-100 bg-white p-6 shadow-sm">
             <h3 class="text-lg font-bold text-ink-900">{item.title}</h3>
             <p class="mt-2 leading-relaxed text-ink-700">{item.body}</p>
           </article>
@@ -66,7 +66,7 @@ const principles = [
       }
     </div>
 
-    <h2 class="mt-12 text-3xl font-black text-ink-900">הצוות</h2>
+    <h2 class="mt-12 text-3xl font-bold text-ink-900">הצוות</h2>
     <p class="mt-4 rounded-xl border border-dashed border-brand-300 bg-brand-50 p-6 text-ink-500">
       [TBD — תמונות, שמות ותפקידים של חברי ההנהלה, באישורם.]
     </p>

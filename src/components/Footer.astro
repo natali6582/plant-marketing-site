@@ -1,19 +1,26 @@
 ---
+const { minimal = false } = Astro.props;
 const year = new Date().getFullYear();
 ---
 
 <footer class="border-t border-brand-100 bg-ink-950 text-ink-200">
+  {minimal ? (
+    <div class="mx-auto flex max-w-6xl flex-col items-center gap-2 px-4 py-8 text-center text-sm">
+      <p class="text-lg font-black text-white"><span class="ltr">Plan-T</span></p>
+      <a href="/privacy/" class="hover:text-white hover:underline">מדיניות פרטיות</a>
+      <p class="text-xs text-ink-400">© <span class="ltr">{year}</span> Plan-T. כל הזכויות שמורות.</p>
+    </div>
+  ) : (
   <div class="mx-auto grid max-w-6xl gap-8 px-4 py-12 md:grid-cols-3">
     <div>
       <p class="text-lg font-black text-white"><span class="ltr">Plan-T</span></p>
       <p class="mt-2 max-w-xs text-sm leading-relaxed">
-        פלטפורמה ליועצים פיננסיים, סוכני ביטוח ויועצים פנסיוניים בישראל.
+        פלטפורמה למתכננים פיננסיים בישראל.
       </p>
     </div>
     <nav aria-label="קישורי פוטר" class="grid grid-cols-2 gap-2 text-sm">
-      <a href="/product/" class="hover:text-white hover:underline">Plan-t AI</a>
-      <a href="/solutions/" class="hover:text-white hover:underline">פתרונות לפי תפקיד</a>
-      <a href="/webinar/" class="hover:text-white hover:underline">וובינר</a>
+      <a href="/product/" class="hover:text-white hover:underline">הפלטפורמה</a>
+      <a href="/solutions/" class="hover:text-white hover:underline">תהליכי עבודה</a>
       <a href="/about/" class="hover:text-white hover:underline">אודות</a>
       <a href="/contact/" class="hover:text-white hover:underline">יצירת קשר</a>
       <a href="/privacy/" class="hover:text-white hover:underline">מדיניות פרטיות</a>
@@ -29,9 +36,12 @@ const year = new Date().getFullYear();
       </p>
     </div>
   </div>
+  )}
+  {!minimal && (
   <div class="border-t border-ink-800">
     <p class="mx-auto max-w-6xl px-4 py-4 text-xs text-ink-400">
       © <span class="ltr">{year}</span> Plan-T. כל הזכויות שמורות.
     </p>
   </div>
+  )}
 </footer>

@@ -92,7 +92,12 @@ async function submitProbe(route, formSelector, fill, urlSuffix = '') {
     await new Promise((r) => win.setTimeout(r, 400));
 
     const status = form.querySelector('.form-status');
+    // Only initiators that can carry a submission (fetch/XHR/beacon). Clicking
+    // submit focus-scrolls the page, which fires lazy <img> loads — browser
+    // behaviour, not the form sending data — so media/style entries are noise
+    // here, same as the font requests already filtered out.
     const newResources = win.performance.getEntriesByType('resource').slice(resourcesBefore)
+      .filter((e) => ['fetch', 'xmlhttprequest', 'beacon'].includes(e.initiatorType))
       .map((e) => e.name).filter((n) => !n.includes('fonts.g'));
     return {
       statusText: status ? norm(status.textContent) : null,

@@ -1,13 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import LeadForm from '../components/LeadForm.astro';
-
-const advantages = [
-  'מבט רחב ומקיף על כלל נכסי הלקוח',
-  'ממשק נוח ואינטואיטיבי שנבנה בשיתוף קהילת המשתמשים',
-  'יכולות אנליטיות מתקדמות התומכות בקבלת החלטות',
-  'התאמה לשוק הישראלי ולצרכים של מתכננים פיננסיים',
-];
+import { advantages } from '../data/advantages';
 ---
 
 <BaseLayout
@@ -24,21 +18,23 @@ const advantages = [
     </div>
   </section>
 
-  <section class="mx-auto max-w-3xl px-4 py-16" aria-labelledby="consolidation-title">
+  <section class="band bg-white" aria-labelledby="consolidation-title">
+    <div class="mx-auto max-w-3xl px-4">
     <h2 id="consolidation-title" class="text-3xl font-bold text-ink-900">מידע מרוכז. תמונה רחבה.</h2>
     <p class="mt-4 leading-relaxed text-ink-700">
       המידע הפיננסי והפנסיוני מפוזר בין מערכות ומקורות שונים. <span class="ltr">Plan-T</span> מרכזת
       אותו במקום אחד, כך שמתכננים פיננסיים יכולים לבחון את התיק ואת החשיפות בצורה ברורה ומסודרת.
     </p>
+    </div>
   </section>
 
-  <section class="bg-brand-50 py-16" aria-labelledby="advantages-title">
+  <section class="band bg-brand-50" aria-labelledby="advantages-title">
     <div class="mx-auto max-w-3xl px-4">
       <h2 id="advantages-title" class="text-3xl font-bold text-ink-900">היתרונות המרכזיים</h2>
       <ul class="mt-6 space-y-3">
         {
           advantages.map((item) => (
-            <li class="flex gap-3 rounded-xl bg-white p-4 shadow-sm">
+            <li class="reveal card-lift flex gap-3 rounded-xl bg-white p-4 shadow-sm">
               <span class="mt-1 text-brand-600" aria-hidden="true">✓</span>
               <span class="text-ink-700">{item}</span>
             </li>

@@ -113,3 +113,35 @@ These are placeholders currently visible on the site.
 - The role dropdown on the lead form offers advisor / agent / pension / other.
   These must match whatever the monday status column accepts, or Make will
   reject the value.
+
+## The Orion motion patterns, after the merge into the single-audience site
+
+The motion study lives in `motion-plan.md`. Merging it onto the rebrand
+resolved four collisions, all in favour of the approved content contracts:
+
+- **Persona tabs — dropped.** The pattern was built on the three retired
+  audiences; a single-audience site has no personas to tab between.
+  `PersonaTabs.astro` and `src/data/roles.ts` were removed in the merge.
+- **Heading weight contrast — dropped.** `check-typography` pins every h1/h2
+  to Noto Serif Hebrew at weight 700 (and only that weight is loaded), so the
+  mixed-weight headline pattern cannot ship. The typography contract wins.
+- **Marquee content swapped.** The six AI capability chips are retired copy;
+  the strip now runs the four approved advantages from /product/
+  (single-sourced in `src/data/advantages.ts`, label `היתרונות המרכזיים` —
+  both approved strings, nothing invented).
+- **Hero button pair — not shipped.** The ghost button's destination was
+  /webinar/, which the presented site must not link to, and no other
+  destination has approved button copy. The solid CTA carries the measured
+  pill mechanics; the pair waits for an approved second destination + string.
+
+Still open:
+
+- [ ] `prefers-reduced-motion: reduce` is implemented for the marquee, cards
+      and reveal, but this environment cannot emulate the preference; verified
+      by reading the compiled CSS. Worth one manual pass with the OS setting on.
+- The marquee restates the /product/ advantages on the home page — deliberate
+  (strip teases, page explains), and the natural slot for cleared partner
+  logos later; one line to remove if it reads as repetition.
+- The sticky header overlaps a section heading when a section is scrolled to
+  its exact top. Pre-existing; not touched.
+

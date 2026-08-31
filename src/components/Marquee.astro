@@ -1,0 +1,89 @@
+---
+/*
+  Infinite horizontal marquee — 33.3 px/s, linear, seamless.
+
+  The behaviour is reproduced from the Orion study (motion-plan.md); none of
+  their code, markup or styling is used. The track is the item list duplicated
+  exactly once and translated by -50%, so the loop closes cleanly whatever the
+  items measure — Orion's fixed `100px × N` constant only loops seamlessly if
+  every item happens to be exactly 100px wide.
+
+  Items are passed in, so swapping the capability chips for cleared partner
+  logos later is a one-line change at the call site.
+*/
+interface Props {
+  items: string[];
+  label: string;
+}
+
+const { items, label } = Astro.props;
+
+// Duplicated exactly once — the CSS translates by half the track.
+const track = [...items, ...items];
+---
+
+<section class="band bg-ink-50" aria-label={label}>
+  <div class="marquee" data-marquee>
+    <ul class="marquee__track" data-marquee-track>
+      {
+        track.map((item, index) => {
+          const isClone = index >= items.length;
+          return (
+            <li
+              class="marquee__item mx-4 flex max-h-[70px] shrink-0 items-center gap-2 rounded-full border border-brand-100 bg-white px-5 py-3 md:mx-6"
+              dir="rtl"
+              data-clone={isClone ? '' : undefined}
+              aria-hidden={isClone ? 'true' : undefined}
+            >
+              <span
+                class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brand-700"
+                aria-hidden="true"
+              >
+                <svg width="14" height="14" viewBox="0 0 20 20" fill="none">
+                  <path
+                    d="M10 15V7m0 0c0-2.2 1.8-3.7 4.4-3.7 0 2.6-1.8 4-4.4 3.7Zm0 1.5c0-1.8-1.5-3-3.7-3 0 2.2 1.5 3 3.7 3Z"
+                    stroke="#fff"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                  />
+                </svg>
+              </span>
+              <span class="whitespace-nowrap text-sm font-bold text-ink-900">{item}</span>
+            </li>
+          );
+        })
+      }
+    </ul>
+  </div>
+</section>
+
+<script>
+  // Orion hard-codes the loop distance and derives the duration from it. We do
+  // the reverse: measure the track and derive the duration from a fixed speed,
+  // so the 33.3 px/s reads identically however many items are in the strip.
+  const PIXELS_PER_SECOND = 33.3;
+
+  function calibrate(marquee: HTMLElement) {
+    const track = marquee.querySelector<HTMLElement>('[data-marquee-track]');
+    if (!track) return;
+
+    // scrollWidth covers both halves; the animation travels exactly one of them.
+    const distance = track.scrollWidth / 2;
+    if (distance <= 0) return;
+
+    marquee.style.setProperty('--marquee-duration', `${distance / PIXELS_PER_SECOND}s`);
+  }
+
+  for (const marquee of document.querySelectorAll<HTMLElement>('[data-marquee]')) {
+    calibrate(marquee);
+
+    // Fonts land after first paint and change the track width, so remeasure.
+    document.fonts?.ready.then(() => calibrate(marquee));
+
+    let frame = 0;
+    window.addEventListener('resize', () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => calibrate(marquee));
+    });
+  }
+</script>

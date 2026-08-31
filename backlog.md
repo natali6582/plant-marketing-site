@@ -108,3 +108,26 @@ These are placeholders currently visible on the site.
 - The role dropdown on the lead form offers advisor / agent / pension / other.
   These must match whatever the monday status column accepts, or Make will
   reject the value.
+
+## Noticed while adding the Orion motion patterns (feat/orion-motion)
+
+- [ ] **One new string, needs approval.** The capability marquee needs an
+      accessible name, and there was no existing string that fit without
+      colliding with the AI section's own heading. It ships as
+      `aria-label="יכולות Plan-t AI"` — screen-reader only, never displayed.
+      Everything else on the branch reuses copy already on the site.
+- [ ] **The marquee restates the AI section.** The strip shows the same six
+      capability titles the section below explains in full — deliberate (strip
+      teases, cards explain, which is how Orion sequences its logo band), but
+      if it reads as repetition, the strip is one line to remove and is the
+      natural slot for cleared partner logos.
+- The persona tabs and `/solutions/` now share `src/data/roles.ts`. Editing the
+  role copy in one place changes both, which is the point — but it does mean
+  `/solutions/` no longer owns its own content.
+- The sticky header overlaps a section heading when a section is scrolled to
+  its exact top. Pre-existing (`/solutions/` already carries `scroll-mt-24` for
+  this reason); not touched, since no in-page anchor was added.
+- `prefers-reduced-motion: reduce` is implemented for the marquee, cards, tabs
+  and reveal, but the browser here cannot emulate the preference, so it is
+  verified by reading the compiled CSS rather than by observing it. Worth one
+  manual pass with the OS setting on before merge.

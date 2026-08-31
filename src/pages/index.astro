@@ -2,6 +2,9 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import LeadForm from '../components/LeadForm.astro';
 import WebinarStrip from '../components/WebinarStrip.astro';
+import Marquee from '../components/Marquee.astro';
+import PersonaTabs from '../components/PersonaTabs.astro';
+import StatsRow from '../components/StatsRow.astro';
 
 const painCards = [
   {
@@ -62,24 +65,38 @@ const tour = [
   title="Plan-T — הפלטפורמה ליועצים, סוכנים ומתכננים פיננסיים"
   description="אל תישאר מאחור. תתקדם ל-Plan-t: פלטפורמה ישראלית ליועצים פיננסיים, סוכני ביטוח ויועצים פנסיוניים, עם Plan-t AI שחוסך שעות עבודה בכל תיק."
 >
-  <!-- Hero -->
-  <section class="bg-gradient-to-b from-ink-950 to-ink-800 text-white">
+  <!-- Hero. The headline carries its contrast in weight, not size: both lines
+       are the same scale, the second is font-black. The band's bottom edge is
+       clipped on a diagonal, mirrored from Orion's so it falls toward the
+       right in RTL. -->
+  <section class="hero-slope bg-gradient-to-b from-ink-950 to-ink-800 text-white">
     <div class="mx-auto max-w-6xl px-4 py-20 text-center md:py-28">
       <p class="text-sm font-bold tracking-wide text-accent-300">מסוכן למתכנן</p>
-      <h1 class="mx-auto mt-4 max-w-3xl text-4xl font-black leading-tight md:text-6xl">
-        <span class="block">אל תישאר מאחור.</span>
-        <span class="mt-2 block text-accent-300">תתקדם ל־<span class="ltr">Plan-t</span></span>
+      <h1 class="mx-auto mt-4 max-w-3xl text-4xl leading-tight md:text-6xl">
+        <span class="block font-normal">אל תישאר מאחור.</span>
+        <span class="mt-2 block font-black text-accent-300">תתקדם ל־<span class="ltr">Plan-t</span></span>
       </h1>
       <p class="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-ink-200">
         פלטפורמה אחת ליועצים פיננסיים, סוכני ביטוח ויועצים פנסיוניים —
         שמרכזת את תיק הלקוח, מסדרת את העבודה ומחזירה לכם שעות בכל שבוע.
       </p>
-      <a
-        href="/contact/"
-        class="mt-10 inline-block rounded-full bg-accent-500 px-10 py-4 text-lg font-bold text-ink-950 transition-colors hover:bg-accent-400"
-      >
-        תיאום הדגמה
-      </a>
+
+      <!-- Solid + ghost pair. Green stays the only CTA colour (design law 2);
+           the ghost's outline is an inset shadow, so hover shifts nothing. -->
+      <div class="mt-10 flex flex-col items-stretch gap-5 sm:flex-row sm:items-center sm:justify-center sm:gap-10">
+        <a
+          href="/contact/"
+          class="btn-pill btn-solid rounded-full px-10 py-4 text-lg font-bold text-ink-950"
+        >
+          תיאום הדגמה
+        </a>
+        <a
+          href="/webinar/"
+          class="btn-pill btn-ghost rounded-full px-10 py-4 text-lg font-bold text-white"
+        >
+          להרשמה לוובינר
+        </a>
+      </div>
 
       <!-- M1 — the product is the hero: the charts side of the verified-demo
            client screen in a browser frame. Interim crop: the full capture has
@@ -111,17 +128,27 @@ const tour = [
     </div>
   </section>
 
+  <!-- Capability strip, directly under the hero where Orion runs its logo
+       marquee. Same six capabilities the section below explains in full: the
+       strip teases, the cards explain. Swap `items` for cleared partner logos
+       when there are any. -->
+  <Marquee items={aiCards.map((card) => card.title)} label="יכולות Plan-t AI" />
+
+  <!-- Renders nothing until src/data/stats.json holds real, sourced figures. -->
+  <StatsRow />
+
   <!-- Pain → the Plan-T way -->
-  <section class="mx-auto max-w-6xl px-4 py-16" aria-labelledby="pain-title">
-    <h2 id="pain-title" class="text-center text-3xl font-black text-ink-900">
-      מכירים את זה מהמשרד שלכם?
+  <section class="band bg-white" aria-labelledby="pain-title">
+    <div class="mx-auto max-w-6xl px-4">
+    <h2 id="pain-title" class="text-center text-3xl text-ink-900">
+      <span class="font-normal">מכירים את זה</span> <span class="font-black">מהמשרד שלכם?</span>
     </h2>
     <div class="mt-10 grid gap-6 md:grid-cols-3">
       {
         painCards.map((card, i) => (
           <article
             class:list={[
-              'reveal rounded-2xl border p-6 shadow-sm',
+              'reveal card-lift rounded-2xl border p-6 shadow-sm',
               i === 2 ? 'border-ink-700 bg-brand-700 text-white' : 'border-brand-100 bg-white',
             ]}
           >
@@ -131,13 +158,15 @@ const tour = [
         ))
       }
     </div>
+    </div>
   </section>
 
   <!-- Plan-t AI capabilities -->
-  <section class="bg-white py-16" aria-labelledby="ai-title">
+  <section class="band bg-ink-50" aria-labelledby="ai-title">
     <div class="mx-auto max-w-6xl px-4">
-      <h2 id="ai-title" class="text-center text-3xl font-black text-ink-900">
-        מה <span class="ltr">Plan-t AI</span> עושה בשבילכם
+      <h2 id="ai-title" class="text-center text-3xl text-ink-900">
+        <span class="font-normal">מה <span class="ltr">Plan-t AI</span></span>
+        <span class="font-black">עושה בשבילכם</span>
       </h2>
       <p class="mx-auto mt-3 max-w-2xl text-center text-ink-700">
         עוזר חכם בתוך הפלטפורמה — עם שקיפות מלאה ואישור אנושי בכל שלב. בלי הבטחות באוויר.
@@ -145,7 +174,7 @@ const tour = [
       <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {
           aiCards.map((card) => (
-            <article class="reveal rounded-2xl border border-brand-100 bg-brand-50 p-6">
+            <article class="reveal card-lift rounded-2xl border border-brand-100 bg-white p-6">
               <div class="flex h-10 w-10 items-center justify-center rounded-full bg-brand-700" aria-hidden="true">
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
                   <path d="M10 15V7m0 0c0-2.2 1.8-3.7 4.4-3.7 0 2.6-1.8 4-4.4 3.7Zm0 1.5c0-1.8-1.5-3-3.7-3 0 2.2 1.5 3 3.7 3Z" stroke="#fff" stroke-width="1.5" stroke-linecap="round" />
@@ -160,13 +189,17 @@ const tour = [
     </div>
   </section>
 
-  <!-- Product tour -->
-  <section class="mx-auto max-w-6xl px-4 py-16" aria-labelledby="tour-title">
-    <h2 id="tour-title" class="text-center text-3xl font-black text-ink-900">סיור קצר במוצר</h2>
+  <!-- Product tour. Each figure is now a card with the screenshot bled to its
+       edge, so the image is part of the card rather than sitting on top of it. -->
+  <section class="band bg-white" aria-labelledby="tour-title">
+    <div class="mx-auto max-w-6xl px-4">
+    <h2 id="tour-title" class="text-center text-3xl text-ink-900">
+      <span class="font-normal">סיור קצר</span> <span class="font-black">במוצר</span>
+    </h2>
     <div class="mt-10 grid gap-8 md:grid-cols-3">
       {
         tour.map((item) => (
-          <figure class="reveal">
+          <figure class="reveal card-lift overflow-hidden rounded-2xl border border-brand-100 bg-white shadow-sm">
             {item.formats ? (
               <picture>
                 <source srcset={`${item.image}.webp`} type="image/webp" />
@@ -177,7 +210,7 @@ const tour = [
                   height={item.height}
                   loading="lazy"
                   decoding="async"
-                  class="w-full rounded-2xl border border-brand-100 shadow-md"
+                  class="block w-full"
                 />
               </picture>
             ) : (
@@ -188,25 +221,30 @@ const tour = [
                 height="400"
                 loading="lazy"
                 decoding="async"
-                class="w-full rounded-2xl border border-brand-100 shadow-md"
+                class="block w-full"
               />
             )}
-            <figcaption class="mt-3 text-center text-sm font-medium text-ink-700">{item.caption}</figcaption>
+            <figcaption class="px-5 py-4 text-center text-sm font-medium text-ink-700">{item.caption}</figcaption>
           </figure>
         ))
       }
     </div>
+    </div>
   </section>
+
+  <PersonaTabs />
 
   <!-- Social proof — one real, published testimonial from plan-t.org.il.
        Wording and punctuation are verbatim; only whitespace was normalised
        (the editor's stray non-breaking spaces and doubled spaces collapsed),
        and CRM is wrapped in .ltr like every other Latin string on the site.
        Do not reword, and add nothing that is not published. -->
-  <section class="bg-brand-50 py-16" aria-labelledby="proof-title">
+  <section class="band bg-brand-50" aria-labelledby="proof-title">
     <div class="mx-auto max-w-2xl px-4 text-center">
-      <h2 id="proof-title" class="text-3xl font-black text-ink-900">משרדים שכבר עובדים איתנו</h2>
-      <figure class="reveal mt-8 rounded-2xl border border-brand-100 bg-white p-8 shadow-sm sm:p-10">
+      <h2 id="proof-title" class="text-3xl text-ink-900">
+        <span class="font-normal">משרדים</span> <span class="font-black">שכבר עובדים איתנו</span>
+      </h2>
+      <figure class="reveal card-lift mt-8 rounded-2xl border border-brand-100 bg-white p-8 shadow-sm sm:p-10">
         <blockquote class="text-lg leading-relaxed text-ink-900 sm:text-xl">"סוף סוף מערכת שמרכזת הכל במקום אחד , <span class="ltr">CRM</span> :דוחות ללקוחות, ניהול חשיפות, תכנון פיננסי, תפעול ובקרה, – בלי קפיצות בין מערכות ובלי בזבוז זמן מיותר."</blockquote>
         <figcaption class="mt-6 text-sm font-bold text-brand-700">רווית, סוכנת ביטוח ופיננסים עצמאית</figcaption>
       </figure>

@@ -74,29 +74,23 @@ const tour = [
         תיאום הדגמה
       </a>
 
-      <!-- M1 — the product is the hero: the charts side of the verified-demo
-           client screen in a browser frame. Interim crop: the full capture has
-           a broken flag-icon slot in the client panel, so the hero shows only
-           the charts columns until a fresh capture is supplied. -->
-      <div class="mx-auto mt-14 max-w-2xl md:mt-16">
-        <div class="overflow-hidden rounded-xl border border-ink-700 bg-ink-800 shadow-2xl shadow-ink-950/60">
-          <div class="flex items-center gap-1.5 border-b border-ink-700 bg-ink-800 px-4 py-2.5" aria-hidden="true">
-            <span class="h-2.5 w-2.5 rounded-full bg-ink-500"></span>
-            <span class="h-2.5 w-2.5 rounded-full bg-ink-500"></span>
-            <span class="h-2.5 w-2.5 rounded-full bg-ink-500"></span>
-            <span class="ltr ms-3 text-xs text-ink-300">plan-t.co.il</span>
-          </div>
+      <!-- M1 — the product is the hero. The browser chrome that framed the
+           previous single screen is gone: this is a montage of floating panels
+           with its own light ground, and a single address bar around it would
+           claim it is one page when it is not. -->
+      <div class="mx-auto mt-14 max-w-3xl md:mt-16">
+        <div class="overflow-hidden rounded-2xl border border-ink-700 shadow-2xl shadow-ink-950/60">
           <picture>
-            <source srcset="/images/hero-client-charts.webp" type="image/webp" />
+            <source srcset="/images/hero-montage.webp" type="image/webp" />
             <img
-              src="/images/hero-client-charts.jpg"
-              alt="מסך לקוח ראשי ב-Plan-T: תשואת התיק, מאזן נכסים ותזרים הכנסות, פילוח נכסים, תיק פנסיוני וסיכונים וחשיפות"
-              width="1344"
-              height="1570"
+              src="/images/hero-montage.jpg"
+              alt="מסכי Plan-T: סיכום לקוחות, סקירת תיק, פעילות אחרונה, נתוני שוק והגדרות — ועליהם הכיתוב «כל התמונה של הלקוח. במקום אחד.»"
+              width="1168"
+              height="784"
               loading="eager"
               fetchpriority="high"
               decoding="async"
-              class="w-full"
+              class="block w-full"
             />
           </picture>
         </div>

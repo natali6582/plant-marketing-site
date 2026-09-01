@@ -85,8 +85,21 @@ const ogImageUrl = new URL(ogImage, Astro.site);
         groups.set(parent, siblings);
       }
 
+      /*
+        A zero-height viewport — a hidden pane, a headless capture, an
+        offscreen embed — gives IntersectionObserver nothing to intersect
+        against, so it never fires. The CSS has already hidden these, so
+        without this escape they would stay hidden for good.
+      */
+      const canReveal =
+        'IntersectionObserver' in window && window.innerHeight > 0;
+
       for (const siblings of groups.values()) {
         siblings.forEach((el, index) => {
+          if (!canReveal) {
+            el.classList.add('is-visible');
+            return;
+          }
           if (siblings.length > 1) {
             (el as HTMLElement).style.setProperty(
               '--reveal-delay',
@@ -95,6 +108,134 @@ const ogImageUrl = new URL(ogImage, Astro.site);
           }
           observer.observe(el);
         });
+      }
+
+      /*
+        Line reveal — headings hinge in one line at a time.
+
+        Values measured from the Toptech theme; see motion-plan.md. It drives
+        the effect with GSAP + ScrollTrigger and a paid line-splitter. Here the
+        splitting is done by grouping words on their measured line box, which
+        needs no library and works the same in RTL, and the animation itself is
+        a plain CSS transition.
+
+        The split runs when the heading enters view, not on load, so the line
+        boxes always match the layout the visitor actually has — a resize
+        before the reveal cannot leave the lines wrapped against a stale width.
+      */
+      const LINE_STAGGER_MS = 100;
+      const stillMoves = window.matchMedia('(prefers-reduced-motion: no-preference)');
+
+      /*
+        The hidden state is armed by script, never by the stylesheet alone, and
+        only once we know an observer can actually report on this viewport. A
+        zero-height viewport — a hidden pane, a headless capture, an offscreen
+        embed — gives IntersectionObserver nothing to intersect against, so it
+        never fires and anything hidden by CSS would stay hidden for good.
+        Unarmed means visible: the animation is the enhancement, not the
+        content's precondition.
+      */
+      const canObserve =
+        'IntersectionObserver' in window && window.innerHeight > 0;
+
+      // Words become the atomic units; existing inline elements (.ltr spans and
+      // the like) are kept whole so their own styling and bidi isolation survive.
+      function toWordUnits(host: HTMLElement): HTMLElement[] {
+        const units: HTMLElement[] = [];
+
+        for (const child of [...host.childNodes]) {
+          if (child.nodeType === Node.TEXT_NODE) {
+            const parts = (child.textContent ?? '').split(/(\s+)/);
+            const fragment = document.createDocumentFragment();
+
+            for (const part of parts) {
+              if (!part) continue;
+              if (/^\s+$/.test(part)) {
+                fragment.appendChild(document.createTextNode(part));
+                continue;
+              }
+              const word = document.createElement('span');
+              word.textContent = part;
+              fragment.appendChild(word);
+              units.push(word);
+            }
+            child.replaceWith(fragment);
+          } else if (child.nodeType === Node.ELEMENT_NODE) {
+            units.push(child as HTMLElement);
+          }
+        }
+
+        return units;
+      }
+
+      function splitIntoLines(host: HTMLElement) {
+        const units = toWordUnits(host);
+        if (units.length === 0) return;
+
+        // Group by the top of each unit's line box.
+        const lines: HTMLElement[][] = [];
+        let lastTop: number | null = null;
+
+        for (const unit of units) {
+          const top = Math.round(unit.getBoundingClientRect().top);
+          if (lastTop === null || Math.abs(top - lastTop) > 2) {
+            lines.push([]);
+            lastTop = top;
+          }
+          lines[lines.length - 1].push(unit);
+        }
+
+        lines.forEach((line, index) => {
+          const wrapper = document.createElement('span');
+          wrapper.className = 'line';
+          wrapper.style.setProperty('--line-delay', `${index * LINE_STAGGER_MS}ms`);
+
+          /*
+            Move the whole run from the first unit to the last, not just the
+            units themselves: the spaces between words are separate text nodes,
+            and leaving them outside the wrapper renders the line with its
+            words jammed together.
+          */
+          const first = line[0];
+          const last = line[line.length - 1];
+          first.before(wrapper);
+
+          let node: ChildNode | null = first;
+          while (node) {
+            const next: ChildNode | null = node === last ? null : node.nextSibling;
+            wrapper.appendChild(node);
+            node = next;
+          }
+        });
+      }
+
+      const lineObserver = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (!entry.isIntersecting) continue;
+            const host = entry.target as HTMLElement;
+            lineObserver.unobserve(host);
+
+            splitIntoLines(host);
+            host.classList.add('is-split');
+            // Two frames: one for the split to land, one for the browser to
+            // register the start state before the transition to it is undone.
+            requestAnimationFrame(() =>
+              requestAnimationFrame(() => host.classList.add('is-visible'))
+            );
+          }
+        },
+        // Matches the reference's ScrollTrigger `start: "top 90%"`.
+        { rootMargin: '0px 0px -10% 0px' }
+      );
+
+      for (const el of document.querySelectorAll<HTMLElement>('.reveal-lines')) {
+        // Reduced motion, or nothing to measure against: leave it unarmed, and
+        // therefore plainly visible.
+        if (!stillMoves.matches || !canObserve) continue;
+
+        el.classList.add('is-armed');
+        lineObserver.observe(el);
       }
     </script>
   </body>

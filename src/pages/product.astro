@@ -8,9 +8,30 @@ import { advantages } from '../data/advantages';
   title="הפלטפורמה | Plan-T"
   description="Plan-T מרכזת במקום אחד את נתוני הנכסים הפיננסיים והפנסיוניים של הלקוח ושל התא המשפחתי, ומאפשרת למתכננים פיננסיים לקבל תמונה רחבה של החשיפות והקצאת הנכסים."
 >
-  <section class="bg-ink-900 text-white">
+  <!-- Same duotone treatment the mood imagery already uses elsewhere on the
+       site: the photograph sits under a navy wash so the type keeps its
+       contrast. Decorative — empty alt, aria-hidden — because it carries
+       nothing the copy does not already say. -->
+  <section class="relative isolate overflow-hidden bg-ink-900 text-white">
+    <picture>
+      <source srcset="/images/mood-skyline.webp" type="image/webp" />
+      <img
+        src="/images/mood-skyline.jpg"
+        alt=""
+        width="1168"
+        height="500"
+        loading="eager"
+        decoding="async"
+        class="absolute inset-0 -z-10 h-full w-full object-cover opacity-35"
+        aria-hidden="true"
+      />
+    </picture>
+    <div
+      class="absolute inset-0 -z-10 bg-gradient-to-b from-ink-950/75 to-ink-900/90"
+      aria-hidden="true"
+    ></div>
     <div class="mx-auto max-w-4xl px-4 py-20 text-center">
-      <h1 class="text-4xl font-bold md:text-5xl">הפלטפורמה</h1>
+      <h1 class="reveal-lines text-4xl font-bold md:text-5xl">הפלטפורמה</h1>
       <p class="mt-6 text-lg leading-relaxed text-ink-200">
         <span class="ltr">Plan-T</span> מרכזת במקום אחד את נתוני הנכסים הפיננסיים והפנסיוניים של
         הלקוח ושל התא המשפחתי, ומציגה תמונה רחבה של החשיפות והקצאת הנכסים.
@@ -20,7 +41,7 @@ import { advantages } from '../data/advantages';
 
   <section class="band bg-white" aria-labelledby="consolidation-title">
     <div class="mx-auto max-w-3xl px-4">
-    <h2 id="consolidation-title" class="text-3xl font-bold text-ink-900">מידע מרוכז. תמונה רחבה.</h2>
+    <h2 id="consolidation-title" class="reveal-lines text-3xl font-bold text-ink-900">מידע מרוכז. תמונה רחבה.</h2>
     <p class="mt-4 leading-relaxed text-ink-700">
       המידע הפיננסי והפנסיוני מפוזר בין מערכות ומקורות שונים. <span class="ltr">Plan-T</span> מרכזת
       אותו במקום אחד, כך שמתכננים פיננסיים יכולים לבחון את התיק ואת החשיפות בצורה ברורה ומסודרת.
@@ -30,7 +51,7 @@ import { advantages } from '../data/advantages';
 
   <section class="band bg-brand-50" aria-labelledby="advantages-title">
     <div class="mx-auto max-w-3xl px-4">
-      <h2 id="advantages-title" class="text-3xl font-bold text-ink-900">היתרונות המרכזיים</h2>
+      <h2 id="advantages-title" class="reveal-lines text-3xl font-bold text-ink-900">היתרונות המרכזיים</h2>
       <ul class="mt-6 space-y-3">
         {
           advantages.map((item) => (

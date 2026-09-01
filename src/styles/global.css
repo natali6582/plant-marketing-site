@@ -152,6 +152,9 @@ body {
   --motion-card: 300ms;        /* card hover */
   --motion-reveal: 500ms;      /* scroll reveal — ours, Orion has none */
   --reveal-stagger: 70ms;
+  --motion-line: 1200ms;       /* line reveal — measured on the Toptech theme */
+  --line-stagger: 100ms;
+  --ease-line: cubic-bezier(0.215, 0.61, 0.355, 1); /* power ease-out */
   --hero-slope: 27px;          /* depth of the hero's diagonal bottom edge */
 }
 
@@ -349,5 +352,56 @@ body {
   .marquee::before,
   .marquee::after {
     display: none;
+  }
+}
+
+/*
+  ── Line reveal ────────────────────────────────────────────────────────────
+  Measured from the Toptech theme (GSAP 3.11.4 + ScrollTrigger, 21 live
+  triggers on its home page). Each heading hinges in line by line:
+
+    opacity        0 → 1
+    rotationX      -80deg → 0
+    transformOrigin"top center -50"   (origin pushed 50px back on Z)
+    perspective    400px on the parent
+    stagger        0.1s between lines
+    duration       1.2s–1.4s (their long paragraph stretched to 3.1s)
+    ease           1 - (1-t)^r  — a power ease-out
+    trigger        start "top 90%", toggleActions "play none none none"
+
+  Reproduced in CSS plus the IntersectionObserver we already run. The reference
+  loads GSAP + ScrollTrigger (~90KB) to do this; none of that is needed, and
+  none of their code is used. Their paragraph duration scales with line count
+  and reaches 3.1s — we cap at one duration for every block, because a
+  paragraph that takes three seconds to arrive is read as a page that has not
+  finished loading.
+*/
+.js .reveal-lines {
+  perspective: 400px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /*
+    Hidden until the lines have been measured and wrapped, so the split itself
+    never flashes. Splitting happens on entry, which means the line boxes are
+    always measured against the layout the visitor actually has.
+  */
+  .js .reveal-lines.is-armed:not(.is-split) {
+    opacity: 0;
+  }
+
+  .js .reveal-lines.is-armed.is-split .line {
+    display: block;
+    opacity: 0;
+    transform: rotateX(-80deg);
+    transform-origin: top center -50px;
+    transition: opacity var(--motion-line) var(--ease-line),
+      transform var(--motion-line) var(--ease-line);
+    transition-delay: var(--line-delay, 0ms);
+  }
+
+  .js .reveal-lines.is-armed.is-visible .line {
+    opacity: 1;
+    transform: none;
   }
 }

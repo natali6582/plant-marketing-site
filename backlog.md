@@ -145,3 +145,25 @@ Still open:
 - The sticky header overlaps a section heading when a section is scrolled to
   its exact top. Pre-existing; not touched.
 
+
+## Noticed while adding the line reveal and the mood photography (feat/line-reveal)
+
+- [ ] **Two dark bands now sit next to each other.** The testimonial band became
+      a navy duotone photograph, and the lead form below it is already navy. The
+      boundary is carried only by the photo's texture. Worth an eye: if it reads
+      as one undifferentiated dark block, the testimonial can go back to
+      `bg-brand-50` and the photograph move elsewhere.
+- [ ] **The animation was never seen running.** The browser available here
+      reports `document.hidden` and never delivers an IntersectionObserver
+      callback — a freshly created observer got none either — so the reveal
+      cannot fire in it. The line-splitting was verified by invoking it directly
+      (correct lines, correct spacing, correct stagger) and the CSS was verified
+      in the compiled bundle, but the motion itself needs one human pass, along
+      with `check-typography` and `check-content` in a real console.
+- **Rejected imagery, and why.** The supplied dashboard images were not used:
+      they show fabricated portfolio figures (₪24.78M, 5.63% YTD, named funds)
+      on screens that read as the product but are not it — English LTR, with
+      generation artifacts. Fabricated performance data on a financial-services
+      site is the same exposure that keeps `stats.json` empty. The campaign
+      creative grid was also left out: it is ad material carrying unapproved
+      copy. Only the two photographs with no legible data were taken.

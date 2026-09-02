@@ -1,31 +1,33 @@
 # Cutover from plan-t.org.il (PR F). Cloudflare Workers static-assets
 # _redirects — same format and location as _headers. First match wins.
 #
-# Path-only sources, on purpose. Workers static assets do not support
-# domain-level sources ("https://host/* …" is listed as unsupported in the
-# Cloudflare docs), so the old-hostname catch-all is NOT here: it is a
-# Redirect Rule on the plan-t.org.il zone — see docs/cutover-runbook.md §2.
+# Path-only sources: Workers static assets do not support domain-level
+# sources, so the old-hostname catch-all is a Redirect Rule on the
+# plan-t.org.il zone — docs/cutover-runbook.md §2.
 #
-# Every target is absolute to the new host so a hit on either old hostname
-# lands in ONE hop once that hostname reaches this Worker.
+# Hebrew sources are PERCENT-ENCODED ONLY. Verified in production on
+# 02/09/2026: Cloudflare matches the encoded request path, so a raw-UTF-8
+# source line never matches (curl with raw bytes -> 404, encoded -> 301).
+# Browsers always send the encoded form, so this is what visitors hit.
+# Raw lines were dead weight and are gone. The Hebrew is kept as a comment
+# beside each encoded line so the file stays readable.
 #
-# Hebrew sources are listed twice, raw and percent-encoded, because both
-# forms arrive in the wild.
+# Every target is absolute to the new host: one hop from either hostname.
 
 /aboutus https://plan-t.co.il/about/ 301
 /blank https://plan-t.co.il/packages/ 301
-/copy-of-פתרונות-ומוצרים https://plan-t.co.il/packages/pro/ 301
+# /copy-of-פתרונות-ומוצרים
 /copy-of-%D7%A4%D7%AA%D7%A8%D7%95%D7%A0%D7%95%D7%AA-%D7%95%D7%9E%D7%95%D7%A6%D7%A8%D7%99%D7%9D https://plan-t.co.il/packages/pro/ 301
-/copy-of-פתרונות-ומוצרים-1 https://plan-t.co.il/packages/planner/ 301
+# /copy-of-פתרונות-ומוצרים-1
 /copy-of-%D7%A4%D7%AA%D7%A8%D7%95%D7%A0%D7%95%D7%AA-%D7%95%D7%9E%D7%95%D7%A6%D7%A8%D7%99%D7%9D-1 https://plan-t.co.il/packages/planner/ 301
-/copy-of-פתרונות-ומוצרים-2 https://plan-t.co.il/packages/enterprise/ 301
+# /copy-of-פתרונות-ומוצרים-2
 /copy-of-%D7%A4%D7%AA%D7%A8%D7%95%D7%A0%D7%95%D7%AA-%D7%95%D7%9E%D7%95%D7%A6%D7%A8%D7%99%D7%9D-2 https://plan-t.co.il/packages/enterprise/ 301
 /copy-of-enterprise https://plan-t.co.il/packages/funds/ 301
-/שאלות-ותשובות https://plan-t.co.il/faq/ 301
+# /שאלות-ותשובות
 /%D7%A9%D7%90%D7%9C%D7%95%D7%AA-%D7%95%D7%AA%D7%A9%D7%95%D7%91%D7%95%D7%AA https://plan-t.co.il/faq/ 301
 /monthlyregistration https://plan-t.co.il/contact/ 301
 /support https://plan-t.co.il/support/ 301
-/מדיניות-הפרטיות https://plan-t.co.il/privacy/ 301
+# /מדיניות-הפרטיות
 /%D7%9E%D7%93%D7%99%D7%A0%D7%99%D7%95%D7%AA-%D7%94%D7%A4%D7%A8%D7%98%D7%99%D7%95%D7%AA https://plan-t.co.il/privacy/ 301
 
 # Old blog: no equivalent here; everything under it goes Home.

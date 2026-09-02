@@ -1,0 +1,28 @@
+// Cloudflare Worker configuration — static assets only, no Worker script.
+//
+// Why this file exists at all: without it, Workers Builds deploys this repo by
+// "automatic project configuration", and the platform default for an unknown
+// path is an EMPTY 404 — so the branded 404 page in dist/404.html has never
+// been served in production (found 02/09/2026, runbook §6). The only way to
+// make Workers serve it is assets.not_found_handling = "404-page", and that
+// lives here.
+//
+// What this changes about deployment: the moment this file exists, the deploy
+// command (npx wrangler deploy) reads it instead of auto-configuring. So:
+//   - "name" must be exactly the existing Worker's name, or wrangler deploys a
+//     different Worker. It is. Routes/domains stay in the dashboard.
+//   - "assets.directory" is Astro's output, the same dist/ auto-config used.
+//   - "html_handling" is set to the platform default on purpose, pinning the
+//     behaviour every internal link on the site relies on (/faq/ -> /faq/index.html).
+//   - No "main": nothing to run; assets are served directly.
+// Rollback is reverting this one file.
+{
+  "$schema": "https://developers.cloudflare.com/workers/wrangler/config-schema.json",
+  "name": "plant-marketing-site",
+  "compatibility_date": "2026-09-02",
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "404-page",
+    "html_handling": "auto-trailing-slash"
+  }
+}

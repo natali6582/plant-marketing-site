@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import LeadForm from '../components/LeadForm.astro';
 import Marquee from '../components/Marquee.astro';
 import StatsRow from '../components/StatsRow.astro';
+import AudienceSelector from '../components/AudienceSelector.astro';
 import { advantages } from '../data/advantages';
 
 const painCards = [
@@ -102,6 +103,10 @@ const tour = [
        teases what /product/ explains in full. Swap `items` for cleared partner
        logos when there are any. Label and items are the approved product copy. -->
   <Marquee items={advantages} label="היתרונות המרכזיים" />
+
+  <!-- D3 = KEEP: the marquee stays above the selector, so the page reads
+       hero → advantages → "which of you is this for". -->
+  <AudienceSelector />
 
   <!-- Renders nothing until src/data/stats.json holds real, sourced figures. -->
   <StatsRow />

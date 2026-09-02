@@ -1,4 +1,6 @@
 ---
+import { audiences } from '../data/audiences';
+
 const { minimal = false } = Astro.props;
 const year = new Date().getFullYear();
 ---
@@ -21,6 +23,9 @@ const year = new Date().getFullYear();
     <nav aria-label="קישורי פוטר" class="grid grid-cols-2 gap-2 text-sm">
       <a href="/product/" class="hover:text-white hover:underline">הפלטפורמה</a>
       <a href="/solutions/" class="hover:text-white hover:underline">תהליכי עבודה</a>
+      {audiences.map((audience) => (
+        <a href={audience.href} class="hover:text-white hover:underline">{audience.name}</a>
+      ))}
       <a href="/about/" class="hover:text-white hover:underline">אודות</a>
       <a href="/contact/" class="hover:text-white hover:underline">יצירת קשר</a>
       <a href="/privacy/" class="hover:text-white hover:underline">מדיניות פרטיות</a>

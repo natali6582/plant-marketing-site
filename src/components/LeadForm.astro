@@ -4,16 +4,25 @@
   The webhook URL comes from PUBLIC_LEAD_WEBHOOK_URL (see .env.example / config.md).
   Submissions are never stored on the site — leads live in monday only.
 */
+import type { AudienceId } from '../data/audiences';
+
 interface Props {
   source?: string;
   heading?: string;
   cta?: string;
+  /*
+    Landing context, not a declared role: which audience page rendered this
+    form. Empty on every other page. The runtime coerces anything outside the
+    allowed set to "" — see config.md.
+  */
+  audience?: AudienceId | '';
 }
 
 const {
   source = 'website',
   heading = 'רוצים לראות איך זה עובד אצלכם במשרד?',
   cta = 'שלחו ונחזור אליכם',
+  audience = '',
 } = Astro.props;
 
 const webhookUrl = import.meta.env.PUBLIC_LEAD_WEBHOOK_URL ?? '';
@@ -30,6 +39,7 @@ const webhookUrl = import.meta.env.PUBLIC_LEAD_WEBHOOK_URL ?? '';
       class="lead-form mt-8 grid gap-4 rounded-2xl bg-white p-6 shadow-xl sm:grid-cols-2"
       data-webhook={webhookUrl}
       data-source={source}
+      data-audience={audience}
       novalidate
     >
       <div class="sm:col-span-1">
@@ -98,6 +108,15 @@ const webhookUrl = import.meta.env.PUBLIC_LEAD_WEBHOOK_URL ?? '';
     return new URLSearchParams(window.location.search).get(param) ?? '';
   }
 
+  // The allowed set, duplicated here on purpose: this runs in the browser and
+  // must not depend on the build-time union holding. Anything else → "".
+  const ALLOWED_AUDIENCES = ['agents', 'planners', 'wealth'];
+
+  function readAudience(form: HTMLFormElement): string {
+    const value = form.dataset.audience ?? '';
+    return ALLOWED_AUDIENCES.includes(value) ? value : '';
+  }
+
   document.querySelectorAll<HTMLFormElement>('form.lead-form').forEach((form) => {
     wireLeadForm(form, {
       honeypot: 'company_website',
@@ -114,6 +133,7 @@ const webhookUrl = import.meta.env.PUBLIC_LEAD_WEBHOOK_URL ?? '';
         message: data.get('message'),
         source: f.dataset.source ?? 'website',
         page: window.location.pathname,
+        audience: readAudience(f),
         utm_source: getUtm('utm_source'),
         utm_medium: getUtm('utm_medium'),
         utm_campaign: getUtm('utm_campaign'),

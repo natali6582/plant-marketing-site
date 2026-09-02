@@ -1,0 +1,105 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import LeadForm from '../components/LeadForm.astro';
+
+/*
+  Audience page — insurance agents (proposal §4, headline option B).
+
+  Every line here is drawn from copy already approved and live on the site:
+  the pains from the Home pain cards, the capabilities from /solutions/, the
+  family-unit and exposures wording from /product/. Nothing on this page is a
+  new product claim — the open F-questions (§11) are deliberately not answered
+  here. One primary CTA, an in-page anchor, so the audience tag survives the
+  submission.
+*/
+const pains = [
+  'המידע של הלקוח מפוזר: קובץ מסלקה כאן, נתוני יצרנים שם, וגיליון שמנסה לחבר הכל.',
+  'הכנה לפגישה לוקחת שעות של איסוף והקלדה — לפני שהתחלתם בכלל לדבר עם הלקוח.',
+  'ללקוח יש נכסים גם מחוץ למה שאתם מטפלים בו — ואין לכם דרך פשוטה לראות אותם לצד הכיסויים.',
+];
+
+const enables = [
+  'ריכוז נתוני המסלקה לצד שאר המידע בתיק.',
+  'תמונת תיק אחת: השקעות, חיסכון וכיסויים — של הלקוח ושל התא המשפחתי.',
+  'הכנה לפגישה בדקות במקום בשעות.',
+  'דוח מסודר ללקוח בסוף התהליך, ממותג במיתוג המשרד.',
+  'תיעוד מלא של התהליך לצורכי רגולציה ובקרה.',
+];
+---
+
+<BaseLayout
+  title="Plan-T לסוכני ביטוח — כל התיק של הלקוח במקום אחד"
+  description="Plan-T מרכזת לסוכני ביטוח את הנתונים הפנסיוניים והפיננסיים של הלקוח — מסלקה, כיסויים וחיסכון — בתמונה אחת, ומכינה אתכם לפגישה בדקות."
+>
+  <section class="bg-ink-900 text-white">
+    <div class="mx-auto max-w-4xl px-4 py-16 text-center">
+      <!-- PR B: the ~120px stage marker (all three rings, this one lit) goes
+           here, aria-hidden. -->
+      <h1 class="reveal-lines text-4xl font-bold md:text-5xl">
+        הלקוח שלך הוא יותר מהפוליסה. עכשיו אפשר לראות את זה.
+      </h1>
+      <p class="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-ink-200">
+        <span class="ltr">Plan-T</span> מרכזת את הנתונים הפנסיוניים והפיננסיים של הלקוח במקום אחד —
+        כדי שתגיעו לכל פגישה עם התמונה השלמה, ולא רק עם המוצר שעל השולחן.
+      </p>
+      <a
+        href="#lead-form"
+        class="btn-pill btn-solid mt-10 inline-block rounded-full px-10 py-4 text-lg font-bold text-ink-950"
+      >
+        תיאום הדגמה
+      </a>
+    </div>
+  </section>
+
+  <section class="band bg-white" aria-labelledby="pains-title">
+    <div class="mx-auto max-w-5xl px-4">
+      <h2 id="pains-title" class="reveal-lines text-center text-3xl font-bold text-ink-900">
+        מכירים את זה?
+      </h2>
+      <ul class="mt-10 grid gap-4 md:grid-cols-3">
+        {
+          pains.map((pain) => (
+            <li class="reveal card-lift rounded-2xl border border-brand-100 bg-white p-5 leading-relaxed text-ink-700 shadow-sm">
+              {pain}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="band bg-ink-50" aria-labelledby="enables-title">
+    <div class="mx-auto max-w-5xl px-4">
+      <h2 id="enables-title" class="reveal-lines text-center text-3xl font-bold text-ink-900">
+        מה <span class="ltr">Plan-T</span> נותנת לכם
+      </h2>
+      <ul class="mt-10 grid gap-4 md:grid-cols-2">
+        {
+          enables.map((item) => (
+            <li class="reveal card-lift rounded-2xl border border-brand-100 bg-white p-5 leading-relaxed text-ink-700 shadow-sm">
+              {item}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="band bg-white" aria-labelledby="progression-title">
+    <div class="mx-auto max-w-3xl px-4 text-center">
+      <h2 id="progression-title" class="reveal-lines text-3xl font-bold text-ink-900">
+        כשהלקוחות צריכים מכם יותר
+      </h2>
+      <p class="reveal mt-5 text-lg leading-relaxed text-ink-700">
+        הלקוחות שלכם לא נעצרים בפוליסה — וגם התיק שלהם ב־<span class="ltr">Plan-T</span> לא.
+        כשהשיחה מתרחבת להשקעות ולתכנון, אותו תיק, אותה מערכת, תמונה רחבה יותר.
+      </p>
+    </div>
+  </section>
+
+  <LeadForm
+    source="website-agents"
+    audience="agents"
+    heading="רוצים לראות את התיק של לקוח אמיתי מסודר במסך אחד?"
+  />
+</BaseLayout>

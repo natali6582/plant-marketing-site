@@ -30,19 +30,34 @@ not a credential store.
   "phone": "050-0000000",
   "email": "test@example.com",
   "office": "משרד לדוגמה",
-  "role": "advisor",
   "message": "בדיקה",
   "source": "website-contact",
   "page": "/contact/",
+  "audience": "",
   "utm_source": "",
   "utm_medium": "",
   "utm_campaign": ""
 }
 ```
 
-`role` arrives as one of `advisor`, `agent`, `pension`, `other`, or empty.
 `source` is `website-home` / `website-product` / `website-solutions` /
-`website-webinar` / `website-about` / `website-contact`.
+`website-about` / `website-contact` / `website-agents` / `website-planners` /
+`website-wealth` / `website-webinar`.
+
+`audience` arrives as `agents`, `planners`, `wealth`, or empty. It is set from
+the page the form was submitted on — `/agents/`, `/planners/`, `/wealth/`; every
+other page sends empty. It is rendered server-side as `data-audience` on the
+form, and the runtime coerces anything outside the allowed set to empty. It is
+not persisted across pages and never derived from `utm_*` or the query string:
+a visitor who reads `/agents/` and then submits from the home page sends empty.
+
+**Meaning: the landing context of the submission — which audience page the
+visitor was on. It is NOT a verified declaration of the person's professional
+role.** Do not map it to a role column in monday unless the visitor selects a
+role explicitly in a field of its own.
+
+The `role` field this file used to document was removed from the form in commit
+`ee9bf0e` (the single-audience rebrand) and is no longer sent.
 
 ### Column mapping
 
@@ -52,10 +67,10 @@ not a credential store.
 | `phone` | phone | ☐ |
 | `email` | email | ☐ |
 | `office` | text | ☐ |
-| `role` | status/dropdown | ☐ |
 | `message` | long text | ☐ |
 | `source` | text | ☐ |
 | `page` | text | ☐ |
+| `audience` | text — landing context, **not** a role | ☐ |
 | `utm_source` / `utm_medium` / `utm_campaign` | text ×3 | ☐ |
 | — | date (creation) | ☐ |
 

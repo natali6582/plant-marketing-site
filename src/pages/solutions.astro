@@ -125,7 +125,7 @@ const sources = [
   <div class="mx-auto max-w-5xl px-4 py-16">
     {
       stages.map((stage, index) => (
-        <section id={stage.id} class:list={['scroll-mt-24 py-10', index > 0 && 'border-t border-brand-100']} aria-labelledby={`${stage.id}-title`}>
+        <section id={stage.id} class:list={['reveal scroll-mt-24 py-10', index > 0 && 'border-t border-brand-100']} aria-labelledby={`${stage.id}-title`}>
           <h2 id={`${stage.id}-title`} class="text-3xl font-bold text-ink-900">{stage.title}</h2>
           <ul class="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {stage.items.map((item) => (
@@ -147,7 +147,7 @@ const sources = [
       ))
     }
 
-    <section id="sources" class="scroll-mt-24 border-t border-brand-100 py-10" aria-labelledby="sources-title">
+    <section id="sources" class="reveal scroll-mt-24 border-t border-brand-100 py-10" aria-labelledby="sources-title">
       <h2 id="sources-title" class="text-2xl font-bold text-ink-900">מקורות מידע שמתחברים ל-<span class="ltr">Plan-T</span></h2>
       <ul class="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {

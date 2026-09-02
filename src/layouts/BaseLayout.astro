@@ -41,6 +41,13 @@ const ogImageUrl = new URL(ogImage, Astro.site);
     <meta property="og:locale" content="he_IL" />
     <meta name="twitter:card" content="summary_large_image" />
 
+    <!-- Search-engine site verification, copied verbatim from the old site's
+         <head> (plan-t.org.il, 02/09/2026) so the properties carry over at
+         cutover and Search Console's change-of-address can be filed. Values,
+         not secrets: they only prove ownership of a domain we already own. -->
+    <meta name="google-site-verification" content="lJsQkE9-KmEIiDVCHA8JYTAyGRhCe2xnhxXcXozJksI" />
+    <meta name="msvalidate.01" content="B0EFBB152549A0828828C4A65FA32488" />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link

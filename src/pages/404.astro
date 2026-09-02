@@ -7,8 +7,16 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <p class="ltr text-6xl font-black text-ink-400">404</p>
     <h1 class="mt-4 text-3xl font-bold text-ink-900">הדף לא נמצא</h1>
     <p class="mt-4 text-ink-700">ייתכן שהקישור השתנה או שהוקלד בטעות.</p>
-    <a href="/" class="mt-8 inline-block rounded-full bg-brand-700 px-8 py-3 font-bold text-white hover:bg-brand-600">
+    <!-- PR F: the prompt asked for a branded Hebrew 404 with four ways out. The
+         page was already branded; it had one link. Now: Home as the primary,
+         and the three destinations a lost visitor most likely wanted. -->
+    <a href="/" class="btn-pill btn-solid mt-8 inline-block rounded-full px-8 py-3 font-bold text-ink-950">
       חזרה לדף הבית
     </a>
+    <nav aria-label="דפים מרכזיים" class="mt-6 flex flex-wrap justify-center gap-3 text-sm">
+      <a href="/product/" class="rounded-full border border-brand-200 px-4 py-2 font-medium text-brand-800 hover:bg-brand-50">הפלטפורמה</a>
+      <a href="/packages/" class="rounded-full border border-brand-200 px-4 py-2 font-medium text-brand-800 hover:bg-brand-50">חבילות</a>
+      <a href="/contact/" class="rounded-full border border-brand-200 px-4 py-2 font-medium text-brand-800 hover:bg-brand-50">תיאום הדגמה</a>
+    </nav>
   </section>
 </BaseLayout>

@@ -1,0 +1,17 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node scripts/build-on-edit.mjs",
+            "timeout": 120,
+            "statusMessage": "Rebuilding the site…"
+          }
+        ]
+      }
+    ]
+  }
+}

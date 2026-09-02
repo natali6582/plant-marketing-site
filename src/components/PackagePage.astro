@@ -1,0 +1,74 @@
+---
+/*
+  One layout for the four package pages, so they cannot drift apart.
+  Hero (name + tagline) → audience line + capability card → the old page's
+  descriptive paragraphs → lead form. Same section rhythm and card style as
+  the audience pages from PR A; no new visual language.
+
+  Content is migrated verbatim (MIGRATED — verify with Natali); see
+  src/data/packages.ts for what is deliberately absent and why.
+*/
+import LeadForm from './LeadForm.astro';
+import { packages } from '../data/packages';
+
+interface Props {
+  slug: string;
+}
+
+const { slug } = Astro.props;
+const pkg = packages.find((p) => p.slug === slug);
+if (!pkg) throw new Error(`Unknown package slug: ${slug}`);
+---
+
+<section class="bg-ink-900 text-white">
+  <div class="mx-auto max-w-4xl px-4 py-16 text-center">
+    <p class="text-sm font-bold tracking-wide text-accent-300">{pkg.audience}</p>
+    <h1 class="reveal-lines mt-4 text-4xl font-bold md:text-5xl"><span class="ltr">{pkg.name}</span></h1>
+    {pkg.tagline && (
+      <p class="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-ink-200">{pkg.tagline}</p>
+    )}
+    <a
+      href="#lead-form"
+      class="btn-pill btn-solid mt-10 inline-block rounded-full px-10 py-4 text-lg font-bold text-ink-950"
+    >
+      להצטרפות ופרטים נוספים
+    </a>
+  </div>
+</section>
+
+<section class="band bg-white" aria-labelledby="capabilities-title">
+  <div class="mx-auto max-w-3xl px-4">
+    <h2 id="capabilities-title" class="reveal-lines text-center text-3xl font-bold text-ink-900">מאפיינים ויכולות</h2>
+    <ul class="reveal card-lift mt-8 space-y-3 rounded-2xl border border-brand-100 bg-white p-6 shadow-sm">
+      {
+        pkg.bullets.map((item) => (
+          <li class="flex gap-3">
+            <span class="mt-1 text-brand-600" aria-hidden="true">✓</span>
+            <span class="text-ink-700">{item}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+{pkg.paragraphs.length > 0 && (
+  <section class="band bg-ink-50" aria-labelledby="about-package-title">
+    <div class="mx-auto max-w-3xl px-4">
+      <h2 id="about-package-title" class="reveal-lines text-3xl font-bold text-ink-900">
+        על <span class="ltr">{pkg.name}</span>
+      </h2>
+      <div class="mt-6 space-y-5">
+        {pkg.paragraphs.map((text) => (
+          <p class="reveal leading-relaxed text-ink-700">{text}</p>
+        ))}
+      </div>
+    </div>
+  </section>
+)}
+
+<LeadForm
+  source={`website-packages-${pkg.slug}`}
+  audience=""
+  heading="רוצים לשמוע עוד על החבילה הזו?"
+/>

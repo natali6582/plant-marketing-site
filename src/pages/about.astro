@@ -48,10 +48,27 @@ const principles = [
   </section>
 
   <section class="mx-auto max-w-3xl px-4 py-16">
+    <!-- "הסיפור" and "החזון": migrated verbatim from the old site's מי אנחנו page
+         (old-site-content.md L41–43, L50). MIGRATED — verify with Natali.
+         Three claims inside are pending the deferred M-13 ruling and the
+         forbidden-word rule, and are listed line-by-line in the PR:
+         «יועצים» (L41), «היחידה בישראל» (L41, L42), «למעלה מ-12 שנים» (L42). -->
     <h2 class="text-3xl font-bold text-ink-900">הסיפור</h2>
+    <div class="mt-4 space-y-4 leading-relaxed text-ink-700">
+      <p>
+        פלאנטי (<span class="ltr">PLAN-T</span>) היא חברת פינטק ישראלית ותיקה, המובילה את תחום פתרונות הניהול לנותני שירותים בשוק הפיננסי והפנסיוני בישראל – בהם סוכנים פנסיוניים, מתכננים פיננסיים, מנהלי עושר, מתכנני פרישה, יועצים ומנהלי השקעות.
+      </p>
+      <p>
+        הפלטפורמה שלנו הוקמה לפני למעלה מ-12 שנים כמענה לצורך מהותי בשוק: יצירת קונסולידציה מלאה של נכסי הלקוח והצגת תמונת מצב הוליסטית של החשיפות והאלוקציות בתיק ההשקעות. מאז ועד היום, הצורך הזה רק התגבר, ואנו גאים להיות החברה היחידה בישראל המאפשרת ניתוח כולל ומדויק של כלל נכסי התא המשפחתי או הלקוח הבודד – במקום אחד.
+      </p>
+      <p>
+        המערכת פותחה בשיתוף פעולה הדוק עם המשתמשים עצמם, מתוך הבנה עמוקה של האתגרים היומיומיים שלהם. הגישה הזו מאפשרת לנו להגיב במהירות לשינויים בשוק ולהציע פתרונות חכמים ומדויקים המותאמים לצרכים האמיתיים של אנשי המקצוע.
+      </p>
+    </div>
+
+    <h2 class="mt-12 text-3xl font-bold text-ink-900">החזון</h2>
     <p class="mt-4 leading-relaxed text-ink-700">
-      [TBD — פסקת רקע על החברה: שנת הקמה, המייסדים והסיבה שבגללה Plan-T קמה. הטקסט
-      יאושר על ידי אחראי/ת התוכן לפני העלייה לאוויר.]
+      להמשיך להוביל ולהנגיש ללקוחותינו פתרונות מתקדמים אשר יתנו מענה לאתגרים הרבים בשוק וזאת באמצעות פיתוח כלים חדשניים שיתנו לנותני השירותים יתרון תחרותי, ישפרו את חוויית הלקוח הסופי.
     </p>
 
     <h2 class="mt-12 text-3xl font-bold text-ink-900">מה מנחה אותנו</h2>
@@ -66,10 +83,25 @@ const principles = [
       }
     </div>
 
+    <!-- "הצוות": the three managers from the old site's הנהלת החברה block
+         (old-site-content.md L52–60). Names, roles and emails verbatim; no
+         photos, because none were supplied. MIGRATED — verify with Natali. -->
     <h2 class="mt-12 text-3xl font-bold text-ink-900">הצוות</h2>
-    <p class="mt-4 rounded-xl border border-dashed border-brand-300 bg-brand-50 p-6 text-ink-500">
-      [TBD — תמונות, שמות ותפקידים של חברי ההנהלה, באישורם.]
-    </p>
+    <ul class="mt-6 grid gap-5 sm:grid-cols-3">
+      {
+        [
+          { name: 'עידן בן נאים', role: 'מנכ"ל', email: 'Idan@plan-t.org.il' },
+          { name: 'ליהי לוטן', role: 'סמנכ"לית מוצר ולקוחות', email: 'Lihi@plan-t.org.il' },
+          { name: 'מור רפאל', role: 'סמנכ"לית טכנולוגיות', email: 'Mor@plan-t.org.il' },
+        ].map((person) => (
+          <li class="reveal card-lift rounded-2xl border border-brand-100 bg-white p-6 shadow-sm">
+            <p class="text-lg font-bold text-ink-900">{person.name}</p>
+            <p class="mt-1 text-ink-700">{person.role}</p>
+            <a href={`mailto:${person.email}`} class="ltr mt-3 inline-block text-sm text-brand-700 underline hover:text-brand-600">{person.email}</a>
+          </li>
+        ))
+      }
+    </ul>
   </section>
 
   <LeadForm source="website-about" heading="רוצים להכיר מקרוב?" />

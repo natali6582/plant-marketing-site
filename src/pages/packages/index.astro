@@ -1,0 +1,58 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import LeadForm from '../../components/LeadForm.astro';
+import { packages } from '../../data/packages';
+
+/*
+  /packages/ — the old site's "פתרונות ומוצרים · השוואת מוצרים" page (/blank).
+  Four cards in the old order. Price lines and the "PLAN-T AI — Coming Soon"
+  block are absent by decision (M-2 and N-8 deferred); see src/data/packages.ts.
+  MIGRATED — verify with Natali.
+*/
+---
+
+<BaseLayout
+  title="חבילות | Plan-T"
+  description="ארבע חבילות Plan-T — Planner, Pro, Enterprise ו-Funds — לפי סוג המשרד והלקוחות שהוא מלווה. כל החבילות על תשתית אחת."
+>
+  <section class="bg-ink-900 text-white">
+    <div class="mx-auto max-w-4xl px-4 py-16 text-center">
+      <h1 class="reveal-lines text-4xl font-bold md:text-5xl">חבילות</h1>
+      <p class="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-ink-200">
+        אותה פלטפורמה, ארבע חבילות — לפי סוג המשרד, הלקוחות שהוא מלווה והנכסים שהוא מנהל.
+      </p>
+    </div>
+  </section>
+
+  <section class="band bg-white" aria-labelledby="packages-title">
+    <div class="mx-auto max-w-6xl px-4">
+      <h2 id="packages-title" class="sr-only">ארבע החבילות</h2>
+      <ul class="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+        {
+          packages.map((pkg) => (
+            <li class="reveal card-lift flex flex-col rounded-2xl border border-brand-100 bg-white p-6 shadow-sm">
+              <p class="text-sm font-bold text-brand-700">{pkg.audience}</p>
+              <h3 class="mt-2 text-xl font-bold text-ink-900"><span class="ltr">{pkg.name}</span></h3>
+              <ul class="mt-4 flex-1 space-y-2 text-sm leading-relaxed text-ink-700">
+                {pkg.bullets.map((item) => (
+                  <li class="flex gap-2">
+                    <span class="text-brand-600" aria-hidden="true">✓</span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+              <a
+                href={`/packages/${pkg.slug}/`}
+                class="mt-6 inline-block rounded-full border border-brand-200 px-5 py-2 text-center text-sm font-bold text-brand-800 transition-colors hover:bg-brand-50"
+              >
+                להצטרפות ופרטים נוספים <span aria-hidden="true">←</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <LeadForm source="website-packages" audience="" heading="לא בטוחים איזו חבילה מתאימה לכם?" />
+</BaseLayout>

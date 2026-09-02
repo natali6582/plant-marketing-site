@@ -104,10 +104,14 @@ Run from any machine after section 2:
 NEW=https://plan-t.co.il
 for u in \
   /aboutus /blank /copy-of-enterprise /monthlyregistration /support /blog /blog/anything \
-  "/copy-of-פתרונות-ומוצרים" "/copy-of-פתרונות-ומוצרים-1" "/copy-of-פתרונות-ומוצרים-2" \
-  "/שאלות-ותשובות" "/מדיניות-הפרטיות" \
   /copy-of-%D7%A4%D7%AA%D7%A8%D7%95%D7%A0%D7%95%D7%AA-%D7%95%D7%9E%D7%95%D7%A6%D7%A8%D7%99%D7%9D \
-  /%D7%A9%D7%90%D7%9C%D7%95%D7%AA-%D7%95%D7%AA%D7%A9%D7%95%D7%91%D7%95%D7%AA ; do
+  /copy-of-%D7%A4%D7%AA%D7%A8%D7%95%D7%A0%D7%95%D7%AA-%D7%95%D7%9E%D7%95%D7%A6%D7%A8%D7%99%D7%9D-1 \
+  /copy-of-%D7%A4%D7%AA%D7%A8%D7%95%D7%A0%D7%95%D7%AA-%D7%95%D7%9E%D7%95%D7%A6%D7%A8%D7%99%D7%9D-2 \
+  /%D7%A9%D7%90%D7%9C%D7%95%D7%AA-%D7%95%D7%AA%D7%A9%D7%95%D7%91%D7%95%D7%AA \
+  /%D7%9E%D7%93%D7%99%D7%A0%D7%99%D7%95%D7%AA-%D7%94%D7%A4%D7%A8%D7%98%D7%99%D7%95%D7%AA ; do
+  # Hebrew paths are percent-encoded on purpose: that is what browsers send, and
+  # it is the only form Cloudflare matches (verified in production 02/09 — raw
+  # UTF-8 bytes in the request returned 404, the encoded form 301).
   for host in https://www.plan-t.org.il https://plan-t.org.il; do
     printf "%-70s " "$host$u"
     curl -s -o /dev/null -w "%{http_code} -> %{redirect_url}\n" "$host$u"
@@ -122,13 +126,15 @@ done
 
 Also: Lighthouse on `/`, `/product/`, `/packages/`, `/faq/` — scores no lower than before cutover; and the OG image is the new asset (C-12 is still **SKIP**; the current `og.png` ships until an asset is supplied).
 
+**Known gap — the branded 404 is not served (found 02/09/2026).** An unknown path on production returns a **0-byte** 404, not `dist/404.html`. Workers static assets only serve a custom 404 page when the Worker's assets config says so (`assets.not_found_handling = "404-page"` in `wrangler.jsonc`); this repo has no wrangler config, so the platform default applies. The branded page has therefore never been served in production — before PR F or after. Fixing it means adding a `wrangler.jsonc`, which changes how Cloudflare builds and deploys this Worker; that is a decision, not a doc fix, and is left open here. Until it is made, an old URL that is *not* in the redirect map lands on an empty response.
+
 ---
 
 ## 7 · Rollback
 
 Each step above is independently reversible; do them in reverse order.
 
-- **Redirects misbehave:** remove `plan-t.org.il` from the Worker's domains. The old hostnames stop reaching `_redirects` and return to wherever their DNS points. Nothing on `.co.il` is affected.
+- **Redirects misbehave:** disable the `org.il → co.il` Redirect Rule in the `plan-t.org.il` zone (Rules → Redirect Rules → toggle off). The old hostnames then serve whatever their proxied records point at — the placeholder from §2 step 3, i.e. nothing useful — so this is a stop, not a restore; re-point the records at the old Wix origin if the old site must come back. Nothing on `.co.il` is affected either way.
 - **`plan-t.co.il` broken after the NS switch:** at DomainTheNet, set the NS back to `ns1/ns2/ns3.dtnt.info`. Propagation takes as long as it took forward. This is why the wildcard/mail questions in section 1 are asked *before* the switch — a rollback recovers the records, not the mail that bounced meanwhile.
 - **Search Console change-of-address:** can be withdrawn from the old property within 180 days.
 - **Wix:** cannot be rolled back once cancelled — hence section 4 before section 2's final step.

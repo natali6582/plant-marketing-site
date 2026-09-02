@@ -1,0 +1,37 @@
+# Cutover from plan-t.org.il (PR F). Cloudflare static-assets _redirects,
+# same format and location as _headers. First match wins, top to bottom.
+#
+# Every target is absolute to the new host so a hit on either old hostname
+# lands in ONE hop — a relative target would redirect within the old host
+# first and only then cross domains.
+#
+# Hebrew sources are listed twice, raw and percent-encoded, because both
+# forms arrive in the wild. The host-level rules at the bottom catch
+# everything the path map does not; they are inert until plan-t.org.il is
+# attached to this Worker (see docs/cutover-runbook.md).
+
+/aboutus https://plan-t.co.il/about/ 301
+/blank https://plan-t.co.il/packages/ 301
+/copy-of-פתרונות-ומוצרים https://plan-t.co.il/packages/pro/ 301
+/copy-of-%D7%A4%D7%AA%D7%A8%D7%95%D7%A0%D7%95%D7%AA-%D7%95%D7%9E%D7%95%D7%A6%D7%A8%D7%99%D7%9D https://plan-t.co.il/packages/pro/ 301
+/copy-of-פתרונות-ומוצרים-1 https://plan-t.co.il/packages/planner/ 301
+/copy-of-%D7%A4%D7%AA%D7%A8%D7%95%D7%A0%D7%95%D7%AA-%D7%95%D7%9E%D7%95%D7%A6%D7%A8%D7%99%D7%9D-1 https://plan-t.co.il/packages/planner/ 301
+/copy-of-פתרונות-ומוצרים-2 https://plan-t.co.il/packages/enterprise/ 301
+/copy-of-%D7%A4%D7%AA%D7%A8%D7%95%D7%A0%D7%95%D7%AA-%D7%95%D7%9E%D7%95%D7%A6%D7%A8%D7%99%D7%9D-2 https://plan-t.co.il/packages/enterprise/ 301
+/copy-of-enterprise https://plan-t.co.il/packages/funds/ 301
+/שאלות-ותשובות https://plan-t.co.il/faq/ 301
+/%D7%A9%D7%90%D7%9C%D7%95%D7%AA-%D7%95%D7%AA%D7%A9%D7%95%D7%91%D7%95%D7%AA https://plan-t.co.il/faq/ 301
+/monthlyregistration https://plan-t.co.il/contact/ 301
+/support https://plan-t.co.il/support/ 301
+/מדיניות-הפרטיות https://plan-t.co.il/privacy/ 301
+/%D7%9E%D7%93%D7%99%D7%A0%D7%99%D7%95%D7%AA-%D7%94%D7%A4%D7%A8%D7%98%D7%99%D7%95%D7%AA https://plan-t.co.il/privacy/ 301
+
+# Old blog: no equivalent here; everything under it goes Home.
+/blog https://plan-t.co.il/ 301
+/blog/* https://plan-t.co.il/ 301
+
+# Host-level: anything else on the old hostnames -> same path on the new one.
+https://plan-t.org.il/* https://plan-t.co.il/:splat 301
+https://www.plan-t.org.il/* https://plan-t.co.il/:splat 301
+http://plan-t.org.il/* https://plan-t.co.il/:splat 301
+http://www.plan-t.org.il/* https://plan-t.co.il/:splat 301

@@ -28,10 +28,10 @@ const {
 const webhookUrl = import.meta.env.PUBLIC_LEAD_WEBHOOK_URL ?? '';
 ---
 
-<section id="lead-form" class="bg-ink-900 py-16" aria-labelledby="lead-form-title">
+<section id="lead-form" class="bg-brand-50 py-16" aria-labelledby="lead-form-title">
   <div class="mx-auto max-w-2xl px-4">
-    <h2 id="lead-form-title" class="text-center text-3xl font-bold text-white">{heading}</h2>
-    <p class="mt-3 text-center text-ink-200">
+    <h2 id="lead-form-title" class="text-center text-3xl font-bold text-ink-900">{heading}</h2>
+    <p class="mt-3 text-center text-ink-700">
       השאירו פרטים ונחזור אליכם לתיאום שיחה או הדגמה — בלי התחייבות.
     </p>
 
@@ -86,7 +86,7 @@ const webhookUrl = import.meta.env.PUBLIC_LEAD_WEBHOOK_URL ?? '';
 
       <div class="sm:col-span-2">
         <button type="submit"
-          class="w-full rounded-full bg-brand-700 px-6 py-3 text-lg font-bold text-white transition-colors hover:bg-brand-600 disabled:opacity-60">
+          class="w-full rounded-full bg-brand-700 px-6 py-3 text-lg font-bold text-ink-900 transition-colors hover:bg-brand-600 disabled:opacity-60">
           {cta}
         </button>
       </div>

@@ -64,7 +64,7 @@ const tour = [
       <h1 class="reveal-lines mx-auto mt-4 max-w-3xl text-4xl font-bold leading-tight md:text-6xl">
         כל תיק הלקוח. תמונה אחת ברורה.
       </h1>
-      <p class="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-ink-200">
+      <p class="reveal reveal--float mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-ink-200">
         <span class="ltr">Plan-T</span> מרכזת את הנתונים הפיננסיים והפנסיוניים, מסדרת את תהליך
         העבודה ומאפשרת להתמקד בתכנון ובשיחה עם הלקוח.
       </p>
@@ -144,6 +144,16 @@ const tour = [
       {
         tour.map((item) => (
           <figure class="reveal card-lift overflow-hidden rounded-2xl border border-brand-100 bg-white shadow-sm">
+            <!-- M-12: lightbox on click. A real button, so Enter/Space work and
+                 the target is announced; block + full width so wrapping the
+                 image changes no layout. The alt travels to the dialog. -->
+            <button
+              type="button"
+              class="lightbox-open block w-full cursor-zoom-in"
+              data-src={item.formats ? `${item.image}.jpg` : item.image}
+              data-alt={item.alt}
+              aria-label={`הגדלת התמונה: ${item.caption}`}
+            >
             {item.formats ? (
               <picture>
                 <source srcset={`${item.image}.webp`} type="image/webp" />
@@ -168,6 +178,7 @@ const tour = [
                 class="block w-full"
               />
             )}
+            </button>
             <figcaption class="px-5 py-4 text-center text-sm font-medium text-ink-700">{item.caption}</figcaption>
           </figure>
         ))
@@ -175,6 +186,60 @@ const tour = [
     </div>
     </div>
   </section>
+
+  <!-- M-12 lightbox. One native <dialog> for all three tour images: showModal()
+       gives the focus trap, aria-modal semantics, Esc-to-close and an inert
+       page behind it for free — nothing to reimplement, nothing to get subtly
+       wrong. Backdrop click and the close button are the two extras. The
+       opener gets focus back on close. No entrance animation at all, so
+       reduced motion has nothing to suppress and there is no layout shift:
+       the dialog is out of flow. -->
+  <dialog class="lightbox" aria-label="תצוגה מוגדלת של צילום המסך" data-lightbox>
+    <button
+      type="button"
+      class="lightbox-close"
+      aria-label="סגירת התצוגה המוגדלת"
+      data-lightbox-close
+    >
+      <span aria-hidden="true">×</span>
+    </button>
+    <img src="" alt="" width="1400" height="1073" decoding="async" data-lightbox-img />
+  </dialog>
+
+  <script>
+    const dialog = document.querySelector<HTMLDialogElement>('[data-lightbox]');
+    const image = dialog?.querySelector<HTMLImageElement>('[data-lightbox-img]');
+    const closeButton = dialog?.querySelector<HTMLButtonElement>('[data-lightbox-close]');
+
+    if (dialog && image && closeButton && typeof dialog.showModal === 'function') {
+      let opener: HTMLElement | null = null;
+
+      for (const button of document.querySelectorAll<HTMLButtonElement>('.lightbox-open')) {
+        button.addEventListener('click', () => {
+          opener = button;
+          image.src = button.dataset.src ?? '';
+          // The alt is the image's meaning; it must survive the enlargement.
+          image.alt = button.dataset.alt ?? '';
+          dialog.showModal();
+          closeButton.focus();
+        });
+      }
+
+      closeButton.addEventListener('click', () => dialog.close());
+
+      // A click on the backdrop lands on the <dialog> itself, not on a child.
+      dialog.addEventListener('click', (event) => {
+        if (event.target === dialog) dialog.close();
+      });
+
+      // Esc is native. On any close, hand focus back to where the visitor was.
+      dialog.addEventListener('close', () => {
+        image.src = '';
+        opener?.focus();
+        opener = null;
+      });
+    }
+  </script>
 
   <!-- Social proof — one real, published testimonial from plan-t.org.il.
        Wording and punctuation are verbatim; only whitespace was normalised
@@ -204,7 +269,7 @@ const tour = [
     ></div>
     <div class="mx-auto max-w-2xl px-4 text-center">
       <h2 id="proof-title" class="reveal-lines text-3xl font-bold text-white">משרדים שכבר עובדים איתנו</h2>
-      <figure class="reveal card-lift mt-8 rounded-2xl border border-brand-100 bg-white p-8 shadow-sm sm:p-10">
+      <figure class="reveal reveal--float card-lift mt-8 rounded-2xl border border-brand-100 bg-white p-8 shadow-sm sm:p-10">
         <blockquote class="text-lg leading-relaxed text-ink-900 sm:text-xl">"סוף סוף מערכת שמרכזת הכל במקום אחד , <span class="ltr">CRM</span> :דוחות ללקוחות, ניהול חשיפות, תכנון פיננסי, תפעול ובקרה, – בלי קפיצות בין מערכות ובלי בזבוז זמן מיותר."</blockquote>
         <figcaption class="mt-6 text-sm font-bold text-brand-700">רווית, סוכנת ביטוח ופיננסים עצמאית</figcaption>
       </figure>

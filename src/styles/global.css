@@ -139,6 +139,30 @@ body {
     opacity: 1;
     transform: none;
   }
+
+  /*
+    Two opt-in intensities, both riding the same observer, the same stagger
+    and the same `.is-visible` reset as `.reveal` — so they inherit this
+    block's reduced-motion gating with nothing extra to remember.
+
+    --float: the old site's "float in" — 60px from below over --motion-float.
+             Applied per M-11 only: hero paragraph, testimonial block, module
+             cards on /product, package cards on /packages.
+    --expand: the old site's "fade + expand" for headings — opacity plus a
+             slight scale-up, no translate. Defined for h1/h2 that opt in; not
+             for anything carrying .reveal-lines, which already animates.
+  */
+  .js .reveal.reveal--float {
+    transform: translateY(60px);
+    transition-duration: var(--motion-float);
+    transition-timing-function: var(--ease-float);
+  }
+
+  .js .reveal.reveal--expand {
+    transform: scale(0.96);
+    transition-duration: var(--motion-float);
+    transition-timing-function: var(--ease-float);
+  }
 }
 
 /*
@@ -155,6 +179,17 @@ body {
   --motion-line: 1200ms;       /* line reveal — measured on the Toptech theme */
   --line-stagger: 100ms;
   --ease-line: cubic-bezier(0.215, 0.61, 0.355, 1); /* power ease-out */
+  /*
+    Motion parity with the old Wix site (PR E). Measured there: elements float
+    in from 60px below over 1200ms on an ease-in-out-ish curve, once, on scroll.
+    1100ms is the M-11 value. The curve is the standard ease-in-out sine — the
+    old site's exact bezier was not recoverable, so this is a stated choice,
+    not a measurement. Namespaced as --ease-float (like --ease-line) on
+    purpose: --ease-in-out is Tailwind's own theme token, and redefining it
+    here would silently re-curve every `ease-in-out` utility on the site.
+  */
+  --motion-float: 1100ms;
+  --ease-float: cubic-bezier(0.45, 0, 0.55, 1);
   --hero-slope: 27px;          /* depth of the hero's diagonal bottom edge */
 }
 
@@ -404,4 +439,60 @@ body {
     opacity: 1;
     transform: none;
   }
+}
+
+/*
+  ── Lightbox (M-12) ────────────────────────────────────────────────────────
+  A native <dialog>, opened with showModal(), so the focus trap, the inert
+  page behind it, Esc-to-close and the modal semantics come from the browser.
+  There is deliberately no entrance animation: nothing for reduced motion to
+  suppress, and nothing that could shift layout — the dialog is out of flow.
+*/
+.lightbox {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  max-width: 92vw;
+  max-height: 90vh;
+}
+
+.lightbox::backdrop {
+  background: rgb(8 9 24 / 0.85); /* ink-950 */
+}
+
+.lightbox img {
+  display: block;
+  max-width: 92vw;
+  max-height: 90vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 1rem;
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 0.5rem;
+  inset-inline-end: 0.5rem;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 9999px;
+  background: rgb(8 9 24 / 0.7);
+  color: #fff;
+  font-size: 1.75rem;
+  line-height: 1;
+}
+
+.lightbox-close:focus-visible {
+  outline: 3px solid var(--color-brand-500);
+  outline-offset: 2px;
+}
+
+/*
+  The opener sits inside a card with overflow:hidden, which would clip an
+  outset focus ring; an inset ring stays visible.
+*/
+.lightbox-open:focus-visible {
+  outline: 3px solid var(--color-brand-500);
+  outline-offset: -3px;
 }

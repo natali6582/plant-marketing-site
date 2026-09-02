@@ -34,7 +34,17 @@ const linkClass = (href: string) =>
   ].join(' ');
 ---
 
-<header class="sticky top-0 z-50 border-b border-brand-100 bg-white/90 backdrop-blur">
+<!--
+  Solid white, no backdrop blur. The blur looked good, but backdrop-filter
+  promotes the header into its own compositing layer, and text in a composited
+  layer is rasterised differently from text in the normal flow — grayscale
+  antialiasing instead of the subpixel antialiasing the rest of the page gets on
+  Windows. Same font, same weight, visibly thinner and softer: the header read
+  as a different typeface from everything below it. The 90% white made it worse,
+  letting scrolled content muddy the glyphs. Uniform type beats the frosted
+  edge, so the frost is gone.
+-->
+<header class="sticky top-0 z-50 border-b border-brand-100 bg-white">
   <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3">
     <a href="/" class="flex items-center gap-2 text-xl font-black text-ink-900" aria-label="Plan-T — דף הבית">
       <!-- The Plan-T mark: circle with the T in negative space. Geometry and

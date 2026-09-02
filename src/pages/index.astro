@@ -64,7 +64,12 @@ const tour = [
       <h1 class="reveal-lines mx-auto mt-4 max-w-3xl text-4xl font-bold leading-tight md:text-6xl">
         כל תיק הלקוח. תמונה אחת ברורה.
       </h1>
-      <p class="reveal reveal--float mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-ink-700">
+      <!-- Fades up on the base 20px, not the 60px float. This paragraph sits 40px
+           above the demo button, so a 60px displacement drew it straight through
+           the button for the length of the animation — the whole reason the float
+           was visible at all here. Above-the-fold content has no scroll to enter
+           on; it just arrives. -->
+      <p class="reveal mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-ink-700">
         <span class="ltr">Plan-T</span> מרכזת את הנתונים הפיננסיים והפנסיוניים, מסדרת את תהליך
         העבודה ומאפשרת להתמקד בתכנון ובשיחה עם הלקוח.
       </p>

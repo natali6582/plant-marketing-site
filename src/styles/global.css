@@ -13,6 +13,14 @@
   They map to token families here: ink = navy (grounds and text),
   brand = blue (primary interactive), accent = green (calls to action).
   Components reference tokens, never raw hex values.
+
+  One exception, added with the Cerulean change: the brand family is no longer
+  the mark's blue. Its interface blue is Cerulean #0492C2 by decision, because
+  the lighter #249FDA washed out against the light palette. The mark itself
+  still carries the official #249FDA in all three places it is drawn — the
+  header lockup, the COMMUNITY lockup and favicon.svg — because that is the
+  company's logo, in use beyond this site and on plan-t.org.il, which is still
+  live through cutover. Repaint those three only on Natali's word.
 */
 @theme {
   --font-sans: "Heebo", "Arial Hebrew", "Segoe UI", system-ui, sans-serif;
@@ -30,18 +38,24 @@
   --color-ink-900: #101228;
   --color-ink-950: #080918;
 
-  /* Blue — links, primary buttons, brand furniture */
-  --color-brand-50: #eef8fd;
-  --color-brand-100: #d5eefa;
-  --color-brand-200: #b0e0f5;
-  --color-brand-300: #79ccee;
-  --color-brand-400: #45b4e4;
-  --color-brand-500: #249fda;
-  --color-brand-600: #1478ae;
-  --color-brand-700: #136694;
-  --color-brand-800: #15567a;
-  --color-brand-900: #164866;
-  --color-brand-950: #0e2d43;
+  /* Blue — links, primary buttons, brand furniture.
+     Anchored on Cerulean #0492C2 at step 500, by decision. The ramp is built
+     around that one value in OKLCH: the hue and chroma are the anchor's, and
+     only lightness moves per step, so every tint and shade is the same blue at
+     a different weight rather than eleven hand-picked colours. The light tints
+     are deliberately deeper than the ones they replace — the pale wash they
+     produced read as almost-white on the hero and the section bands. */
+  --color-brand-50: #dff7ff;
+  --color-brand-100: #bee9ff;
+  --color-brand-200: #9ad8f8;
+  --color-brand-300: #71c4ec;
+  --color-brand-400: #42abd9;
+  --color-brand-500: #0492c2;
+  --color-brand-600: #007ba6;
+  --color-brand-700: #00668b;
+  --color-brand-800: #005575;
+  --color-brand-900: #004763;
+  --color-brand-950: #002a3d;
 
   /* Green — calls to action and highlights */
   --color-accent-50: #f4faea;

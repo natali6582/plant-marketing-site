@@ -16,7 +16,6 @@
 */
 @theme {
   --font-sans: "Heebo", "Arial Hebrew", "Segoe UI", system-ui, sans-serif;
-  --font-display: "Noto Serif Hebrew", "Times New Roman", Georgia, serif;
 
   /* Navy — grounds, headings, body text */
   --color-ink-50: #f5f6fa;
@@ -75,11 +74,13 @@ html {
   }
 }
 
-/* Display face for the two top heading levels only; h3 and below stay on the
-   UI face, so the display/text contrast reads as hierarchy rather than decoration. */
+/* One face for the whole site: Heebo, inherited from body. Headings used to
+   run on a serif display face (Noto Serif Hebrew); that second family is gone
+   by decision, so hierarchy is carried by size and weight alone. The weight
+   here is the floor for h1/h2 — the utility classes on individual headings
+   (font-bold, font-black) still win where they are set. */
 h1,
 h2 {
-  font-family: var(--font-display);
   font-weight: 700;
 }
 

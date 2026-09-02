@@ -50,10 +50,16 @@ Steps:
 
 Do this **after** section 1 is verified, and after B4.
 
-1. Attach `plan-t.org.il` and `www.plan-t.org.il` as additional custom domains on the **same** Worker. The host-level rules in `public/_redirects` are inert until the old hostnames reach this Worker — this is the step that arms them.
-2. At the old domain's DNS (wherever `plan-t.org.il` is served — **not** the same zone as `.co.il`; check before touching): point the apex and `www` at Cloudflare per the instructions the Domains page shows. **Leave `portal.plan-t.org.il` and every MX record exactly as they are.** If the zone must move to Cloudflare to do this, recreate the portal and mail records first, byte for byte, and verify them before changing NS.
-3. Run the 301 audit (section 6). Every old URL must return **301 → 200**, raw and percent-encoded alike.
-4. Only then cancel the Wix site (section 4 first).
+**Why the hostname catch-all is not in `public/_redirects`:** Cloudflare Workers static assets do not support domain-level sources in `_redirects` — `https://host/* …` is listed as unsupported in the Workers docs. So `_redirects` handles the *paths* that changed shape, and the *hostname* is a zone-level Redirect Rule, below.
+
+1. Bring `plan-t.org.il` into Cloudflare as its own zone (it is **not** the same zone as `.co.il`; check where it is served today before touching anything). Recreate every existing record first, byte for byte — **`portal.plan-t.org.il` and every MX record exactly as they are** — and verify them before changing NS.
+2. In that zone: **Rules → Redirect Rules → Create rule**, name it `org.il → co.il`:
+   - *When incoming requests match:* `(http.host eq "plan-t.org.il") or (http.host eq "www.plan-t.org.il")`
+   - *Then:* **Dynamic** redirect, expression `concat("https://plan-t.co.il", http.request.uri.path)`, status **301**, *Preserve query string* on.
+   Every old URL goes to the same path on the new host in one hop; `_redirects` on `plan-t.co.il` then handles the URLs whose shape changed (`/aboutus` → `/about/`, the Hebrew slugs, `/blog/*`). An old deep link resolves in **two** hops at most — host, then path.
+3. The apex and `www` records in the old zone must be **proxied** (orange cloud): the rule runs at Cloudflare's edge and needs the request to reach it. Point them at a placeholder (`192.0.2.1`, proxied); the rule answers before any origin is contacted.
+4. Run the 301 audit (section 6). Every old URL must return **301 → 200**, raw and percent-encoded alike, through the hops above.
+5. Only then cancel the Wix site (section 4 first).
 
 ---
 

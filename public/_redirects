@@ -1,14 +1,16 @@
-# Cutover from plan-t.org.il (PR F). Cloudflare static-assets _redirects,
-# same format and location as _headers. First match wins, top to bottom.
+# Cutover from plan-t.org.il (PR F). Cloudflare Workers static-assets
+# _redirects — same format and location as _headers. First match wins.
+#
+# Path-only sources, on purpose. Workers static assets do not support
+# domain-level sources ("https://host/* …" is listed as unsupported in the
+# Cloudflare docs), so the old-hostname catch-all is NOT here: it is a
+# Redirect Rule on the plan-t.org.il zone — see docs/cutover-runbook.md §2.
 #
 # Every target is absolute to the new host so a hit on either old hostname
-# lands in ONE hop — a relative target would redirect within the old host
-# first and only then cross domains.
+# lands in ONE hop once that hostname reaches this Worker.
 #
 # Hebrew sources are listed twice, raw and percent-encoded, because both
-# forms arrive in the wild. The host-level rules at the bottom catch
-# everything the path map does not; they are inert until plan-t.org.il is
-# attached to this Worker (see docs/cutover-runbook.md).
+# forms arrive in the wild.
 
 /aboutus https://plan-t.co.il/about/ 301
 /blank https://plan-t.co.il/packages/ 301
@@ -29,9 +31,3 @@
 # Old blog: no equivalent here; everything under it goes Home.
 /blog https://plan-t.co.il/ 301
 /blog/* https://plan-t.co.il/ 301
-
-# Host-level: anything else on the old hostnames -> same path on the new one.
-https://plan-t.org.il/* https://plan-t.co.il/:splat 301
-https://www.plan-t.org.il/* https://plan-t.co.il/:splat 301
-http://plan-t.org.il/* https://plan-t.co.il/:splat 301
-http://www.plan-t.org.il/* https://plan-t.co.il/:splat 301

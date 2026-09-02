@@ -20,12 +20,12 @@ const pkg = packages.find((p) => p.slug === slug);
 if (!pkg) throw new Error(`Unknown package slug: ${slug}`);
 ---
 
-<section class="bg-ink-900 text-white">
+<section class="bg-gradient-to-b from-white to-brand-100 text-ink-900">
   <div class="mx-auto max-w-4xl px-4 py-16 text-center">
-    <p class="text-sm font-bold tracking-wide text-accent-300">{pkg.audience}</p>
+    <p class="text-sm font-bold tracking-wide text-brand-700">{pkg.audience}</p>
     <h1 class="reveal-lines mt-4 text-4xl font-bold md:text-5xl"><span class="ltr">{pkg.name}</span></h1>
     {pkg.tagline && (
-      <p class="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-ink-200">{pkg.tagline}</p>
+      <p class="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-ink-700">{pkg.tagline}</p>
     )}
     <a
       href="#lead-form"

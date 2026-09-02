@@ -6,10 +6,12 @@
   (brand #249FDA, accent #8DC63F), per the decision to use the token values
   rather than the concept image's own shades.
 
-  One deliberate adaptation: the concept's third segment is the brand navy on a
-  white ground. This lockup renders on the hero's navy ground, where navy would
-  vanish, so that segment is white — the same swap the Plan-T mark itself uses
-  on dark grounds (the og card). No gradients, no shadows, no bitmap.
+  The concept's third segment is the brand navy on a white ground, and that is
+  what renders here: since the light palette (design/light-palette) the hero is
+  white-to-light-blue, so the navy segment and the navy wordmark are the
+  concept as drawn. (On the earlier navy hero both were swapped to white — the
+  same swap the Plan-T mark uses on dark grounds, e.g. the og card.) No
+  gradients, no shadows, no bitmap.
 
   The wordmark tail is real text, so COMMUNITY stays selectable and readable by
   assistive tech through the aria-label; the visually hidden span keeps the full
@@ -20,10 +22,10 @@
 <span class="ltr inline-flex items-center" role="img" aria-label="COMMUNITY">
   <svg data-community-logo width="36" height="36" viewBox="0 0 80 80" fill="none" aria-hidden="true">
     <!-- three arc segments, gaps between them; the ring opens toward the wordmark -->
-    <path d="M 58.0 18.6 A 28 28 0 0 0 14.6 28.2" stroke="#ffffff" stroke-width="14" />
+    <path d="M 58.0 18.6 A 28 28 0 0 0 14.6 28.2" stroke="#101228" stroke-width="14" />
     <path d="M 13.0 32.8 A 28 28 0 0 0 32.8 67.0" stroke="#249FDA" stroke-width="14" />
     <path d="M 37.6 67.9 A 28 28 0 0 0 60.8 58.7" stroke="#8DC63F" stroke-width="14" />
   </svg>
-  <span aria-hidden="true" class="ms-1 text-2xl font-black tracking-widest text-white">OMMUNITY</span>
+  <span aria-hidden="true" class="ms-1 text-2xl font-black tracking-widest text-ink-900">OMMUNITY</span>
   <span class="sr-only">COMMUNITY</span>
 </span>

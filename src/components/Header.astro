@@ -1,11 +1,37 @@
 ---
+/*
+  D5 = N1: «למי זה מתאים» is a dropdown holding the three audience pages.
+
+  This is the first JavaScript-driven element in the navigation — the desktop
+  nav was a flat <a> list and the mobile menu is a native <details> that needs
+  no script. The dropdown therefore carries its own keyboard contract: Enter
+  and Space open it (the button's native activation), ArrowDown opens and
+  lands on the first item, Escape closes and returns focus to the button, Tab
+  moves through the items and closes on the way out, and a click anywhere
+  outside closes it. aria-expanded tracks the state.
+
+  Mobile keeps the native <details>. The three audience links render as an
+  indented group under a plain label — no nested toggle, because a disclosure
+  inside a disclosure is a trap on a touch screen.
+*/
+import { audiences } from '../data/audiences';
+
 const { minimal = false } = Astro.props;
-const links = [
-  { href: '/product/', label: 'הפלטפורמה' },
+
+const linksBefore = [{ href: '/product/', label: 'הפלטפורמה' }];
+const linksAfter = [
   { href: '/solutions/', label: 'תהליכי עבודה' },
   { href: '/about/', label: 'אודות' },
 ];
+
 const current = Astro.url.pathname;
+const onAudiencePage = audiences.some((audience) => audience.href === current);
+
+const linkClass = (href: string) =>
+  [
+    'text-sm font-medium transition-colors hover:text-brand-600',
+    current === href ? 'text-brand-700 underline underline-offset-8' : 'text-ink-700',
+  ].join(' ');
 ---
 
 <header class="sticky top-0 z-50 border-b border-brand-100 bg-white/90 backdrop-blur">
@@ -26,20 +52,52 @@ const current = Astro.url.pathname;
 
     {!minimal && (
     <nav aria-label="ניווט ראשי" class="hidden items-center gap-6 md:flex">
-      {
-        links.map((link) => (
-          <a
-            href={link.href}
-            aria-current={current === link.href ? 'page' : undefined}
-            class:list={[
-              'text-sm font-medium transition-colors hover:text-brand-600',
-              current === link.href ? 'text-brand-700 underline underline-offset-8' : 'text-ink-700',
-            ]}
-          >
-            {link.label}
-          </a>
-        ))
-      }
+      {linksBefore.map((link) => (
+        <a href={link.href} aria-current={current === link.href ? 'page' : undefined} class={linkClass(link.href)}>
+          {link.label}
+        </a>
+      ))}
+
+      <div class="relative" data-audience-menu>
+        <button
+          type="button"
+          class:list={[
+            'flex items-center gap-1 text-sm font-medium transition-colors hover:text-brand-600',
+            onAudiencePage ? 'text-brand-700 underline underline-offset-8' : 'text-ink-700',
+          ]}
+          aria-expanded="false"
+          aria-controls="audience-menu"
+          data-audience-toggle
+        >
+          למי זה מתאים
+          <span aria-hidden="true" class="text-xs">▾</span>
+        </button>
+        <div
+          id="audience-menu"
+          class="absolute start-auto end-0 z-10 mt-2 hidden w-56 flex-col gap-1 rounded-xl border border-brand-100 bg-white p-2 shadow-lg"
+          data-audience-panel
+        >
+          {audiences.map((audience) => (
+            <a
+              href={audience.href}
+              aria-current={current === audience.href ? 'page' : undefined}
+              class:list={[
+                'rounded-lg px-3 py-2 text-sm font-medium hover:bg-brand-50',
+                current === audience.href ? 'text-brand-700' : 'text-ink-700',
+              ]}
+            >
+              {audience.name}
+            </a>
+          ))}
+        </div>
+      </div>
+
+      {linksAfter.map((link) => (
+        <a href={link.href} aria-current={current === link.href ? 'page' : undefined} class={linkClass(link.href)}>
+          {link.label}
+        </a>
+      ))}
+
       <a
         href="/contact/"
         class="rounded-full bg-brand-700 px-5 py-2 text-sm font-bold text-white transition-colors hover:bg-brand-600"
@@ -56,14 +114,28 @@ const current = Astro.url.pathname;
           <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
         </svg>
       </summary>
-      <nav aria-label="ניווט נייד" class="absolute start-auto end-0 mt-2 flex w-56 flex-col gap-1 rounded-xl border border-brand-100 bg-white p-3 shadow-lg">
-        {
-          links.map((link) => (
-            <a href={link.href} class="rounded-lg px-3 py-2 text-sm font-medium text-ink-700 hover:bg-brand-50">
-              {link.label}
+      <nav aria-label="ניווט נייד" class="absolute start-auto end-0 mt-2 flex w-64 flex-col gap-1 rounded-xl border border-brand-100 bg-white p-3 shadow-lg">
+        {linksBefore.map((link) => (
+          <a href={link.href} class="rounded-lg px-3 py-2 text-sm font-medium text-ink-700 hover:bg-brand-50">
+            {link.label}
+          </a>
+        ))}
+
+        <p id="mobile-audiences-label" class="px-3 pt-2 text-xs font-bold text-ink-500">למי זה מתאים</p>
+        <div class="flex flex-col gap-1 border-s-2 border-brand-100 ps-2" role="group" aria-labelledby="mobile-audiences-label">
+          {audiences.map((audience) => (
+            <a href={audience.href} class="rounded-lg px-3 py-2 text-sm font-medium text-ink-700 hover:bg-brand-50">
+              {audience.name}
             </a>
-          ))
-        }
+          ))}
+        </div>
+
+        {linksAfter.map((link) => (
+          <a href={link.href} class="rounded-lg px-3 py-2 text-sm font-medium text-ink-700 hover:bg-brand-50">
+            {link.label}
+          </a>
+        ))}
+
         <a href="/contact/" class="mt-1 rounded-lg bg-brand-700 px-3 py-2 text-center text-sm font-bold text-white">
           תיאום הדגמה
         </a>
@@ -72,3 +144,60 @@ const current = Astro.url.pathname;
     )}
   </div>
 </header>
+
+<script>
+  /*
+    Desktop dropdown only — the mobile menu is the native <details> above and
+    needs no script. The panel is toggled by class rather than the `hidden`
+    attribute because it is a flex column when open.
+  */
+  const root = document.querySelector<HTMLElement>('[data-audience-menu]');
+  const toggle = root?.querySelector<HTMLButtonElement>('[data-audience-toggle]');
+  const panel = root?.querySelector<HTMLElement>('[data-audience-panel]');
+
+  if (root && toggle && panel) {
+    const items = [...panel.querySelectorAll<HTMLAnchorElement>('a')];
+
+    const setOpen = (open: boolean) => {
+      panel.classList.toggle('hidden', !open);
+      panel.classList.toggle('flex', open);
+      toggle.setAttribute('aria-expanded', String(open));
+    };
+
+    const close = (returnFocus = false) => {
+      setOpen(false);
+      if (returnFocus) toggle.focus();
+    };
+
+    toggle.addEventListener('click', () => {
+      setOpen(toggle.getAttribute('aria-expanded') !== 'true');
+    });
+
+    // ArrowDown is the conventional way into a menu: open and land on item one.
+    toggle.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowDown') {
+        event.preventDefault();
+        setOpen(true);
+        items[0]?.focus();
+      }
+    });
+
+    root.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        close(true);
+      }
+    });
+
+    // Tabbing past the last item leaves the menu — close it behind them.
+    root.addEventListener('focusout', () => {
+      window.setTimeout(() => {
+        if (!root.contains(document.activeElement)) close();
+      }, 0);
+    });
+
+    document.addEventListener('click', (event) => {
+      if (!root.contains(event.target as Node)) close();
+    });
+  }
+</script>

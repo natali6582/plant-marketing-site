@@ -1,0 +1,105 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import LeadForm from '../components/LeadForm.astro';
+
+/*
+  Audience page — wealth managers (proposal §6, headline option A).
+
+  Copy sourced from the /product/ intro (exposures, asset allocation, the
+  family unit), the /solutions/ stages and the /about/ data principle. §6's
+  closing line is the *alt* wording: the primary one repeats the h1 verbatim,
+  which reads as a stutter on the page even though both were approved drafts.
+
+  Note R-2 stays open: whether «מנהלי עושר» needs a clarifying line so it is
+  not read as «מנהלי תיקים» (a licensed activity). Nothing here asserts it.
+*/
+const pains = [
+  'ככל שהתיק גדל, המידע מתפזר על פני יותר מקורות ויותר ישויות — והתמונה הכוללת הולכת לאיבוד.',
+  'חשיפות שמתפצלות בין חשבונות, קופות ומוצרים קשה לראות במקובץ.',
+  'דרישות התיעוד והבקרה גדלות יחד עם התיק.',
+];
+
+const enables = [
+  'תמונה רחבה של החשיפות והקצאת הנכסים — של הלקוח ושל התא המשפחתי, במקום אחד.',
+  'בחינת התיק והחשיפות בצורה ברורה ומסודרת.',
+  'תיעוד מלא של התהליך לצורכי רגולציה ובקרה.',
+  'דוח מסודר ללקוח, ממותג במיתוג המשרד.',
+  'הנתונים נשארים בסביבת העבודה של המשרד ומשמשים אך ורק לצרכיו.',
+];
+---
+
+<BaseLayout
+  title="Plan-T למנהלי עושר — תמונה אחת ברורה גם בתיקים מורכבים"
+  description="Plan-T מציגה למנהלי עושר את החשיפות והקצאת הנכסים של הלקוח ושל התא המשפחתי במקום אחד — עם תיעוד מלא לבקרה ולרגולציה."
+>
+  <section class="bg-ink-900 text-white">
+    <div class="mx-auto max-w-4xl px-4 py-16 text-center">
+      <!-- PR B: the ~120px stage marker (all three rings, this one lit) goes
+           here, aria-hidden. -->
+      <h1 class="reveal-lines text-4xl font-bold md:text-5xl">
+        יותר מורכבות לא צריכה לייצר יותר עומס.
+      </h1>
+      <p class="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-ink-200">
+        <span class="ltr">Plan-T</span> מרכזת את נתוני הנכסים של הלקוח ושל התא המשפחתי ומציגה תמונה
+        רחבה של החשיפות והקצאת הנכסים — כדי שתוכלו לנהל היקף ומורכבות בלי לאבד את התמונה.
+      </p>
+      <a
+        href="#lead-form"
+        class="btn-pill btn-solid mt-10 inline-block rounded-full px-10 py-4 text-lg font-bold text-ink-950"
+      >
+        תיאום הדגמה
+      </a>
+    </div>
+  </section>
+
+  <section class="band bg-white" aria-labelledby="pains-title">
+    <div class="mx-auto max-w-5xl px-4">
+      <h2 id="pains-title" class="reveal-lines text-center text-3xl font-bold text-ink-900">
+        מכירים את זה?
+      </h2>
+      <ul class="mt-10 grid gap-4 md:grid-cols-3">
+        {
+          pains.map((pain) => (
+            <li class="reveal card-lift rounded-2xl border border-brand-100 bg-white p-5 leading-relaxed text-ink-700 shadow-sm">
+              {pain}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="band bg-ink-50" aria-labelledby="enables-title">
+    <div class="mx-auto max-w-5xl px-4">
+      <h2 id="enables-title" class="reveal-lines text-center text-3xl font-bold text-ink-900">
+        מה <span class="ltr">Plan-T</span> נותנת לכם
+      </h2>
+      <ul class="mt-10 grid gap-4 md:grid-cols-2">
+        {
+          enables.map((item) => (
+            <li class="reveal card-lift rounded-2xl border border-brand-100 bg-white p-5 leading-relaxed text-ink-700 shadow-sm">
+              {item}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="band bg-white" aria-labelledby="progression-title">
+    <div class="mx-auto max-w-3xl px-4 text-center">
+      <h2 id="progression-title" class="reveal-lines text-3xl font-bold text-ink-900">
+        שליטה, לא עומס
+      </h2>
+      <p class="reveal mt-5 text-lg leading-relaxed text-ink-700">
+        הצמיחה של התיק לא צריכה להיות צמיחה של העומס. תמונה אחת, שליטה מלאה.
+      </p>
+    </div>
+  </section>
+
+  <LeadForm
+    source="website-wealth"
+    audience="wealth"
+    heading="רוצים לראות איך תיק מורכב נראה במסך אחד?"
+  />
+</BaseLayout>

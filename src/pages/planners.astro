@@ -1,0 +1,102 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import LeadForm from '../components/LeadForm.astro';
+
+/*
+  Audience page — financial planners (proposal §5, headline option A).
+
+  Copy sourced from the existing /solutions/ stages, the /product/ intro and
+  the Home hero sub-line. The form heading reuses the approved /solutions/
+  wording rather than inventing a new one.
+*/
+const pains = [
+  'המידע הפנסיוני והפיננסי מפוזר בין מסלקה, יצרנים וגיליונות — וקשה לבנות ממנו תמונה אחת שלמה.',
+  'להציג ללקוח השוואה ברורה בין חלופות דורש עבודה ידנית בכל פעם מחדש.',
+  'כל דוח ללקוח נבנה מהתחלה, בכלים שלא נועדו לזה.',
+];
+
+const enables = [
+  'תמונת תיק אחת: השקעות, חיסכון וכיסויים במקום אחד.',
+  'בחינת התיק והחשיפות בצורה ברורה ומסודרת.',
+  'השוואה ברורה בין חלופות להצגה מול הלקוח.',
+  'דוח מסודר ללקוח, ממותג במיתוג המשרד.',
+  'ממשק שנבנה בשיתוף קהילת המשתמשים, מותאם לשוק הישראלי.',
+];
+---
+
+<BaseLayout
+  title="Plan-T למתכננים פיננסיים — כל התמונה הפיננסית, מחוברת"
+  description="Plan-T מחברת למתכננים פיננסיים את ההשקעות, הפנסיה והכיסויים של הלקוח ושל התא המשפחתי לתיק אחד ברור, מהכנה לפגישה ועד הדוח ללקוח."
+>
+  <section class="bg-ink-900 text-white">
+    <div class="mx-auto max-w-4xl px-4 py-16 text-center">
+      <!-- PR B: the ~120px stage marker (all three rings, this one lit) goes
+           here, aria-hidden. -->
+      <h1 class="reveal-lines text-4xl font-bold md:text-5xl">
+        כל התמונה הפיננסית של הלקוח. מחוברת.
+      </h1>
+      <p class="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-ink-200">
+        <span class="ltr">Plan-T</span> מרכזת את הנתונים הפיננסיים והפנסיוניים של הלקוח ושל התא
+        המשפחתי, מסדרת את תהליך העבודה ומשאירה לכם את מה שחשוב: השיחה עם הלקוח וההחלטות המקצועיות.
+      </p>
+      <a
+        href="#lead-form"
+        class="btn-pill btn-solid mt-10 inline-block rounded-full px-10 py-4 text-lg font-bold text-ink-950"
+      >
+        תיאום הדגמה
+      </a>
+    </div>
+  </section>
+
+  <section class="band bg-white" aria-labelledby="pains-title">
+    <div class="mx-auto max-w-5xl px-4">
+      <h2 id="pains-title" class="reveal-lines text-center text-3xl font-bold text-ink-900">
+        מכירים את זה?
+      </h2>
+      <ul class="mt-10 grid gap-4 md:grid-cols-3">
+        {
+          pains.map((pain) => (
+            <li class="reveal card-lift rounded-2xl border border-brand-100 bg-white p-5 leading-relaxed text-ink-700 shadow-sm">
+              {pain}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="band bg-ink-50" aria-labelledby="enables-title">
+    <div class="mx-auto max-w-5xl px-4">
+      <h2 id="enables-title" class="reveal-lines text-center text-3xl font-bold text-ink-900">
+        מה <span class="ltr">Plan-T</span> נותנת לכם
+      </h2>
+      <ul class="mt-10 grid gap-4 md:grid-cols-2">
+        {
+          enables.map((item) => (
+            <li class="reveal card-lift rounded-2xl border border-brand-100 bg-white p-5 leading-relaxed text-ink-700 shadow-sm">
+              {item}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="band bg-white" aria-labelledby="progression-title">
+    <div class="mx-auto max-w-3xl px-4 text-center">
+      <h2 id="progression-title" class="reveal-lines text-3xl font-bold text-ink-900">
+        כשהתיקים גדלים
+      </h2>
+      <p class="reveal mt-5 text-lg leading-relaxed text-ink-700">
+        תיק של לקוח אחד הופך לתיק של משפחה. חשיפה אחת הופכת למספר ישויות.
+        <span class="ltr">Plan-T</span> מציגה את כל זה באותה תמונה ברורה — בלי להחליף מערכת.
+      </p>
+    </div>
+  </section>
+
+  <LeadForm
+    source="website-planners"
+    audience="planners"
+    heading="נדבר על תהליך העבודה שלכם?"
+  />
+</BaseLayout>

@@ -6,6 +6,18 @@ import StatsRow from '../components/StatsRow.astro';
 import AudienceSelector from '../components/AudienceSelector.astro';
 import { advantages } from '../data/advantages';
 
+/*
+  One icon per card, drawn inline so nothing new is fetched: a sheet of paper
+  for the hours lost to it, a circle with a quadrant missing for the partial
+  picture, a check for the way out. Decorative — each card's own heading says
+  the same thing in words, so the icons are aria-hidden.
+*/
+const painIcons = [
+  '<path d="M8 3h7l4 4v12a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z"/><path d="M15 3v4h4"/><path d="M9 12h6"/><path d="M9 16h4"/>',
+  '<path d="M21 12a9 9 0 1 1-9-9v9h9Z"/><path d="M15.5 3.6A9 9 0 0 1 20.4 8.5"/>',
+  '<circle cx="12" cy="12" r="9"/><path d="m8.4 12.4 2.5 2.5 4.7-5.3"/>',
+];
+
 const painCards = [
   {
     title: 'הכאב: שעות על ניירת',
@@ -131,7 +143,26 @@ const tour = [
               i === 2 ? 'border-brand-700 bg-brand-700 text-white' : 'border-brand-100 bg-white',
             ]}
           >
-            <h3 class="text-xl font-bold">{card.title}</h3>
+            <span
+              class:list={[
+                'inline-flex h-11 w-11 items-center justify-center rounded-xl',
+                i === 2 ? 'bg-white/15 text-white' : 'bg-brand-50 text-brand-700',
+              ]}
+              aria-hidden="true"
+            >
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.6"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                set:html={painIcons[i]}
+              />
+            </span>
+            <h3 class="mt-4 text-xl font-bold">{card.title}</h3>
             <p class:list={['mt-3 leading-relaxed', i === 2 ? 'text-ink-200' : 'text-ink-700']}>{card.body}</p>
           </article>
         ))
@@ -251,10 +282,38 @@ const tour = [
        (the editor's stray non-breaking spaces and doubled spaces collapsed),
        and CRM is wrapped in .ltr like every other Latin string on the site.
        Do not reword, and add nothing that is not published. -->
+  <!-- The human beat the page was missing between the product tour and the
+       quotation: a photograph shown as a photograph, not as scenery under a
+       wash. Framed to the content width rather than bled to the window edge
+       on purpose — the source is 884px wide, so full-bleed would upscale it
+       past 1.6x on a desktop and show it. Inside this frame it is 1.3x, and
+       the rounded frame echoes the montage in the hero. Replace the file with
+       a wider original and the frame can come off. Decorative: the quotation
+       below carries the meaning, so the alt is empty and the strip is hidden
+       from assistive tech. -->
+  <div class="bg-white pb-4 pt-12 md:pt-16" aria-hidden="true">
+    <div class="mx-auto max-w-6xl px-4">
+      <div class="overflow-hidden rounded-2xl border border-brand-100 shadow-lg shadow-brand-900/10">
+        <picture>
+          <source srcset="/images/mood-team.webp" type="image/webp" />
+          <img
+            src="/images/mood-team.jpg"
+            alt=""
+            width="884"
+            height="232"
+            loading="lazy"
+            decoding="async"
+            class="block h-44 w-full object-cover object-center md:h-56 lg:h-64"
+          />
+        </picture>
+      </div>
+    </div>
+  </div>
+
   <section class="band relative isolate overflow-hidden bg-brand-50" aria-labelledby="proof-title">
-    <!-- Decorative only: advisers at a table, under the same white wash the
-         rest of the mood imagery uses since the light palette. Empty alt — the
-         testimonial carries the meaning, the photograph only sets the room. -->
+    <!-- Decorative only: advisers at a table, under the white wash the rest of
+         the mood imagery uses. Empty alt — the testimonial carries the meaning,
+         the photograph only sets the room. -->
     <picture>
       <source srcset="/images/mood-advisors.webp" type="image/webp" />
       <img

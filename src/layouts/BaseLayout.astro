@@ -11,7 +11,7 @@ interface Props {
   chrome?: 'full' | 'minimal';
 }
 
-const { title, description, ogImage = '/images/og.png', chrome = 'full' } = Astro.props;
+const { title, description, ogImage = '/images/og.jpg', chrome = 'full' } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const ogImageUrl = new URL(ogImage, Astro.site);
 ---

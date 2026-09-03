@@ -30,6 +30,12 @@ const ogImageUrl = new URL(ogImage, Astro.site);
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
+    <!-- The new mark is a raster (see Header.astro), so the icon is too. The
+         32px PNG is the tab icon; the 180px one is what iOS puts on a home
+         screen. favicon.svg stays as the last fallback for anything that
+         prefers vector. -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="sitemap" href="/sitemap-index.xml" />
 

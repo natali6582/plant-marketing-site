@@ -24,7 +24,7 @@ export const audiences: Audience[] = [
     id: 'agents',
     href: '/agents/',
     name: 'סוכני ביטוח',
-    line: 'מהפוליסה לתמונה השלמה של הלקוח',
+    line: 'סוכן ביטוח זה כרטיס הכניסה.',
   },
   {
     id: 'planners',

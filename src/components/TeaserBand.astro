@@ -1,0 +1,141 @@
+---
+import BokehBackground from './BokehBackground.astro';
+
+/*
+  The "בקרוב.." teaser.
+
+  Every line here is the company's own campaign copy, not paraphrase. The band
+  says something is coming and never what: no product, no launch, no tools, no
+  capabilities, no feature list, no date. That restriction is the point of the
+  band, so anything added later belongs in the PR discussion, not here.
+
+  Green appears exactly twice on the whole page and both are in this component:
+  the one highlighted word and the pill. It is never a surface.
+
+  variant="full" is the /agents/ band, with the notify-me form.
+  variant="strip" is the slim Home band, which links here and carries no form.
+*/
+
+interface Props {
+  variant?: 'full' | 'strip';
+  id?: string;
+}
+
+const { variant = 'full', id } = Astro.props;
+const full = variant === 'full';
+
+/*
+  Same webhook as the lead form, and deliberately the same runtime: the notify
+  form below carries class="lead-form", which LeadForm's own script wires on
+  page load. That works because /agents/ renders LeadForm too — if this band
+  ever ships on a page without it, the form needs its own wiring or it will
+  silently do nothing.
+*/
+const webhookUrl = import.meta.env.PUBLIC_LEAD_WEBHOOK_URL ?? '';
+---
+
+<section
+  id={id}
+  class:list={['bokeh-host bg-brand-800 text-white', full ? 'band' : 'py-10', id && 'scroll-mt-24']}
+  data-band="dark"
+  aria-labelledby={full ? 'soon-title' : undefined}
+  aria-label={full ? undefined : 'בקרוב'}
+>
+  <BokehBackground intensity="half" seed={2} />
+
+  {
+    full ? (
+      <div class="mx-auto max-w-3xl px-4 text-center">
+        <h2 id="soon-title" class="reveal-lines text-3xl font-bold leading-tight md:text-5xl">
+          הגיע הזמן לקפוץ למגרש של <span class="text-accent-400">הגדולים</span>.
+        </h2>
+
+        <p class="reveal mt-6">
+          <span class="inline-block rounded-full bg-accent-500 px-5 py-2 text-lg font-black text-ink-950">
+            בקרוב..
+          </span>
+        </p>
+
+        <p class="reveal mt-8 text-2xl font-bold md:text-3xl">אל תישאר מאחור.</p>
+
+        <p class="reveal mt-10 text-brand-100">רוצים לשמוע ראשונים?</p>
+
+        <form
+          class="lead-form reveal mx-auto mt-4 grid max-w-xl gap-3 sm:grid-cols-[1fr_1fr_auto]"
+          data-webhook={webhookUrl}
+          data-source="website-agents-teaser"
+          data-audience="agents"
+          novalidate
+        >
+          <div class="text-start">
+            <label for="notify-name" class="sr-only">שם</label>
+            <input
+              id="notify-name"
+              name="name"
+              type="text"
+              required
+              autocomplete="name"
+              placeholder="שם"
+              class="w-full rounded-lg border border-brand-200 bg-white px-3 py-2 text-ink-900 focus:border-brand-400"
+            />
+          </div>
+          <div class="text-start">
+            <label for="notify-email" class="sr-only">דוא״ל</label>
+            <input
+              id="notify-email"
+              name="email"
+              type="email"
+              required
+              autocomplete="email"
+              dir="ltr"
+              placeholder="דוא״ל"
+              class="w-full rounded-lg border border-brand-200 bg-white px-3 py-2 text-left text-ink-900 focus:border-brand-400"
+            />
+          </div>
+          <button
+            type="submit"
+            class="rounded-full bg-brand-600 px-6 py-2 font-bold text-white transition-colors hover:bg-brand-700 disabled:opacity-60"
+          >
+            עדכנו אותי
+          </button>
+
+          {/* Invisible to people, bots fill it — same name the shared runtime checks. */}
+          <div
+            class="hp-field"
+            aria-hidden="true"
+            style="position:absolute; inset-inline-start:-9999px; height:0; overflow:hidden;"
+          >
+            <label for="notify-company">אל תמלאו שדה זה</label>
+            <input id="notify-company" name="company_website" type="text" tabindex="-1" autocomplete="off" />
+          </div>
+
+          <div class="sm:col-span-3">
+            <label class="flex items-start justify-center gap-2 text-sm">
+              <input name="privacy" type="checkbox" required class="mt-1 h-4 w-4 accent-brand-600" />
+              <span>
+                קראתי ואני מסכים/ה ל<a href="/privacy/" class="font-bold text-brand-100 underline hover:text-white">מדיניות הפרטיות</a>
+                <span aria-hidden="true" class="text-brand-100">*</span>
+              </span>
+            </label>
+          </div>
+
+          <p
+            class="form-status sm:col-span-3 hidden rounded-lg px-4 py-3 text-sm font-medium"
+            role="status"
+            aria-live="polite"
+          ></p>
+        </form>
+      </div>
+    ) : (
+      <div class="mx-auto flex max-w-6xl flex-col items-center gap-4 px-4 text-center sm:flex-row sm:justify-center">
+        <p class="text-xl font-bold md:text-2xl">
+          הגיע הזמן לקפוץ למגרש של <span class="text-accent-400">הגדולים</span>.
+        </p>
+        <span class="inline-block rounded-full bg-accent-500 px-4 py-1 font-black text-ink-950">בקרוב..</span>
+        <a href="/agents/#soon" class="font-bold text-white underline underline-offset-4 hover:text-brand-100">
+          אל תישאר מאחור
+        </a>
+      </div>
+    )
+  }
+</section>

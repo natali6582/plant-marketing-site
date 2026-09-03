@@ -111,6 +111,9 @@ const ICONS = {
   'compliance-record':   { glyph: 'shield-check',     accent: 1 },
   'clearinghouse':       { glyph: 'plugs-connected',  accent: 4 },
 
+  // /agents story beats
+  'heavy-client':  { glyph: 'briefcase',        accentFrom: 'duotone' },
+
   // Home pain cards
   'hourglass':     { glyph: 'hourglass',     accentFrom: 'regular', accent: 1 },
   'puzzle':        { glyph: 'puzzle-piece',  accentDraw: 'M172,52a36,36,0,1,1-72,0a36,36,0,1,1,72,0Z' },

@@ -2,56 +2,101 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHero from '../components/PageHero.astro';
 import LeadForm from '../components/LeadForm.astro';
+import DuotoneIcon from '../components/DuotoneIcon.astro';
+import TeaserBand from '../components/TeaserBand.astro';
 
 /*
-  Audience page — insurance agents (proposal §4, headline option B).
+  Audience page — insurance agents.
 
-  Every line here is drawn from copy already approved and live on the site:
-  the pains from the Home pain cards, the capabilities from /solutions/, the
-  family-unit and exposures wording from /product/. Nothing on this page is a
-  new product claim — the open F-questions (§11) are deliberately not answered
-  here. One primary CTA, an in-page anchor, so the audience tag survives the
-  submission.
+  DRAFT — Natali final sign-off. Every line on this page is the company's own
+  wording, taken from the internal campaign video and the campaign creatives,
+  not paraphrased. The video is reference for the message only: it is not
+  published, and nothing here links to or embeds it. The three-beat strip
+  below is what carries that message instead.
+
+  This tone belongs to this audience alone. /planners/ and /wealth/ keep
+  theirs, and nothing on them changed.
+
+  Two hard rules, both from the brief:
+
+  1. The teaser says something is coming and never what. No product, no
+     launch, no tools, no capabilities, no feature list, no date. The four
+     feature icons from creative #4 deliberately do not appear on the site.
+  2. Nothing here calls the agent junior, small or entry-level. "מספיק
+     להתעסק בזוטות" is the campaign voicing the agent's own frustration in
+     the first person, and it stays exactly that — it is not escalated.
 */
-const pains = [
-  'המידע של הלקוח מפוזר: קובץ מסלקה כאן, נתוני יצרנים שם, וגיליון שמנסה לחבר הכל.',
-  'הכנה לפגישה לוקחת שעות של איסוף והקלדה — לפני שהתחלתם בכלל לדבר עם הלקוח.',
-  'ללקוח יש נכסים גם מחוץ למה שאתם מטפלים בו — ואין לכם דרך פשוטה לראות אותם לצד הכיסויים.',
+
+/* The trigger cards. Each line is existing approved /agents/ copy, kept
+   verbatim — no capability is claimed that this page did not already carry. */
+const triggerCards = [
+  {
+    icon: 'exposures',
+    title: 'חשיפות',
+    line: 'בחינת התיק והחשיפות בצורה ברורה ומסודרת.',
+  },
+  {
+    icon: 'planning-tools',
+    title: 'פילוחים',
+    line: 'תמונת תיק אחת: השקעות, חיסכון וכיסויים — של הלקוח ושל התא המשפחתי.',
+  },
+  {
+    icon: 'alternatives',
+    title: 'סיכון והזדמנויות',
+    line: 'ריכוז נתוני המסלקה לצד שאר המידע בתיק.',
+  },
 ];
 
-const enables = [
-  'ריכוז נתוני המסלקה לצד שאר המידע בתיק.',
-  'תמונת תיק אחת: השקעות, חיסכון וכיסויים — של הלקוח ושל התא המשפחתי.',
-  'הכנה לפגישה בדקות במקום בשעות.',
-  'דוח מסודר ללקוח בסוף התהליך, ממותג במיתוג המשרד.',
-  'תיעוד מלא של התהליך לצורכי רגולציה ובקרה.',
+/* The story, in the campaign's own three beats. This is what replaces the video. */
+const beats = [
+  {
+    icon: 'hourglass',
+    bold: 'מספיק להתעסק בזוטות.',
+    line: 'תקוע על אחוזי דמי ניהול, כשהלקוח צריך הרבה יותר.',
+  },
+  {
+    icon: 'heavy-client',
+    bold: 'ואז מגיע לקוח כבד.',
+    line: 'ולפגישה הזו צריך להגיע עם כל התמונה.',
+  },
+  {
+    icon: 'holistic-view',
+    bold: 'כל התמונה של הלקוח. במקום אחד.',
+    line: 'חשיפות, פילוחים, סיכון, הזדמנויות — טוענים את התיק ורואים הכול.',
+  },
 ];
 ---
 
 <BaseLayout
-  title="Plan-T לסוכני ביטוח — כל התיק של הלקוח במקום אחד"
-  description="Plan-T מרכזת לסוכני ביטוח את הנתונים הפנסיוניים והפיננסיים של הלקוח — מסלקה, כיסויים וחיסכון — בתמונה אחת, ומכינה אתכם לפגישה בדקות."
+  title="Plan-T לסוכני ביטוח — כרטיס הכניסה למגרש של הגדולים"
+  description="כשמגיע לקוח כבד, Plan-T נותנת לסוכן הביטוח את כל התמונה של הלקוח במקום אחד. ובקרוב — עוד. אל תישאר מאחור."
 >
   <!-- PR B: the ~120px stage marker (all three rings, this one lit) goes
        here, aria-hidden. -->
-  <PageHero size="compact" seed={3} cta={{ label: 'תיאום הדגמה', href: '#lead-form' }}>
-    <Fragment slot="title">הלקוח שלך הוא יותר מהפוליסה. עכשיו אפשר לראות את זה.</Fragment>
+  <PageHero size="compact" seed={1} eyebrow="לסוכני ביטוח" cta={{ label: 'תיאום הדגמה', href: '#lead-form' }}>
+    <Fragment slot="title">סוכן ביטוח זה כרטיס הכניסה.</Fragment>
     <Fragment slot="lead">
-      <span class="ltr">Plan-T</span> מרכזת את הנתונים הפנסיוניים והפיננסיים של הלקוח במקום אחד —
-      כדי שתגיעו לכל פגישה עם התמונה השלמה, ולא רק עם המוצר שעל השולחן.
+      מספיק להתעסק בזוטות. כשמגיע לקוח כבד — יש לך במה לפגוש אותו.
     </Fragment>
   </PageHero>
 
-  <section class="band bg-white" aria-labelledby="pains-title">
+  <!-- The trigger -->
+  <section class="band bg-surface-blue" aria-labelledby="trigger-title">
     <div class="mx-auto max-w-5xl px-4">
-      <h2 id="pains-title" class="reveal-lines text-center text-3xl font-bold text-brand-800">
-        מכירים את זה?
+      <h2 id="trigger-title" class="reveal-lines text-center text-3xl font-bold text-brand-800">
+        ואז מגיע לקוח כבד.
       </h2>
+      <p class="reveal mx-auto mt-5 max-w-3xl text-center text-lg leading-relaxed text-ink-700">
+        טוענים את התיק ל-<span class="ltr">Plan-T</span> — חשיפות, פילוחים, סיכון, הזדמנויות — וכל
+        התמונה של הלקוח במקום אחד.
+      </p>
       <ul class="mt-10 grid gap-4 md:grid-cols-3">
         {
-          pains.map((pain) => (
-            <li class="reveal card-lift accent-rule accent-rule--navy rounded-2xl border border-brand-200 bg-white hover:border-brand-400 p-5 leading-relaxed text-ink-700 shadow-sm">
-              {pain}
+          triggerCards.map((card) => (
+            <li class="reveal card-lift rounded-2xl border border-brand-200 bg-white p-5 shadow-sm hover:border-brand-400">
+              <DuotoneIcon name={card.icon} />
+              <h3 class="mt-3 text-lg font-bold text-brand-800">{card.title}</h3>
+              <p class="mt-2 text-sm leading-relaxed text-ink-700">{card.line}</p>
             </li>
           ))
         }
@@ -59,34 +104,51 @@ const enables = [
     </div>
   </section>
 
-  <section class="band bg-surface-blue" aria-labelledby="enables-title">
-    <div class="mx-auto max-w-5xl px-4">
-      <h2 id="enables-title" class="reveal-lines text-center text-3xl font-bold text-brand-800">
-        מה <span class="ltr">Plan-T</span> נותנת לכם
-      </h2>
-      <ul class="mt-10 grid gap-4 md:grid-cols-2">
+  <!--
+    The story in three beats — the page's answer to "where is the video": the
+    same message, carried by the page.
+
+    The connector between beats is a border on the list item rather than a
+    drawn arrow, so it follows RTL reading order with no mirroring logic and
+    simply is not there once the beats stack on a phone. The only motion is
+    the existing .reveal stagger, which brings them in one after the other.
+  -->
+  <section class="band bg-white" aria-labelledby="story-title">
+    <div class="mx-auto max-w-6xl px-4">
+      <h2 id="story-title" class="sr-only">הסיפור בשלושה שלבים</h2>
+      <ol class="grid gap-8 md:grid-cols-3">
         {
-          enables.map((item) => (
-            <li class="reveal card-lift accent-rule accent-rule--sky rounded-2xl border border-brand-200 bg-white hover:border-brand-400 p-5 leading-relaxed text-ink-700 shadow-sm">
-              {item}
+          beats.map((beat, index) => (
+            <li
+              class:list={[
+                'reveal text-center md:text-start',
+                index > 0 && 'md:border-e md:border-brand-200 md:pe-8',
+              ]}
+            >
+              <div class="flex justify-center md:justify-start">
+                <DuotoneIcon name={beat.icon} />
+              </div>
+              <p class="mt-4 text-xl font-bold text-brand-800">{beat.bold}</p>
+              <p class="mt-2 leading-relaxed text-ink-700">{beat.line}</p>
             </li>
           ))
         }
-      </ul>
+      </ol>
     </div>
   </section>
 
-  <section class="band bg-white" aria-labelledby="progression-title">
+  <!-- Payoff. No selling language anywhere on this page, by decision. -->
+  <section class="band bg-surface-blue" aria-labelledby="payoff-title">
     <div class="mx-auto max-w-3xl px-4 text-center">
-      <h2 id="progression-title" class="reveal-lines text-3xl font-bold text-brand-800">
-        כשהלקוחות צריכים מכם יותר
-      </h2>
+      <h2 id="payoff-title" class="reveal-lines text-3xl font-bold text-brand-800">יש לך תותחים כבדים.</h2>
       <p class="reveal mt-5 text-lg leading-relaxed text-ink-700">
-        הלקוחות שלכם לא נעצרים בפוליסה — וגם התיק שלהם ב־<span class="ltr">Plan-T</span> לא.
-        כשהשיחה מתרחבת להשקעות ולתכנון, אותו תיק, אותה מערכת, תמונה רחבה יותר.
+        כל התמונה של הלקוח — מובנת, נגישה ושקופה — כדי שהוא יקבל החלטות בקלות, ולא מבולבל. ואתה זה
+        שמביא לו אותה.
       </p>
     </div>
   </section>
+
+  <TeaserBand variant="full" id="soon" />
 
   <LeadForm
     source="website-agents"

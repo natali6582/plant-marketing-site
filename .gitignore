@@ -18,3 +18,7 @@ npm-debug.log*
 
 # wrangler local state (temp builds, cache) — never committed
 .wrangler/
+
+# Working proposals — drafts, not site content. Kept out of the repo on purpose;
+# ignored because a broad "git add" has swept one in twice.
+docs/proposals/

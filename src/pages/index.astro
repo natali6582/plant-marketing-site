@@ -2,32 +2,24 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import LeadForm from '../components/LeadForm.astro';
 import Marquee from '../components/Marquee.astro';
+import IconTile from '../components/IconTile.astro';
 import StatsRow from '../components/StatsRow.astro';
 import AudienceSelector from '../components/AudienceSelector.astro';
 import { advantages } from '../data/advantages';
 
-/*
-  One icon per card, drawn inline so nothing new is fetched: a sheet of paper
-  for the hours lost to it, a circle with a quadrant missing for the partial
-  picture, a check for the way out. Decorative — each card's own heading says
-  the same thing in words, so the icons are aria-hidden.
-*/
-const painIcons = [
-  '<path d="M8 3h7l4 4v12a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z"/><path d="M15 3v4h4"/><path d="M9 12h6"/><path d="M9 16h4"/>',
-  '<path d="M21 12a9 9 0 1 1-9-9v9h9Z"/><path d="M15.5 3.6A9 9 0 0 1 20.4 8.5"/>',
-  '<circle cx="12" cy="12" r="9"/><path d="m8.4 12.4 2.5 2.5 4.7-5.3"/>',
-];
-
 const painCards = [
   {
+    icon: 'hourglass',
     title: 'הכאב: שעות על ניירת',
     body: 'איסוף מסמכים, הקלדות כפולות ומעקב ידני אחרי כל לקוח גוזלים את הזמן שהיה אמור ללכת ללקוח עצמו.',
   },
   {
+    icon: 'puzzle',
     title: 'הכאב: תמונה חלקית',
     body: 'המידע הפנסיוני והפיננסי של הלקוח מפוזר בין מסלקה, יצרנים וגיליונות — וקשה לבנות ממנו תמונה אחת שלמה.',
   },
   {
+    icon: 'check-circle-2',
     title: 'הדרך של Plan-T',
     body: 'פלטפורמה אחת שמרכזת את הנתונים, מסדרת את התהליך ומשאירה לכם את מה שחשוב: השיחה עם הלקוח וההחלטות המקצועיות.',
   },
@@ -70,7 +62,7 @@ const tour = [
 >
   <!-- Hero. The band's bottom edge is clipped on a diagonal, mirrored from
        the measured Orion slope so it falls toward the right in RTL. -->
-  <section class="hero-slope bg-gradient-to-b from-brand-800 to-brand-700 text-white">
+  <section class="hero-slope hero-glow bg-gradient-to-b from-brand-800 to-brand-700 text-white" data-band="dark">
     <div class="mx-auto max-w-6xl px-4 py-20 text-center md:py-28">
       <p class="text-sm font-bold tracking-wide text-brand-300">הפלטפורמה שרואה את כל התמונה של הלקוח</p>
       <h1 class="reveal-lines mx-auto mt-4 max-w-3xl text-4xl font-bold leading-tight md:text-6xl">
@@ -142,26 +134,9 @@ const tour = [
               'reveal card-lift rounded-2xl border p-6 shadow-sm',
               i === 2 ? 'border-brand-700 bg-brand-700 text-white' : 'border-brand-100 bg-white',
             ]}
+            data-band={i === 2 ? 'dark' : undefined}
           >
-            <span
-              class:list={[
-                'inline-flex h-11 w-11 items-center justify-center rounded-xl',
-                i === 2 ? 'bg-white/15 text-white' : 'bg-brand-100 text-brand-600',
-              ]}
-              aria-hidden="true"
-            >
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.6"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                set:html={painIcons[i]}
-              />
-            </span>
+            <IconTile icon={card.icon} size="sm" />
             <h3 class="mt-4 text-xl font-bold">{card.title}</h3>
             <p class:list={['mt-3 leading-relaxed', i === 2 ? 'text-ink-200' : 'text-ink-700']}>{card.body}</p>
           </article>

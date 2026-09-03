@@ -1,0 +1,53 @@
+---
+import { lucideIcons } from '../data/lucide-icons';
+
+/*
+  One tile, one icon, one set.
+
+  Every icon on the site comes from Lucide and is stored as inner SVG markup in
+  src/data/lucide-icons.ts, so nothing is fetched at runtime and no package or
+  CDN was added. Passing a name that is not in that file is a build error rather
+  than a silently empty tile — a missing icon should not reach a visitor.
+
+  The tile has no hover of its own. It is never interactive; where one sits in a
+  card that carries .card-lift, the card answers the pointer for it.
+
+  On a dark band the tile inverts. That is driven by data-band="dark" on an
+  ancestor section rather than a prop, so a tile does not have to be told where
+  it is — see .icon-tile in the global stylesheet.
+*/
+
+interface Props {
+  icon: string;
+  size?: 'sm' | 'md';
+  label?: string;
+}
+
+const { icon, size = 'md', label } = Astro.props;
+
+const markup = lucideIcons[icon];
+if (!markup) {
+  throw new Error(
+    `IconTile: "${icon}" is not in src/data/lucide-icons.ts. Copy the inner markup of the Lucide icon of that name into that file first.`
+  );
+}
+
+const px = size === 'sm' ? 20 : 28;
+---
+
+<span class:list={['icon-tile', size === 'sm' && 'icon-tile--sm']}>
+  <svg
+    width={px}
+    height={px}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+    focusable="false"
+    set:html={markup}
+  />
+  {label && <span class="sr-only">{label}</span>}
+</span>

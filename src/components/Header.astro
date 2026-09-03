@@ -46,27 +46,35 @@ const linkClass = (href: string) =>
 -->
 <header class="sticky top-0 z-50 border-b border-brand-100 bg-white">
   <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3">
-    <a href="/" class="flex items-center gap-2 text-xl font-black text-ink-900" aria-label="Plan-T — דף הבית">
-      <!-- The Plan-T mark, cut from the lockup Natali supplied on 03/09/2026.
-           It is a raster because the source is: the render arrived on a black
-           ground with no transparency, so the mark was masked out of it on its
-           own circle. That drops the outer glow, which at 30px was never going
-           to read anyway, and keeps the night sky, the stars and the quadrants
-           that make this version the new one. 56px by decision: at the 30px it
-           launched at, this mark and the old one were indistinguishable — the
-           stars and gradients only read from about 44px up. The file is 224px,
-           4x, so it stays sharp on a dense screen. Replace with a vector the
-           day one exists. -->
+    <!-- The Plan-T lockup — mark and chrome wordmark — cut from the render Natali
+         supplied on 03/09/2026, in the header on every page by her decision.
+         Two images, not one, so each can arrive on its own beat: the mark first,
+         the wordmark a moment behind it (see .logo-mark in the stylesheet). The
+         anchor is LTR so the lockup reads as the brand drew it, mark left and
+         wordmark right, the same way the footer shows it. Both are rasters
+         because the source is; the anchor's aria-label carries the name, so the
+         images stay decorative. Sizes: the mark is h-14/w-14 (56px); the wordmark
+         has no 35px utility, so its width/height attributes size it and w-auto
+         keeps the ratio. Replace with vectors the day they exist. -->
+    <a href="/" class="logo ltr flex items-center gap-2" aria-label="Plan-T — דף הבית">
       <img
         src="/images/mark-plant.png"
         alt=""
         width="56"
         height="56"
         decoding="async"
-        class="h-[56px] w-[56px]"
+        class="logo-mark h-14 w-14"
         aria-hidden="true"
       />
-      <span class="ltr">Plan-T</span>
+      <img
+        src="/images/wordmark-plant.png"
+        alt=""
+        width="138"
+        height="35"
+        decoding="async"
+        class="logo-wordmark w-auto"
+        aria-hidden="true"
+      />
     </a>
 
     {!minimal && (

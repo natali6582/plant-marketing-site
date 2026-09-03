@@ -1,0 +1,47 @@
+---
+import { duotoneIcons } from '../data/icons-duotone';
+
+/*
+  One icon, two tones, no tile.
+
+  Replaces IconTile, which drew a thin 2px Lucide outline in a mid blue inside a
+  white rounded tile — pale next to the dark headings it sat above. The old site
+  (plan-t.org.il) uses solid two-tone glyphs sitting straight on the background,
+  and that is what this is: a filled base in the dark tone with one element
+  picked out in sky.
+
+  Both layers come from src/data/icons-duotone.ts on the same 256x256 grid, so
+  nothing is positioned here. Colour is CSS, not attributes, which is what lets
+  a dark band flip both tones without the component knowing where it is.
+
+  A name that is not in the data file is a build error rather than an empty
+  space — a missing icon should not reach a visitor.
+*/
+
+interface Props {
+  name: string;
+  size?: 'md' | 'lg';
+  class?: string;
+}
+
+const { name, size = 'lg', class: extra } = Astro.props;
+
+const icon = duotoneIcons[name];
+if (!icon) {
+  throw new Error(
+    `DuotoneIcon: "${name}" is not in src/data/icons-duotone.ts. Add it to the ICONS map in scripts/build-duotone-icons.mjs and regenerate.`
+  );
+}
+---
+
+<svg
+  viewBox="0 0 256 256"
+  width="72"
+  height="72"
+  aria-hidden="true"
+  focusable="false"
+  class:list={['duotone-icon', size === 'md' && 'duotone-icon--md', extra]}
+>
+  <path class="duotone-icon__base" d={icon.base} />
+  <path class="duotone-icon__accent" d={icon.accent} />
+</svg>

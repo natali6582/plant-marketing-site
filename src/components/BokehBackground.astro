@@ -1,0 +1,244 @@
+---
+/*
+  Bokeh field for the dark bands. One inline SVG, no image file, no dependency.
+
+  Replaces the two-blob .hero-glow, which was deliberately almost invisible.
+  This one is meant to be seen: out-of-focus light discs at three scales, a
+  diagonal beam, and a vignette that drops the corners — sky blue over the
+  section's own deep-blue gradient.
+
+  Nothing here is opaque. The disc groups blend with `screen`, so they only ever
+  add light to whatever the section's background already is, and the vignette
+  blends with `multiply` so it only ever removes it. That is what keeps this a
+  background rather than a second surface, and it is why the SVG carries no
+  base rectangle of its own.
+
+  The text zone — the middle 55% of the width and 50% of the height, where the
+  headline, paragraph and button live — holds no medium or small disc. Only the
+  soft edge of a large one reaches it. The layouts below are hand-placed against
+  that rule rather than generated, so it can be checked by reading them.
+
+  preserveAspectRatio="xMidYMid slice" means the viewBox is cropped, never
+  letterboxed, and cropped from the edges — so the empty middle stays in the
+  middle at every aspect ratio, including a 360px phone.
+
+  Blur is CSS `filter: blur()`, not SVG feGaussianBlur, and that is measured
+  rather than assumed — I had it the other way round first. Rasterising this
+  field at 1265x1261 with 23 filtered elements takes a median 78.9ms through
+  feGaussianBlur and 34.8ms through the CSS filter, and the two outputs are
+  equivalent: mean channel difference 1.12/255, identical alpha everywhere, and
+  every larger difference confined to pixels whose alpha is ~1/255, i.e.
+  invisible. `blur(Npx)` is defined as a Gaussian of standard deviation N, so
+  the radii carry over unchanged. Numbers and method are in the PR.
+*/
+
+interface Props {
+  intensity?: 'full' | 'half';
+  seed?: number;
+}
+
+const { intensity = 'full', seed = 1 } = Astro.props;
+
+/* Unique per instance: a page can carry two of these (hero and form band) and
+   duplicate filter ids would make the second one reference the first's. */
+const uid = Math.random().toString(36).slice(2, 8);
+
+/* Half strength is the same field, quieter: every opacity scaled, and the two
+   busiest layers — the small sharp discs and the beam — left out entirely. */
+const k = intensity === 'half' ? 0.55 : 1;
+const showDetail = intensity === 'full';
+
+type Disc = { cx: number; cy: number; r: number; o: number; c: string };
+
+/*
+  Three pre-baked layouts so the hero and the form band on the same page are
+  not the same picture. Coordinates are viewBox units (1600x900); the text zone
+  they avoid is x 360-1240, y 225-675.
+
+  Every layout also keeps discs in the centre column, above and below that zone.
+  That is not decoration: on a phone a tall band is cropped by `slice` to
+  roughly the middle quarter of the viewBox, so a layout with everything at the
+  edges renders as a plain gradient there. Seed 3 did exactly that before it was
+  measured — nothing at all reached the lead-form band at 360px.
+*/
+const layouts: Record<number, { large: Disc[]; medium: Disc[]; small: Disc[]; beam: number }> = {
+  1: {
+    large: [
+      { cx: 1380, cy: 140, r: 250, o: 0.28, c: 'brand-400' },
+      { cx: 170, cy: 770, r: 215, o: 0.24, c: 'brand-400' },
+      { cx: 1490, cy: 730, r: 180, o: 0.22, c: 'brand-400' },
+      { cx: 110, cy: 170, r: 200, o: 0.26, c: 'brand-400' },
+    ],
+    medium: [
+      { cx: 1430, cy: 335, r: 95, o: 0.36, c: 'brand-500' },
+      { cx: 150, cy: 420, r: 110, o: 0.32, c: 'brand-300' },
+      { cx: 1345, cy: 560, r: 70, o: 0.34, c: 'brand-500' },
+      { cx: 700, cy: 110, r: 85, o: 0.38, c: 'brand-300' },
+      { cx: 980, cy: 795, r: 100, o: 0.3, c: 'brand-500' },
+      { cx: 420, cy: 845, r: 75, o: 0.35, c: 'brand-300' },
+    ],
+    small: [
+      { cx: 1505, cy: 245, r: 30, o: 0.5, c: 'brand-200' },
+      { cx: 250, cy: 115, r: 22, o: 0.45, c: 'white' },
+      { cx: 1185, cy: 115, r: 36, o: 0.4, c: 'brand-200' },
+      { cx: 85, cy: 600, r: 26, o: 0.38, c: 'white' },
+      { cx: 1340, cy: 825, r: 34, o: 0.42, c: 'brand-200' },
+      { cx: 600, cy: 855, r: 20, o: 0.5, c: 'white' },
+    ],
+    beam: 1400,
+  },
+  2: {
+    large: [
+      { cx: 210, cy: 130, r: 235, o: 0.26, c: 'brand-400' },
+      { cx: 1450, cy: 320, r: 200, o: 0.28, c: 'brand-400' },
+      { cx: 760, cy: 880, r: 225, o: 0.23, c: 'brand-400' },
+    ],
+    medium: [
+      { cx: 120, cy: 480, r: 105, o: 0.34, c: 'brand-300' },
+      { cx: 1500, cy: 620, r: 90, o: 0.32, c: 'brand-500' },
+      { cx: 780, cy: 118, r: 84, o: 0.36, c: 'brand-500' },
+      { cx: 300, cy: 100, r: 66, o: 0.3, c: 'brand-300' },
+      { cx: 880, cy: 795, r: 112, o: 0.31, c: 'brand-500' },
+    ],
+    small: [
+      { cx: 1420, cy: 130, r: 26, o: 0.46, c: 'white' },
+      { cx: 190, cy: 660, r: 32, o: 0.4, c: 'brand-200' },
+      { cx: 1550, cy: 470, r: 19, o: 0.52, c: 'white' },
+      { cx: 830, cy: 840, r: 28, o: 0.44, c: 'brand-200' },
+      { cx: 480, cy: 130, r: 24, o: 0.38, c: 'white' },
+    ],
+    beam: 300,
+  },
+  3: {
+    large: [
+      { cx: 1470, cy: 190, r: 220, o: 0.27, c: 'brand-400' },
+      { cx: 90, cy: 640, r: 240, o: 0.24, c: 'brand-400' },
+      { cx: 860, cy: 905, r: 215, o: 0.24, c: 'brand-400' },
+      { cx: 1520, cy: 880, r: 165, o: 0.25, c: 'brand-400' },
+    ],
+    medium: [
+      { cx: 1370, cy: 470, r: 88, o: 0.35, c: 'brand-300' },
+      { cx: 175, cy: 200, r: 96, o: 0.33, c: 'brand-500' },
+      { cx: 830, cy: 112, r: 78, o: 0.37, c: 'brand-300' },
+      { cx: 715, cy: 812, r: 96, o: 0.32, c: 'brand-500' },
+      { cx: 240, cy: 830, r: 68, o: 0.34, c: 'brand-300' },
+      { cx: 1460, cy: 690, r: 80, o: 0.32, c: 'brand-500' },
+    ],
+    small: [
+      { cx: 1250, cy: 190, r: 25, o: 0.48, c: 'white' },
+      { cx: 130, cy: 380, r: 34, o: 0.4, c: 'brand-200' },
+      { cx: 1540, cy: 560, r: 21, o: 0.5, c: 'white' },
+      { cx: 700, cy: 870, r: 30, o: 0.42, c: 'brand-200' },
+    ],
+    beam: 1150,
+  },
+};
+
+const L = layouts[seed] ?? layouts[1];
+const paint = (c: string) => (c === 'white' ? '#fff' : `var(--color-${c})`);
+---
+
+<svg
+  class="bokeh"
+  viewBox="0 0 1600 900"
+  preserveAspectRatio="xMidYMid slice"
+  aria-hidden="true"
+  focusable="false"
+>
+  <defs>
+    <linearGradient id={`bk-beamfill-${uid}`} x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="var(--color-brand-300)" stop-opacity="0" />
+      <stop offset="35%" stop-color="var(--color-brand-300)" stop-opacity="1" />
+      <stop offset="100%" stop-color="var(--color-brand-300)" stop-opacity="0" />
+    </linearGradient>
+
+    <radialGradient id={`bk-vig-${uid}`} cx="50%" cy="45%" r="78%">
+      <stop offset="45%" stop-color="var(--color-brand-900)" stop-opacity="0" />
+      <stop offset="100%" stop-color="var(--color-brand-900)" stop-opacity={0.45 * k} />
+    </radialGradient>
+  </defs>
+
+  <!-- Everything that adds light. Screen against the section's gradient. -->
+  <g style="mix-blend-mode: screen">
+    {
+      showDetail && (
+        <rect
+          x={L.beam - 130}
+          y="-700"
+          width="260"
+          height="2300"
+          fill={`url(#bk-beamfill-${uid})`}
+          opacity={0.25 * k}
+          style="filter: blur(60px)"
+          transform={`rotate(35 ${L.beam} 450)`}
+        />
+      )
+    }
+
+    <g class="bokeh__drift">
+      {
+        L.large.map((d) => (
+          <circle
+            cx={d.cx}
+            cy={d.cy}
+            r={d.r}
+            fill={paint(d.c)}
+            opacity={d.o * k}
+            style="filter: blur(40px)"
+          />
+        ))
+      }
+    </g>
+
+    {
+      L.medium.map((d) => (
+        <>
+          <circle
+            cx={d.cx}
+            cy={d.cy}
+            r={d.r}
+            fill={paint(d.c)}
+            opacity={d.o * k}
+            style="filter: blur(14px)"
+          />
+          {/* The rim is what makes a blurred circle read as bokeh rather than a
+              blob, so it is blurred less than the disc it sits on. */}
+          <circle
+            cx={d.cx}
+            cy={d.cy}
+            r={d.r - 2}
+            fill="none"
+            stroke={paint(d.c)}
+            stroke-width="4"
+            opacity={0.55 * d.o * 2 * k}
+            style="filter: blur(6px)"
+          />
+        </>
+      ))
+    }
+
+    {
+      showDetail &&
+        L.small.map((d) => (
+          <circle
+            cx={d.cx}
+            cy={d.cy}
+            r={d.r}
+            fill={paint(d.c)}
+            opacity={d.o * k}
+            style="filter: blur(4px)"
+          />
+        ))
+    }
+  </g>
+
+  <!-- And the one thing that removes it: corners and bottom fall away. -->
+  <rect
+    x="0"
+    y="0"
+    width="1600"
+    height="900"
+    fill={`url(#bk-vig-${uid})`}
+    style="mix-blend-mode: multiply"
+  />
+</svg>

@@ -94,7 +94,7 @@ const ICONS = {
   // /product modules
   'data-intake':   { glyph: 'arrows-clockwise', accent: 1 },
   'holistic-view': { glyph: 'chart-pie-slice',  accent: 0 },
-  'planning-tools':{ glyph: 'chart-bar',        accentFrom: 'duotone' },
+  'planning-tools':{ glyph: 'chart-bar',        accentDraw: 'M160,200V40a8,8,0,0,1,8-8h40a8,8,0,0,1,8,8V200Z' },
   'crm':           { glyph: 'currency-dollar',  accentFrom: 'duotone' },
   'forms':         { glyph: 'note-pencil',      accentFrom: 'duotone' },
   'client-reports':{ glyph: 'file-text',        accent: 3 },
@@ -113,7 +113,7 @@ const ICONS = {
 
   // Home pain cards
   'hourglass':     { glyph: 'hourglass',     accentFrom: 'regular', accent: 1 },
-  'puzzle':        { glyph: 'puzzle-piece',  accentDraw: 'M228.7,140.2a24.7,24.7,0,1,1-49.4,0a24.7,24.7,0,1,1,49.4,0Z' },
+  'puzzle':        { glyph: 'puzzle-piece',  accentDraw: 'M172,52a36,36,0,1,1-72,0a36,36,0,1,1,72,0Z' },
   'check-circle':  { glyph: 'check-circle',  accent: 1 },
 };
 
@@ -135,8 +135,19 @@ for (const [key, spec] of Object.entries(ICONS)) {
   const fill = pathsOf(readFileSync(join(ASSETS, 'fill', `${spec.glyph}-fill.svg`), 'utf8')).join(' ');
   let accent;
   if (spec.accentDraw) {
-    /* The only two drawn by hand, and only because the glyph offers nothing:
-       puzzle-piece is a single path with no cut-out to borrow. */
+    /* Traced by hand, and only where nothing could be borrowed. Both are copied
+       off the base glyph's own coordinates rather than eyeballed:
+
+       puzzle-piece is a single path with no cut-out, so the accent is its top
+       tab — the semicircle the glyph draws at centre (136,52) r36. An earlier
+       version put a circle on the RIGHT side, which is a notch, not a tab, so
+       it floated outside the piece: 98.7% of its pixels landed on background.
+
+       chart-bar could not use its duotone secondary. That layer is a plain rect
+       x 152-208 / y 40-208, while the fill weight draws the tall bar at
+       x 160-216 / y 32-200 with rounded top corners — 8 units off on both axes,
+       which showed as a navy sliver down one edge and sky spilling past the
+       baseline. This is the fill weight's own bar, corners and all. */
     accent = spec.accentDraw;
   } else if (spec.accentFrom === 'duotone') {
     accent = secondaryOf(readFileSync(join(ASSETS, 'duotone', `${spec.glyph}-duotone.svg`), 'utf8'));

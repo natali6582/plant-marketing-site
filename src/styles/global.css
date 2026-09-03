@@ -326,6 +326,30 @@ body {
 }
 
 /*
+  Accent rule on a text-only card.
+
+  The audience pages carry two grids — "מכירים את זה?" and "מה Plan-T נותנת לכם"
+  — that are plain paragraphs on white cards with no icon and no heading, so
+  they had no colour in them at all and read washed out beside the module grid.
+  The modules get their colour from the duotone icon; these cards have nowhere
+  to put one without inventing a meaning per bullet, so they take the same two
+  tones as a rule down the inline-start edge instead: navy for the problems,
+  sky for what the platform does about them. Logical properties, so the rule
+  sits on the right in RTL and would move on its own in an LTR context.
+*/
+.accent-rule {
+  border-inline-start-width: 4px;
+}
+
+.accent-rule--navy {
+  border-inline-start-color: var(--color-icon-navy);
+}
+
+.accent-rule--sky {
+  border-inline-start-color: var(--color-brand-500);
+}
+
+/*
   Duotone icons. No tile, no border, no shadow — the glyph sits straight on the
   card, the way the old site set them. Two sizes: lg for the module and
   capability grids, md for the smaller home cards.

@@ -87,7 +87,7 @@ const faq = [
       <div class="space-y-3">
         {
           faq.map((item, index) => (
-            <details class="reveal card-lift group rounded-2xl border border-brand-100 bg-white shadow-sm open:border-brand-300">
+            <details class="reveal card-lift group rounded-2xl border border-brand-200 bg-white hover:border-brand-400 shadow-sm open:border-brand-300">
               <summary class="flex cursor-pointer list-none items-center justify-between gap-4 p-5 text-lg font-bold text-ink-900 [&::-webkit-details-marker]:hidden">
                 <span><span class="ltr me-2 text-brand-600">{index + 1}.</span>{item.q}</span>
                 <span class="shrink-0 text-brand-600 transition-transform group-open:rotate-180" aria-hidden="true">▾</span>

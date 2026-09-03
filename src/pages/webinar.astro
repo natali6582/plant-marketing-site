@@ -21,7 +21,7 @@ const agenda = [
 >
   <section class="bg-gradient-to-b from-white to-brand-100 text-ink-900">
     <div class="mx-auto max-w-4xl px-4 py-20 text-center">
-      <p class="text-sm font-bold tracking-wide text-brand-700">וובינר השקה</p>
+      <p class="text-sm font-bold tracking-wide text-brand-600">וובינר השקה</p>
       <h1 class="mt-4 text-4xl font-bold md:text-5xl">
         <span class="ltr">Plan-t AI</span> — ההדגמה הראשונה
       </h1>
@@ -32,8 +32,8 @@ const agenda = [
       <div class="mt-10 grid gap-4 sm:grid-cols-2">
         {
           sessions.map((session) => (
-            <div class="rounded-2xl border border-brand-100 bg-white p-6">
-              <p class="text-2xl font-black text-brand-700 ltr">{session.date}</p>
+            <div class="rounded-2xl border border-brand-200 bg-white hover:border-brand-400 p-6">
+              <p class="text-2xl font-black text-brand-600 ltr">{session.date}</p>
               <p class="mt-1 text-ink-700">{session.day}</p>
               <p class="mt-1 text-ink-700 ltr">{session.time}</p>
             </div>
@@ -43,7 +43,7 @@ const agenda = [
 
       <a
         href="#lead-form"
-        class="mt-10 inline-block rounded-full bg-accent-500 px-10 py-4 text-lg font-bold text-ink-950 transition-colors hover:bg-accent-400"
+        class="mt-10 inline-block rounded-full bg-brand-600 px-10 py-4 text-lg font-bold text-white transition-colors hover:bg-brand-700"
       >
         להרשמה
       </a>
@@ -51,12 +51,12 @@ const agenda = [
   </section>
 
   <section class="mx-auto max-w-3xl px-4 py-16" aria-labelledby="agenda-title">
-    <h2 id="agenda-title" class="text-3xl font-bold text-ink-900">מה יהיה בוובינר</h2>
+    <h2 id="agenda-title" class="text-3xl font-bold text-brand-800">מה יהיה בוובינר</h2>
     <ol class="mt-6 space-y-3">
       {
         agenda.map((item, index) => (
-          <li class="flex gap-4 rounded-xl border border-brand-100 bg-white p-4 shadow-sm">
-            <span class="ltr font-black text-brand-700" aria-hidden="true">{index + 1}</span>
+          <li class="flex gap-4 rounded-xl border border-brand-200 bg-white hover:border-brand-400 p-4 shadow-sm">
+            <span class="ltr font-black text-brand-600" aria-hidden="true">{index + 1}</span>
             <span class="text-ink-700">{item}</span>
           </li>
         ))

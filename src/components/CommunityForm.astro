@@ -13,10 +13,10 @@
 const webhookUrl = import.meta.env.PUBLIC_COMMUNITY_WEBHOOK_URL ?? '';
 ---
 
-<section id="join" class="bg-brand-50 py-16" aria-labelledby="join-title">
+<section id="join" class="bg-brand-800 py-16 text-brand-100" aria-labelledby="join-title">
   <div class="mx-auto max-w-xl px-4">
-    <h2 id="join-title" class="text-center text-3xl font-bold text-ink-900">מעוניינים להצטרף לקהילת Plan-T?</h2>
-    <p class="mt-3 text-center text-ink-700">השאירו שם ונייד ונשלח לכם את פרטי ההצטרפות.</p>
+    <h2 id="join-title" class="text-center text-3xl font-bold text-white">מעוניינים להצטרף לקהילת Plan-T?</h2>
+    <p class="mt-3 text-center text-brand-100">השאירו שם ונייד ונשלח לכם את פרטי ההצטרפות.</p>
 
     <form
       class="community-form mt-8 grid gap-4 rounded-2xl bg-white p-6 shadow-xl"
@@ -26,12 +26,12 @@ const webhookUrl = import.meta.env.PUBLIC_COMMUNITY_WEBHOOK_URL ?? '';
       <div>
         <label for="community-full-name" class="mb-1 block text-sm font-bold">שם מלא <span aria-hidden="true" class="text-brand-600">*</span></label>
         <input id="community-full-name" name="full_name" type="text" required autocomplete="name" minlength="2"
-          class="w-full rounded-lg border border-brand-200 px-3 py-2 focus:border-brand-500" />
+          class="w-full rounded-lg border border-brand-200 px-3 py-2 focus:border-brand-400" />
       </div>
       <div>
         <label for="community-mobile" class="mb-1 block text-sm font-bold">מספר נייד <span aria-hidden="true" class="text-brand-600">*</span></label>
         <input id="community-mobile" name="mobile" type="tel" required autocomplete="tel" dir="ltr" inputmode="tel"
-          class="w-full rounded-lg border border-brand-200 px-3 py-2 text-left focus:border-brand-500" />
+          class="w-full rounded-lg border border-brand-200 px-3 py-2 text-left focus:border-brand-400" />
       </div>
 
       <!-- Campaign attribution — populated by script, never by the visitor -->
@@ -48,13 +48,13 @@ const webhookUrl = import.meta.env.PUBLIC_COMMUNITY_WEBHOOK_URL ?? '';
       </div>
 
       <button type="submit"
-        class="w-full rounded-full bg-accent-500 px-6 py-3 text-lg font-bold text-ink-950 transition-colors hover:bg-accent-400 disabled:opacity-60">
+        class="w-full rounded-full bg-brand-600 px-6 py-3 text-lg font-bold text-white transition-colors hover:bg-brand-700 disabled:opacity-60">
         אני רוצה להצטרף
       </button>
 
       <p class="text-center text-xs text-ink-500">
         בהשארת הפרטים אני מבקש/ת לקבל מידע על ההצטרפות לקהילת Plan-T.
-        <a href="/privacy/" class="font-bold text-brand-700 underline">מדיניות הפרטיות</a>
+        <a href="/privacy/" class="font-bold text-brand-600 underline hover:text-brand-800">מדיניות הפרטיות</a>
       </p>
 
       <p class="form-status hidden rounded-lg px-4 py-3 text-sm font-medium" role="status" aria-live="polite"></p>

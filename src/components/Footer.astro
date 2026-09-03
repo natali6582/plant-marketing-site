@@ -5,60 +5,60 @@ const { minimal = false } = Astro.props;
 const year = new Date().getFullYear();
 ---
 
-<footer class="border-t border-brand-100 bg-brand-50 text-ink-700">
+<footer class="border-t border-brand-800 bg-brand-900 text-brand-100">
   {minimal ? (
     <div class="mx-auto flex max-w-6xl flex-col items-center gap-2 px-4 py-8 text-center text-sm">
-      <p class="text-lg font-black text-ink-900"><span class="ltr">Plan-T</span></p>
-      <a href="/privacy/" class="hover:text-brand-700 hover:underline">מדיניות פרטיות</a>
-      <p class="text-xs text-ink-500">© <span class="ltr">{year}</span> Plan-T. כל הזכויות שמורות.</p>
+      <p class="text-lg font-black text-white"><span class="ltr">Plan-T</span></p>
+      <a href="/privacy/" class="hover:text-white hover:underline">מדיניות פרטיות</a>
+      <p class="text-xs text-brand-300">© <span class="ltr">{year}</span> Plan-T. כל הזכויות שמורות.</p>
     </div>
   ) : (
   <div class="mx-auto grid max-w-6xl gap-8 px-4 py-12 md:grid-cols-2 lg:grid-cols-4">
     <div>
-      <p class="text-lg font-black text-ink-900"><span class="ltr">Plan-T</span></p>
+      <p class="text-lg font-black text-white"><span class="ltr">Plan-T</span></p>
       <p class="mt-2 max-w-xs text-sm leading-relaxed">
         הפלטפורמה שבה כל התמונה של הלקוח מתחברת.
       </p>
     </div>
     <nav aria-label="מה באתר" class="grid grid-cols-2 gap-2 text-sm">
-      <a href="/product/" class="hover:text-brand-700 hover:underline">הפלטפורמה</a>
-      <a href="/solutions/" class="hover:text-brand-700 hover:underline">תהליכי עבודה</a>
+      <a href="/product/" class="hover:text-white hover:underline">הפלטפורמה</a>
+      <a href="/solutions/" class="hover:text-white hover:underline">תהליכי עבודה</a>
       {audiences.map((audience) => (
-        <a href={audience.href} class="hover:text-brand-700 hover:underline">{audience.name}</a>
+        <a href={audience.href} class="hover:text-white hover:underline">{audience.name}</a>
       ))}
-      <a href="/packages/" class="hover:text-brand-700 hover:underline">חבילות</a>
-      <a href="/faq/" class="hover:text-brand-700 hover:underline">שאלות ותשובות</a>
-      <a href="/about/" class="hover:text-brand-700 hover:underline">אודות</a>
-      <a href="/contact/" class="hover:text-brand-700 hover:underline">יצירת קשר</a>
-      <a href="/privacy/" class="hover:text-brand-700 hover:underline">מדיניות פרטיות</a>
-      <a href="/accessibility/" class="hover:text-brand-700 hover:underline">הצהרת נגישות</a>
+      <a href="/packages/" class="hover:text-white hover:underline">חבילות</a>
+      <a href="/faq/" class="hover:text-white hover:underline">שאלות ותשובות</a>
+      <a href="/about/" class="hover:text-white hover:underline">אודות</a>
+      <a href="/contact/" class="hover:text-white hover:underline">יצירת קשר</a>
+      <a href="/privacy/" class="hover:text-white hover:underline">מדיניות פרטיות</a>
+      <a href="/accessibility/" class="hover:text-white hover:underline">הצהרת נגישות</a>
     </nav>
     <!-- Migrated verbatim from the old site's footer ("פתרונות ושירותים").
          Plain links to the modules grid; the old site had no per-item pages.
          MIGRATED — verify with Natali. -->
     <nav aria-label="פתרונות ושירותים" class="text-sm">
-      <p class="font-bold text-ink-900">פתרונות ושירותים</p>
+      <p class="font-bold text-white">פתרונות ושירותים</p>
       <ul class="mt-2 space-y-1">
         {['טעינת נתונים', 'הפקת והצגת נתונים', 'הפקת דוחות', 'הפקת טפסים', 'ניתוח נתונים', 'תיעוד גבייה', 'בקרה תפעולית'].map((item) => (
-          <li><a href="/product/#modules" class="hover:text-brand-700 hover:underline">{item}</a></li>
+          <li><a href="/product/#modules" class="hover:text-white hover:underline">{item}</a></li>
         ))}
       </ul>
     </nav>
     <div class="text-sm">
-      <p class="font-bold text-ink-900">יצירת קשר</p>
+      <p class="font-bold text-white">יצירת קשר</p>
       <p class="mt-2">
-        דוא״ל: <a href="mailto:sales@plan-t.org.il" class="ltr underline hover:text-brand-700">sales@plan-t.org.il</a>
+        דוא״ל: <a href="mailto:sales@plan-t.org.il" class="ltr underline hover:text-white">sales@plan-t.org.il</a>
       </p>
       <p class="mt-1">
-        טלפון: <a href="tel:+972733861711" class="ltr underline hover:text-brand-700">073-3861711</a>
+        טלפון: <a href="tel:+972733861711" class="ltr underline hover:text-white">073-3861711</a>
       </p>
       <p class="mt-1">כתובת: המנופים 8, הרצליה</p>
     </div>
   </div>
   )}
   {!minimal && (
-  <div class="border-t border-brand-100">
-    <p class="mx-auto max-w-6xl px-4 py-4 text-xs text-ink-500">
+  <div class="border-t border-brand-800">
+    <p class="mx-auto max-w-6xl px-4 py-4 text-xs text-brand-300">
       © <span class="ltr">{year}</span> Plan-T. כל הזכויות שמורות.
     </p>
   </div>

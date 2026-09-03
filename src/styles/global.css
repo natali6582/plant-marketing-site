@@ -14,13 +14,14 @@
   brand = blue (primary interactive), accent = green (calls to action).
   Components reference tokens, never raw hex values.
 
-  One exception, added with the Cerulean change: the brand family is no longer
-  the mark's blue. Its interface blue is Cerulean #0492C2 by decision, because
-  the lighter #249FDA washed out against the light palette. The mark itself
-  still carries the official #249FDA in all three places it is drawn — the
-  header lockup, the COMMUNITY lockup and favicon.svg — because that is the
-  company's logo, in use beyond this site and on plan-t.org.il, which is still
-  live through cutover. Repaint those three only on Natali's word.
+  One exception: the brand family is not the mark's blue. The interface blue
+  is the reference board's royal and sky range, sampled in the token block
+  below. The mark itself still carries the official #249FDA in all three
+  places it is drawn — the header lockup, the COMMUNITY lockup and
+  favicon.svg — because that is the company's logo, in use beyond this site
+  and on plan-t.org.il, which is live through cutover. The green likewise
+  survives as tokens for the mark alone; no button uses it any more. Repaint
+  neither without Natali.
 */
 @theme {
   --font-sans: "Heebo", "Arial Hebrew", "Segoe UI", system-ui, sans-serif;
@@ -38,24 +39,31 @@
   --color-ink-900: #101228;
   --color-ink-950: #080918;
 
-  /* Blue — links, primary buttons, brand furniture.
-     Anchored on Cerulean #0492C2 at step 500, by decision. The ramp is built
-     around that one value in OKLCH: the hue and chroma are the anchor's, and
-     only lightness moves per step, so every tint and shade is the same blue at
-     a different weight rather than eleven hand-picked colours. The light tints
-     are deliberately deeper than the ones they replace — the pale wash they
-     produced read as almost-white on the hero and the section bands. */
-  --color-brand-50: #dff7ff;
-  --color-brand-100: #bee9ff;
-  --color-brand-200: #9ad8f8;
-  --color-brand-300: #71c4ec;
-  --color-brand-400: #42abd9;
-  --color-brand-500: #0492c2;
-  --color-brand-600: #007ba6;
-  --color-brand-700: #00668b;
-  --color-brand-800: #005575;
-  --color-brand-900: #004763;
-  --color-brand-950: #002a3d;
+  /* Blue — surfaces, links, primary buttons, brand furniture.
+     Sampled from the reference board: deep royal #1F3F8F for large dark
+     surfaces, royal #2850A0 as its gradient partner, sky #3898D8 as the
+     accent, #98C8E8 as the light tint and #E8F0F8 as the pale ground. The
+     intermediate steps are generated to sit between them; the step names are
+     unchanged so no class had to be renamed.
+
+     One correction to the sampled set. The reference's AA-safe variant of the
+     sky blue was given as #2A7BBE, but it measures 4.49:1 against white and
+     3.90:1 against the pale ground — below the 4.5:1 this palette requires of
+     body text, on the two grounds it is actually used on. Step 600 is
+     #1C70B2 instead: the same hue and chroma, lightness lowered until it
+     clears both (5.24:1 and 4.55:1). It carries every button and body link,
+     so it is the one step that could not be left as sampled. */
+  --color-brand-50: #eef4fb;
+  --color-brand-100: #dce8f7;
+  --color-brand-200: #b9d3ee;
+  --color-brand-300: #98c8e8;
+  --color-brand-400: #5faee0;
+  --color-brand-500: #3898d8;
+  --color-brand-600: #1c70b2;
+  --color-brand-700: #2850a0;
+  --color-brand-800: #1f3f8f;
+  --color-brand-900: #17306e;
+  --color-brand-950: #0f2050;
 
   /* Green — calls to action and highlights */
   --color-accent-50: #f4faea;
@@ -75,7 +83,10 @@
   --color-warn-500: #c07f0c;
   --color-warn-700: #8a5a06;
 
-  --color-surface: #f6f8fb;
+  --color-surface: #f8f8f8;
+
+  /* Pale blue section ground — the reference uses this instead of a grey. */
+  --color-surface-blue: #e8f0f8;
 }
 
 html {
@@ -270,10 +281,25 @@ body {
 .btn-solid {
   background-image: linear-gradient(
     90deg,
-    var(--color-accent-500) 0%,
-    var(--color-accent-500) 50%,
-    var(--color-accent-400) 50%,
-    var(--color-accent-400) 100%
+    var(--color-brand-600) 0%,
+    var(--color-brand-600) 50%,
+    var(--color-brand-700) 50%,
+    var(--color-brand-700) 100%
+  );
+}
+
+/*
+  The same pill inverted, for a blue ground: white at rest, the palest blue
+  under the wipe. The reference puts a white pill on its dark slides, and a
+  blue-on-blue button would disappear there.
+*/
+.btn-invert {
+  background-image: linear-gradient(
+    90deg,
+    #fff 0%,
+    #fff 50%,
+    var(--color-brand-50) 50%,
+    var(--color-brand-50) 100%
   );
 }
 
@@ -349,12 +375,12 @@ body {
 
 .marquee::before {
   left: 0;
-  background: linear-gradient(to right, var(--color-ink-50) 0%, transparent 100%);
+  background: linear-gradient(to right, var(--color-surface-blue) 0%, transparent 100%);
 }
 
 .marquee::after {
   right: 0;
-  background: linear-gradient(to left, var(--color-ink-50) 0%, transparent 100%);
+  background: linear-gradient(to left, var(--color-surface-blue) 0%, transparent 100%);
 }
 
 .marquee__track {

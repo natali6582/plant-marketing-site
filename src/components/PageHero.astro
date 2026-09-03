@@ -31,24 +31,58 @@ interface Props {
   seed?: number;
   bokeh?: boolean;
   image?: boolean;
+  /*
+    'gradient' is the blue band with the bokeh field — every page but Home.
+    'photo' hands the whole backdrop to the caller through the "background"
+    slot, so the page that uses it owns both the photograph and the legibility
+    overlay over it. That is deliberate: the overlay has to be tuned against
+    the specific photograph's brightest pixels, and that tuning belongs next to
+    the image, not hidden in here.
+  */
+  background?: 'gradient' | 'photo';
 }
 
-const { eyebrow, cta, size = 'compact', seed = 1, bokeh = true, image = false } = Astro.props;
+const {
+  eyebrow,
+  cta,
+  size = 'compact',
+  seed = 1,
+  bokeh = true,
+  image = false,
+  background = 'gradient',
+} = Astro.props;
 const full = size === 'full';
+const photo = background === 'photo';
 /* /contact/ has no lead line; an empty <p> would still take its margin. */
 const hasLead = Astro.slots.has('lead');
 ---
 
 <section
   class:list={[
-    'hero-slope bg-gradient-to-b from-brand-800 to-brand-700 text-white',
-    bokeh && 'bokeh-host',
+    'hero-slope text-white',
+    photo ? 'relative isolate overflow-hidden' : 'bg-gradient-to-b from-brand-800 to-brand-700',
+    !photo && bokeh && 'bokeh-host',
   ]}
   data-band="dark"
 >
-  {bokeh && <BokehBackground intensity={full ? 'full' : 'half'} seed={seed} />}
+  {photo ? <slot name="background" /> : bokeh && <BokehBackground intensity={full ? 'full' : 'half'} seed={seed} />}
   <div class:list={['mx-auto max-w-6xl px-4 text-center', full ? 'py-20 md:py-28' : 'py-12 md:py-16']}>
-    {eyebrow && <p class="text-sm font-bold tracking-wide text-brand-300">{eyebrow}</p>}
+    {
+      /*
+        brand-300 on the flat blue band measures 5.43:1 and is the site's eyebrow
+        colour. Over a photograph it is not: on Home's hero it measured 3.01:1,
+        and the eyebrow is 14px bold — small text by WCAG, so it needs 4.5:1.
+        brand-200 reaches 3.48 and brand-100 only 4.33, so the tint cannot be
+        saved without a heavier overlay that would bury the photograph. White
+        measures 5.37:1. Tied to the variant rather than set per page, because
+        the photo variant is exactly the case where the tint fails.
+      */
+      eyebrow && (
+        <p class:list={['text-sm font-bold tracking-wide', photo ? 'text-white' : 'text-brand-300']}>
+          {eyebrow}
+        </p>
+      )
+    }
 
     <h1
       class:list={[

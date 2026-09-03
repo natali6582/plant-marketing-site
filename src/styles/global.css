@@ -389,6 +389,62 @@ body {
 
 
 /*
+  Header lockup motion. Two beats on arrival — the mark scales up out of a
+  slight turn, then the wordmark slides in from the mark's side — and a small
+  lift with a blue glow on hover. Both gated the way every other motion here
+  is: on .js, so the lockup is simply present without script, and under
+  no-preference, so a visitor who asked for less motion gets none.
+
+  The entrance uses fill-mode `backwards`, not `both`: `both` would keep the
+  animation's final transform applied forever, and an animation's value
+  outranks a hover rule, so the lift would never move. `backwards` holds the
+  starting frame until the animation begins and then gets out of the way.
+*/
+.logo-mark {
+  transition:
+    transform var(--motion-interactive) ease-out,
+    filter var(--motion-interactive) ease-out;
+}
+
+.logo:hover .logo-mark,
+.logo:focus-visible .logo-mark {
+  transform: translateY(-2px);
+  filter: drop-shadow(0 6px 12px rgb(56 152 216 / 0.45));
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .js .logo-mark {
+    animation: logo-mark-in 600ms var(--ease-float) backwards;
+  }
+
+  .js .logo-wordmark {
+    animation: logo-wordmark-in 500ms var(--ease-float) 150ms backwards;
+  }
+}
+
+@keyframes logo-mark-in {
+  from {
+    opacity: 0;
+    transform: scale(0.6) rotate(-12deg);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes logo-wordmark-in {
+  from {
+    opacity: 0;
+    transform: translateX(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/*
   Card hover: a 1% scale reads as a ~2px lift on every edge of a tall card.
   focus-within so it answers the keyboard too.
 */

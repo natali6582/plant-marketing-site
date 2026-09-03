@@ -320,6 +320,101 @@ body {
 }
 
 /*
+  Icon tiles. 64px tile with a 28px icon by default, 44px with 20px for the
+  smaller cards. The shadow is blue-tinted rather than grey — a neutral drop
+  shadow under a blue-on-white card reads as dirt.
+*/
+.icon-tile {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border-radius: var(--radius-2xl, 1rem);
+  background: #fff;
+  border: 1px solid var(--color-brand-100);
+  box-shadow: 0 8px 24px -12px rgb(31 63 143 / 0.18);
+  color: var(--color-brand-600);
+}
+
+.icon-tile--sm {
+  width: 44px;
+  height: 44px;
+}
+
+/*
+  On a dark band the tile inverts, so it reads as a lit chip on the blue rather
+  than a white hole punched through it. Driven by the band, not by a prop: any
+  section that sets data-band="dark" flips every tile inside it.
+*/
+[data-band='dark'] .icon-tile {
+  background: var(--color-brand-700);
+  border-color: var(--color-brand-600);
+  color: #fff;
+}
+
+/*
+  Hero glow. Depth on the dark surfaces without an image: two soft blobs and one
+  faint white bloom, all gradients. isolation keeps the z-index:-1 layers inside
+  this element, so they paint over the section's own gradient and under every
+  child — including the montage, which stays the hero of the hero.
+
+  The bright blob sits top-right on purpose. In RTL the headline begins at the
+  right edge, and at 78% 22% the blob clears its first words: on this page the
+  clipped slope puts that corner above the line the text starts on.
+
+  Intensities are the two numbers worth tuning, and they were set by contrast,
+  not by eye — see the PR. Static; nothing here animates.
+*/
+.hero-glow {
+  position: relative;
+  isolation: isolate;
+}
+
+.hero-glow::before,
+.hero-glow::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.hero-glow::before {
+  background:
+    radial-gradient(
+      60% 55% at 78% 22%,
+      color-mix(in srgb, var(--color-brand-400) 32%, transparent),
+      transparent 70%
+    ),
+    radial-gradient(
+      45% 40% at 18% 80%,
+      color-mix(in srgb, var(--color-brand-300) 18%, transparent),
+      transparent 70%
+    );
+}
+
+.hero-glow::after {
+  background: radial-gradient(35% 30% at 62% 60%, rgb(255 255 255 / 0.06), transparent 70%);
+  mix-blend-mode: screen;
+}
+
+/* Half strength, for the lead-form band — the same language, quieter. */
+.hero-glow--soft::before {
+  background:
+    radial-gradient(
+      60% 55% at 78% 22%,
+      color-mix(in srgb, var(--color-brand-400) 16%, transparent),
+      transparent 70%
+    ),
+    radial-gradient(
+      45% 40% at 18% 80%,
+      color-mix(in srgb, var(--color-brand-300) 9%, transparent),
+      transparent 70%
+    );
+}
+
+/*
   Card hover: a 1% scale reads as a ~2px lift on every edge of a tall card.
   focus-within so it answers the keyboard too.
 */

@@ -110,7 +110,14 @@ const beats = [
 
     The connector between beats is a border on the list item rather than a
     drawn arrow, so it follows RTL reading order with no mirroring logic and
-    simply is not there once the beats stack on a phone. The only motion is
+    simply is not there once the beats stack on a phone.
+
+    It is border-s / ps-8, the inline-START side, and that is the whole point:
+    the page is RTL, so the first beat is the rightmost column. A rule on the
+    inline-END side put beat 2's rule between beats 2 and 3, left the gap
+    between beats 1 and 2 bare, and hung beat 3's rule on the grid's outer
+    left edge with nothing beyond it. On the start side each rule after the
+    first falls in a gap, and there is no trailing one. The only motion is
     the existing .reveal stagger, which brings them in one after the other.
   -->
   <section class="band bg-white" aria-labelledby="story-title">
@@ -122,7 +129,7 @@ const beats = [
             <li
               class:list={[
                 'reveal text-center md:text-start',
-                index > 0 && 'md:border-e md:border-brand-200 md:pe-8',
+                index > 0 && 'md:border-s md:border-brand-200 md:ps-8',
               ]}
             >
               <div class="flex justify-center md:justify-start">

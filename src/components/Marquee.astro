@@ -22,7 +22,7 @@ const { items, label } = Astro.props;
 const track = [...items, ...items];
 ---
 
-<section class="band bg-ink-50" aria-label={label}>
+<section class="band bg-surface-blue" aria-label={label}>
   <div class="marquee" data-marquee>
     <ul class="marquee__track" data-marquee-track>
       {
@@ -30,7 +30,7 @@ const track = [...items, ...items];
           const isClone = index >= items.length;
           return (
             <li
-              class="marquee__item mx-4 flex max-h-[70px] shrink-0 items-center gap-2 rounded-full border border-brand-100 bg-white px-5 py-3 md:mx-6"
+              class="marquee__item mx-4 flex max-h-[70px] shrink-0 items-center gap-2 rounded-full border border-brand-200 bg-white hover:border-brand-400 px-5 py-3 md:mx-6"
               dir="rtl"
               data-clone={isClone ? '' : undefined}
               aria-hidden={isClone ? 'true' : undefined}

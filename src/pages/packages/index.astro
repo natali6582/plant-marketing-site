@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/PageHero.astro';
 import LeadForm from '../../components/LeadForm.astro';
 import { packages } from '../../data/packages';
 
@@ -15,14 +16,12 @@ import { packages } from '../../data/packages';
   title="חבילות | Plan-T"
   description="ארבע חבילות Plan-T — Planner, Pro, Enterprise ו-Funds — לפי סוג המשרד והלקוחות שהוא מלווה. כל החבילות על תשתית אחת."
 >
-  <section class="bg-gradient-to-b from-white to-brand-100 text-ink-900">
-    <div class="mx-auto max-w-4xl px-4 py-16 text-center">
-      <h1 class="reveal-lines text-4xl font-bold md:text-5xl">חבילות</h1>
-      <p class="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-ink-700">
-        אותה פלטפורמה, ארבע חבילות — לפי סוג המשרד, הלקוחות שהוא מלווה והנכסים שהוא מנהל.
-      </p>
-    </div>
-  </section>
+  <PageHero size="compact" seed={1} cta={{ label: 'תיאום הדגמה', href: '#lead-form' }}>
+    <Fragment slot="title">חבילות</Fragment>
+    <Fragment slot="lead">
+      אותה פלטפורמה, ארבע חבילות — לפי סוג המשרד, הלקוחות שהוא מלווה והנכסים שהוא מנהל.
+    </Fragment>
+  </PageHero>
 
   <section class="band bg-white" aria-labelledby="packages-title">
     <div class="mx-auto max-w-6xl px-4">

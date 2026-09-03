@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
 import LeadForm from '../components/LeadForm.astro';
 
 /*
@@ -31,25 +32,15 @@ const enables = [
   title="Plan-T לסוכני ביטוח — כל התיק של הלקוח במקום אחד"
   description="Plan-T מרכזת לסוכני ביטוח את הנתונים הפנסיוניים והפיננסיים של הלקוח — מסלקה, כיסויים וחיסכון — בתמונה אחת, ומכינה אתכם לפגישה בדקות."
 >
-  <section class="bg-gradient-to-b from-white to-brand-100 text-ink-900">
-    <div class="mx-auto max-w-4xl px-4 py-16 text-center">
-      <!-- PR B: the ~120px stage marker (all three rings, this one lit) goes
-           here, aria-hidden. -->
-      <h1 class="reveal-lines text-4xl font-bold md:text-5xl">
-        הלקוח שלך הוא יותר מהפוליסה. עכשיו אפשר לראות את זה.
-      </h1>
-      <p class="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-ink-700">
-        <span class="ltr">Plan-T</span> מרכזת את הנתונים הפנסיוניים והפיננסיים של הלקוח במקום אחד —
-        כדי שתגיעו לכל פגישה עם התמונה השלמה, ולא רק עם המוצר שעל השולחן.
-      </p>
-      <a
-        href="#lead-form"
-        class="btn-pill btn-solid mt-10 inline-block rounded-full px-10 py-4 text-lg font-bold text-white"
-      >
-        תיאום הדגמה
-      </a>
-    </div>
-  </section>
+  <!-- PR B: the ~120px stage marker (all three rings, this one lit) goes
+       here, aria-hidden. -->
+  <PageHero size="compact" seed={3} cta={{ label: 'תיאום הדגמה', href: '#lead-form' }}>
+    <Fragment slot="title">הלקוח שלך הוא יותר מהפוליסה. עכשיו אפשר לראות את זה.</Fragment>
+    <Fragment slot="lead">
+      <span class="ltr">Plan-T</span> מרכזת את הנתונים הפנסיוניים והפיננסיים של הלקוח במקום אחד —
+      כדי שתגיעו לכל פגישה עם התמונה השלמה, ולא רק עם המוצר שעל השולחן.
+    </Fragment>
+  </PageHero>
 
   <section class="band bg-white" aria-labelledby="pains-title">
     <div class="mx-auto max-w-5xl px-4">

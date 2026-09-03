@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
 import IconTile from '../components/IconTile.astro';
 import LeadForm from '../components/LeadForm.astro';
 
@@ -114,20 +115,25 @@ const sources = [
   description="איך Plan-T מלווה את תהליך העבודה — מהכנה לפגישה ועד הדוח ללקוח."
 >
   <!-- TODO: a short footnoted proof stat (e.g. "X hours saved per week") could sit here once Natali approves a real, sourced figure. Do not fill with an estimate. -->
-  <section class="bg-gradient-to-b from-white to-brand-100 text-ink-900">
-    <div class="mx-auto max-w-4xl px-4 py-16 text-center">
-      <h1 class="text-4xl font-bold md:text-5xl">תהליכי עבודה עם <span class="ltr">Plan-T</span></h1>
-      <p class="mt-5 text-lg text-ink-700">
-        מהכנה לפגישה ועד הדוח ללקוח — כך <span class="ltr">Plan-T</span> מלווה את העבודה השוטפת.
-      </p>
-    </div>
-  </section>
+  <PageHero size="compact" seed={3} cta={{ label: 'תיאום הדגמה', href: '#lead-form' }}>
+    <Fragment slot="title">תהליכי עבודה עם <span class="ltr">Plan-T</span></Fragment>
+    <Fragment slot="lead">
+      מהכנה לפגישה ועד הדוח ללקוח — כך <span class="ltr">Plan-T</span> מלווה את העבודה השוטפת.
+    </Fragment>
+  </PageHero>
 
-  <div class="mx-auto max-w-5xl px-4 py-16">
     {
       stages.map((stage, index) => (
-        <section id={stage.id} class:list={['reveal scroll-mt-24 py-10', index > 0 && 'border-t border-brand-100']} aria-labelledby={`${stage.id}-title`}>
-          <h2 id={`${stage.id}-title`} class="text-3xl font-bold text-brand-800">{stage.title}</h2>
+        <section
+          id={stage.id}
+          class:list={[
+            'band scroll-mt-24',
+            index % 2 === 0 ? 'bg-surface-blue' : 'bg-white',
+          ]}
+          aria-labelledby={`${stage.id}-title`}
+        >
+          <div class="reveal mx-auto max-w-5xl px-4">
+          <h2 id={`${stage.id}-title`} class="reveal-lines text-3xl font-bold text-brand-800">{stage.title}</h2>
           <ul class="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {stage.items.map((item) => (
               <li
@@ -140,11 +146,13 @@ const sources = [
               </li>
             ))}
           </ul>
+          </div>
         </section>
       ))
     }
 
-    <section id="sources" class="reveal scroll-mt-24 border-t border-brand-100 py-10" aria-labelledby="sources-title">
+    <section id="sources" class="band bg-surface-blue scroll-mt-24" aria-labelledby="sources-title">
+      <div class="reveal mx-auto max-w-5xl px-4">
       <h2 id="sources-title" class="text-2xl font-bold text-brand-800">מקורות מידע שמתחברים ל-<span class="ltr">Plan-T</span></h2>
       <ul class="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {
@@ -161,8 +169,9 @@ const sources = [
         }
       </ul>
       <!-- TODO(F-1): additional data-source cards pending Natali's confirmation of which sources are live. Do not add without approval. -->
+    </div>
     </section>
-  </div>
+  
 
   <LeadForm source="website-solutions" heading="נדבר על תהליך העבודה שלכם?" />
 </BaseLayout>

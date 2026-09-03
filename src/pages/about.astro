@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
 import LeadForm from '../components/LeadForm.astro';
 
 const principles = [
@@ -24,38 +25,21 @@ const principles = [
 >
   <!-- M3 — same artwork family and treatment as the webinar strip, so the
        site's two photographic moments read as one brand. Decorative: empty alt. -->
-  <section class="relative isolate overflow-hidden bg-brand-50 text-ink-900">
-    <picture>
-      <source srcset="/images/mood-growth-wide.webp" type="image/webp" />
-      <img
-        src="/images/mood-growth-wide.jpg"
-        alt=""
-        width="1920"
-        height="847"
-        loading="eager"
-        decoding="async"
-        class="absolute inset-0 -z-10 h-full w-full object-cover"
-        aria-hidden="true"
-      />
-    </picture>
-    <div class="absolute inset-0 -z-10 bg-gradient-to-b from-white/45 via-white/60 to-white/45" aria-hidden="true"></div>
-    <div class="mx-auto max-w-4xl px-4 py-20 text-center md:py-24">
-      <!-- Ink, not brand-800: on this photograph brand-800 measures 3.18:1 and
-           ink-900 measures 6.05:1. -->
-      <h1 class="text-4xl font-bold text-ink-900 md:text-5xl">המקום שבו כל התמונה של הלקוח מתחברת.</h1>
-      <p class="mt-5 text-lg text-ink-900">
-        <span class="ltr">Plan-T</span> נבנית לסוכני ביטוח, למתכננים פיננסיים ולמנהלי עושר שרוצים לראות את הלקוח בתמונה רחבה יותר — בלי להוסיף עוד מורכבות ליום העבודה.
-      </p>
-    </div>
-  </section>
+  <PageHero size="compact" seed={1} cta={{ label: 'תיאום הדגמה', href: '#lead-form' }}>
+    <Fragment slot="title">המקום שבו כל התמונה של הלקוח מתחברת.</Fragment>
+    <Fragment slot="lead">
+      <span class="ltr">Plan-T</span> נבנית לסוכני ביטוח, למתכננים פיננסיים ולמנהלי עושר שרוצים לראות את הלקוח בתמונה רחבה יותר — בלי להוסיף עוד מורכבות ליום העבודה.
+    </Fragment>
+  </PageHero>
 
-  <section class="mx-auto max-w-3xl px-4 py-16">
+  <section class="band bg-surface-blue">
+    <div class="mx-auto max-w-3xl px-4">
     <!-- "הסיפור" and "החזון": migrated verbatim from the old site's מי אנחנו page
          (old-site-content.md L41–43, L50). MIGRATED — verify with Natali.
          Three claims inside are pending the deferred M-13 ruling and the
          forbidden-word rule, and are listed line-by-line in the PR:
          «יועצים» (L41), «היחידה בישראל» (L41, L42), «למעלה מ-12 שנים» (L42). -->
-    <h2 class="text-3xl font-bold text-brand-800">הסיפור</h2>
+    <h2 class="reveal-lines text-3xl font-bold text-brand-800">הסיפור</h2>
     <div class="mt-4 space-y-4 leading-relaxed text-ink-700">
       <p>
         פלאנטי (<span class="ltr">PLAN-T</span>) היא חברת פינטק ישראלית ותיקה, המובילה את תחום פתרונות הניהול לנותני שירותים בשוק הפיננסי והפנסיוני בישראל – בהם סוכנים פנסיוניים, מתכננים פיננסיים, מנהלי עושר, מתכנני פרישה, יועצים ומנהלי השקעות.
@@ -68,12 +52,12 @@ const principles = [
       </p>
     </div>
 
-    <h2 class="mt-12 text-3xl font-bold text-brand-800">החזון</h2>
+    <h2 class="reveal-lines mt-12 text-3xl font-bold text-brand-800">החזון</h2>
     <p class="mt-4 leading-relaxed text-ink-700">
       להמשיך להוביל ולהנגיש ללקוחותינו פתרונות מתקדמים אשר יתנו מענה לאתגרים הרבים בשוק וזאת באמצעות פיתוח כלים חדשניים שיתנו לנותני השירותים יתרון תחרותי, ישפרו את חוויית הלקוח הסופי.
     </p>
 
-    <h2 class="mt-12 text-3xl font-bold text-brand-800">מה מנחה אותנו</h2>
+    <h2 class="reveal-lines mt-12 text-3xl font-bold text-brand-800">מה מנחה אותנו</h2>
     <div class="mt-6 grid gap-5">
       {
         principles.map((item) => (
@@ -88,7 +72,7 @@ const principles = [
     <!-- "הצוות": the three managers from the old site's הנהלת החברה block
          (old-site-content.md L52–60). Names, roles and emails verbatim; no
          photos, because none were supplied. MIGRATED — verify with Natali. -->
-    <h2 class="mt-12 text-3xl font-bold text-brand-800">הצוות</h2>
+    <h2 class="reveal-lines mt-12 text-3xl font-bold text-brand-800">הצוות</h2>
     <ul class="mt-6 grid gap-5 sm:grid-cols-3">
       {
         [
@@ -104,6 +88,7 @@ const principles = [
         ))
       }
     </ul>
+    </div>
   </section>
 
   <LeadForm source="website-about" heading="רוצים להכיר מקרוב?" />

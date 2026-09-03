@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
 import LeadForm from '../components/LeadForm.astro';
 ---
 
@@ -7,16 +8,15 @@ import LeadForm from '../components/LeadForm.astro';
   title="יצירת קשר ותיאום הדגמה | Plan-T"
   description="השאירו פרטים ונחזור אליכם לתיאום הדגמה של Plan-T, או כתבו לנו ישירות בדוא״ל."
 >
-  <section class="bg-gradient-to-b from-white to-brand-100 text-ink-900">
-    <div class="mx-auto max-w-4xl px-4 py-16 text-center">
-      <h1 class="text-4xl font-bold md:text-5xl">בואו נדבר</h1>
-      <p class="mt-5 text-lg text-ink-700">
-        השאירו פרטים ונחזור אליכם תוך יום עסקים אחד לתיאום הדגמה קצרה.
-      </p>
-    </div>
-  </section>
+  <PageHero size="compact" seed={2}>
+    <Fragment slot="title">בואו נדבר</Fragment>
+    <Fragment slot="lead">
+      השאירו פרטים ונחזור אליכם תוך יום עסקים אחד לתיאום הדגמה קצרה.
+    </Fragment>
+  </PageHero>
 
-  <section class="mx-auto max-w-4xl px-4 py-12">
+  <section class="band bg-surface-blue">
+    <div class="mx-auto max-w-4xl px-4">
     <div class="grid gap-6 sm:grid-cols-2">
       <div class="rounded-2xl border border-brand-200 bg-white hover:border-brand-400 p-6 shadow-sm">
         <h2 class="text-lg font-bold text-brand-800">דוא״ל</h2>
@@ -30,6 +30,7 @@ import LeadForm from '../components/LeadForm.astro';
           <a href="tel:+972733861711" class="ltr font-medium text-brand-600 underline hover:text-brand-800">073-3861711</a>
         </p>
       </div>
+    </div>
     </div>
   </section>
 

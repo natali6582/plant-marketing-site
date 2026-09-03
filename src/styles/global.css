@@ -445,6 +445,38 @@ body {
 }
 
 /*
+  Header logo sizing, and the reason it is two sizes.
+
+  The lockup exists in two crops Natali made: the mark with "Plan-T", and the
+  same plus the English tagline. The tagline is 22px of the 180px source — 12.2%
+  of whatever height the logo is displayed at — so it only clears 8px of cap
+  height, the floor for small type, once the logo is 66px tall and 235px wide.
+  That is larger than the 56px she had just called too big, because on a 360px
+  phone 173px of logo is half the screen width.
+
+  Both complaints are real and they pull opposite ways, so the two crops split by
+  viewport: the compact mark alone up to the tablet width, the full lockup with
+  the tagline from 1024px up. Not 768px, which is where the desktop nav appears
+  and is measurably the worst case for both: at that width the 235px lockup left
+  the nav too little room and it wrapped to two lines, while flex shrank the
+  image itself to a 3.43:1 ratio against its natural 3.56:1 — a visibly squashed
+  logo. 1024px measured clean, ratio 3.555 against 3.556 and the nav on one line. A <picture> in the header picks one,
+  so only one file is ever fetched. Heights live here rather than in Tailwind
+  utilities because the arbitrary-value classes this header used before
+  (h-[56px]) never compiled, and 66px has no place on the spacing scale.
+*/
+.logo-img {
+  width: auto;
+  height: 40px;
+}
+
+@media (min-width: 64rem) {
+  .logo-img {
+    height: 66px;
+  }
+}
+
+/*
   Card hover: a 1% scale reads as a ~2px lift on every edge of a tall card.
   focus-within so it answers the keyboard too.
 */

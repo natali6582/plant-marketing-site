@@ -46,34 +46,32 @@ const linkClass = (href: string) =>
 -->
 <header class="sticky top-0 z-50 border-b border-brand-100 bg-white">
   <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3">
-    <!-- The Plan-T lockup — mark and chrome wordmark — cut from the render Natali
-         supplied on 03/09/2026, in the header on every page by her decision.
-         Two images, not one, so each can arrive on its own beat: the mark first,
-         the wordmark a moment behind it (see .logo-mark in the stylesheet). The
-         anchor is LTR so the lockup reads as the brand drew it, mark left and
-         wordmark right, the same way the footer shows it. Both are rasters
-         because the source is; the anchor's aria-label carries the name, so the
-         images stay decorative. Sizes: the mark is h-14/w-14 (56px); the wordmark
-         has no 35px utility, so its width/height attributes size it and w-auto
-         keeps the ratio. Replace with vectors the day they exist. -->
-    <a href="/" class="logo ltr flex items-center gap-2" aria-label="Plan-T — דף הבית">
+    <!-- Logo swap, 03/09/2026: Natali supplied a new flat lockup (logo-header.png,
+         920x340, no transparency) and measured her own crop — (120,50)-(540,186)
+         on the source, mark + "Plan-T" wordmark, no tagline — because at header
+         height the tagline blurs to nothing. That crop is one PNG now, not the
+         two-image mark/wordmark split the previous version used, so this is a
+         single <img>. Same slot, same link, same rendered height as before (the
+         mark alone was 56px; the width here is that height at the new asset's own
+         3.09:1 ratio, 173px, via inline style rather than an arbitrary Tailwind
+         class — h-[56px]/w-[56px] on the prior version never actually compiled,
+         width/height attributes were carrying the size the whole time). class
+         "logo-mark" reuses the existing entrance and hover motion as-is; no CSS
+         changed for this swap. White background is fine here — the header is
+         white too. Still a raster; still due for a vector the day one exists.
+         The footer's lockup (lockup-plant.png, mark + chrome wordmark on
+         transparency) and the favicon are untouched — this file has no alpha,
+         so it would show as a white box on the footer's blue and is out of scope
+         for a header-only swap. -->
+    <a href="/" class="logo flex items-center" aria-label="Plan-T — דף הבית">
       <img
-        src="/images/mark-plant.png"
-        alt=""
-        width="56"
+        src="/images/logo-header.png"
+        alt="Plan-T"
+        width="173"
         height="56"
         decoding="async"
-        class="logo-mark h-14 w-14"
-        aria-hidden="true"
-      />
-      <img
-        src="/images/wordmark-plant.png"
-        alt=""
-        width="138"
-        height="35"
-        decoding="async"
-        class="logo-wordmark w-auto"
-        aria-hidden="true"
+        class="logo-mark"
+        style="width: 173px; height: 56px;"
       />
     </a>
 

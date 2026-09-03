@@ -69,20 +69,48 @@ const tour = [
   <!-- The hero every other page now opens with too. The band's bottom edge is
        clipped on a diagonal, mirrored from the measured Orion slope so it falls
        toward the right in RTL; that lives in .hero-slope, inside PageHero. -->
-  <PageHero
-    size="full"
-    seed={1}
-    image
-    eyebrow="הפלטפורמה שרואה את כל התמונה של הלקוח"
-    cta={{ label: 'תיאום הדגמה', href: '/contact/' }}
-  >
+  <PageHero size="full" background="photo" image eyebrow="הפלטפורמה שרואה את כל התמונה של הלקוח">
+    <Fragment slot="background">
+      <!-- The photograph that used to sit behind the testimonial band; the two
+           swapped places. Eager and high priority because it is above the fold
+           and is now the page's LCP element. object-position keeps the three
+           faces in frame when the band is cropped narrow on a phone.
+           Decorative: the hero's own words carry the meaning. -->
+      <picture>
+        <source srcset="/images/mood-advisors.webp" type="image/webp" />
+        <img
+          src="/images/mood-advisors.jpg"
+          alt=""
+          width="1168"
+          height="620"
+          loading="eager"
+          fetchpriority="high"
+          decoding="async"
+          class="absolute inset-0 -z-10 h-full w-full object-cover [object-position:center_30%]"
+          aria-hidden="true"
+        />
+      </picture>
+      <!-- Legibility overlay. The photograph is bright and the type is white,
+           so this is not decoration — the ratios in the PR are measured over
+           the brightest pixel behind each line, with these exact stops. -->
+      <div
+        class="absolute inset-0 -z-10 bg-gradient-to-b from-brand-900/75 via-brand-800/66 to-brand-700/56"
+        aria-hidden="true"
+      ></div>
+    </Fragment>
     <Fragment slot="title">כל תיק הלקוח. תמונה אחת ברורה.</Fragment>
     <Fragment slot="lead">
       <span class="ltr">Plan-T</span> מרכזת את הנתונים הפיננסיים והפנסיוניים, מסדרת את תהליך
       העבודה ומאפשרת להתמקד בתכנון ובשיחה עם הלקוח.
     </Fragment>
     <Fragment slot="image">
-      <!-- M1 — the product is the hero. The browser chrome that framed the
+      <!-- M1 — the product is the hero. Still eager, because it is above the
+           fold, but no longer fetchpriority="high": the photograph behind the
+           hero is now the larger painted element and therefore the LCP
+           candidate, and two images both claiming high priority only make them
+           compete. One high-priority image per page is the point of the hint.
+
+           The browser chrome that framed the
            previous single screen is gone: this is a montage of floating panels
            with its own light ground, and a single address bar around it would
            claim it is one page when it is not. -->
@@ -95,7 +123,6 @@ const tour = [
             width="1168"
             height="784"
             loading="eager"
-            fetchpriority="high"
             decoding="async"
             class="block w-full"
           />
@@ -253,30 +280,17 @@ const tour = [
        (the editor's stray non-breaking spaces and doubled spaces collapsed),
        and CRM is wrapped in .ltr like every other Latin string on the site.
        Do not reword, and add nothing that is not published. -->
-  <section class="band relative isolate overflow-hidden bg-surface-blue" aria-labelledby="proof-title">
-    <!-- Decorative only: advisers at a table, under the white wash the rest of
-         the mood imagery uses. Empty alt — the testimonial carries the meaning,
-         the photograph only sets the room. -->
-    <picture>
-      <source srcset="/images/mood-advisors.webp" type="image/webp" />
-      <img
-        src="/images/mood-advisors.jpg"
-        alt=""
-        width="1168"
-        height="620"
-        loading="lazy"
-        decoding="async"
-        class="absolute inset-0 -z-10 h-full w-full object-cover"
-        aria-hidden="true"
-      />
-    </picture>
-    <div
-      class="absolute inset-0 -z-10 bg-gradient-to-b from-white/45 via-white/60 to-white/45"
-      aria-hidden="true"
-    ></div>
+  <section
+    class="band relative isolate overflow-hidden bg-gradient-to-b from-brand-800 to-brand-700 bokeh-host text-white"
+    data-band="dark"
+    aria-labelledby="proof-title"
+  >
+    <!-- Seed 3 rather than 2: the lead-form band directly below is seed 3 too,
+         but at half intensity on a much shorter band, so the two crops share no
+         visible discs. Seed 1 is the hero's. -->
+    <BokehBackground intensity="half" seed={3} />
     <div class="mx-auto max-w-2xl px-4 text-center">
-      <!-- Ink, not brand-800: on this photograph brand-800 measures 2.77:1. -->
-      <h2 id="proof-title" class="reveal-lines text-3xl font-bold text-ink-900">משרדים שכבר עובדים איתנו</h2>
+      <h2 id="proof-title" class="reveal-lines text-3xl font-bold text-white">משרדים שכבר עובדים איתנו</h2>
       <figure class="reveal reveal--float card-lift mt-8 rounded-2xl border border-brand-200 bg-white hover:border-brand-400 p-8 shadow-sm sm:p-10">
         <blockquote class="text-lg leading-relaxed text-ink-900 sm:text-xl">"סוף סוף מערכת שמרכזת הכל במקום אחד , <span class="ltr">CRM</span> :דוחות ללקוחות, ניהול חשיפות, תכנון פיננסי, תפעול ובקרה, – בלי קפיצות בין מערכות ובלי בזבוז זמן מיותר."</blockquote>
         <figcaption class="mt-6 text-sm font-bold text-brand-600">רווית, סוכנת ביטוח ופיננסים עצמאית</figcaption>

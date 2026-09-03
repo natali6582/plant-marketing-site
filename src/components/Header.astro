@@ -46,33 +46,33 @@ const linkClass = (href: string) =>
 -->
 <header class="sticky top-0 z-50 border-b border-brand-100 bg-white">
   <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3">
-    <!-- Logo swap, 03/09/2026: Natali supplied a new flat lockup (logo-header.png,
-         920x340, no transparency) and measured her own crop — (120,50)-(540,186)
-         on the source, mark + "Plan-T" wordmark, no tagline — because at header
-         height the tagline blurs to nothing. That crop is one PNG now, not the
-         two-image mark/wordmark split the previous version used, so this is a
-         single <img>. Same slot, same link, same rendered height as before (the
-         mark alone was 56px; the width here is that height at the new asset's own
-         3.09:1 ratio, 173px, via inline style rather than an arbitrary Tailwind
-         class — h-[56px]/w-[56px] on the prior version never actually compiled,
-         width/height attributes were carrying the size the whole time). class
-         "logo-mark" reuses the existing entrance and hover motion as-is; no CSS
-         changed for this swap. White background is fine here — the header is
-         white too. Still a raster; still due for a vector the day one exists.
-         The footer's lockup (lockup-plant.png, mark + chrome wordmark on
-         transparency) and the favicon are untouched — this file has no alpha,
-         so it would show as a white box on the footer's blue and is out of scope
-         for a header-only swap. -->
-    <a href="/" class="logo flex items-center" aria-label="Plan-T — דף הבית">
-      <img
-        src="/images/logo-header.png"
-        alt="Plan-T"
-        width="173"
-        height="56"
-        decoding="async"
-        class="logo-mark"
-        style="width: 173px; height: 56px;"
-      />
+    <!-- The lockup, in the two crops Natali cut and at the two sizes her own
+         feedback forces. She asked for the version with the English tagline and
+         in the same breath said the logo was too big; measured, those conflict —
+         the tagline is 12.2% of the image height, so it needs the logo at 66px
+         to reach a legible 8px cap, while 56px was already half the width of a
+         360px phone. So the phone gets the compact mark-and-wordmark crop at
+         40px and everything from 1024px up gets the full crop with the tagline at
+         66px — 768px was measured and rejected: there the nav wrapped and flex
+         squashed the image off its own ratio. shrink-0 is why it cannot squash
+         again at any width. A <picture>, not two <img>, so the browser fetches one file and
+         not both; the <img> is the styled element, and w-auto lets each crop keep
+         its own ratio (3.09:1 compact, 3.56:1 full). Sizes are in .logo-img in
+         the stylesheet. class "logo-mark" keeps the existing entrance and hover.
+         Both files are rasters on a white ground — fine on a white header, still
+         wrong for the footer, which keeps its own transparent lockup. -->
+    <a href="/" class="logo flex shrink-0 items-center" aria-label="Plan-T — דף הבית">
+      <picture>
+        <source media="(min-width: 64rem)" srcset="/images/logo-header-full.png" width="235" height="66" />
+        <img
+          src="/images/logo-header.png"
+          alt="Plan-T"
+          width="124"
+          height="40"
+          decoding="async"
+          class="logo-mark logo-img"
+        />
+      </picture>
     </a>
 
     {!minimal && (

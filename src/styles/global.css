@@ -354,65 +354,39 @@ body {
 }
 
 /*
-  Hero glow. Depth on the dark surfaces without an image: two soft blobs and one
-  faint white bloom, all gradients. isolation keeps the z-index:-1 layers inside
-  this element, so they paint over the section's own gradient and under every
-  child — including the montage, which stays the hero of the hero.
-
-  The bright blob sits top-right on purpose. In RTL the headline begins at the
-  right edge, and at 78% 22% the blob clears its first words: on this page the
-  clipped slope puts that corner above the line the text starts on.
-
-  Intensities are the two numbers worth tuning, and they were set by contrast,
-  not by eye — see the PR. Static; nothing here animates.
+  Bokeh field. The host provides the frame the SVG fills: isolation keeps the
+  z-index:-1 layer inside this section, so it paints over the section's own
+  gradient and under every child — the montage in the hero included — and
+  overflow clips the discs that hang past the edges by design.
 */
-.hero-glow {
+.bokeh-host {
   position: relative;
   isolation: isolate;
+  overflow: hidden;
 }
 
-.hero-glow::before,
-.hero-glow::after {
-  content: '';
+.bokeh {
   position: absolute;
   inset: 0;
   z-index: -1;
+  width: 100%;
+  height: 100%;
   pointer-events: none;
 }
 
-.hero-glow::before {
-  background:
-    radial-gradient(
-      60% 55% at 78% 22%,
-      color-mix(in srgb, var(--color-brand-400) 32%, transparent),
-      transparent 70%
-    ),
-    radial-gradient(
-      45% 40% at 18% 80%,
-      color-mix(in srgb, var(--color-brand-300) 18%, transparent),
-      transparent 70%
-    );
-}
+/*
+  No drift. The brief allowed a very slow one and it is implemented nowhere:
+  the condition for keeping it was a measured frame cost on a mid-range phone,
+  and that test could not be run here — the tool's browser does not run
+  animation frames while its pane is hidden, so every rAF sample timed out.
 
-.hero-glow::after {
-  background: radial-gradient(35% 30% at 62% 60%, rgb(255 255 255 / 0.06), transparent 70%);
-  mix-blend-mode: screen;
-}
+  Rather than ship an unmeasured always-on cost, the field is static. What it
+  would have cost is a permanently promoted, filtered compositing layer on the
+  hero of every desktop visit, in exchange for a ±20px drift over 52 seconds
+  that almost nobody would notice. The group below still carries .bokeh__drift,
+  so turning it on later is a CSS-only change against a real measurement.
+*/
 
-/* Half strength, for the lead-form band — the same language, quieter. */
-.hero-glow--soft::before {
-  background:
-    radial-gradient(
-      60% 55% at 78% 22%,
-      color-mix(in srgb, var(--color-brand-400) 16%, transparent),
-      transparent 70%
-    ),
-    radial-gradient(
-      45% 40% at 18% 80%,
-      color-mix(in srgb, var(--color-brand-300) 9%, transparent),
-      transparent 70%
-    );
-}
 
 /*
   Card hover: a 1% scale reads as a ~2px lift on every edge of a tall card.

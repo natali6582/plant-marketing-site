@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import LeadForm from '../components/LeadForm.astro';
 import Marquee from '../components/Marquee.astro';
+import BokehBackground from '../components/BokehBackground.astro';
 import IconTile from '../components/IconTile.astro';
 import StatsRow from '../components/StatsRow.astro';
 import AudienceSelector from '../components/AudienceSelector.astro';
@@ -62,7 +63,8 @@ const tour = [
 >
   <!-- Hero. The band's bottom edge is clipped on a diagonal, mirrored from
        the measured Orion slope so it falls toward the right in RTL. -->
-  <section class="hero-slope hero-glow bg-gradient-to-b from-brand-800 to-brand-700 text-white" data-band="dark">
+  <section class="hero-slope bokeh-host bg-gradient-to-b from-brand-800 to-brand-700 text-white" data-band="dark">
+    <BokehBackground intensity="full" seed={1} />
     <div class="mx-auto max-w-6xl px-4 py-20 text-center md:py-28">
       <p class="text-sm font-bold tracking-wide text-brand-300">הפלטפורמה שרואה את כל התמונה של הלקוח</p>
       <h1 class="reveal-lines mx-auto mt-4 max-w-3xl text-4xl font-bold leading-tight md:text-6xl">

@@ -47,16 +47,22 @@ const linkClass = (href: string) =>
 <header class="sticky top-0 z-50 border-b border-brand-100 bg-white">
   <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3">
     <a href="/" class="flex items-center gap-2 text-xl font-black text-ink-900" aria-label="Plan-T — דף הבית">
-      <!-- The Plan-T mark: circle with the T in negative space. Geometry and
-           colours taken from the official logo on plan-t.org.il. -->
-      <svg width="30" height="30" viewBox="0 0 768 768" fill="none" aria-hidden="true">
-        <clipPath id="plant-mark"><circle cx="384" cy="384" r="384" /></clipPath>
-        <g clip-path="url(#plant-mark)">
-          <rect x="0" y="0" width="768" height="319" fill="#101228" />
-          <rect x="0" y="407" width="340" height="361" fill="#249FDA" />
-          <rect x="428" y="407" width="340" height="361" fill="#8DC63F" />
-        </g>
-      </svg>
+      <!-- The Plan-T mark, cut from the lockup Natali supplied on 03/09/2026.
+           It is a raster because the source is: the render arrived on a black
+           ground with no transparency, so the mark was masked out of it on its
+           own circle. That drops the outer glow, which at 30px was never going
+           to read anyway, and keeps the night sky, the stars and the quadrants
+           that make this version the new one. Replace with a vector the day
+           one exists. -->
+      <img
+        src="/images/mark-plant.png"
+        alt=""
+        width="30"
+        height="30"
+        decoding="async"
+        class="h-[30px] w-[30px]"
+        aria-hidden="true"
+      />
       <span class="ltr">Plan-T</span>
     </a>
 

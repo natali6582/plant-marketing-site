@@ -445,34 +445,84 @@ body {
 }
 
 /*
-  Header logo sizing, and the reason it is two sizes.
+  Header lockup: two images and a line of live text.
 
-  The lockup exists in two crops Natali made: the mark with "Plan-T", and the
-  same plus the English tagline. The tagline is 22px of the 180px source — 12.2%
-  of whatever height the logo is displayed at — so it only clears 8px of cap
-  height, the floor for small type, once the logo is 66px tall and 235px wide.
-  That is larger than the 56px she had just called too big, because on a 360px
-  phone 173px of logo is half the screen width.
+  The tagline used to be baked into the logo bitmap, and that was the problem.
+  It is 22px of the 180px source — 12.2% of whatever height the logo is shown at
+  — so it only reached a legible 8px cap once the whole lockup was 66px tall and
+  235px wide, which on a phone was half the screen. Rendered as text it is sharp
+  at any size, so the lockup can shrink without the tagline turning to mush.
 
-  Both complaints are real and they pull opposite ways, so the two crops split by
-  viewport: the compact mark alone up to the tablet width, the full lockup with
-  the tagline from 1024px up. Not 768px, which is where the desktop nav appears
-  and is measurably the worst case for both: at that width the 235px lockup left
-  the nav too little room and it wrapped to two lines, while flex shrank the
-  image itself to a 3.43:1 ratio against its natural 3.56:1 — a visibly squashed
-  logo. 1024px measured clean, ratio 3.555 against 3.556 and the nav on one line. A <picture> in the header picks one,
-  so only one file is ever fetched. Heights live here rather than in Tailwind
-  utilities because the arbitrary-value classes this header used before
-  (h-[56px]) never compiled, and 66px has no place on the spacing scale.
+  Three pieces now: the mark, the chrome "Plan-T" (both cut from Natali's render
+  at 4x their largest display size), and the tagline as a real <span>. The text
+  column carries the wordmark above the tagline, left edges aligned, which is
+  how the original artwork sets them — measured, the tagline's left edge sits
+  within 6px of the wordmark's.
+
+  direction: ltr on the lockup is deliberate. The page is RTL, so a plain flex
+  row would put the mark on the right of the wordmark and mirror the logo; ltr
+  here keeps mark-then-type in the order the artwork draws them, while the
+  anchor itself still sits at the right edge of an RTL header.
+
+  Phone and desktop differ in more than size. On a phone the text column is
+  capped so the tagline wraps to two lines and the whole lockup stays under
+  ~160px — on a 360px screen a one-line tagline would have pushed it past half
+  the width, which is the complaint that started this. From 1024px it is one
+  line and nothing wraps.
 */
-.logo-img {
+.logo-lockup {
+  display: flex;
+  direction: ltr;
+  align-items: center;
+  gap: 8px;
+}
+
+.logo-lockup__mark {
   width: auto;
-  height: 40px;
+  height: 36px;
+}
+
+.logo-lockup__text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  max-width: 112px;
+}
+
+.logo-lockup__word {
+  width: auto;
+  height: 18px;
+}
+
+.logo-lockup__tagline {
+  font-size: 9px;
+  line-height: 1.25;
+  letter-spacing: 0.005em;
+  color: var(--color-ink-500);
 }
 
 @media (min-width: 64rem) {
-  .logo-img {
-    height: 66px;
+  .logo-lockup {
+    gap: 12px;
+  }
+
+  .logo-lockup__mark {
+    height: 52px;
+  }
+
+  .logo-lockup__text {
+    max-width: none;
+    gap: 3px;
+  }
+
+  .logo-lockup__word {
+    height: 25px;
+  }
+
+  .logo-lockup__tagline {
+    font-size: 11px;
+    white-space: nowrap;
   }
 }
 

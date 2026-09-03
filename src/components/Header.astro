@@ -46,33 +46,35 @@ const linkClass = (href: string) =>
 -->
 <header class="sticky top-0 z-50 border-b border-brand-100 bg-white">
   <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3">
-    <!-- The lockup, in the two crops Natali cut and at the two sizes her own
-         feedback forces. She asked for the version with the English tagline and
-         in the same breath said the logo was too big; measured, those conflict —
-         the tagline is 12.2% of the image height, so it needs the logo at 66px
-         to reach a legible 8px cap, while 56px was already half the width of a
-         360px phone. So the phone gets the compact mark-and-wordmark crop at
-         40px and everything from 1024px up gets the full crop with the tagline at
-         66px — 768px was measured and rejected: there the nav wrapped and flex
-         squashed the image off its own ratio. shrink-0 is why it cannot squash
-         again at any width. A <picture>, not two <img>, so the browser fetches one file and
-         not both; the <img> is the styled element, and w-auto lets each crop keep
-         its own ratio (3.09:1 compact, 3.56:1 full). Sizes are in .logo-img in
-         the stylesheet. class "logo-mark" keeps the existing entrance and hover.
-         Both files are rasters on a white ground — fine on a white header, still
-         wrong for the footer, which keeps its own transparent lockup. -->
-    <a href="/" class="logo flex shrink-0 items-center" aria-label="Plan-T — דף הבית">
-      <picture>
-        <source media="(min-width: 64rem)" srcset="/images/logo-header-full.png" width="235" height="66" />
+    <!-- Mark, chrome wordmark, and the tagline as live text — Natali's call,
+         and the right one: baked into the bitmap the tagline needed the lockup
+         at 66px/235px to be legible at all, and as text it is sharp at 9px. The
+         two images are cut from her render at 4x their largest display size and
+         sit on a white ground, which is invisible on this white bar but would be
+         wrong anywhere else; the footer keeps its own transparent lockup.
+         aria-label on the anchor is the accessible name, so both images are
+         decorative and the tagline is not announced twice. Sizes, the RTL
+         handling and the phone wrap are in .logo-lockup in the stylesheet. -->
+    <a href="/" class="logo logo-lockup shrink-0" aria-label="Plan-T — דף הבית">
+      <img
+        src="/images/logo-mark.png"
+        alt=""
+        width="245"
+        height="224"
+        decoding="async"
+        class="logo-mark logo-lockup__mark"
+      />
+      <span class="logo-lockup__text">
         <img
-          src="/images/logo-header.png"
-          alt="Plan-T"
-          width="124"
-          height="40"
+          src="/images/logo-wordmark.png"
+          alt=""
+          width="397"
+          height="112"
           decoding="async"
-          class="logo-mark logo-img"
+          class="logo-lockup__word"
         />
-      </picture>
+        <span class="logo-lockup__tagline">Advanced tech for wealth management</span>
+      </span>
     </a>
 
     {!minimal && (

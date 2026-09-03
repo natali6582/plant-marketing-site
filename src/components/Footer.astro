@@ -8,22 +8,30 @@ const year = new Date().getFullYear();
 <footer class="border-t border-brand-800 bg-brand-900 text-brand-100">
   {minimal ? (
     <div class="mx-auto flex max-w-6xl flex-col items-center gap-2 px-4 py-8 text-center text-sm">
-      <!-- The full lockup — the mark and the chrome wordmark — cut from the render
-           Natali supplied on 03/09/2026 and placed here by her decision: the chrome
-           reads best on this blue. The wordmark is inside the image now, so the alt
-           carries the name for assistive tech; the © line below still says it as text. -->
-      <img src="/images/lockup-plant.png" alt="Plan-T" width="172" height="48" decoding="async" loading="lazy" class="h-12 w-auto" />
+      <!-- The full lockup — mark, chrome wordmark and the tagline — from the render
+           Natali picked for the footer. Keyed out by luminance rather than masked:
+           the source sits on a near-black ground, and on this blue a luminance key
+           drops the ground while keeping the glow, the stars and the orbit rings
+           that a hard mask would have cut off. The reflection under the lockup is
+           cropped away — a mirrored floor reads as a smudge once the black it was
+           drawn on is gone. The name is inside the image, so the alt carries it for
+           assistive tech and the © line below still says it as text. -->
+      <img src="/images/lockup-plant.png" alt="Plan-T — Advanced tech for wealth management" width="576" height="169" decoding="async" loading="lazy" class="h-14 w-auto" />
       <a href="/privacy/" class="hover:text-white hover:underline">מדיניות פרטיות</a>
       <p class="text-xs text-brand-300">© <span class="ltr">{year}</span> Plan-T. כל הזכויות שמורות.</p>
     </div>
   ) : (
   <div class="mx-auto grid max-w-6xl gap-8 px-4 py-12 md:grid-cols-2 lg:grid-cols-4">
     <div>
-      <!-- The full lockup — the mark and the chrome wordmark — cut from the render
-           Natali supplied on 03/09/2026 and placed here by her decision: the chrome
-           reads best on this blue. The wordmark is inside the image now, so the alt
-           carries the name for assistive tech; the © line below still says it as text. -->
-      <img src="/images/lockup-plant.png" alt="Plan-T" width="172" height="48" decoding="async" loading="lazy" class="h-12 w-auto" />
+      <!-- The full lockup — mark, chrome wordmark and the tagline — from the render
+           Natali picked for the footer. Keyed out by luminance rather than masked:
+           the source sits on a near-black ground, and on this blue a luminance key
+           drops the ground while keeping the glow, the stars and the orbit rings
+           that a hard mask would have cut off. The reflection under the lockup is
+           cropped away — a mirrored floor reads as a smudge once the black it was
+           drawn on is gone. The name is inside the image, so the alt carries it for
+           assistive tech and the © line below still says it as text. -->
+      <img src="/images/lockup-plant.png" alt="Plan-T — Advanced tech for wealth management" width="576" height="169" decoding="async" loading="lazy" class="h-14 w-auto" />
       <p class="mt-2 max-w-xs text-sm leading-relaxed">
         הפלטפורמה שבה כל התמונה של הלקוח מתחברת.
       </p>

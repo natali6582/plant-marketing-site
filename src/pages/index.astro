@@ -29,8 +29,8 @@ const painCards = [
 /*
   Product tour. The first two are the real screenshots published in the
   מסכי המערכת gallery on plan-t.org.il; `webp` is served with a jpg fallback.
-  The third slot is still a wireframe — the gallery publishes two screens, not
-  three. Replace it when a third screenshot is approved.
+  The third is a screen capture Natali supplied on 03/09/2026 — the automatic-
+  reports settings dialog. It is not from the published gallery; see the PR.
 */
 const tour = [
   {
@@ -50,8 +50,11 @@ const tour = [
     caption: 'מסך ראשי — התמונה המלאה של המשרד.',
   },
   {
-    image: '/images/tour-report.svg',
-    alt: 'צילום מסך להמחשה: דוח מסודר ללקוח שהופק מ-Plan-T',
+    image: '/images/tour-reports-auto',
+    formats: ['webp', 'jpg'],
+    width: 1111,
+    height: 497,
+    alt: 'מסך הדוחות האוטומטיים ב-Plan-T: חלון סיכום ההגדרות של דוח תשואה — מועד השליחה, פירוט ההגדרות לכל דוח ואישור לפני ההפעלה',
     caption: 'דוח ללקוח בלחיצה — מסודר, ממותג ומוכן לשליחה.',
   },
 ];

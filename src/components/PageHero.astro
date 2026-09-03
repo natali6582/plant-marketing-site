@@ -1,0 +1,92 @@
+---
+import BokehBackground from './BokehBackground.astro';
+
+/*
+  The page hero, extracted from the Home page so there is one of them.
+
+  Every page used to open differently: Home on the dark bokeh gradient, /product
+  and /about on bg-brand-50, the rest on a white-to-brand-100 wash. This is
+  Home's, and now it is all of them.
+
+  Title and lead are slots rather than string props on purpose. Several of the
+  headings carry markup — «תהליכי עבודה עם <span class="ltr">Plan-T</span>» —
+  and a string prop would either flatten that or need it escaped back in. Slots
+  move the existing markup across untouched, which is what keeps the copy diff
+  at zero.
+
+  size="full" is Home: its padding, its 6xl heading, and a slot for the montage.
+  size="compact" is every inner page: the same hero at roughly 60% of the
+  vertical padding, no image, and the 5xl heading those pages already had, so
+  nothing jumps. The §5.5 image exception stays Home-only — no screenshot goes
+  in an inner hero.
+
+  bokeh={false} is for the legal pages, which get the flat blue with nothing
+  moving on it.
+*/
+
+interface Props {
+  eyebrow?: string;
+  cta?: { label: string; href: string };
+  size?: 'full' | 'compact';
+  seed?: number;
+  bokeh?: boolean;
+  image?: boolean;
+}
+
+const { eyebrow, cta, size = 'compact', seed = 1, bokeh = true, image = false } = Astro.props;
+const full = size === 'full';
+/* /contact/ has no lead line; an empty <p> would still take its margin. */
+const hasLead = Astro.slots.has('lead');
+---
+
+<section
+  class:list={[
+    'hero-slope bg-gradient-to-b from-brand-800 to-brand-700 text-white',
+    bokeh && 'bokeh-host',
+  ]}
+  data-band="dark"
+>
+  {bokeh && <BokehBackground intensity={full ? 'full' : 'half'} seed={seed} />}
+  <div class:list={['mx-auto max-w-6xl px-4 text-center', full ? 'py-20 md:py-28' : 'py-12 md:py-16']}>
+    {eyebrow && <p class="text-sm font-bold tracking-wide text-brand-300">{eyebrow}</p>}
+
+    <h1
+      class:list={[
+        'reveal-lines mx-auto max-w-3xl font-bold leading-tight text-4xl',
+        eyebrow && 'mt-4',
+        full ? 'md:text-6xl' : 'md:text-5xl',
+      ]}
+    >
+      <slot name="title" />
+    </h1>
+
+    {
+      /* Fades up on the base 20px, not the 60px float: above the fold there is
+         no scroll to enter on, and 60px reached the button below it. */
+      hasLead && (
+        <p class="reveal mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-white">
+          <slot name="lead" />
+        </p>
+      )
+    }
+
+    {
+      cta && (
+        <a
+          href={cta.href}
+          class="btn-pill btn-invert mt-10 inline-block rounded-full px-10 py-4 text-lg font-bold text-brand-800"
+        >
+          {cta.label}
+        </a>
+      )
+    }
+
+    {
+      image && (
+        <div class="mx-auto mt-14 max-w-3xl md:mt-16">
+          <slot name="image" />
+        </div>
+      )
+    }
+  </div>
+</section>

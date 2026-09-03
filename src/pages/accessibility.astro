@@ -1,19 +1,18 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
 ---
 
 <BaseLayout
   title="הצהרת נגישות | Plan-T"
   description="הצהרת הנגישות של אתר Plan-T: רמת הנאותות שאליה אנו חותרים, ההתאמות שבוצעו ודרכי הפנייה לרכז הנגישות."
 >
-  <section class="bg-gradient-to-b from-white to-brand-100 text-ink-900">
-    <div class="mx-auto max-w-3xl px-4 py-12">
-      <h1 class="text-4xl font-bold">הצהרת נגישות</h1>
-      <p class="mt-3 text-ink-700">
-        עודכן לאחרונה: <span class="ltr">[TBD — תאריך אישור]</span>
-      </p>
-    </div>
-  </section>
+  <PageHero size="compact" bokeh={false}>
+    <Fragment slot="title">הצהרת נגישות</Fragment>
+    <Fragment slot="lead">
+      עודכן לאחרונה: <span class="ltr">[TBD — תאריך אישור]</span>
+    </Fragment>
+  </PageHero>
 
   <article class="mx-auto max-w-3xl space-y-8 px-4 py-12 leading-relaxed text-ink-700">
     <div class="rounded-xl border border-dashed border-warn-500 bg-warn-100 p-4 text-sm text-ink-900">

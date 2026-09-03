@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
 import LeadForm from '../components/LeadForm.astro';
 import Marquee from '../components/Marquee.astro';
 import BokehBackground from '../components/BokehBackground.astro';
@@ -64,54 +65,43 @@ const tour = [
   title="Plan-T — כל התמונה של הלקוח, במקום אחד"
   description="Plan-T מרכזת במקום אחד את נתוני הנכסים הפיננסיים והפנסיוניים של הלקוח, ומאפשרת לסוכני ביטוח, מתכננים פיננסיים ומנהלי עושר לראות את התיק בתמונה אחת ברורה."
 >
-  <!-- Hero. The band's bottom edge is clipped on a diagonal, mirrored from
-       the measured Orion slope so it falls toward the right in RTL. -->
-  <section class="hero-slope bokeh-host bg-gradient-to-b from-brand-800 to-brand-700 text-white" data-band="dark">
-    <BokehBackground intensity="full" seed={1} />
-    <div class="mx-auto max-w-6xl px-4 py-20 text-center md:py-28">
-      <p class="text-sm font-bold tracking-wide text-brand-300">הפלטפורמה שרואה את כל התמונה של הלקוח</p>
-      <h1 class="reveal-lines mx-auto mt-4 max-w-3xl text-4xl font-bold leading-tight md:text-6xl">
-        כל תיק הלקוח. תמונה אחת ברורה.
-      </h1>
-      <!-- Fades up on the base 20px, not the 60px float. This paragraph sits 40px
-           above the demo button, so a 60px displacement drew it straight through
-           the button for the length of the animation — the whole reason the float
-           was visible at all here. Above-the-fold content has no scroll to enter
-           on; it just arrives. -->
-      <p class="reveal mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-white">
-        <span class="ltr">Plan-T</span> מרכזת את הנתונים הפיננסיים והפנסיוניים, מסדרת את תהליך
-        העבודה ומאפשרת להתמקד בתכנון ובשיחה עם הלקוח.
-      </p>
-      <a
-        href="/contact/"
-        class="btn-pill btn-invert mt-10 inline-block rounded-full px-10 py-4 text-lg font-bold text-brand-800"
-      >
-        תיאום הדגמה
-      </a>
-
+  <!-- The hero every other page now opens with too. The band's bottom edge is
+       clipped on a diagonal, mirrored from the measured Orion slope so it falls
+       toward the right in RTL; that lives in .hero-slope, inside PageHero. -->
+  <PageHero
+    size="full"
+    seed={1}
+    image
+    eyebrow="הפלטפורמה שרואה את כל התמונה של הלקוח"
+    cta={{ label: 'תיאום הדגמה', href: '/contact/' }}
+  >
+    <Fragment slot="title">כל תיק הלקוח. תמונה אחת ברורה.</Fragment>
+    <Fragment slot="lead">
+      <span class="ltr">Plan-T</span> מרכזת את הנתונים הפיננסיים והפנסיוניים, מסדרת את תהליך
+      העבודה ומאפשרת להתמקד בתכנון ובשיחה עם הלקוח.
+    </Fragment>
+    <Fragment slot="image">
       <!-- M1 — the product is the hero. The browser chrome that framed the
            previous single screen is gone: this is a montage of floating panels
            with its own light ground, and a single address bar around it would
            claim it is one page when it is not. -->
-      <div class="mx-auto mt-14 max-w-3xl md:mt-16">
-        <div class="overflow-hidden rounded-2xl border border-brand-700 shadow-2xl shadow-brand-950/30">
-          <picture>
-            <source srcset="/images/hero-montage.webp" type="image/webp" />
-            <img
-              src="/images/hero-montage.jpg"
-              alt="מסכי Plan-T: סיכום לקוחות, סקירת תיק, פעילות אחרונה, נתוני שוק והגדרות — ועליהם הכיתוב «כל התמונה של הלקוח. במקום אחד.»"
-              width="1168"
-              height="784"
-              loading="eager"
-              fetchpriority="high"
-              decoding="async"
-              class="block w-full"
-            />
-          </picture>
-        </div>
+      <div class="overflow-hidden rounded-2xl border border-brand-700 shadow-2xl shadow-brand-950/30">
+        <picture>
+          <source srcset="/images/hero-montage.webp" type="image/webp" />
+          <img
+            src="/images/hero-montage.jpg"
+            alt="מסכי Plan-T: סיכום לקוחות, סקירת תיק, פעילות אחרונה, נתוני שוק והגדרות — ועליהם הכיתוב «כל התמונה של הלקוח. במקום אחד.»"
+            width="1168"
+            height="784"
+            loading="eager"
+            fetchpriority="high"
+            decoding="async"
+            class="block w-full"
+          />
+        </picture>
       </div>
-    </div>
-  </section>
+    </Fragment>
+  </PageHero>
 
   <!-- The advantages strip, where Orion runs its logo marquee: the strip
        teases what /product/ explains in full. Swap `items` for cleared partner

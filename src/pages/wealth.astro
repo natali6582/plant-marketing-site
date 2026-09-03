@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
 import LeadForm from '../components/LeadForm.astro';
 
 /*
@@ -32,25 +33,15 @@ const enables = [
   title="Plan-T למנהלי עושר — תמונה אחת ברורה גם בתיקים מורכבים"
   description="Plan-T מציגה למנהלי עושר את החשיפות והקצאת הנכסים של הלקוח ושל התא המשפחתי במקום אחד — עם תיעוד מלא לבקרה ולרגולציה."
 >
-  <section class="bg-gradient-to-b from-white to-brand-100 text-ink-900">
-    <div class="mx-auto max-w-4xl px-4 py-16 text-center">
-      <!-- PR B: the ~120px stage marker (all three rings, this one lit) goes
-           here, aria-hidden. -->
-      <h1 class="reveal-lines text-4xl font-bold md:text-5xl">
-        יותר מורכבות לא צריכה לייצר יותר עומס.
-      </h1>
-      <p class="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-ink-700">
-        <span class="ltr">Plan-T</span> מרכזת את נתוני הנכסים של הלקוח ושל התא המשפחתי ומציגה תמונה
-        רחבה של החשיפות והקצאת הנכסים — כדי שתוכלו לנהל היקף ומורכבות בלי לאבד את התמונה.
-      </p>
-      <a
-        href="#lead-form"
-        class="btn-pill btn-solid mt-10 inline-block rounded-full px-10 py-4 text-lg font-bold text-white"
-      >
-        תיאום הדגמה
-      </a>
-    </div>
-  </section>
+  <!-- PR B: the ~120px stage marker (all three rings, this one lit) goes
+       here, aria-hidden. -->
+  <PageHero size="compact" seed={2} cta={{ label: 'תיאום הדגמה', href: '#lead-form' }}>
+    <Fragment slot="title">יותר מורכבות לא צריכה לייצר יותר עומס.</Fragment>
+    <Fragment slot="lead">
+      <span class="ltr">Plan-T</span> מרכזת את נתוני הנכסים של הלקוח ושל התא המשפחתי ומציגה תמונה
+      רחבה של החשיפות והקצאת הנכסים — כדי שתוכלו לנהל היקף ומורכבות בלי לאבד את התמונה.
+    </Fragment>
+  </PageHero>
 
   <section class="band bg-white" aria-labelledby="pains-title">
     <div class="mx-auto max-w-5xl px-4">

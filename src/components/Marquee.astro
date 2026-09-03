@@ -1,15 +1,37 @@
 ---
 /*
-  Infinite horizontal marquee — 33.3 px/s, linear, seamless.
+  Infinite horizontal marquee — 40 px/s, linear, seamless at any width.
 
   The behaviour is reproduced from the Orion study (motion-plan.md); none of
-  their code, markup or styling is used. The track is the item list duplicated
-  exactly once and translated by -50%, so the loop closes cleanly whatever the
-  items measure — Orion's fixed `100px × N` constant only loops seamlessly if
-  every item happens to be exactly 100px wide.
+  their code, markup or styling is used.
 
-  Items are passed in, so swapping the capability chips for cleared partner
-  logos later is a one-line change at the call site.
+  Three things were wrong before and all three are fixed here.
+
+  It travelled the wrong way. The track is width:max-content inside an RTL
+  container, so it anchors to the container's right edge and every extra copy
+  hangs off to the left — and the animation translated left, away from them.
+  Measured at 1920, three quarters through a cycle the last chip ended 1371px
+  short of the right edge, and that much of the band was simply empty. The
+  direction now follows the anchoring (see --marquee-dir in global.css), which
+  is also the direction an RTL ticker belongs in: chips enter from the left.
+
+  It duplicated the set exactly once, so even travelling the right way it only
+  covered a viewport narrower than one set. Coverage is now measured rather
+  than assumed: three copies ship in the markup so a no-JS render still fills a
+  wide screen, and the script clones up to ceil(viewportWidth / setWidth) + 1 —
+  the +1 being the copy that is mid-exit while the rest already fill the frame.
+
+  And it travelled a percentage, which stops meaning "one set" the moment the
+  copy count changes. The animation now moves exactly one set width: the script
+  measures it and sets --set-width in pixels. The CSS default is 33.3333%,
+  which is one set of the three that ship statically, so the loop stays
+  seamless if the script never runs.
+
+  Speed is fixed rather than duration: 40 px/s means a chip reads at the same
+  pace whether the strip holds four items or twelve.
+
+  Only the first set is exposed to assistive tech; every clone is aria-hidden,
+  including the ones the script adds.
 */
 interface Props {
   items: string[];
@@ -18,13 +40,18 @@ interface Props {
 
 const { items, label } = Astro.props;
 
-// Duplicated exactly once — the CSS translates by half the track.
-const track = [...items, ...items];
+/*
+  Three, not two. Two only covers a viewport narrower than one set, which is
+  exactly the assumption that failed. Three covers roughly twice the widest set
+  at load, and the script tops it up from there.
+*/
+const STATIC_SETS = 3;
+const track = Array.from({ length: STATIC_SETS }, () => items).flat();
 ---
 
 <section class="band bg-surface-blue" aria-label={label}>
   <div class="marquee" data-marquee>
-    <ul class="marquee__track" data-marquee-track>
+    <ul class="marquee__track" data-marquee-track data-items-per-set={items.length} data-sets={STATIC_SETS}>
       {
         track.map((item, index) => {
           const isClone = index >= items.length;
@@ -58,26 +85,57 @@ const track = [...items, ...items];
 </section>
 
 <script>
-  // Orion hard-codes the loop distance and derives the duration from it. We do
-  // the reverse: measure the track and derive the duration from a fixed speed,
-  // so the 33.3 px/s reads identically however many items are in the strip.
-  const PIXELS_PER_SECOND = 33.3;
+  /*
+    Orion hard-codes the loop distance and derives the duration from it. We do
+    the reverse twice over: measure one set, clone until the strip covers the
+    viewport, then derive the duration from a fixed speed — so the pace reads
+    identically at 360px and at 1920px, with any number of items.
+  */
+  const PIXELS_PER_SECOND = 40;
 
   function calibrate(marquee: HTMLElement) {
     const track = marquee.querySelector<HTMLElement>('[data-marquee-track]');
     if (!track) return;
 
-    // scrollWidth covers both halves; the animation travels exactly one of them.
-    const distance = track.scrollWidth / 2;
-    if (distance <= 0) return;
+    const itemsPerSet = Number(track.dataset.itemsPerSet);
+    if (!itemsPerSet) return;
 
-    marquee.style.setProperty('--marquee-duration', `${distance / PIXELS_PER_SECOND}s`);
+    const items = Array.from(track.children) as HTMLElement[];
+    const sets = Number(track.dataset.sets) || 1;
+
+    /*
+      Measured from the live layout rather than from scrollWidth / sets: the two
+      agree today, but scrollWidth would quietly lie the moment an item wrapped
+      or a margin collapsed, and this is the number the whole loop rests on.
+    */
+    const boundary = items[itemsPerSet];
+    const setWidth = boundary ? boundary.offsetLeft - items[0].offsetLeft : track.scrollWidth / sets;
+    if (setWidth <= 0) return;
+
+    // +1: while one copy is exiting, the rest must already fill the frame.
+    const needed = Math.ceil(marquee.clientWidth / setWidth) + 1;
+    if (needed > sets) {
+      const fragment = document.createDocumentFragment();
+      for (let copy = sets; copy < needed; copy++) {
+        for (let i = 0; i < itemsPerSet; i++) {
+          const clone = items[i].cloneNode(true) as HTMLElement;
+          clone.setAttribute('aria-hidden', 'true');
+          clone.dataset.clone = '';
+          fragment.appendChild(clone);
+        }
+      }
+      track.appendChild(fragment);
+      track.dataset.sets = String(needed);
+    }
+
+    marquee.style.setProperty('--set-width', `${setWidth}px`);
+    marquee.style.setProperty('--marquee-duration', `${setWidth / PIXELS_PER_SECOND}s`);
   }
 
   for (const marquee of document.querySelectorAll<HTMLElement>('[data-marquee]')) {
     calibrate(marquee);
 
-    // Fonts land after first paint and change the track width, so remeasure.
+    // Fonts land after first paint and change the set width, so remeasure.
     document.fonts?.ready.then(() => calibrate(marquee));
 
     let frame = 0;

@@ -650,7 +650,35 @@ body {
   display: flex;
   width: max-content;
   direction: ltr;
-  animation: marquee-scroll var(--marquee-duration, 30s) linear infinite;
+  /*
+    One set width, not half the track. The script sets --set-width in pixels
+    once it has measured a set; 33.3333% is the no-JS value, correct for the
+    three copies that ship in the markup. A percentage here resolves against
+    the track's own width, so it stops meaning "one set" the moment the script
+    clones more copies — which is exactly why the script sets pixels.
+  */
+  --set-width: 33.3333%;
+  /*
+    Travel direction, and the real reason the strip used to go bare.
+
+    The track is width:max-content inside an RTL container, so it is anchored
+    to the container's RIGHT edge and all its overflow hangs off to the LEFT.
+    The old rule translated it further left, which pulled the content out of
+    the frame it was supposed to fill: measured at 1920, three quarters through
+    a cycle the last chip ended 1371px short of the right edge and that much of
+    the band was empty. More copies would not have helped — they were all
+    added on the side the animation was moving away from.
+
+    Rightward is also the direction an RTL ticker should run: chips enter from
+    the left and leave on the right, mirroring the English ticker rather than
+    copying it. In an LTR context the anchoring flips, so the sign does too.
+  */
+  --marquee-dir: 1;
+  animation: marquee-scroll var(--marquee-duration, 45s) linear infinite;
+}
+
+[dir='ltr'] .marquee__track {
+  --marquee-dir: -1;
 }
 
 @keyframes marquee-scroll {
@@ -658,7 +686,7 @@ body {
     transform: translateX(0);
   }
   to {
-    transform: translateX(-50%);
+    transform: translateX(calc(var(--marquee-dir) * var(--set-width)));
   }
 }
 

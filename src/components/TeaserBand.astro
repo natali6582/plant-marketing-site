@@ -2,7 +2,7 @@
 import BokehBackground from './BokehBackground.astro';
 
 /*
-  The "בקרוב.." teaser.
+  The "בקרוב..." teaser.
 
   Every line here is the company's own campaign copy, not paraphrase. The band
   says something is coming and never what: no product, no launch, no tools, no
@@ -13,7 +13,10 @@ import BokehBackground from './BokehBackground.astro';
   the one highlighted word and the pill. It is never a surface.
 
   variant="full" is the /agents/ band, with the notify-me form.
-  variant="strip" is the slim Home band, which links here and carries no form.
+  variant="strip" is the slim Home band: headline and pill, and nothing else.
+  It carried a link to /agents/#soon and no longer does — by decision the Home
+  strip is not clickable at all, so nothing in it competes with the page it
+  sits above.
 */
 
 interface Props {
@@ -52,7 +55,7 @@ const webhookUrl = import.meta.env.PUBLIC_LEAD_WEBHOOK_URL ?? '';
 
         <p class="reveal mt-6">
           <span class="inline-block rounded-full bg-accent-500 px-5 py-2 text-lg font-black text-ink-950">
-            בקרוב..
+            בקרוב...
           </span>
         </p>
 
@@ -131,10 +134,7 @@ const webhookUrl = import.meta.env.PUBLIC_LEAD_WEBHOOK_URL ?? '';
         <p class="text-xl font-bold md:text-2xl">
           הגיע הזמן לקפוץ למגרש של <span class="text-accent-400">הגדולים</span>.
         </p>
-        <span class="inline-block rounded-full bg-accent-500 px-4 py-1 font-black text-ink-950">בקרוב..</span>
-        <a href="/agents/#soon" class="font-bold text-white underline underline-offset-4 hover:text-brand-100">
-          אל תישאר מאחור
-        </a>
+        <span class="inline-block rounded-full bg-accent-500 px-4 py-1 font-black text-ink-950">בקרוב...</span>
       </div>
     )
   }

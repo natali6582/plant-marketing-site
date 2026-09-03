@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHero from '../components/PageHero.astro';
-import IconTile from '../components/IconTile.astro';
+import DuotoneIcon from '../components/DuotoneIcon.astro';
 import LeadForm from '../components/LeadForm.astro';
 
 /*
@@ -41,19 +41,19 @@ const stages: Stage[] = [
         slug: 'portfolio-picture',
         name: 'תמונת תיק אחת',
         line: 'תמונת תיק אחת: השקעות, חיסכון וכיסויים במקום אחד.',
-        icon: 'layers',
+        icon: 'portfolio-picture',
       },
       {
         slug: 'fast-prep',
         name: 'הכנה מהירה לפגישה',
         line: 'הכנה לפגישה בדקות במקום בשעות.',
-        icon: 'clock-3',
+        icon: 'fast-prep',
       },
       {
         slug: 'clearinghouse-data',
         name: 'נתוני מסלקה במקום אחד',
         line: 'ריכוז נתוני המסלקה לצד שאר המידע בתיק.',
-        icon: 'database',
+        icon: 'clearinghouse-data',
       },
     ],
   },
@@ -65,13 +65,13 @@ const stages: Stage[] = [
         slug: 'exposures',
         name: 'בחינת חשיפות',
         line: 'בחינת התיק והחשיפות בצורה ברורה ומסודרת.',
-        icon: 'scan-search',
+        icon: 'exposures',
       },
       {
         slug: 'alternatives',
         name: 'השוואת חלופות',
         line: 'השוואה ברורה בין חלופות להצגה מול הלקוח.',
-        icon: 'git-compare',
+        icon: 'alternatives',
       },
     ],
   },
@@ -83,13 +83,13 @@ const stages: Stage[] = [
         slug: 'branded-report',
         name: 'דוח ממותג ללקוח',
         line: 'דוח מסודר ללקוח בסוף התהליך, ממותג במיתוג המשרד.',
-        icon: 'file-text',
+        icon: 'branded-report',
       },
       {
         slug: 'compliance-record',
         name: 'תיעוד לרגולציה ובקרה',
         line: 'תיעוד מלא של התהליך לצורכי רגולציה ובקרה.',
-        icon: 'shield-check',
+        icon: 'compliance-record',
       },
     ],
   },
@@ -105,7 +105,7 @@ const sources = [
     slug: 'clearinghouse',
     name: 'מסלקה פנסיונית',
     line: 'נתוני המסלקה נטענים למערכת ומוצגים לצד שאר התיק — כך שאין צורך לעבור בין מקורות בזמן ההכנה לפגישה.',
-    icon: 'plug-zap',
+    icon: 'clearinghouse',
   },
 ];
 ---
@@ -140,7 +140,7 @@ const sources = [
                 id={`solutions-${item.slug}`}
                 class="reveal card-lift scroll-mt-24 rounded-2xl border border-brand-200 bg-white hover:border-brand-400 p-5 shadow-sm"
               >
-                <IconTile icon={item.icon} />
+                <DuotoneIcon name={item.icon} />
                 <h3 class="mt-3 text-lg font-bold text-brand-800">{item.name}</h3>
                 <p class="mt-1 text-sm leading-relaxed text-ink-700">{item.line}</p>
               </li>
@@ -161,7 +161,7 @@ const sources = [
               id={`solutions-source-${source.slug}`}
               class="reveal card-lift scroll-mt-24 rounded-2xl border border-brand-200 bg-white hover:border-brand-400 p-5 shadow-sm"
             >
-              <IconTile icon={source.icon} />
+              <DuotoneIcon name={source.icon} />
               <h3 class="mt-3 text-lg font-bold text-brand-800">{source.name}</h3>
               <p class="mt-1 text-sm leading-relaxed text-ink-700">{source.line}</p>
             </li>

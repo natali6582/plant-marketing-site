@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHero from '../components/PageHero.astro';
-import IconTile from '../components/IconTile.astro';
+import DuotoneIcon from '../components/DuotoneIcon.astro';
 import LeadForm from '../components/LeadForm.astro';
 import { advantages } from '../data/advantages';
 import { modules } from '../data/modules';
@@ -60,7 +60,7 @@ import { modules } from '../data/modules';
         {
           modules.map((item) => (
             <li class="reveal reveal--float card-lift rounded-2xl border border-brand-200 bg-white hover:border-brand-400 p-5 shadow-sm">
-              <IconTile icon={item.icon} />
+              <DuotoneIcon name={item.icon} />
               <h3 class="mt-3 text-lg font-bold text-brand-800">{item.name}</h3>
               <p class="mt-2 text-sm leading-relaxed text-ink-700">{item.line}</p>
             </li>

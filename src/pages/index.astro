@@ -4,7 +4,7 @@ import PageHero from '../components/PageHero.astro';
 import LeadForm from '../components/LeadForm.astro';
 import Marquee from '../components/Marquee.astro';
 import BokehBackground from '../components/BokehBackground.astro';
-import IconTile from '../components/IconTile.astro';
+import DuotoneIcon from '../components/DuotoneIcon.astro';
 import StatsRow from '../components/StatsRow.astro';
 import AudienceSelector from '../components/AudienceSelector.astro';
 import { advantages } from '../data/advantages';
@@ -21,7 +21,7 @@ const painCards = [
     body: 'המידע הפנסיוני והפיננסי של הלקוח מפוזר בין מסלקה, יצרנים וגיליונות — וקשה לבנות ממנו תמונה אחת שלמה.',
   },
   {
-    icon: 'check-circle-2',
+    icon: 'check-circle',
     title: 'הדרך של Plan-T',
     body: 'פלטפורמה אחת שמרכזת את הנתונים, מסדרת את התהליך ומשאירה לכם את מה שחשוב: השיחה עם הלקוח וההחלטות המקצועיות.',
   },
@@ -131,7 +131,7 @@ const tour = [
             ]}
             data-band={i === 2 ? 'dark' : undefined}
           >
-            <IconTile icon={card.icon} size="sm" />
+            <DuotoneIcon name={card.icon} size="md" />
             <h3 class="mt-4 text-xl font-bold">{card.title}</h3>
             <p class:list={['mt-3 leading-relaxed', i === 2 ? 'text-ink-200' : 'text-ink-700']}>{card.body}</p>
           </article>

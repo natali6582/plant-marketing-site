@@ -11,7 +11,7 @@
 export interface Module {
   name: string;
   line: string;
-  /** Lucide icon name; must exist in src/data/lucide-icons.ts. */
+  /** Duotone icon key; must exist in src/data/icons-duotone.ts. */
   icon: string;
 }
 
@@ -19,41 +19,41 @@ export const modules: Module[] = [
   {
     name: 'ממשקי קליטת נתונים',
     line: 'טעינת קבצים: מסלקה, הר ביטוח, בנקים, ניהול תיקים, מוצרים אלטרנטיביים ישירות למערכת',
-    icon: 'download',
+    icon: 'data-intake',
   },
   {
     name: 'תמונה הוליסטית',
     line: 'הצגת תמונה הוליסטית של הלקוח והתא המשפחתי עד לרמת הנכס הבודד והחשיפה במונחי דלתא',
-    icon: 'pie-chart',
+    icon: 'holistic-view',
   },
   {
     name: 'כלי תכנון פיננסי',
     line: 'ניהול תזרים עתידי ומעקב אחר מטרות ויעדי הלקוח, ניתוח התיק הפנסיוני והביטוחי',
-    icon: 'calculator',
+    icon: 'planning-tools',
   },
   {
     name: 'CRM פנימי',
     line: 'ניהול הקשר מול הלקוחות לרבות לידים, הזדמנות מכירה, תיעוד פגישות, ארכוב מיילים אוטומטי ומסמכים, ניהול משימות ופעולות',
-    icon: 'users',
+    icon: 'crm',
   },
   {
     name: 'מערכת טפסים',
     line: 'מערכת טפסים המאפשרת הפקת טפסים חכמים, חתימה מרחוק ונעילת מסמכים',
-    icon: 'file-signature',
+    icon: 'forms',
   },
   {
     name: 'דוחות ללקוח',
     line: 'מערכת הפקה ושליחת מגוון דוחות ללקוחות — דו"ח תשואה לתקופה, דו"ח פנסיוני, דו"ח תכנון פיננסי ועוד',
-    icon: 'file-bar-chart',
+    icon: 'client-reports',
   },
   {
     name: 'פורטל לקוח',
     line: 'פורטל לקוח מקצועי ומעוצב לכל לקוחות הקצה של הסוכן',
-    icon: 'monitor-smartphone',
+    icon: 'client-portal',
   },
   {
     name: 'דוחות בקרה, רגולציה ותפעול',
     line: 'דוחות בקרה ותמיכה בתהליכי התפעול בכל הנוגע להפקת דוחות עסקיים והצפה של חריגים ומעקב אחר ביצוע פעולות',
-    icon: 'clipboard-check',
+    icon: 'compliance',
   },
 ];

@@ -4,9 +4,9 @@
   old-site-content.md L19–36. MIGRATED — verify with Natali.
 
   Icons: the old site used eight PNGs on wixstatic. Decision N-7 (reuse PNG |
-  redraw SVG) is still open, and this is neither — the reserved slot now holds a
-  Lucide icon from the site-wide set, which is a placeholder no one has to
-  apologise for. Swapping in the real artwork later means changing one name.
+  redraw SVG) is closed — these are redrawn as duotone glyphs from the site-wide
+  set, matching the old artwork's two tones without shipping its rasters. The
+  originals are kept for comparison under docs/reference/old-icons/.
 */
 export interface Module {
   name: string;

@@ -366,12 +366,16 @@ body {
 }
 
 /*
-  On the pale band the sky accent sits on a blue-tinted ground and loses its
-  edge, so it steps down to brand-600 there — measured, not assumed.
+  There is deliberately no per-band accent override. An earlier version stepped
+  the accent down to brand-600 inside .bg-surface-blue, on the reasoning that the
+  sky tone would fade against a blue-tinted ground. That reasoning was wrong
+  about the markup: every icon on the site sits on a bg-white card, and the pale
+  band is only the section behind that card, so the selector matched an ancestor
+  the icon never actually touches. It also made things worse where it fired —
+  the two tones sit against each other, and brand-600 against the navy base is
+  2.25:1 where brand-500 is 3.74:1 — and it split /solutions into two accent
+  colours on visually identical white cards. One accent tone everywhere.
 */
-.bg-surface-blue .duotone-icon__accent {
-  fill: var(--color-brand-600);
-}
 
 [data-band='dark'] .duotone-icon__base {
   fill: #fff;

@@ -12,8 +12,8 @@ import LeadForm from '../components/LeadForm.astro';
   stable id — solutions-<slug> — so other pages can point at one capability.
   The three timeline headings are untouched.
 
-  Icons: 24×24 stroke glyphs, currentColor at ink-600, inside a fixed 40×40
-  box so nothing shifts while they paint. §5.5 rule 5 puts the default at
+  Icons: solid two-tone glyphs on a 256×256 grid, sized by DuotoneIcon with
+  explicit width and height so nothing shifts while they paint. §5.5 rule 5 puts the default at
   "skip"; these earn their slot as a scanning aid for seven cards that were
   an unlabelled list, and nothing more — no text inside them (rule 4), no
   green surface (rule 2), no meaning beyond the sentence beside them.
@@ -22,7 +22,7 @@ interface Capability {
   slug: string;
   name: string;
   line: string;
-  /** SVG path data; one simple concept per glyph. */
+  /** Duotone icon key; must exist in src/data/icons-duotone.ts. */
   icon: string;
 }
 

@@ -4,6 +4,7 @@ import PageHero from '../components/PageHero.astro';
 import LeadForm from '../components/LeadForm.astro';
 import Marquee from '../components/Marquee.astro';
 import BokehBackground from '../components/BokehBackground.astro';
+import TeaserBand from '../components/TeaserBand.astro';
 import DuotoneIcon from '../components/DuotoneIcon.astro';
 import StatsRow from '../components/StatsRow.astro';
 import AudienceSelector from '../components/AudienceSelector.astro';
@@ -284,4 +285,10 @@ const tour = [
   </section>
 
   <LeadForm source="website-home" />
+
+  <!-- The agents teaser, in its slim form. Home carries the line and the link;
+       the form lives on /agents/ where the rest of that story is. This is the
+       only place the agent campaign's tone appears outside /agents/, and it is
+       deliberately one strip, not a section. -->
+  <TeaserBand variant="strip" />
 </BaseLayout>

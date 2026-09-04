@@ -1,0 +1,103 @@
+---
+import { REGULATORS } from '../../data/knowledge';
+
+/*
+  Who supervises what, as a diagram.
+
+  Replaces the second generated image, which drew three pillars and labelled
+  them «קרנות כנסיה», «קוסות גמל», «ביטוח היים», «המסלקה הכנסיונות». Same
+  composition, real words.
+
+  The composition is the argument. Three supervisors stand as separate columns
+  because they do not overlap; רשות המסים is the plinth they all stand on
+  because it taxes every layer regardless of which of them supervises it; and
+  the exchange sits apart, dashed, because it is a venue and not a regulator —
+  the one distinction the source is most insistent about.
+
+  aria-hidden and desktop-only, for the same reason as the layer stack: the
+  cards beside it carry the full scope text and say more.
+*/
+
+const pillars = REGULATORS.filter((r) => !r.venue && r.name !== 'רשות המסים');
+const tax = REGULATORS.find((r) => r.name === 'רשות המסים');
+const venue = REGULATORS.find((r) => r.venue);
+
+const W = 760;
+const H = 340;
+
+const COL_W = 214;
+const COL_GAP = 18;
+const COLS_W = pillars.length * COL_W + (pillars.length - 1) * COL_GAP;
+const COLS_X = 24;
+
+/* Short labels for the diagram. The cards carry the full scope; a column
+   324 pixels tall cannot, and a truncated sentence would be worse than a
+   deliberate summary. */
+const SHORT: Record<string, string[]> = {
+  'רשות שוק ההון, ביטוח וחיסכון': ['קרנות פנסיה', 'קופות גמל והשתלמות', 'חברות וסוכני ביטוח'],
+  'רשות ניירות ערך': ['הבורסה ותשקיפים', 'קרנות נאמנות', 'יועצים ומנהלי תיקים'],
+  'בנק ישראל': ['תאגידים בנקאיים', 'שוק האשראי', 'ריבית מוניטרית'],
+};
+---
+
+<svg
+  class="hidden w-full md:block"
+  viewBox={`0 0 ${W} ${H}`}
+  role="presentation"
+  aria-hidden="true"
+  style="direction: rtl; font-family: inherit;"
+>
+  {
+    /* RTL: the first pillar is the rightmost. */
+    pillars.map((r, i) => {
+      const x = COLS_X + (pillars.length - 1 - i) * (COL_W + COL_GAP);
+      const cx = x + COL_W / 2;
+      return (
+        <>
+          <rect x={x} y="18" width={COL_W} height="176" rx="12" fill="var(--color-surface)" stroke="var(--color-brand-300)" stroke-width="2" />
+          <rect x={x} y="18" width={COL_W} height="44" rx="12" fill="var(--color-brand-700)" />
+          <rect x={x} y="46" width={COL_W} height="16" fill="var(--color-brand-700)" />
+
+          <text x={cx} y="46" text-anchor="middle" font-size="14.5" font-weight="700" fill="#ffffff">
+            {r.name === 'רשות שוק ההון, ביטוח וחיסכון' ? 'רשות שוק ההון' : r.name}
+          </text>
+
+          {SHORT[r.name]?.map((line, k) => (
+            <text x={cx} y={92 + k * 26} text-anchor="middle" font-size="13.5" fill="var(--color-ink-700)">
+              {line}
+            </text>
+          ))}
+        </>
+      );
+    })
+  }
+
+  {/* The plinth: tax cuts across all three. */}
+  <rect x={COLS_X} y="206" width={COLS_W} height="52" rx="12" fill="var(--color-brand-800)" />
+  <text x={COLS_X + COLS_W / 2} y="230" text-anchor="middle" font-size="16" font-weight="700" fill="#ffffff">
+    {tax?.name}
+  </text>
+  <text x={COLS_X + COLS_W / 2} y="249" text-anchor="middle" font-size="12.5" fill="var(--color-brand-100)">
+    מיסוי כל השכבות — רווחי הון, מס שבח, פטורי הפקדה, תיקון 190
+  </text>
+
+  {/* The venue, apart and dashed. */}
+  <rect
+    x={COLS_X}
+    y="276"
+    width={COLS_W}
+    height="48"
+    rx="12"
+    fill="none"
+    stroke="var(--color-brand-400)"
+    stroke-width="2"
+    stroke-dasharray="7 6"
+  />
+  {/* "start" is the right edge inside direction: rtl — see LayersDiagram. */}
+  <text x={COLS_X + COLS_W - 18} y="299" text-anchor="start" font-size="14.5" font-weight="700" fill="var(--color-brand-700)">
+    {venue?.name}
+  </text>
+  <text x={COLS_X + COLS_W - 18} y="317" text-anchor="start" font-size="12.5" fill="var(--color-ink-700)">
+    זירת מסחר וסליקה — לא רגולטור
+  </text>
+</svg>

@@ -1,0 +1,110 @@
+---
+import { CONCEPT_LAYERS } from '../../data/knowledge';
+
+/*
+  The four-layer stack, as a diagram.
+
+  This replaces the generated image that came with the brief, which drew the
+  right idea and spelled it wrong — «מכשיר שכועה», «נאמוונק קרן», «שוהפות
+  מוגברת». Every word here is a real <text> node: selectable, searchable,
+  readable by a screen reader, translatable, and correct.
+
+  It reads bottom-up, base asset at the foot, because that is the direction the
+  argument runs: the exposure exists first and the wrappers are put around it.
+  The arrows say that; a list of four cards cannot.
+
+  It sits ABOVE the card stack rather than instead of it. The cards carry the
+  full text of each layer and the diagram carries the shape, so this is
+  aria-hidden — a screen reader gets the cards, which say more — and hidden
+  below md, where 640 logical pixels of stack would shrink the labels past
+  reading size and the cards are right there anyway.
+
+  Colour comes from the site's tokens, so a palette change moves the diagram
+  with everything else.
+*/
+
+const layers = [...CONCEPT_LAYERS].reverse(); // layer 1 at the bottom
+
+const W = 760;
+const SLAB_H = 84;
+const GAP = 26;
+const PAD = 16;
+const H = PAD * 2 + layers.length * SLAB_H + (layers.length - 1) * GAP;
+
+const X = 24;
+const SLAB_W = W - X * 2;
+const RIGHT = X + SLAB_W - 22;
+const LEFT = X + 22;
+
+/* Darkest at the base, lightest at the top: the further from the underlying
+   asset, the more wrapper and the less exposure. */
+const TONE = ['var(--color-brand-100)', 'var(--color-brand-200)', 'var(--color-brand-300)', 'var(--color-brand-500)'];
+---
+
+<svg
+  class="hidden w-full md:block"
+  viewBox={`0 0 ${W} ${H}`}
+  role="presentation"
+  aria-hidden="true"
+  style="direction: rtl; font-family: inherit;"
+>
+  {
+    layers.map((layer, index) => {
+      /* index 0 is the top of the drawing, which is the last layer. */
+      const number = layers.length - index;
+      const y = PAD + index * (SLAB_H + GAP);
+      return (
+        <>
+          <rect
+            x={X}
+            y={y}
+            width={SLAB_W}
+            height={SLAB_H}
+            rx="14"
+            fill="var(--color-surface)"
+            stroke={TONE[number - 1]}
+            stroke-width="2"
+          />
+          <rect x={X} y={y} width="6" height={SLAB_H} rx="3" fill={TONE[number - 1]} />
+
+          {/*
+            text-anchor is relative to the inline direction, not to the x axis.
+            Inside direction: rtl, "start" is the RIGHT edge and "end" is the
+            left — the opposite of the reflex, and getting it backwards ran
+            every label off the right side of its slab.
+
+            The number is its own <text> rather than a tspan with dx, because
+            dx shifts along the x axis regardless of direction and so moves an
+            RTL tspan backwards into the character before it.
+          */}
+          <text x={RIGHT} y={y + 32} text-anchor="start" font-size="19" font-weight="700" fill="var(--color-brand-500)">
+            {number}.
+          </text>
+          <text x={RIGHT - 26} y={y + 32} text-anchor="start" font-size="19" font-weight="700" fill="var(--color-brand-800)">
+            {layer.title}
+          </text>
+
+          <text x={RIGHT} y={y + 57} text-anchor="start" font-size="14" fill="var(--color-ink-700)">
+            {layer.examples?.join('  ·  ')}
+          </text>
+
+          <text x={LEFT} y={y + 75} text-anchor="end" font-size="12.5" font-weight="700" fill="var(--color-brand-600)">
+            {layer.question}
+          </text>
+
+          {/* An arrow into the layer above: the wrapper is put around what is
+              already there. None above the top slab. */}
+          {index > 0 && (
+            <path
+              d={`M ${W / 2} ${y - GAP + 5} l 7 9 h -14 z M ${W / 2} ${y - 3} v -9`}
+              fill="var(--color-brand-400)"
+              stroke="var(--color-brand-400)"
+              stroke-width="2"
+              stroke-linecap="round"
+            />
+          )}
+        </>
+      );
+    })
+  }
+</svg>

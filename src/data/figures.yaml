@@ -107,8 +107,12 @@ tikun-190-min-monthly-pension:
   unit: "₪"
   year: 2026
   label: קצבה חודשית מזערית ממקור פנסיוני, שאינו ביטוח לאומי
+  # This is the one figure in the file whose provenance is commercial rather
+  # than official, and the sources disagree. It was attributed to gov.il here
+  # before the previews were read; they say otherwise, so it says otherwise.
+  note: הסכום לפי טבלת הראל. מקורות אחרים מציינים כ-4,900 עד 5,300 ₪. יש לאמת מול רשות המסים סמוך למועד הפרסום או הפעולה.
   group: tikun-190
-  source: { label: "רשות המסים / gov.il", url: "", tier: 0 }
+  source: { label: "טבלת הראל — מקור מסחרי, טעון אימות מול רשות המסים", url: "", tier: 0 }
 
 tikun-190-first-tier:
   value: 38412
@@ -256,3 +260,21 @@ purchase-tax-additional-8pct-ceiling:
   note: הוראת שעה עד 31.12.2026. מעל התקרה — 10%.
   group: real-estate
   source: { label: "רשות המסים — מיסוי מקרקעין", url: "", tier: 0 }
+
+pension-general-salary-ceiling:
+  value: 55706
+  unit: "₪"
+  year: 2026
+  label: שכר קובע חודשי מרבי בקרן פנסיה כללית
+  note: קרן פנסיה כללית קולטת הפקדות מעל התקרה של המקיפה, וללא הבטחת תשואה.
+  group: pension
+  source: { label: "רשות שוק ההון, ביטוח וחיסכון", url: "", tier: 0 }
+
+capital-market-authority-supervised-assets:
+  value: 2700000000000
+  unit: "₪"
+  year: 2026
+  label: היקף הנכסים שבפיקוח רשות שוק ההון, ביטוח וחיסכון
+  note: המקור מציין "למעלה מ-2.7 טריליון ₪".
+  group: pension
+  source: { label: "רשות שוק ההון, ביטוח וחיסכון", url: "", tier: 0 }

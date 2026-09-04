@@ -93,24 +93,28 @@ export const COMPARE: Record<string, CompareTable> = {
     difference; it does not rank them, and neither does this.
   */
   'pension-fund-types': {
-    caption: 'שני סוגי קרן הפנסיה, לפי המנגנון שמאחוריהם.',
-    columns: ['קרן פנסיה מקיפה', 'קרן פנסיה כללית'],
+    caption: 'שני סוגי קרן הפנסיה, לפי מה שכל אחת מהן קולטת ומבטיחה.',
+    columns: ['קרן פנסיה מקיפה', 'קרן פנסיה כללית ("משלימה")'],
     rows: [
       {
-        label: 'מה מגדיר את הזכויות',
-        values: ['תקנון הקרן, המשתנה לפי דין ולפי מצב אקטוארי', 'תקנון הקרן, ללא רכיבי הכיסוי המובְנים'],
+        label: 'תפקיד',
+        values: ['ברירת המחדל לרוב החוסכים', 'קולטת הפקדות מעל התקרה של המקיפה'],
+      },
+      {
+        label: 'ערבות הדדית',
+        values: ['כן', 'לא'],
       },
       {
         label: 'רכיב ביטוחי',
-        values: ['כיסויי נכות ושאירים לפי התקנון', 'ככלל אין כיסוי מובנה'],
+        values: ['כיסוי לשארים ולאובדן כושר עבודה', 'ככלל אין כיסוי מובנה'],
       },
       {
-        label: 'תפקיד בתיק',
-        values: ['שכבת הפרישה הארוכה', 'שכבת חיסכון קצבתי משלימה'],
+        label: 'הבטחת תשואה',
+        values: ['מנגנון הבטחת תשואה על חלק מהנכסים', 'ללא הבטחת תשואה'],
       },
       {
-        label: 'מה משתנה בין חוסכים',
-        values: ['מסלול ההשקעה, דמי הניהול והכיסויים בפועל', 'מסלול ההשקעה ודמי הניהול'],
+        label: 'תקרת הפקדה',
+        values: ['ההפקדה מוגבלת בתקרה חודשית', 'שכר קובע חודשי גבוה יותר'],
       },
     ],
   },
@@ -139,28 +143,33 @@ export interface TimelineTable {
 
 export const TIMELINE: Record<string, TimelineTable> = {
   /*
-    Policy generations. The document gives one dated fact — the September 2023
-    restriction — and one structural rule: that older policies may carry terms
-    that newer products do not, so a comparison by product name says nothing.
-    The entries below say exactly that and no more; there is no list of
-    generation years here, because the document does not contain one.
+    Policy generations. Written first as a single structural note, because the
+    docx has no list of generations; the HTML previews Natali supplied on 04/09
+    do, and this is theirs. Four generations, each defined by what the contract
+    guarantees — which is the point: the guarantee, not the product name, is
+    what a comparison is between.
   */
   'policy-generations': {
     items: [
       {
-        label: 'הכלל',
-        title: 'שנת הפוליסה היא תנאי, לא פרט',
-        body: 'בביטוח מנהלים אין להשוות פוליסות לפי שם המוצר. תנאיהן של פוליסות ותיקות עשויים להיות שונים מהותית מתנאיהם של מוצרים חדשים, ולכן ההשוואה היא בין מסמכי הפוליסה עצמם.',
+        label: 'עד 1990',
+        title: 'פוליסות קלאסיות',
+        body: 'מרכיב חיסכון נמוך, ללא הבטחת תשואה וללא השתתפות ברווחים.',
       },
       {
-        label: 'ספטמבר 2023',
-        title: 'הגבלת ההצטרפות החדשה',
-        body: 'מאז ספטמבר 2023 הוגבלה הצטרפות חדשה לביטוח מנהלים לחלק השכר שמעל פעמיים השכר הממוצע, בכפוף לתקנות ולחריגים הרלוונטיים.',
+        label: 'עד 2004',
+        title: 'פוליסות ״עדיף״',
+        body: 'מסלול יסוד, כפולות משכורת ומסלול צמוד מדד. פוליסות משתתפות ברווחים, עם אפשרות להשתתף בתשואות שוק ההון.',
       },
       {
-        label: 'בכל בדיקה',
-        title: 'מה נקרא בפועל',
-        body: 'הכיסויים בביטוח מנהלים הם חוזיים ונקבעים בפוליסה, בשונה מקרן פנסיה שבה הם נקבעים בתקנון. זו ההבחנה שמכתיבה מה בכלל אפשר להשוות בין השניים.',
+        label: '2004 עד 2013',
+        title: 'מקדם קצבה מובטח',
+        body: 'פוליסות עם מקדם המרה לקצבה שנקבע כבר ברכישה.',
+      },
+      {
+        label: 'מ-2013 ואילך',
+        title: 'ללא מקדם מובטח',
+        body: 'מקדמי ההמרה אינם קבועים, ובעת ההמרה לקצבה הם מחושבים לפי תוחלת חיים וריבית תעריפית עדכניים.',
       },
     ],
   },

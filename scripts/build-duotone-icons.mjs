@@ -118,6 +118,20 @@ const ICONS = {
   'hourglass':     { glyph: 'hourglass',     accentFrom: 'regular', accent: 1 },
   'puzzle':        { glyph: 'puzzle-piece',  accentDraw: 'M172,52a36,36,0,1,1-72,0a36,36,0,1,1,72,0Z' },
   'check-circle':  { glyph: 'check-circle',  accent: 1 },
+
+  /*
+    Knowledge hub. 'scales' and 'shield-check' repeat the geometry already
+    behind 'alternatives' and 'compliance-record'; they are here under their
+    own names because an article about a legal wrapper should not reach for an
+    icon called after a product module. The data file is generated, so the
+    duplication costs a few KB and nothing else.
+  */
+  'piggy-bank':     { glyph: 'piggy-bank',     accentFrom: 'duotone' },
+  'scales':         { glyph: 'scales',         accentFrom: 'duotone' },
+  'buildings':      { glyph: 'buildings',      accentFrom: 'duotone' },
+  'chart-line-up':  { glyph: 'chart-line-up',  accentFrom: 'duotone' },
+  'shield-check':   { glyph: 'shield-check',   accent: 1 },
+  'bank':           { glyph: 'bank',           accentFrom: 'duotone' },
 };
 
 const ASSETS = process.argv[2];

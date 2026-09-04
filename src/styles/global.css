@@ -191,6 +191,132 @@ body {
   color: var(--color-brand-600);
 }
 
+/*
+  Knowledge hub: a comparison table that becomes cards on a phone.
+
+  The markup is one real <table> — that is what a comparison is, and a screen
+  reader should hear it as one. Below 640px the same rows re-lay themselves as
+  a card per column, with each cell showing the column it belongs to from its
+  data-label. Nothing is duplicated in the markup to make that happen, so the
+  table and the cards can never disagree.
+*/
+@media (max-width: 639px) {
+  .compare,
+  .compare thead,
+  .compare tbody,
+  .compare tr,
+  .compare th,
+  .compare td {
+    display: block;
+    width: auto;
+  }
+
+  .compare thead {
+    /* The header row's job is done by the per-cell labels below. */
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .compare tr {
+    border-top: 1px solid var(--color-brand-200);
+    padding-block: 0.5rem;
+  }
+
+  .compare tbody th[scope='row'] {
+    padding-inline: 0;
+    font-size: 1rem;
+  }
+
+  .compare td {
+    padding-inline: 0;
+    padding-block: 0.25rem;
+  }
+
+  .compare td::before {
+    content: attr(data-label) ': ';
+    font-weight: 700;
+    color: var(--color-brand-700);
+  }
+}
+
+/*
+  Article prose. The knowledge hub is the only place on the site with long-form
+  markdown, so the body styles live here rather than as utility classes on
+  elements the markdown does not control.
+*/
+.kb-prose > * + * {
+  margin-top: 1.25rem;
+}
+
+.kb-prose h2 {
+  margin-top: 2.5rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--color-brand-800);
+}
+
+.kb-prose h3 {
+  margin-top: 2rem;
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--color-brand-800);
+}
+
+.kb-prose p,
+.kb-prose li {
+  line-height: 1.8;
+  color: var(--color-ink-700);
+}
+
+.kb-prose ul,
+.kb-prose ol {
+  padding-inline-start: 1.5rem;
+}
+
+.kb-prose ul {
+  list-style: disc;
+}
+
+.kb-prose ol {
+  list-style: decimal;
+}
+
+.kb-prose li + li {
+  margin-top: 0.5rem;
+}
+
+.kb-prose strong {
+  font-weight: 700;
+  color: var(--color-ink-900);
+}
+
+.kb-prose a:not([class]) {
+  color: var(--color-brand-600);
+  text-decoration: underline;
+}
+
+/*
+  .not-prose marks a component the article layout dropped into the flow. The
+  prose rules must stop at its edge — otherwise the list-style above puts a
+  bullet beside every KeyFigures card and every layer in a stack.
+*/
+.kb-prose .not-prose {
+  color: inherit;
+}
+
+.kb-prose .not-prose ul,
+.kb-prose .not-prose ol,
+.kb-prose ul.not-prose,
+.kb-prose ol.not-prose {
+  list-style: none;
+  padding-inline-start: 0;
+}
+
 /* Visible keyboard focus everywhere */
 :focus-visible {
   outline: 3px solid var(--color-brand-500);

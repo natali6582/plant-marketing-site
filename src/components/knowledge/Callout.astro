@@ -1,0 +1,31 @@
+---
+/*
+  A boxed aside inside an article. Two kinds only:
+
+  info — context the reader needs but that is not part of the argument.
+  warn — something that will bite: a draft position, a temporary order, a
+         figure whose basis changes.
+
+  warn uses the site's existing warn tokens rather than red, because on this
+  section a warning is almost always "verify this before you rely on it", not
+  "danger".
+*/
+
+interface Props {
+  type?: 'info' | 'warn';
+  title?: string;
+}
+
+const { type = 'info', title } = Astro.props;
+const warn = type === 'warn';
+---
+
+<aside
+  class:list={[
+    'not-prose my-8 rounded-2xl border p-5 leading-relaxed',
+    warn ? 'border-warn-500 bg-warn-100 text-ink-900' : 'border-brand-200 bg-surface-blue text-ink-700',
+  ]}
+>
+  {title && <p class="font-bold text-brand-800">{title}</p>}
+  <div class:list={['space-y-3', title && 'mt-2']}><slot /></div>
+</aside>

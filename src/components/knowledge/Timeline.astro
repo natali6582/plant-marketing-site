@@ -1,0 +1,44 @@
+---
+/*
+  A dated sequence — policy generations, regulatory changes.
+
+  The connector is a border on the list item rather than a drawn line, the same
+  device the /agents/ story strip uses: it follows RTL reading order with no
+  mirroring logic and simply is not there when the items stack on a phone.
+*/
+
+export interface Milestone {
+  label: string;
+  title: string;
+  body: string;
+}
+
+interface Props {
+  items: Milestone[];
+}
+
+const { items } = Astro.props;
+---
+
+<ol class="not-prose my-8 space-y-6" data-timeline>
+  {
+    items.map((m, index) => (
+      <li
+        class:list={[
+          'relative ps-6',
+          index < items.length - 1 && 'border-s-2 border-brand-200 pb-6',
+          index === items.length - 1 && 'border-s-2 border-transparent',
+        ]}
+      >
+        <span
+          class="absolute -inline-start-[7px] top-1 block h-3 w-3 rounded-full bg-brand-500"
+          style="inset-inline-start:-7px"
+          aria-hidden="true"
+        />
+        <p class="text-sm font-bold text-brand-600">{m.label}</p>
+        <h3 class="mt-1 text-lg font-bold text-brand-800">{m.title}</h3>
+        <p class="mt-2 leading-relaxed text-ink-700">{m.body}</p>
+      </li>
+    ))
+  }
+</ol>

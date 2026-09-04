@@ -1,6 +1,8 @@
 ---
 import { audiences } from '../data/audiences';
 
+import { KNOWLEDGE_ENABLED } from '../data/knowledge';
+
 const { minimal = false } = Astro.props;
 const year = new Date().getFullYear();
 ---
@@ -46,6 +48,7 @@ const year = new Date().getFullYear();
       ))}
       <a href="/packages/" class="hover:text-white hover:underline">חבילות</a>
       <a href="/faq/" class="hover:text-white hover:underline">שאלות ותשובות</a>
+      {KNOWLEDGE_ENABLED && <a href="/knowledge/" class="hover:text-white hover:underline">מרכז ידע</a>}
       <a href="/about/" class="hover:text-white hover:underline">אודות</a>
       <a href="/careers/" class="hover:text-white hover:underline">קריירה</a>
       <a href="/contact/" class="hover:text-white hover:underline">יצירת קשר</a>

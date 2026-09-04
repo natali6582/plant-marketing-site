@@ -21,6 +21,23 @@
 # tier 0  NOT YET VERIFIED. The build refuses to publish an article that cites a
 #         tier-0 figure; it is allowed only while the article is draft: true.
 #
+# The source policy, from the previews Natali supplied on 04/09:
+#
+#   tier 1  רשות שוק ההון (gov.il) · רשות ניירות ערך (isa.gov.il) · רשות המסים ·
+#           בנק ישראל · הבורסה לניירות ערך בתל אביב (tase.co.il) · חוקים ותקנות
+#           ב-Nevo ובוויקיטקסט. These verify regulatory and numeric facts.
+#   tier 2  חברות ביטוח (הראל, מיטב, הפניקס) · אתרי מקצוע (כל-זכות, ויקיפדיה,
+#           אנליסט, גלובס, כלכליסט). Useful to explain and illustrate; must be
+#           verified against a tier-1 source before publication.
+#   never   Plan-T's own internal material — system mapping, the content topic
+#           bank, the pension training course, control reports. Context and
+#           internal terminology only; never cited as a source.
+#
+# The policy also names the figures that must be re-verified close to
+# publication and are index-linked annually: every ceiling for קרן השתלמות,
+# קופת גמל, גמל להשקעה and פנסיה, the accredited-investor threshold, and the
+# minimum pension for תיקון 190. That is most of this file.
+#
 # Everything below is tier 0 today, and that is deliberate rather than lazy.
 # The research document these came from cites its sources as bare markers —
 # "gov+1", "isa+1", "knesset+1", "boi", "tase+1" — with no URLs anywhere in the
@@ -34,7 +51,7 @@ keren-hishtalmut-salary-ceiling-employee:
   year: 2026
   label: משכורת קובעת מרבית לשכיר, לחודש
   group: keren-hishtalmut
-  source: { label: "רשות המסים / gov.il", url: "", tier: 0 }
+  source: { label: "רשות המסים — taxes.gov.il / gov.il", url: "", tier: 0 }
 
 keren-hishtalmut-deposit-employee:
   value: 18854
@@ -43,7 +60,7 @@ keren-hishtalmut-deposit-employee:
   label: הפקדה שנתית מוטבת לשכיר
   note: בהפקדות שכיחות של 2.5% עובד ו-7.5% מעסיק. הסכום מחושב מהמשכורת הקובעת המרבית ואינו תקרה בפני עצמו.
   group: keren-hishtalmut
-  source: { label: "רשות המסים / gov.il", url: "", tier: 0 }
+  source: { label: "רשות המסים — taxes.gov.il / gov.il", url: "", tier: 0 }
 
 keren-hishtalmut-income-ceiling-self:
   value: 293397
@@ -51,7 +68,7 @@ keren-hishtalmut-income-ceiling-self:
   year: 2026
   label: תקרת הכנסה קובעת לעצמאי, לשנה
   group: keren-hishtalmut
-  source: { label: "רשות המסים / gov.il", url: "", tier: 0 }
+  source: { label: "רשות המסים — taxes.gov.il / gov.il", url: "", tier: 0 }
 
 keren-hishtalmut-deduction-self:
   value: 13203
@@ -59,7 +76,7 @@ keren-hishtalmut-deduction-self:
   year: 2026
   label: ניכוי מרבי לעצמאי
   group: keren-hishtalmut
-  source: { label: "רשות המסים / gov.il", url: "", tier: 0 }
+  source: { label: "רשות המסים — taxes.gov.il / gov.il", url: "", tier: 0 }
 
 keren-hishtalmut-deposit-ceiling-self:
   value: 20566
@@ -67,7 +84,7 @@ keren-hishtalmut-deposit-ceiling-self:
   year: 2026
   label: תקרת הפקדה מוטבת לעצמאי, פטורה ממס על הרווחים
   group: keren-hishtalmut
-  source: { label: "רשות המסים / gov.il", url: "", tier: 0 }
+  source: { label: "רשות המסים — taxes.gov.il / gov.il", url: "", tier: 0 }
 
 keren-hishtalmut-liquidity-years:
   value: 6
@@ -75,7 +92,7 @@ keren-hishtalmut-liquidity-years:
   year: 2026
   label: ותק למשיכה לכל מטרה
   group: keren-hishtalmut
-  source: { label: "רשות שוק ההון, ביטוח וחיסכון", url: "", tier: 0 }
+  source: { label: "רשות שוק ההון, ביטוח וחיסכון — gov.il", url: "", tier: 0 }
 
 gemel-lehashkaa-annual-ceiling:
   value: 83641.09
@@ -83,7 +100,7 @@ gemel-lehashkaa-annual-ceiling:
   year: 2026
   label: תקרת הפקדה שנתית לחוסך, בכלל חשבונותיו
   group: gemel
-  source: { label: "רשות שוק ההון, ביטוח וחיסכון", url: "", tier: 0 }
+  source: { label: "רשות שוק ההון, ביטוח וחיסכון — gov.il", url: "", tier: 0 }
 
 gemel-lehashkaa-annuity-age:
   value: 60
@@ -92,7 +109,7 @@ gemel-lehashkaa-annuity-age:
   label: הגיל שממנו ניתן להעביר לקופה משלמת לקצבה
   note: להעברה לשם קבלת קצבה בלבד, ובכפוף לתנאים.
   group: gemel
-  source: { label: "רשות שוק ההון, ביטוח וחיסכון", url: "", tier: 0 }
+  source: { label: "רשות שוק ההון, ביטוח וחיסכון — gov.il", url: "", tier: 0 }
 
 tikun-190-min-age:
   value: 60
@@ -100,15 +117,19 @@ tikun-190-min-age:
   year: 2026
   label: גיל מזערי להיוון קצבה מוכרת
   group: tikun-190
-  source: { label: "רשות המסים / gov.il", url: "", tier: 0 }
+  source: { label: "רשות המסים — taxes.gov.il / gov.il", url: "", tier: 0 }
 
 tikun-190-min-monthly-pension:
   value: 5306
   unit: "₪"
   year: 2026
   label: קצבה חודשית מזערית ממקור פנסיוני, שאינו ביטוח לאומי
+  # This is the one figure in the file whose provenance is commercial rather
+  # than official, and the sources disagree. It was attributed to gov.il here
+  # before the previews were read; they say otherwise, so it says otherwise.
+  note: הסכום לפי טבלת הראל. מקורות אחרים מציינים כ-4,900 עד 5,300 ₪. יש לאמת מול רשות המסים סמוך למועד הפרסום או הפעולה.
   group: tikun-190
-  source: { label: "רשות המסים / gov.il", url: "", tier: 0 }
+  source: { label: "טבלת הראל — מקור מסחרי, טעון אימות מול רשות המסים", url: "", tier: 0 }
 
 tikun-190-first-tier:
   value: 38412
@@ -125,7 +146,7 @@ tikun-190-tax-rate:
   year: 2026
   label: מס על הרווח הנומינלי בהיוון קצבה מוכרת, בתנאים
   group: tikun-190
-  source: { label: "רשות המסים / gov.il", url: "", tier: 0 }
+  source: { label: "רשות המסים — taxes.gov.il / gov.il", url: "", tier: 0 }
 
 capital-gains-real:
   value: 25
@@ -134,7 +155,7 @@ capital-gains-real:
   label: מס על רווח הון ריאלי ליחיד, ככלל
   note: נסיבות אישיות, מעמד בעל שליטה, פעילות עסקית ומס יסף עשויים לשנות את התוצאה.
   group: tax
-  source: { label: "רשות המסים / gov.il", url: "", tier: 0 }
+  source: { label: "רשות המסים — taxes.gov.il / gov.il", url: "", tier: 0 }
 
 capital-gains-nominal-unlinked:
   value: 15
@@ -142,7 +163,7 @@ capital-gains-nominal-unlinked:
   year: 2026
   label: מס על הכנסה נומינלית לא-צמודה, ככלל
   group: tax
-  source: { label: "רשות המסים / gov.il", url: "", tier: 0 }
+  source: { label: "רשות המסים — taxes.gov.il / gov.il", url: "", tier: 0 }
 
 bituach-menahalim-restriction-date:
   value: "ספטמבר 2023"
@@ -154,7 +175,7 @@ bituach-menahalim-restriction-date:
   label: המועד שממנו הוגבלה הצטרפות חדשה לביטוח מנהלים
   note: ההגבלה חלה על חלק השכר שמעל פעמיים השכר הממוצע, בכפוף לתקנות ולחריגים.
   group: pension
-  source: { label: "רשות שוק ההון, ביטוח וחיסכון / gov.il", url: "", tier: 0 }
+  source: { label: "רשות שוק ההון, ביטוח וחיסכון — gov.il", url: "", tier: 0 }
 
 accredited-liquid-assets:
   value: 9411809
@@ -163,7 +184,7 @@ accredited-liquid-assets:
   label: נכסים נזילים — מבחן עצמאי
   note: קודקס רשות ניירות ערך מציג סכום מעוגל של 9.4 מיליון ₪ ומציין שסכומיו מעודכנים ל-2025 וצמודים למדד. יש לאמת מול הרשות ביום הפרסום.
   group: accredited
-  source: { label: "רשות ניירות ערך — טעון אימות ביום הפרסום", url: "", tier: 0 }
+  source: { label: "רשות ניירות ערך — isa.gov.il, טעון אימות ביום הפרסום", url: "", tier: 0 }
 
 accredited-income-individual:
   value: 1411772
@@ -171,7 +192,7 @@ accredited-income-individual:
   year: 2026
   label: הכנסה שנתית ליחיד, בכל אחת משתי השנים האחרונות
   group: accredited
-  source: { label: "רשות ניירות ערך — טעון אימות ביום הפרסום", url: "", tier: 0 }
+  source: { label: "רשות ניירות ערך — isa.gov.il, טעון אימות ביום הפרסום", url: "", tier: 0 }
 
 accredited-income-family:
   value: 2117657
@@ -179,7 +200,7 @@ accredited-income-family:
   year: 2026
   label: הכנסה שנתית לתא משפחתי, בכל אחת משתי השנים האחרונות
   group: accredited
-  source: { label: "רשות ניירות ערך — טעון אימות ביום הפרסום", url: "", tier: 0 }
+  source: { label: "רשות ניירות ערך — isa.gov.il, טעון אימות ביום הפרסום", url: "", tier: 0 }
 
 accredited-combined-assets:
   value: 5882380
@@ -187,7 +208,7 @@ accredited-combined-assets:
   year: 2026
   label: נכסים נזילים — רכיב הנכסים במבחן המשולב
   group: accredited
-  source: { label: "רשות ניירות ערך — טעון אימות ביום הפרסום", url: "", tier: 0 }
+  source: { label: "רשות ניירות ערך — isa.gov.il, טעון אימות ביום הפרסום", url: "", tier: 0 }
 
 accredited-combined-income-individual:
   value: 705885
@@ -195,7 +216,7 @@ accredited-combined-income-individual:
   year: 2026
   label: הכנסה ליחיד — רכיב ההכנסה במבחן המשולב
   group: accredited
-  source: { label: "רשות ניירות ערך — טעון אימות ביום הפרסום", url: "", tier: 0 }
+  source: { label: "רשות ניירות ערך — isa.gov.il, טעון אימות ביום הפרסום", url: "", tier: 0 }
 
 accredited-combined-income-family:
   value: 1058827
@@ -203,7 +224,7 @@ accredited-combined-income-family:
   year: 2026
   label: הכנסה לתא משפחתי — רכיב ההכנסה במבחן המשולב
   group: accredited
-  source: { label: "רשות ניירות ערך — טעון אימות ביום הפרסום", url: "", tier: 0 }
+  source: { label: "רשות ניירות ערך — isa.gov.il, טעון אימות ביום הפרסום", url: "", tier: 0 }
 
 structured-deposit-principal-protection:
   value: 90
@@ -212,7 +233,7 @@ structured-deposit-principal-protection:
   label: הגנת קרן מזערית בפיקדון בנקאי מובנה העוקב אחר מדד
   note: לפי עמדת רשות ניירות ערך ממאי 2026, לצורך בידול מקרן נאמנות עוקבת.
   group: securities
-  source: { label: "רשות ניירות ערך — עמדה, מאי 2026", url: "", tier: 0 }
+  source: { label: "רשות ניירות ערך — isa.gov.il, עמדה ממאי 2026", url: "", tier: 0 }
 
 structured-deposit-min-months:
   value: 3
@@ -220,7 +241,7 @@ structured-deposit-min-months:
   year: 2026
   label: התקופה המזערית היוצרת בידול לפי אותה עמדה
   group: securities
-  source: { label: "רשות ניירות ערך — עמדה, מאי 2026", url: "", tier: 0 }
+  source: { label: "רשות ניירות ערך — isa.gov.il, עמדה ממאי 2026", url: "", tier: 0 }
 
 offerees-retail-12m:
   value: 35
@@ -229,7 +250,7 @@ offerees-retail-12m:
   label: ניצעי ריטייל בתקופה של 12 חודשים
   note: לפי קודקס רשות ניירות ערך, בכפוף לדין ולסיווג.
   group: securities
-  source: { label: "רשות ניירות ערך — קודקס", url: "", tier: 0 }
+  source: { label: "רשות ניירות ערך — isa.gov.il, קודקס", url: "", tier: 0 }
 
 offerees-joint-investment-retail:
   value: 50
@@ -237,7 +258,7 @@ offerees-joint-investment-retail:
   year: 2026
   label: משקיעי ריטייל בהסדר השקעה משותפת, בכל זמן נתון
   group: securities
-  source: { label: "רשות ניירות ערך — קודקס", url: "", tier: 0 }
+  source: { label: "רשות ניירות ערך — isa.gov.il, קודקס", url: "", tier: 0 }
 
 purchase-tax-single-exempt:
   value: 1978745
@@ -246,7 +267,7 @@ purchase-tax-single-exempt:
   label: תקרת הפטור ממס רכישה לדירה יחידה
   note: המדרגות מוקפאות עד 15.1.2028. המס בפועל תלוי בסיווג הרוכש, הנכס, התא המשפחתי וזכויות נוספות.
   group: real-estate
-  source: { label: "רשות המסים — מיסוי מקרקעין", url: "", tier: 0 }
+  source: { label: "רשות המסים — מיסוי מקרקעין, taxes.gov.il", url: "", tier: 0 }
 
 purchase-tax-additional-8pct-ceiling:
   value: 6055070
@@ -255,4 +276,49 @@ purchase-tax-additional-8pct-ceiling:
   label: התקרה שעד אליה חלים 8% בדירה שאינה יחידה
   note: הוראת שעה עד 31.12.2026. מעל התקרה — 10%.
   group: real-estate
-  source: { label: "רשות המסים — מיסוי מקרקעין", url: "", tier: 0 }
+  source: { label: "רשות המסים — מיסוי מקרקעין, taxes.gov.il", url: "", tier: 0 }
+
+pension-general-salary-ceiling:
+  value: 55706
+  unit: "₪"
+  year: 2026
+  label: שכר קובע חודשי מרבי בקרן פנסיה כללית
+  note: קרן פנסיה כללית קולטת הפקדות מעל התקרה של המקיפה, וללא הבטחת תשואה.
+  group: pension
+  source: { label: "רשות שוק ההון, ביטוח וחיסכון — gov.il", url: "", tier: 0 }
+
+capital-market-authority-supervised-assets:
+  value: 2700000000000
+  unit: "₪"
+  year: 2026
+  label: היקף הנכסים שבפיקוח רשות שוק ההון, ביטוח וחיסכון
+  note: המקור מציין "למעלה מ-2.7 טריליון ₪".
+  group: pension
+  source: { label: "רשות שוק ההון, ביטוח וחיסכון — gov.il", url: "", tier: 0 }
+
+maof-contract-multiplier:
+  value: 50
+  unit: "₪"
+  year: 2026
+  label: מכפיל גודל החוזה בנגזרי מדד ת״א-35
+  note: גודל חוזה = המדד בנקודות כפול המכפיל.
+  group: securities
+  source: { label: "הבורסה לניירות ערך בתל אביב — tase.co.il", url: "", tier: 0 }
+
+reit-law-year:
+  value: 2005
+  unit: "תאריך"
+  year: 2026
+  label: השנה שבה נחקק חוק קרנות הריט בישראל
+  note: תיקון 147 לפקודת מס הכנסה. מודל מיסוי חד-שלבי, ברמת בעלי המניות בלבד.
+  group: real-estate
+  source: { label: "רשות המסים — taxes.gov.il", url: "", tier: 0 }
+
+emergency-fund-months:
+  value: 6
+  unit: "חודשים"
+  year: 2026
+  label: הכיסוי שאליו מכוונת שכבת הנזילות והחירום
+  note: המקור נוקב בטווח של שלושה עד שישה חודשי הוצאה.
+  group: pension
+  source: { label: "מחקר היסוד — עיקרון תכנוני, לא כלל דין", url: "", tier: 0 }

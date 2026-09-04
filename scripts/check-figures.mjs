@@ -95,7 +95,15 @@ for (const file of files) {
   const prose = body
     .replace(/\{\{[^}]*\}\}/g, '')
     .replace(/^\s*>\s?/gm, '')
-    .replace(/`[^`]*`/g, '');
+    .replace(/`[^`]*`/g, '')
+    /*
+      A four-digit year between 1900 and 2099 is a date, not a ceiling. The rule
+      exists so that an amount which changes every January cannot be typed into
+      prose; the year a law was published never changes and belongs in the
+      sentence. A year touching a currency sign is still an amount and is not
+      exempted here.
+    */
+    .replace(/(?<![₪\d,.])\b(19|20)\d{2}\b(?![\d,.]*\s*₪)/g, '');
   for (const m of prose.matchAll(TYPED_NUMBER)) {
     errors.push(`${slug}: the number ${m[0]} is typed in the body — use a figures.yaml id`);
   }

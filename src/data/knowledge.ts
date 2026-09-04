@@ -61,99 +61,93 @@ export const TRACKS: TrackMeta[] = [
 export const trackBySlug = (slug: string) => TRACKS.find((t) => t.slug === slug);
 
 /*
-  The four layers. This is the document's own opening table, and it is the
-  thesis of the whole section: the same economic exposure can sit in five
-  different wrappers, and the wrapper decides liquidity, tax, cost, supervision
-  and inheritance — not the exposure.
+  The four layers, and the thesis of the whole section: the same economic
+  exposure can sit in several wrappers, and the wrapper decides liquidity, tax,
+  cost, supervision and inheritance — not the exposure.
 
-  The document's table has five rows, not four: it separates a private
-  investment structure from an insurance product. The hub shows all five and
-  calls the section "the shared concept map", because dropping a row to make
-  the count round would lose a category that the wealth track is built on.
+  Built from five originally, off the docx's five-row table, and corrected to
+  four against the HTML previews Natali supplied on 04/09. The previews are the
+  canonical grouping and they are labelled Layer 1..4 explicitly, with a
+  different split: a private partnership and a trust are examples of the legal
+  wrapper, not a fifth layer of their own, and קופת גמל / קרן השתלמות belong to
+  the pension layer rather than to the wrapper layer where the five-row reading
+  had put them.
 */
 export const CONCEPT_LAYERS: Layer[] = [
   {
     title: 'נכס בסיס',
-    body: 'המקור הכלכלי של הסיכון והתשואה.',
-    examples: ['מניה', 'אג״ח', 'נדל״ן', 'ריבית', 'מטבע', 'סחורה'],
+    body: 'מקור התשואה והסיכון הכלכלי.',
+    examples: ['מניה', 'אג״ח', 'נדל״ן', 'סחורה', 'מטבע'],
     question: 'מה יוצר רווח או הפסד?',
     icon: 'chart-line-up',
   },
   {
-    title: 'מכשיר פיננסי',
-    body: 'זכות חוזית או נייר ערך המעביר חשיפה.',
-    examples: ['אופציה', 'קרן נאמנות', 'קרן סל', 'מוצר מובנה'],
+    title: 'מכשיר השקעה',
+    body: 'הצורה שבה החשיפה נארזה ומועברת.',
+    examples: ['קרן נאמנות', 'ETF', 'אופציה', 'מוצר מובנה', 'קרן פרטית', 'פיקדון'],
     question: 'כיצד החשיפה נארזה?',
     icon: 'puzzle',
   },
   {
-    title: 'מעטפת חיסכון או השקעה',
-    body: 'מסגרת משפטית, מיסויית ותפעולית.',
-    examples: ['קופת גמל', 'קרן השתלמות', 'גמל להשקעה', 'פוליסת חיסכון'],
+    title: 'מעטפת משפטית או מיסויית',
+    body: 'המסגרת שמחזיקה את המכשיר וקובעת את כללי המס והמשיכה.',
+    examples: ['חשבון בנק', 'שותפות מוגבלת', 'IRA', 'קרן ריט', 'נאמנות'],
     question: 'מהם כללי ההפקדה, המעבר והמשיכה?',
+    icon: 'scales',
+  },
+  {
+    title: 'מוצר פנסיוני או ביטוחי',
+    body: 'מעטפת ייעודית לחיסכון ארוך, לעיתים עם העברת סיכון למבטח.',
+    examples: ['קרן פנסיה', 'קופת גמל', 'ביטוח מנהלים', 'קרן השתלמות', 'גמל להשקעה'],
+    question: 'איזה סיכון אנושי מכוסה, ומה כללי הקצבה?',
     icon: 'piggy-bank',
-  },
-  {
-    title: 'מוצר ביטוחי',
-    body: 'העברת סיכון למבטח, לעיתים לצד חיסכון.',
-    examples: ['ביטוח מנהלים', 'אובדן כושר עבודה', 'ביטוח חיים'],
-    question: 'איזה סיכון אנושי מכוסה?',
-    icon: 'shield-check',
-  },
-  {
-    title: 'מבנה השקעה פרטי',
-    body: 'ישות המחזיקה ומשקיעה הון של משקיעים.',
-    examples: ['שותפות מוגבלת', 'SPV', 'קרן PE, VC, חוב או נדל״ן'],
-    question: 'מי שולט, מי שומר, ומתי אפשר לצאת?',
-    icon: 'bank',
   },
 ];
 
 /*
-  The planning stack from the document's integration chapter.
+  The planning stack — the "how it fits" list.
 
-  Seven entries, not six. The document lists inheritance as its own line —
-  "מוטבים, צוואה, הסכמי שותפות ומיסוי אינם תחליפים זה לזה" — and it is the one
-  layer that cuts across all the others, so it stays.
+  Six layers, numbered, and they are the previews' own. Built first as seven
+  from the docx's loose bullet list, which was the wrong source: the docx has
+  no numbering and folds inheritance in as a line of its own, while the
+  previews label these שכבה 1..6 and put insurance protection where I had put
+  hedging. The brief said six; the brief was right and the docx reading was
+  not.
 
-  These are described, never recommended: the chapter's own title is
-  "עקרונות, לא הקצאה מומלצת", and nothing here tells a reader what to hold.
+  Described, never recommended. There are no weights here, no mix and no
+  suitability — the horizons are the source's own framing of what each layer is
+  for, not a target allocation.
 */
 export const PLANNING_LAYERS: Layer[] = [
   {
     title: 'נזילות וחירום',
-    body: 'מזומן, פיקדונות, מק״מ או קרנות כספיות. המטרה היא זמינות, לא מקסום תשואה.',
+    body: 'עו״ש, פיקדונות, קרנות כספיות ומק״מ. מכסה שלושה עד שישה חודשי הוצאה, זמינה מיידית. לא לתשואה — לאיזון בסיסי.',
     icon: 'fast-prep',
   },
   {
-    title: 'טווח בינוני',
-    body: 'קרן השתלמות נזילה, גמל להשקעה, פוליסת חיסכון או תיק סחיר — מול תאריך היעד והמס.',
+    title: 'חיסכון לטווח קצר עד בינוני',
+    body: 'קרנות נאמנות, ETFs, אג״ח, פוליסת חיסכון וקרן השתלמות. ליעדים בטווח שנה עד שבע שנים.',
     icon: 'piggy-bank',
   },
   {
-    title: 'פרישה ארוכה',
-    body: 'קרן פנסיה, קופת גמל וביטוח מנהלים. נבחנים קצבה, כיסויים, מוטבים ודמי ניהול.',
-    icon: 'hourglass',
-  },
-  {
-    title: 'שוק הון',
-    body: 'מניות, אג״ח וקרנות מספקים צמיחה, הכנסה ופיזור.',
+    title: 'השקעה סחירה לטווח בינוני עד ארוך',
+    body: 'מניות בת״א ובחו״ל, קרנות סל, ולמי שמבין אותם גם מוצרים מובנים ואופציות. החלק הסחיר בתיק, שמעניק פיזור ותשואה.',
     icon: 'chart-line-up',
   },
   {
-    title: 'גידור',
-    body: 'אופציות ונגזרים נועדו לנהל סיכון מוגדר. הם אינם שכבת חירום.',
-    icon: 'scales',
+    title: 'חיסכון פנסיוני לטווח ארוך',
+    body: 'קרן פנסיה, ביטוח מנהלים, קופת גמל, קופת גמל להשקעה ותיקון 190. ליעדי פרישה והורשה, עם יעילות מס.',
+    icon: 'hourglass',
   },
   {
-    title: 'אלטרנטיבי ונדל״ן',
-    body: 'עשויים להוסיף מקורות תשואה ופיזור, ודורשים תקציב אי-נזילות ובדיקת ריכוזיות כוללת.',
+    title: 'הגנות ביטוחיות',
+    body: 'ביטוח חיים, אובדן כושר עבודה, בריאות, סיעוד ורכוש. כרית ביטחון למקרה של אירועים לא צפויים.',
+    icon: 'shield-check',
+  },
+  {
+    title: 'נכסים אלטרנטיביים ונדל״ן',
+    body: 'לפי אופק, נזילות וכשירות: PE, VC, אשראי פרטי, נדל״ן ישיר, REIT וקרנות תשתיות. ליעדי טווח ארוך ולגיוון סיכוני שוק.',
     icon: 'buildings',
-  },
-  {
-    title: 'הורשה',
-    body: 'מוטבים, צוואה, הסכמי שותפות ומיסוי אינם תחליפים זה לזה, ויש לתאם ביניהם.',
-    icon: 'compliance',
   },
 ];
 
@@ -172,22 +166,22 @@ export interface Regulator {
 export const REGULATORS: Regulator[] = [
   {
     name: 'רשות שוק ההון, ביטוח וחיסכון',
-    scope: 'חברות ביטוח, קרנות פנסיה, גמל, השתלמות, שירותים פיננסיים מוסדרים ורישוי בעלי רישיון פנסיוני.',
+    scope: 'קרנות פנסיה, קופות גמל, קרנות השתלמות, ביטוחי מנהלים, חברות ביטוח, סוכני ביטוח, יועצים וסוכני שיווק פנסיוני. הוקמה ב-2016.',
     icon: 'shield-check',
   },
   {
     name: 'רשות ניירות ערך',
-    scope: 'הצעת ניירות ערך, קרנות נאמנות, ייעוץ ושיווק השקעות וניהול תיקים.',
+    scope: 'הבורסה בת״א, תשקיפים, קרנות נאמנות, יועצי השקעות, מנהלי תיקים ומשווקי השקעות. פועלת מ-1969 מכוח חוק ניירות ערך התשכ״ח-1968.',
     icon: 'compliance',
   },
   {
     name: 'רשות המסים',
-    scope: 'מס הכנסה, רווחי הון, קצבאות ומיסוי מקרקעין.',
+    scope: 'מיסוי כל השכבות — רווחי הון, מס שבח, פטורי הפקדה, תיקון 190, מיסוי קרנות ריט ומיסוי חוצה גבולות של קרנות פרטיות זרות.',
     icon: 'scales',
   },
   {
     name: 'בנק ישראל',
-    scope: 'בנקים, פיקדונות, יציבות בנקאית ומערכות תשלום.',
+    scope: 'התאגידים הבנקאיים ושוק האשראי. קובע ריבית מוניטרית ומפרסם נתוני מאקרו רלוונטיים לכל אחד מהמקהלים.',
     icon: 'bank',
   },
   {
@@ -205,17 +199,17 @@ export const REGULATORS: Regulator[] = [
 export const BIG_IDEAS = [
   {
     title: 'המעטפת אינה הנכס',
-    body: 'אותה חשיפה כלכלית יכולה להופיע בתיק ניירות ערך, בקרן נאמנות, בקופת גמל, בפוליסה או בקרן פרטית. הנזילות, המס, העלויות, הפיקוח וההורשה עשויים להשתנות מהותית — בלי שהחשיפה עצמה השתנתה כלל.',
+    body: 'קופת גמל, קרן השתלמות ופוליסת חיסכון הן מסגרות משפטיות-מיסויות. בתוך כל אחת עשויים להימצא מניות, אג״ח, מזומן, נגזרים ונכסים לא-סחירים — והנזילות, המס, הפיקוח וההורשה עשויים להשתנות מהותית בלי שהחשיפה עצמה השתנתה.',
     icon: 'puzzle',
   },
   {
     title: 'נזילות היא תכונת מערכת',
-    body: '״נסחר״ אינו בהכרח ״נזיל״. הנזילות נקבעת בשכבת המעטפת ובכללי המשיכה שלה, לא בנכס הבסיס — ולכן שני מוצרים עם אותה חשיפה יכולים להיפתח בתוך יום או להיסגר לשש שנים.',
+    body: 'צריך לבחון גם את נזילות נכסי הבסיס, גם את כללי המשיכה מהמעטפת וגם מגבלות כמו Lock-up, Gate ושוק משני. ״נסחר״ אינו בהכרח ״נזיל״.',
     icon: 'fast-prep',
   },
   {
     title: 'תיקון 190 אינו מוצר',
-    body: 'זהו תיקון לפקודת מס הכנסה, לא שם של קופה. ההפקדה נעשית לקופת גמל לקצבה במעמד עצמאי, וההטבה מתייחסת לרכיב הקצבה המוכרת. סיווג שגוי כאן משנה את כללי המשיכה, המס וההורשה.',
+    body: 'זהו הסדר מס בפקודת מס הכנסה, המיושם באמצעות קופת גמל לקצבה, וההבחנה שבבסיסו היא בין קצבה מזכה לקצבה מוכרת. סיווג שגוי כאן משנה את כללי המשיכה, המס וההורשה.',
     icon: 'scales',
   },
 ];

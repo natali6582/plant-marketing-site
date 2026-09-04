@@ -105,50 +105,49 @@ export const CONCEPT_LAYERS: Layer[] = [
 ];
 
 /*
-  The planning stack from the document's integration chapter.
+  The planning stack — the "how it fits" list.
 
-  Seven entries, not six. The document lists inheritance as its own line —
-  "מוטבים, צוואה, הסכמי שותפות ומיסוי אינם תחליפים זה לזה" — and it is the one
-  layer that cuts across all the others, so it stays.
+  Six layers, numbered, and they are the previews' own. Built first as seven
+  from the docx's loose bullet list, which was the wrong source: the docx has
+  no numbering and folds inheritance in as a line of its own, while the
+  previews label these שכבה 1..6 and put insurance protection where I had put
+  hedging. The brief said six; the brief was right and the docx reading was
+  not.
 
-  These are described, never recommended: the chapter's own title is
-  "עקרונות, לא הקצאה מומלצת", and nothing here tells a reader what to hold.
+  Described, never recommended. There are no weights here, no mix and no
+  suitability — the horizons are the source's own framing of what each layer is
+  for, not a target allocation.
 */
 export const PLANNING_LAYERS: Layer[] = [
   {
     title: 'נזילות וחירום',
-    body: 'מזומן, פיקדונות, מק״מ או קרנות כספיות. המטרה היא זמינות, לא מקסום תשואה.',
+    body: 'עו״ש, פיקדונות, קרנות כספיות ומק״מ. מכסה שלושה עד שישה חודשי הוצאה, זמינה מיידית. לא לתשואה — לאיזון בסיסי.',
     icon: 'fast-prep',
   },
   {
-    title: 'טווח בינוני',
-    body: 'קרן השתלמות נזילה, גמל להשקעה, פוליסת חיסכון או תיק סחיר — מול תאריך היעד והמס.',
+    title: 'חיסכון לטווח קצר עד בינוני',
+    body: 'קרנות נאמנות, ETFs, אג״ח, פוליסת חיסכון וקרן השתלמות. ליעדים בטווח שנה עד שבע שנים.',
     icon: 'piggy-bank',
   },
   {
-    title: 'פרישה ארוכה',
-    body: 'קרן פנסיה, קופת גמל וביטוח מנהלים. נבחנים קצבה, כיסויים, מוטבים ודמי ניהול.',
-    icon: 'hourglass',
-  },
-  {
-    title: 'שוק הון',
-    body: 'מניות, אג״ח וקרנות מספקים צמיחה, הכנסה ופיזור.',
+    title: 'השקעה סחירה לטווח בינוני עד ארוך',
+    body: 'מניות בת״א ובחו״ל, קרנות סל, ולמי שמבין אותם גם מוצרים מובנים ואופציות. החלק הסחיר בתיק, שמעניק פיזור ותשואה.',
     icon: 'chart-line-up',
   },
   {
-    title: 'גידור',
-    body: 'אופציות ונגזרים נועדו לנהל סיכון מוגדר. הם אינם שכבת חירום.',
-    icon: 'scales',
+    title: 'חיסכון פנסיוני לטווח ארוך',
+    body: 'קרן פנסיה, ביטוח מנהלים, קופת גמל, קופת גמל להשקעה ותיקון 190. ליעדי פרישה והורשה, עם יעילות מס.',
+    icon: 'hourglass',
   },
   {
-    title: 'אלטרנטיבי ונדל״ן',
-    body: 'עשויים להוסיף מקורות תשואה ופיזור, ודורשים תקציב אי-נזילות ובדיקת ריכוזיות כוללת.',
+    title: 'הגנות ביטוחיות',
+    body: 'ביטוח חיים, אובדן כושר עבודה, בריאות, סיעוד ורכוש. כרית ביטחון למקרה של אירועים לא צפויים.',
+    icon: 'shield-check',
+  },
+  {
+    title: 'נכסים אלטרנטיביים ונדל״ן',
+    body: 'לפי אופק, נזילות וכשירות: PE, VC, אשראי פרטי, נדל״ן ישיר, REIT וקרנות תשתיות. ליעדי טווח ארוך ולגיוון סיכוני שוק.',
     icon: 'buildings',
-  },
-  {
-    title: 'הורשה',
-    body: 'מוטבים, צוואה, הסכמי שותפות ומיסוי אינם תחליפים זה לזה, ויש לתאם ביניהם.',
-    icon: 'compliance',
   },
 ];
 

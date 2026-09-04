@@ -15,11 +15,18 @@
   inside a disclosure is a trap on a touch screen.
 */
 import { audiences } from '../data/audiences';
+import { KNOWLEDGE_ENABLED } from '../data/knowledge';
 
 const { minimal = false } = Astro.props;
 
 const linksBefore = [{ href: '/product/', label: 'הפלטפורמה' }];
+/*
+  מרכז ידע sits immediately after the audiences dropdown, which is where the
+  brief put it, and only when the section is switched on. With the flag off the
+  section builds no pages at all, so a nav item would point at a 404.
+*/
 const linksAfter = [
+  ...(KNOWLEDGE_ENABLED ? [{ href: '/knowledge/', label: 'מרכז ידע' }] : []),
   { href: '/solutions/', label: 'תהליכי עבודה' },
   { href: '/about/', label: 'אודות' },
 ];

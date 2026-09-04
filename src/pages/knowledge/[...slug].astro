@@ -1,0 +1,318 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import LeadForm from '../../components/LeadForm.astro';
+import DuotoneIcon from '../../components/DuotoneIcon.astro';
+import ArticleBody from '../../components/knowledge/ArticleBody.astro';
+import HubPage from '../../components/knowledge/HubPage.astro';
+import Layers from '../../components/knowledge/Layers.astro';
+import Disclaimer from '../../components/knowledge/Disclaimer.astro';
+import SourceList from '../../components/knowledge/SourceList.astro';
+import { KNOWLEDGE_ENABLED, PLANNING_LAYERS, SERIES, TRACKS } from '../../data/knowledge';
+import { FIGURE_GROUPS, formatFigure, figuresPath, TIER_LABEL, wrapAtomicRuns } from '../../components/knowledge/figures';
+import { readingMinutes } from '../../components/knowledge/render';
+
+/*
+  One dynamic route for the three page kinds that live at /knowledge/<segment>/:
+  a track, an article, and the figures page.
+
+  They share a path shape, so they share a route. Splitting them into three
+  files would mean two dynamic routes at the same depth, which collide — and
+  the alternative, moving articles a level deeper, changes the URLs the brief
+  specified.
+*/
+
+export async function getStaticPaths() {
+  if (!KNOWLEDGE_ENABLED) return [];
+
+  const articles = await getCollection('knowledge');
+  const figures = await getCollection('figures');
+  const years = [...new Set(figures.map((f) => f.data.year))];
+
+  return [
+    /* slug: undefined is /knowledge/ itself. */
+    { params: { slug: undefined }, props: { kind: 'hub' as const } },
+    ...TRACKS.map((track) => ({ params: { slug: track.slug }, props: { kind: 'track' as const, track } })),
+    /*
+      Drafts never reach production: with the flag off this route builds nothing
+      at all. With it on — staging — they do render, because a review of three
+      empty track pages reviews nothing. Each draft carries a visible banner and
+      a noindex, and every draft is filtered out of the sitemap regardless.
+    */
+    ...articles
+      .filter((a) => !a.data.draft || KNOWLEDGE_ENABLED)
+      .map((article) => ({ params: { slug: article.id }, props: { kind: 'article' as const, article } })),
+    /* The route carries the year from the data, so January's edit moves the
+       page rather than leaving a stale number in the URL. */
+    ...years.map((year) => ({ params: { slug: `figures-${year}` }, props: { kind: 'figures' as const, year } })),
+  ];
+}
+
+const { kind } = Astro.props;
+
+const allArticles = await getCollection('knowledge');
+const published = allArticles.filter((a) => !a.data.draft || KNOWLEDGE_ENABLED);
+const inTrack = (slug: string, a: (typeof allArticles)[number]) => {
+  const aud = a.data.audience;
+  return Array.isArray(aud) ? (aud as string[]).includes(slug) : aud === slug;
+};
+
+/* ---------------------------------------------------------------- track -- */
+const track = kind === 'track' ? Astro.props.track : null;
+const trackArticles = track
+  ? published
+      .filter((a) => inTrack(track.slug, a) || inTrack('shared', a))
+      .sort((a, b) => a.data.order - b.data.order)
+  : [];
+const trackDrafts = track ? allArticles.filter((a) => a.data.draft && inTrack(track.slug, a)) : [];
+
+/* -------------------------------------------------------------- article -- */
+const article = kind === 'article' ? Astro.props.article : null;
+const articleTracks = article
+  ? TRACKS.filter((t) => inTrack(t.slug, article))
+  : [];
+const home = articleTracks[0] ?? TRACKS[0];
+const related = article
+  ? article.data.related
+      .map((slug) => published.find((a) => a.id === slug))
+      .filter((a): a is (typeof published)[number] => Boolean(a))
+  : [];
+const series = article?.data.series ? SERIES.find((s) => s.slug === article.data.series) : undefined;
+const seriesArticles = series
+  ? published
+      .filter((a) => a.data.series === series.slug)
+      .sort((a, b) => (a.data.seriesOrder ?? 0) - (b.data.seriesOrder ?? 0))
+  : [];
+const seriesIndex = series ? seriesArticles.findIndex((a) => a.id === article!.id) : -1;
+const seriesNext = seriesIndex >= 0 ? seriesArticles[seriesIndex + 1] : undefined;
+
+/* -------------------------------------------------------------- figures -- */
+const year = kind === 'figures' ? Astro.props.year : null;
+const allFigures = await getCollection('figures');
+const yearFigures = allFigures.filter((f) => f.data.year === year);
+const groups = [
+  ...FIGURE_GROUPS.filter((g) => yearFigures.some((f) => f.data.group === g.key)),
+  ...[...new Set(yearFigures.map((f) => f.data.group))]
+    .filter((k) => !FIGURE_GROUPS.some((g) => g.key === k))
+    .map((k) => ({ key: k, title: k })),
+];
+
+/* --------------------------------------------------------------- shared -- */
+const pageTitle =
+  kind === 'hub'
+    ? 'מרכז ידע'
+    : kind === 'track' ? track!.title : kind === 'article' ? article!.data.title : `תקרות וסכומים ${year}`;
+const pageSummary =
+  kind === 'hub'
+    ? ''
+    : kind === 'track'
+    ? track!.lead
+    : kind === 'article'
+      ? article!.data.summary
+      : 'כל הסכומים והתקרות שמרכז הידע מצטט, במקום אחד — כל אחד עם השנה שאליה הוא מתייחס והמקור שממנו הוא נלקח.';
+
+const crumbs = [
+  { name: 'מרכז ידע', item: '/knowledge/' },
+  ...(kind === 'article' ? [{ name: home.name, item: `/knowledge/${home.slug}/` }] : []),
+  { name: pageTitle, item: Astro.url.pathname },
+];
+const breadcrumbLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: crumbs.map((c, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: c.name,
+    item: new URL(c.item, Astro.site).href,
+  })),
+};
+---
+
+{kind === 'hub' && <HubPage />}
+
+{kind !== 'hub' && (
+<BaseLayout
+  title={`${pageTitle} | Plan-T`}
+  description={pageSummary}
+  ogType={kind === 'article' ? 'article' : undefined}
+  noindex={kind === 'article' && article!.data.draft}
+>
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbLd)} />
+
+  <PageHero size="compact" seed={kind === 'article' ? 2 : 4} eyebrow={kind === 'track' ? 'מרכז ידע' : home.name}>
+    <Fragment slot="title">{pageTitle}</Fragment>
+    <Fragment slot="lead">{pageSummary}</Fragment>
+  </PageHero>
+
+  {
+    kind === 'track' && (
+      <>
+        <section class="band bg-white" aria-labelledby="articles-title">
+          <div class="mx-auto max-w-5xl px-4">
+            <h2 id="articles-title" class="reveal-lines text-3xl font-bold text-brand-800">המאמרים</h2>
+            {trackArticles.length === 0 ? (
+              <p class="reveal mt-6 leading-relaxed text-ink-700">
+                המאמרים של המסלול הזה בהכנה ויפורסמו בהמשך.
+              </p>
+            ) : (
+              <ul class="mt-8 grid gap-5 md:grid-cols-2">
+                {trackArticles.map((a) => (
+                  <li class="reveal card-lift rounded-2xl border border-brand-200 bg-white p-6 shadow-sm hover:border-brand-400">
+                    {a.data.icon && <DuotoneIcon name={a.data.icon} size="md" />}
+                    <h3 class="mt-3 text-lg font-bold text-brand-800">
+                      <a href={`/knowledge/${a.id}/`} class="hover:underline">{a.data.title}</a>
+                    </h3>
+                    <p class="mt-2 leading-relaxed text-ink-700">{a.data.summary}</p>
+                    <p class="mt-3 text-sm text-ink-700">
+                      עודכן:&#32;<span class="ltr">{a.data.updated}</span>
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            )}
+            {trackDrafts.length > 0 && (
+              <p class="reveal mt-8 text-sm text-ink-700">
+                <span class="font-bold">בהכנה:</span>&#32;
+                {trackDrafts.map((d) => d.data.title).join(' · ')}
+              </p>
+            )}
+          </div>
+        </section>
+
+        <section class="band bg-surface-blue" aria-labelledby="fits-title">
+          <div class="mx-auto max-w-3xl px-4">
+            <h2 id="fits-title" class="reveal-lines text-3xl font-bold text-brand-800">איך זה משתלב</h2>
+            <p class="reveal mt-4 leading-relaxed text-ink-700">
+              ניהול הוליסטי אינו בחירת המוצר הטוב ביותר אלא תיאום בין שכבות. אלה עקרונות, לא הקצאה.
+            </p>
+            <Layers items={PLANNING_LAYERS} numbered={false} />
+            <Disclaimer />
+          </div>
+        </section>
+
+        <LeadForm source={`website-knowledge-${track!.slug}`} audience={track!.audienceKey} />
+      </>
+    )
+  }
+
+  {
+    kind === 'article' && (
+      <>
+        <article class="band bg-white">
+          <div class="mx-auto max-w-3xl px-4">
+            {article!.data.draft && (
+              <p class="rounded-xl border border-dashed border-warn-500 bg-warn-100 p-4 text-sm font-bold text-ink-900">
+                טיוטה — טעון אישור נטלי. המקורות עדיין ללא קישור מאומת, והעמוד אינו מפורסם ואינו
+                מאונדקס.
+              </p>
+            )}
+            <p class:list={['text-sm text-ink-700', article!.data.draft && 'mt-4']}>
+              עודכן:&#32;<span class="ltr">{article!.data.updated}</span>&#32;· קריאה של&#32;
+              <span class="ltr">{readingMinutes(article!.body ?? '')}</span>&#32;דקות
+            </p>
+
+            {series && seriesIndex >= 0 && (
+              <p class="mt-2 text-sm text-brand-700">
+                <a href={`/knowledge/series/${series.slug}/`} class="font-bold underline">{series.title}</a>
+                &#32;· חלק <span class="ltr">{seriesIndex + 1}</span> מתוך <span class="ltr">{seriesArticles.length}</span>
+                {seriesNext && (
+                  <>
+                    &#32;· הבא:&#32;
+                    <a href={`/knowledge/${seriesNext.id}/`} class="underline">{seriesNext.data.title}</a>
+                  </>
+                )}
+              </p>
+            )}
+
+            <div class="mt-8">
+              <ArticleBody html={article!.rendered?.html ?? ''} slug={article!.id} />
+            </div>
+
+            <SourceList sources={article!.data.sources} />
+
+            {related.length > 0 && (
+              <section class="not-prose mt-10" aria-labelledby="related-title">
+                <h2 id="related-title" class="text-lg font-bold text-brand-800">מאמרים קשורים</h2>
+                <ul class="mt-3 space-y-2">
+                  {related.map((r) => (
+                    <li>
+                      <a href={`/knowledge/${r.id}/`} class="text-brand-600 underline hover:text-brand-800">
+                        {r.data.title}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
+
+            <p class="mt-10 text-lg font-bold text-brand-800">
+              ב-<span class="ltr">Plan-T</span> כל השכבות האלה נראות בתיק אחד.&#32;
+              <a href={home.audiencePath} class="text-brand-600 underline hover:text-brand-800">{home.name}</a>
+            </p>
+
+            <Disclaimer />
+          </div>
+        </article>
+
+        <LeadForm source={`website-knowledge-${home.slug}`} audience={home.audienceKey} />
+      </>
+    )
+  }
+
+  {
+    kind === 'figures' && (
+      <>
+        <section class="band bg-white">
+          <div class="mx-auto max-w-3xl px-4">
+            <p class="text-sm text-ink-700">
+              כל מאמר במרכז הידע מקשר לכאן במקום להקליד מספר בגוף הטקסט. עדכון כאן מעדכן את כל
+              האתר.
+            </p>
+
+            {groups.map((group) => (
+              <section class="mt-10" aria-labelledby={`group-${group.key}`}>
+                <h2 id={`group-${group.key}`} class="text-2xl font-bold text-brand-800">{group.title}</h2>
+                <dl class="mt-4 space-y-4">
+                  {yearFigures
+                    .filter((f) => f.data.group === group.key)
+                    .map((f) => (
+                      <div id={f.id} class="scroll-mt-24 rounded-2xl border border-brand-200 bg-white p-5 shadow-sm">
+                        <dt class="text-xl font-bold text-brand-800">
+                          <span class="ltr">{formatFigure(f.data)}</span>
+                        </dt>
+                        <dd class="mt-1 leading-relaxed text-ink-700">
+                          {f.data.label}
+                          {f.data.note && <span class="mt-2 block text-sm" set:html={wrapAtomicRuns(f.data.note)} />}
+                          <span class="mt-3 block text-xs text-ink-700">
+                            נכון ל-<span class="ltr">{f.data.year}</span> ·&#32;
+                            <span
+                              class:list={[
+                                'rounded-full px-2 py-0.5 font-bold',
+                                f.data.source.tier === 0 ? 'bg-warn-100 text-ink-900' : 'bg-brand-100 text-brand-800',
+                              ]}
+                            >
+                              {TIER_LABEL[f.data.source.tier]}
+                            </span>
+                            &#32;
+                            {f.data.source.url ? (
+                              <a href={f.data.source.url} class="underline">{f.data.source.label}</a>
+                            ) : (
+                              f.data.source.label
+                            )}
+                          </span>
+                        </dd>
+                      </div>
+                    ))}
+                </dl>
+              </section>
+            ))}
+
+            <Disclaimer />
+          </div>
+        </section>
+      </>
+    )
+  }
+</BaseLayout>
+)}

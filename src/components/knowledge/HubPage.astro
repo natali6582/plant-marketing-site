@@ -1,0 +1,143 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../PageHero.astro';
+import DuotoneIcon from '../DuotoneIcon.astro';
+import Layers from './Layers.astro';
+import Disclaimer from './Disclaimer.astro';
+import { BIG_IDEAS, CONCEPT_LAYERS, REGULATORS, TRACKS } from '../../data/knowledge';
+import { figuresPath } from './figures';
+import { getCollection } from 'astro:content';
+
+/*
+  /knowledge/ — the hub. Rendered from the section's one route rather than from
+  a page of its own: a static index.astro still writes an index.html even when
+  its body bails out, which leaked an empty /knowledge/ into production builds
+  with the flag off. As a component it simply is not called.
+
+  DRAFT — every line needs Natali's approval. The whole section is educational
+  content in a supervised field, and the source research cites its sources as
+  bare markers with no URLs, so nothing here is published: every article is
+  draft: true and the section sits behind KNOWLEDGE_ENABLED.
+
+  The opening section is the argument the rest of the hub makes, so it comes
+  first: the wrapper is not the asset, liquidity is a property of the wrapper,
+  and תיקון 190 is a tax arrangement rather than a product.
+
+  The regulators are HTML cards with live text, not the AI-generated diagram
+  that came with the brief — §5.5, and also because the generated image spells
+  Hebrew wrong.
+*/
+
+const figures = await getCollection('figures');
+const latestYear = Math.max(...figures.map((f) => f.data.year));
+
+const articles = await getCollection('knowledge');
+const perTrack = (slug: string) =>
+  articles.filter((a) => {
+    const aud = a.data.audience;
+    return Array.isArray(aud) ? aud.includes(slug as never) : aud === slug;
+  }).length;
+---
+
+<BaseLayout
+  title="מרכז ידע | Plan-T"
+  description="תוכן מקצועי וחינוכי על הנכסים, המוצרים והמעטפות בשוק הישראלי: מה מייצר את החשיפה, באיזו מעטפת היא מוחזקת, ומי מפקח על מה."
+>
+  <PageHero size="compact" seed={4} eyebrow="מרכז ידע">
+    <Fragment slot="title">הנכסים, המוצרים והמעטפות — מפה אחת</Fragment>
+    <Fragment slot="lead">
+      אותה חשיפה כלכלית יכולה לשבת בחמש מעטפות שונות, ולהתנהג בכל אחת מהן אחרת לגמרי. מרכז הידע
+      מסביר את ההבחנה הזו, ומה היא משנה בפועל.
+    </Fragment>
+  </PageHero>
+
+  <!-- The three framings, which are the section's thesis. -->
+  <section class="band bg-white" aria-labelledby="ideas-title">
+    <div class="mx-auto max-w-5xl px-4">
+      <h2 id="ideas-title" class="reveal-lines text-center text-3xl font-bold text-brand-800">
+        שלושה רעיונות להכיר
+      </h2>
+      <ul class="mt-10 grid gap-5 md:grid-cols-3">
+        {
+          BIG_IDEAS.map((idea) => (
+            <li class="reveal card-lift rounded-2xl border border-brand-200 bg-white p-6 shadow-sm hover:border-brand-400">
+              <DuotoneIcon name={idea.icon} />
+              <h3 class="mt-3 text-lg font-bold text-brand-800">{idea.title}</h3>
+              <p class="mt-2 leading-relaxed text-ink-700">{idea.body}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="band bg-surface-blue" aria-labelledby="map-title">
+    <div class="mx-auto max-w-3xl px-4">
+      <h2 id="map-title" class="reveal-lines text-3xl font-bold text-brand-800">מפת המושגים המשותפת</h2>
+      <p class="reveal mt-4 leading-relaxed text-ink-700">
+        הסיווג מתחיל בשתי שאלות: מהי החשיפה הכלכלית, ובאיזו מעטפת היא מוחזקת. חמש השכבות האלה הן
+        אותן שתי שאלות, מפורקות.
+      </p>
+      <Layers items={CONCEPT_LAYERS} />
+    </div>
+  </section>
+
+  <section class="band bg-white" aria-labelledby="regulators-title">
+    <div class="mx-auto max-w-5xl px-4">
+      <h2 id="regulators-title" class="reveal-lines text-3xl font-bold text-brand-800">מי מפקח על מה</h2>
+      <p class="reveal mt-4 max-w-3xl leading-relaxed text-ink-700">
+        הפיקוח מחולק לפי סוג המעטפת, לא לפי סוג הלקוח. אותו חוסך יכול להחזיק באותה שנה נכסים
+        בארבעה תחומי פיקוח שונים.
+      </p>
+      <ul class="mt-8 grid gap-5 md:grid-cols-2">
+        {
+          REGULATORS.map((r) => (
+            <li
+              class:list={[
+                'reveal card-lift rounded-2xl border bg-white p-6 shadow-sm hover:border-brand-400',
+                r.venue ? 'border-dashed border-brand-300' : 'border-brand-200',
+              ]}
+            >
+              <DuotoneIcon name={r.icon} size="md" />
+              <h3 class="mt-3 text-lg font-bold text-brand-800">{r.name}</h3>
+              <p class="mt-2 leading-relaxed text-ink-700">{r.scope}</p>
+              {r.venue && <p class="mt-3 text-sm font-bold text-brand-600">זירת מסחר וסליקה, לא רגולטור</p>}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="band bg-surface-blue" aria-labelledby="tracks-title">
+    <div class="mx-auto max-w-5xl px-4">
+      <h2 id="tracks-title" class="reveal-lines text-center text-3xl font-bold text-brand-800">שלושה מסלולים</h2>
+      <ul class="mt-10 grid gap-5 md:grid-cols-3">
+        {
+          TRACKS.map((track) => (
+            <li class="reveal card-lift rounded-2xl border border-brand-200 bg-white p-6 shadow-sm hover:border-brand-400">
+              <DuotoneIcon name={track.icon} />
+              <h3 class="mt-3 text-lg font-bold text-brand-800">
+                <a href={`/knowledge/${track.slug}/`} class="hover:underline">{track.name}</a>
+              </h3>
+              <p class="mt-2 leading-relaxed text-ink-700">{track.lead}</p>
+              <p class="mt-3 text-sm text-ink-700">
+                <span class="ltr">{perTrack(track.slug)}</span>&#32;מאמרים
+              </p>
+            </li>
+          ))
+        }
+      </ul>
+
+      <p class="reveal mt-10 text-center">
+        <a href={figuresPath(latestYear)} class="font-bold text-brand-600 underline hover:text-brand-800">
+          כל התקרות והסכומים לשנת <span class="ltr">{latestYear}</span>, בדף אחד
+        </a>
+      </p>
+    </div>
+  </section>
+
+  <div class="mx-auto max-w-3xl px-4 pb-16">
+    <Disclaimer />
+  </div>
+</BaseLayout>

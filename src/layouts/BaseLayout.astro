@@ -9,9 +9,13 @@ interface Props {
   ogImage?: string;
   /** 'minimal' renders logo-only navigation for campaign pages; the default is the full chrome. */
   chrome?: 'full' | 'minimal';
+  /** 'article' for knowledge-hub articles; everything else on the site is a website. */
+  ogType?: 'website' | 'article';
+  /** Draft knowledge articles render on staging for review and must never be indexed. */
+  noindex?: boolean;
 }
 
-const { title, description, ogImage = '/images/og.jpg', chrome = 'full' } = Astro.props;
+const { title, description, ogImage = '/images/og.jpg', chrome = 'full', ogType = 'website', noindex = false } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const ogImageUrl = new URL(ogImage, Astro.site);
 ---
@@ -39,7 +43,8 @@ const ogImageUrl = new URL(ogImage, Astro.site);
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="sitemap" href="/sitemap-index.xml" />
 
-    <meta property="og:type" content="website" />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    <meta property="og:type" content={ogType} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />

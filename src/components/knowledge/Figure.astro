@@ -1,0 +1,42 @@
+---
+import { getEntry } from 'astro:content';
+import { formatFigure, figuresPath } from './figures';
+
+/*
+  One number, inline, pulled from src/data/figures.yaml by id.
+
+  Articles never type a figure. This is the only way a number reaches a reader,
+  which is what makes the January update a single edit rather than a search
+  through thirteen markdown files.
+
+  The year travels with the value because a ceiling without a year is a claim
+  with an expiry date nobody can see, and the value links to the figures page
+  so the source is one click away from wherever it is cited.
+
+  An id that is not in the data file throws at build time. A missing ceiling
+  should never reach a visitor as an empty span.
+*/
+
+interface Props {
+  id: string;
+  /* Suppress the year when the sentence around it already carries one. */
+  year?: boolean;
+}
+
+const { id, year = true } = Astro.props;
+
+const figure = await getEntry('figures', id);
+if (!figure) {
+  throw new Error(`<Figure id="${id}"/> is not in src/data/figures.yaml.`);
+}
+---
+
+<a
+  href={`${figuresPath(figure.data.year)}#${id}`}
+  class="font-bold text-brand-700 underline decoration-brand-300 underline-offset-2 hover:text-brand-800"
+  title={figure.data.label}
+>
+  <span class="ltr">{formatFigure(figure.data)}</span>{
+    year && <span class="whitespace-nowrap text-sm font-normal text-ink-700">&#32;(<span class="ltr">{figure.data.year}</span>)</span>
+  }
+</a>

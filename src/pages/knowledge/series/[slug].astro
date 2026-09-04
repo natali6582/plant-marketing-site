@@ -1,0 +1,70 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import PageHero from '../../../components/PageHero.astro';
+import Disclaimer from '../../../components/knowledge/Disclaimer.astro';
+import { KNOWLEDGE_ENABLED, SERIES } from '../../../data/knowledge';
+
+/*
+  A reading order.
+
+  The order lives in each article's frontmatter (series + seriesOrder), so this
+  page and the "חלק X מתוך Y" line the articles print for themselves cannot
+  disagree — both count the same sorted list.
+
+  Only one series ships in this PR. The brief named three; the research
+  document supports a pension reading order and does not yet carry enough on
+  retirement tax or intergenerational transfer to order four to six articles,
+  so those two are listed in the PR backlog rather than shipped as empty pages.
+*/
+
+export async function getStaticPaths() {
+  if (!KNOWLEDGE_ENABLED) return [];
+  return SERIES.map((series) => ({ params: { slug: series.slug }, props: { series } }));
+}
+
+const { series } = Astro.props;
+
+const all = await getCollection('knowledge');
+const articles = all
+  .filter((a) => a.data.series === series.slug)
+  .sort((a, b) => (a.data.seriesOrder ?? 0) - (b.data.seriesOrder ?? 0));
+
+/* A series is only as publishable as its least ready part. */
+const anyDraft = articles.some((a) => a.data.draft);
+---
+
+<BaseLayout title={`${series.title} | Plan-T`} description={series.lead} noindex={anyDraft}>
+  <PageHero size="compact" seed={4} eyebrow="סדרה">
+    <Fragment slot="title">{series.title}</Fragment>
+    <Fragment slot="lead">{series.lead}</Fragment>
+  </PageHero>
+
+  <section class="band bg-white">
+    <div class="mx-auto max-w-3xl px-4">
+      {
+        anyDraft && (
+          <p class="mb-6 rounded-xl border border-dashed border-warn-500 bg-warn-100 p-4 text-sm font-bold text-ink-900">
+            טיוטה — טעון אישור נטלי. הסדרה אינה מפורסמת ואינה מאונדקסת.
+          </p>
+        )
+      }
+      <ol class="space-y-4">
+        {
+          articles.map((a, index) => (
+            <li class="reveal card-lift rounded-2xl border border-brand-200 bg-white p-5 shadow-sm hover:border-brand-400">
+              <p class="text-sm font-bold text-brand-600">
+                חלק <span class="ltr">{index + 1}</span> מתוך <span class="ltr">{articles.length}</span>
+              </p>
+              <h2 class="mt-1 text-lg font-bold text-brand-800">
+                <a href={`/knowledge/${a.id}/`} class="hover:underline">{a.data.title}</a>
+              </h2>
+              <p class="mt-2 leading-relaxed text-ink-700">{a.data.summary}</p>
+            </li>
+          ))
+        }
+      </ol>
+      <Disclaimer />
+    </div>
+  </section>
+</BaseLayout>

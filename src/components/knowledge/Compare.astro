@@ -1,0 +1,54 @@
+---
+/*
+  Two to four things side by side on one set of rows — מקיפה מול כללית, קרן
+  מול ETF.
+
+  It is a real <table> on desktop, because that is what it is and a screen
+  reader should hear it as one. On a phone the same markup re-lays itself as
+  one card per column: the row labels are repeated inside each card through
+  data-label, so a reader never has to scroll sideways to remember which column
+  they are in. Nothing is duplicated in the markup to achieve that.
+*/
+
+interface Props {
+  columns: string[];
+  rows: { label: string; values: string[] }[];
+  caption?: string;
+}
+
+const { columns, rows, caption } = Astro.props;
+
+for (const row of rows) {
+  if (row.values.length !== columns.length) {
+    throw new Error(
+      `<Compare>: row "${row.label}" has ${row.values.length} values but there are ${columns.length} columns.`
+    );
+  }
+}
+---
+
+<div class="not-prose my-8 overflow-x-auto">
+  <table class="compare w-full border-collapse text-start text-sm">
+    {caption && <caption class="mb-3 text-start text-sm text-ink-700">{caption}</caption>}
+    <thead>
+      <tr>
+        <th scope="col" class="w-40 p-3 text-start font-bold text-brand-800">&nbsp;</th>
+        {columns.map((c) => (
+          <th scope="col" class="p-3 text-start font-bold text-brand-800">{c}</th>
+        ))}
+      </tr>
+    </thead>
+    <tbody>
+      {
+        rows.map((row) => (
+          <tr class="border-t border-brand-200">
+            <th scope="row" class="p-3 text-start align-top font-bold text-ink-900">{row.label}</th>
+            {row.values.map((v, i) => (
+              <td class="p-3 align-top leading-relaxed text-ink-700" data-label={columns[i]}>{v}</td>
+            ))}
+          </tr>
+        ))
+      }
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,56 @@
+---
+import { getCollection } from 'astro:content';
+import KeyFigures from './KeyFigures.astro';
+import Layers from './Layers.astro';
+import Compare from './Compare.astro';
+import Timeline from './Timeline.astro';
+import { inlineFigures, renderAlerts, splitBlocks } from './render';
+import type { FigureData } from './figures';
+import { CONCEPT_LAYERS, PLANNING_LAYERS } from '../../data/knowledge';
+import { COMPARE, TIMELINE } from '../../data/knowledge-tables';
+
+/*
+  Renders an article body: prose chunks as HTML, block tokens as real
+  components. See render.ts for why the articles carry tokens instead of MDX.
+*/
+
+interface Props {
+  html: string;
+  /* Named in error messages, so a bad id points at the file that has it. */
+  slug: string;
+}
+
+const { html, slug } = Astro.props;
+
+const figureEntries = await getCollection('figures');
+const figures = new Map<string, FigureData>(figureEntries.map((e) => [e.id, e.data as FigureData]));
+
+const parts = splitBlocks(renderAlerts(inlineFigures(html, figures, slug)));
+
+const LAYER_SETS: Record<string, typeof CONCEPT_LAYERS> = {
+  concept: CONCEPT_LAYERS,
+  planning: PLANNING_LAYERS,
+};
+
+/* A token naming something that does not exist fails the build rather than
+   rendering nothing — the same rule the figures follow. */
+for (const part of parts) {
+  if (part.kind !== 'block') continue;
+  const { name, arg } = part;
+  if (name === 'layers' && !LAYER_SETS[arg]) throw new Error(`${slug}: {{layers:${arg}}} — unknown set.`);
+  if (name === 'compare' && !COMPARE[arg]) throw new Error(`${slug}: {{compare:${arg}}} — not in knowledge-tables.ts.`);
+  if (name === 'timeline' && !TIMELINE[arg]) throw new Error(`${slug}: {{timeline:${arg}}} — not in knowledge-tables.ts.`);
+}
+---
+
+<div class="kb-prose">
+  {
+    parts.map((part) => {
+      if (part.kind === 'html') return <Fragment set:html={part.html} />;
+      if (part.name === 'keyfigures') return <KeyFigures ids={part.arg.split(',').map((s) => s.trim())} />;
+      if (part.name === 'layers') return <Layers items={LAYER_SETS[part.arg]} numbered={part.arg === 'concept'} />;
+      if (part.name === 'timeline') return <Timeline items={TIMELINE[part.arg].items} />;
+      return <Compare {...COMPARE[part.arg]} />;
+    })
+  }
+</div>

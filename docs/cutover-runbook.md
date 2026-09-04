@@ -143,24 +143,75 @@ Each step above is independently reversible; do them in reverse order.
 
 ## מרכז הידע — פרסום מדורג
 
-`/knowledge/` נבנה רק כאשר משתנה הבנייה `KNOWLEDGE_ENABLED` שווה בדיוק למחרוזת
-`true`. בכל ערך אחר — ובהיעדר המשתנה — הסקשן לא מייצר אף עמוד: אין hub, אין
-מסלולים, אין מאמרים, ואין ערך ב-sitemap. זה נבדק: 20 עמודים כבוי, 51 דלוק.
+`/knowledge/` דורש ש־`KNOWLEDGE_ENABLED` יהיה בדיוק `true`, ובנוסף הקשר מותר:
+ב־Workers Builds חייבים להתקבל `WORKERS_CI=1` ו־`WORKERS_CI_BRANCH` לא ריק
+ושאינו `main` (לאחר הסרת רווחים בקצוות). ענף חסר או `main` נשארים חסומים גם
+כשהדגל דלוק. בנייה שלא מזוהה כ־Workers Builds חסומה גם היא, למעט פיתוח מקומי
+כמפורט בהמשך. בכל ערך אחר של הדגל — ובהיעדרו — הסקשן כבוי.
+
+כשהסקשן כבוי לא נוצרים hub, מסלולים, מאמרים או רשומות `/knowledge/` ב־sitemap,
+וגם קישורי הניווט אליו מוסתרים. ספירת הייחוס לפני שינוי ההגנה: 20 עמודים כבוי,
+51 דלוק **באתר כולו** — לא 51 עמודי ידע. יש לאמת את הספירה מחדש בכל שינוי תוכן.
 
 **זה משתנה בנייה, לא משתנה ריצה.** האתר סטטי לגמרי והדגל נקרא בזמן יצירת
 העמודים, כמו ה-`PUBLIC_*` — ולכן שינוי שלו מחייב **בנייה מחדש**, לא רק שמירה
 בדשבורד (ראו §5).
 
-### המצב הנוכחי, 04/09/2026
+### הגדרות שאומתו בדשבורד, 04/09/2026
 
-| סביבה | `KNOWLEDGE_ENABLED` | מה נבנה |
+ב־Worker `plant-marketing-site`, בחשבון `Sales@plan-t.org.il's Account`:
+
+- Production branch: `main`.
+- Builds for non-production branches: מופעל.
+- Build command: `npm run build`.
+- Deploy command: `npx wrangler deploy`.
+- Version command: `npx wrangler versions upload` — העלאת גרסת Preview, לא קידום לפרודקשן.
+- Variables and secrets של Builds: ריק בזמן הבדיקה; לא נשמרו שינויים.
+
+**אין כאן משתנה נפרד לכל ענף.** `KNOWLEDGE_ENABLED` הוא משתנה Builds משותף;
+ההפרדה נעשית בקוד בעזרת הענף שמוזרק לבנייה. אין להגדיר ידנית או לדרוס את
+`WORKERS_CI`, את `WORKERS_CI_BRANCH` או את `CI` כדי לפתוח את השער.
+
+| הקשר | `KNOWLEDGE_ENABLED` | תוצאה אחרי מיזוג ההגנה |
 |---|---|---|
-| Production (`main`) | **לא מוגדר** | הסקשן לא קיים |
-| Preview (`preview/knowledge`) | להגדיר `true` | הסקשן מלא, כולל טיוטות |
+| Workers Builds, ענף `main` | `true` או כל ערך אחר | הסקשן לא קיים |
+| Workers Builds, ענף מזוהה שאינו `main`, כולל `preview/knowledge` וענפי PR | `true` | הסקשן מלא, כולל טיוטות |
+| Workers Builds, ענף חסר, ריק או רווחים בלבד | `true` | הסקשן לא קיים |
+| כל הקשר | חסר, ריק, `false`, `TRUE` או כל ערך שאינו בדיוק `true` | הסקשן לא קיים |
+| `npm run dev` מקומי, בלי סימוני CI או ענף | `true` | הסקשן מלא, כולל טיוטות |
+| `npm run build` מקומי רגיל, בלי סימוני CI או ענף | `true` | הסקשן לא קיים |
 
-`preview/knowledge` הוא ענף ייעודי שמשקף את `main`. הוא קיים כדי שתהיה בנייה
-לא-פרודקשן להצמיד אליה את המשתנה. אחרי כל מיזוג ל-`main` יש לרענן אותו:
-`git checkout preview/knowledge && git merge --ff-only main && git push`.
+### סדר הפעלה — ללא חלון סיכון לפרודקשן
+
+1. להשאיר את המשתנה המשותף כבוי/לא מוגדר בזמן הכנת ה־PR.
+2. לאמת את בדיקות ההגנה: `main` וענף חסר כבויים גם כשהדגל `true`, וענף Preview
+   מזוהה דלוק. לבדוק גם נתיבים, קישורי ניווט ו־sitemap, לא רק ערך בוליאני.
+3. למזג את ההגנה ל־`main` ולוודא שהקומיט נמצא שם ושהבנייה שלו הצליחה. תיקון
+   שנמצא רק בענף Preview **אינו מגן על main**.
+4. לרענן את `preview/knowledge` מ־`main` ב־fast-forward בלבד. אם נדרשת הכרעת
+   מיזוג, לעצור — לא לבצע force push ולא לדרוס שינויים.
+5. לבדוק שוב בדשבורד שענף production הוא `main` ופקודת הגרסה היא
+   `npx wrangler versions upload`. רק אז להגדיר את משתנה Builds המשותף
+   `KNOWLEDGE_ENABLED=true` ולבנות את הענף המעודכן.
+6. לוודא שה־Preview מציג `/knowledge/`, ובפרודקשן הנתיב אינו קיים ואין אליו
+   קישורים או רשומות ב־sitemap. אין להריץ מחדש קומיטים ישנים מלפני ההגנה כשהדגל דלוק.
+
+### פיתוח מקומי וגבולות ההגנה
+
+להוסיף/לעדכן רק `KNOWLEDGE_ENABLED=true` ב־`.env` המקומי, בלי לדרוס קובץ קיים
+או את ערכי ה־webhooks שבו, ולהריץ `npm run dev`. החריג המקומי דורש
+`import.meta.env.DEV` וללא ערכים ב־`CI`, ב־`WORKERS_CI` וב־`WORKERS_CI_BRANCH`.
+אם סביבת העבודה נושאת סימוני CI, לא לזייף ענף; להשתמש בתהליך מקומי נקי.
+
+`DEV` הוא מצב development, **לא הוכחה שמדובר בשרת מקומי**: גם build עם
+`NODE_ENV=development` או עם `--devOutput` יכול לייצר פלט כזה. פלט זה אינו
+מיועד לפריסה. לפריסה משתמשים בבנייה רגילה עם `NODE_ENV=production` ובנתיב
+ה־CI המאומת בלבד. קידום ידני של גרסת Preview לפרודקשן, או פריסה ידנית של
+תוצריה, עוקפים את כוונת ההגנה ואסורים לפני אישור הפרסום.
+
+מקורות: [משתני Workers Builds](https://developers.cloudflare.com/workers/ci-cd/builds/configuration/#default-variables),
+[פקודת Preview](https://developers.cloudflare.com/workers/ci-cd/builds/configuration/#non-production-branch-deploy-command),
+[מצבי Vite](https://vite.dev/guide/env-and-mode#built-in-constants).
 
 ### לפני הדלקה בפרודקשן
 
@@ -169,5 +220,6 @@ Each step above is independently reversible; do them in reverse order.
 האלה למבקרים אמיתיים.
 
 הסדר: לאמת מקורות (`scripts/check-figures.mjs` מדפיס את הרשימה) → להוריד
-`draft: true` → להדליק את הדגל.
+`draft: true` → לאשר ולמזג שינוי מפורש בקוד שמתיר פרסום מ־`main` → לבנות
+ולאמת את התוצר לפני פריסה. שינוי המשתנה המשותף לבדו לא פותח את הפרודקשן.
 

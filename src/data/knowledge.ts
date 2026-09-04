@@ -214,8 +214,27 @@ export const BIG_IDEAS = [
   },
 ];
 
-/* Off in production until Natali approves the section; on for staging review. */
-export const KNOWLEDGE_ENABLED = import.meta.env.KNOWLEDGE_ENABLED === 'true';
+/*
+  Workers Builds shares build variables across branches. Keep main off even
+  when the review flag is set, and fail closed if CI cannot identify a branch.
+  These values are supplied by Workers Builds, not custom dashboard overrides.
+*/
+const knowledgeBranch = (import.meta.env.WORKERS_CI_BRANCH ?? '').trim();
+const knowledgeWorkersCi = import.meta.env.WORKERS_CI ?? '';
+const knowledgeCi = import.meta.env.CI ?? '';
+const knowledgePreview =
+  knowledgeWorkersCi === '1' && knowledgeBranch !== '' && knowledgeBranch !== 'main';
+
+/*
+  Allow npm run dev without impersonating Cloudflare. DEV is a development-mode
+  convenience, not a deployment boundary: never deploy development-mode output.
+  A normal local npm run build stays off without a verified Workers CI branch.
+*/
+const knowledgeLocalDev =
+  import.meta.env.DEV && knowledgeCi === '' && knowledgeWorkersCi === '' && knowledgeBranch === '';
+
+export const KNOWLEDGE_ENABLED =
+  import.meta.env.KNOWLEDGE_ENABLED === 'true' && (knowledgePreview || knowledgeLocalDev);
 
 export const SERIES: { slug: string; title: string; lead: string }[] = [
   {

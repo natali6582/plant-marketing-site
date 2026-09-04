@@ -169,7 +169,23 @@ body {
 
 .faq-question::before {
   content: counter(faq) ".";
-  direction: ltr;
+  /*
+    rtl, not ltr. Both render the same two characters and differ only in which
+    side the period lands on. Under ltr the marker read «1.» with the period to
+    the right of the digit — the English shape. Hebrew wants it on the left: the
+    period follows the number in reading order, and reading order here runs
+    right to left.
+
+    The digit is a European number, so the bidi algorithm keeps it upright and
+    left-to-right on its own; only the period is free to move, and the
+    paragraph direction is what decides where it goes. isolate still applies,
+    so the pair cannot trade places with the Hebrew beside it.
+
+    margin-left stays physical on purpose: it is the gap between the marker and
+    the question, the question is always to the marker's left in RTL, and a
+    logical property would follow this box's own direction instead.
+  */
+  direction: rtl;
   unicode-bidi: isolate;
   margin-left: 0.5rem;
   color: var(--color-brand-600);

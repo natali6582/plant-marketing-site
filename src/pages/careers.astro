@@ -1,0 +1,90 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+
+/*
+  /careers/ — קריירה.
+
+  Written for this page rather than migrated, and approved by Natali on
+  04/09/2026 along with the FAQ rewrite.
+
+  Everything factual here already appears elsewhere on the site: Israeli
+  fintech (/about/, "חברת פינטק ישראלית ותיקה"), Herzliya (the footer address),
+  the three audiences (/about/), and the system being built with its users
+  (/about/, "פותחה בשיתוף פעולה הדוק עם המשתמשים עצמם"). Nothing else is
+  claimed — no team size, no benefits, no growth rate. A careers page is the
+  easiest place on a site to invent a company, so this one says only what the
+  rest of the site already says.
+
+  The page states plainly that there are no openings. That is the point of it:
+  a list of roles that do not exist would be worse than no page at all.
+
+  CV address: sales@plan-t.org.il, the only address published anywhere on the
+  site. It is a sales mailbox — CVs sent there land with the sales team. Natali
+  was asked for a careers mailbox and approved the copy without naming one, so
+  it stays until she supplies one; swapping it is a single string here.
+
+  No lead form: this page asks for an email, not a demo.
+*/
+---
+
+<BaseLayout
+  title="קריירה ב-Plan-T"
+  description="פלטפורמת הפינטק שנבנית יחד עם סוכני הביטוח, המתכננים הפיננסיים ומנהלי העושר שעובדים איתה. כרגע אין משרות פתוחות — ואפשר לשלוח קורות חיים."
+>
+  <PageHero size="compact" seed={2}>
+    <Fragment slot="title">לעבוד ב-Plan-T</Fragment>
+    <Fragment slot="lead">
+      אנחנו בונים מערכת אחת שמרכזת את כל התמונה של הלקוח — ובונים אותה יחד עם האנשים
+      שמשתמשים בה.
+    </Fragment>
+  </PageHero>
+
+  <section class="band bg-white" aria-labelledby="where-title">
+    <div class="mx-auto max-w-3xl px-4">
+      <h2 id="where-title" class="reveal-lines text-3xl font-bold text-brand-800">איפה אנחנו עובדים</h2>
+      <p class="reveal mt-4 leading-relaxed text-ink-700">
+        <span class="ltr">Plan-T</span> היא חברת פינטק ישראלית, מהרצליה, שבונה פלטפורמה אחת
+        לסוכני ביטוח, למתכננים פיננסיים ולמנהלי עושר. המערכת לא נבנית במעבדה: היא נבנית
+        בשיתוף פעולה הדוק עם האנשים שעובדים איתה כל יום, ומשתנה לפי מה שבאמת חוסך להם זמן.
+        זה אומר שמי שעובד כאן נמצא קרוב מאוד למי שמשתמש במה שהוא בנה, ורואה את זה חוזר אליו.
+      </p>
+    </div>
+  </section>
+
+  <!--
+    The no-openings notice gets the surface-blue band and a card of its own,
+    because it is the answer most people came for and it should be findable
+    without reading the paragraph above it.
+  -->
+  <section class="band bg-surface-blue" aria-labelledby="openings-title">
+    <div class="mx-auto max-w-3xl px-4">
+      <div class="reveal rounded-2xl border border-brand-200 bg-white p-6 shadow-sm md:p-8">
+        <h2 id="openings-title" class="text-2xl font-bold text-brand-800">משרות פתוחות</h2>
+        <p class="mt-4 text-xl font-bold text-ink-900">כרגע אין אצלנו משרות פתוחות.</p>
+        <p class="mt-3 leading-relaxed text-ink-700">
+          לא פתחנו כאן רשימת תפקידים שאינה קיימת. כשייפתח תפקיד, הוא יופיע בעמוד הזה.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="band bg-white" aria-labelledby="cv-title">
+    <div class="mx-auto max-w-3xl px-4">
+      <h2 id="cv-title" class="reveal-lines text-3xl font-bold text-brand-800">ובכל זאת, אם בא לכם</h2>
+      <p class="reveal mt-4 leading-relaxed text-ink-700">
+        אם אתם חושבים שיש לכם מה להביא לכאן, אל תחכו למשרה. שלחו קורות חיים ומשפט או שניים
+        על מה שאתם מחפשים — אנחנו קוראים כל פנייה ושומרים אותה אצלנו לכשייפתח תפקיד מתאים.
+      </p>
+      <!-- &#32; before the link: compressHTML eats a wrapped space before an
+           inline tag. See the note in accessibility.astro. -->
+      <p class="reveal mt-6 text-lg font-bold text-ink-900">
+        קורות חיים:&#32;
+        <a
+          href="mailto:sales@plan-t.org.il"
+          class="ltr font-bold text-brand-600 underline hover:text-brand-800"
+        >sales@plan-t.org.il</a>
+      </p>
+    </div>
+  </section>
+</BaseLayout>

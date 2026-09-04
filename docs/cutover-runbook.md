@@ -138,3 +138,36 @@ Each step above is independently reversible; do them in reverse order.
 - **`plan-t.co.il` broken after the NS switch:** at DomainTheNet, set the NS back to `ns1/ns2/ns3.dtnt.info`. Propagation takes as long as it took forward. This is why the wildcard/mail questions in section 1 are asked *before* the switch — a rollback recovers the records, not the mail that bounced meanwhile.
 - **Search Console change-of-address:** can be withdrawn from the old property within 180 days.
 - **Wix:** cannot be rolled back once cancelled — hence section 4 before section 2's final step.
+
+---
+
+## מרכז הידע — פרסום מדורג
+
+`/knowledge/` נבנה רק כאשר משתנה הבנייה `KNOWLEDGE_ENABLED` שווה בדיוק למחרוזת
+`true`. בכל ערך אחר — ובהיעדר המשתנה — הסקשן לא מייצר אף עמוד: אין hub, אין
+מסלולים, אין מאמרים, ואין ערך ב-sitemap. זה נבדק: 20 עמודים כבוי, 51 דלוק.
+
+**זה משתנה בנייה, לא משתנה ריצה.** האתר סטטי לגמרי והדגל נקרא בזמן יצירת
+העמודים, כמו ה-`PUBLIC_*` — ולכן שינוי שלו מחייב **בנייה מחדש**, לא רק שמירה
+בדשבורד (ראו §5).
+
+### המצב הנוכחי, 04/09/2026
+
+| סביבה | `KNOWLEDGE_ENABLED` | מה נבנה |
+|---|---|---|
+| Production (`main`) | **לא מוגדר** | הסקשן לא קיים |
+| Preview (`preview/knowledge`) | להגדיר `true` | הסקשן מלא, כולל טיוטות |
+
+`preview/knowledge` הוא ענף ייעודי שמשקף את `main`. הוא קיים כדי שתהיה בנייה
+לא-פרודקשן להצמיד אליה את המשתנה. אחרי כל מיזוג ל-`main` יש לרענן אותו:
+`git checkout preview/knowledge && git merge --ff-only main && git push`.
+
+### לפני הדלקה בפרודקשן
+
+כל המאמרים `draft: true`, וטיוטות מרונדרות **רק** כשהדגל דלוק — כל אחת עם באנר
+״טיוטה״ גלוי ועם `noindex`. הדלקה בפרודקשן לפני שהמקורות אומתו מעלה את הבאנרים
+האלה למבקרים אמיתיים.
+
+הסדר: לאמת מקורות (`scripts/check-figures.mjs` מדפיס את הרשימה) → להוריד
+`draft: true` → להדליק את הדגל.
+

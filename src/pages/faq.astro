@@ -16,6 +16,10 @@ import LeadForm from '../components/LeadForm.astro';
   Accordion = native <details>/<summary>: keyboard-operable, announced by
   screen readers, no script, no library. All eight answers are present, so the
   prompt's "do not merge with missing answers" condition is met.
+
+  The questions sit in a real <ol>, and the number is a CSS counter rather than
+  markup — see .faq-question::before in global.css for the RTL reason. Nothing
+  here renders the index, so the numbering cannot drift from the list order.
 */
 const faq = [
   {
@@ -83,23 +87,25 @@ const faq = [
   <section class="band bg-white" aria-labelledby="faq-title">
     <div class="mx-auto max-w-3xl px-4">
       <h2 id="faq-title" class="sr-only">השאלות הנפוצות</h2>
-      <div class="space-y-3">
+      <ol class="faq-list space-y-3">
         {
-          faq.map((item, index) => (
-            <details class="reveal card-lift group rounded-2xl border border-brand-200 bg-white hover:border-brand-400 shadow-sm open:border-brand-300">
-              <summary class="flex cursor-pointer list-none items-center justify-between gap-4 p-5 text-lg font-bold text-ink-900 [&::-webkit-details-marker]:hidden">
-                <span><span class="ltr me-2 text-brand-600">{index + 1}.</span>{item.q}</span>
-                <span class="shrink-0 text-brand-600 transition-transform group-open:rotate-180" aria-hidden="true">▾</span>
-              </summary>
-              <div class="space-y-4 px-5 pb-5 leading-relaxed text-ink-700">
-                {item.a.map((paragraph) => (
-                  <p>{paragraph}</p>
-                ))}
-              </div>
-            </details>
+          faq.map((item) => (
+            <li class="faq-item">
+              <details class="reveal card-lift group rounded-2xl border border-brand-200 bg-white hover:border-brand-400 shadow-sm open:border-brand-300">
+                <summary class="flex cursor-pointer list-none items-center justify-between gap-4 p-5 text-lg font-bold text-ink-900 [&::-webkit-details-marker]:hidden">
+                  <span class="faq-question">{item.q}</span>
+                  <span class="shrink-0 text-brand-600 transition-transform group-open:rotate-180" aria-hidden="true">▾</span>
+                </summary>
+                <div class="space-y-4 px-5 pb-5 leading-relaxed text-ink-700">
+                  {item.a.map((paragraph) => (
+                    <p>{paragraph}</p>
+                  ))}
+                </div>
+              </details>
+            </li>
           ))
         }
-      </div>
+      </ol>
     </div>
   </section>
 

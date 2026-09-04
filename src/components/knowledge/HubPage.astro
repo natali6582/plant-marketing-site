@@ -3,6 +3,8 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import PageHero from '../PageHero.astro';
 import DuotoneIcon from '../DuotoneIcon.astro';
 import Layers from './Layers.astro';
+import LayersDiagram from './LayersDiagram.astro';
+import RegulatorsDiagram from './RegulatorsDiagram.astro';
 import Disclaimer from './Disclaimer.astro';
 import { BIG_IDEAS, CONCEPT_LAYERS, REGULATORS, TRACKS } from '../../data/knowledge';
 import { figuresPath } from './figures';
@@ -78,6 +80,11 @@ const perTrack = (slug: string) =>
         הסיווג מתחיל בשתי שאלות: מהי החשיפה הכלכלית, ובאיזו מעטפת היא מוחזקת. חמש השכבות האלה הן
         אותן שתי שאלות, מפורקות.
       </p>
+      <!-- Diagram first, cards under it: the diagram carries the shape and the
+           cards carry the words. See LayersDiagram.astro. -->
+      <div class="reveal mt-8">
+        <LayersDiagram />
+      </div>
       <Layers items={CONCEPT_LAYERS} />
     </div>
   </section>
@@ -89,6 +96,9 @@ const perTrack = (slug: string) =>
         הפיקוח מחולק לפי סוג המעטפת, לא לפי סוג הלקוח. אותו חוסך יכול להחזיק באותה שנה נכסים
         בארבעה תחומי פיקוח שונים.
       </p>
+      <div class="reveal mt-8">
+        <RegulatorsDiagram />
+      </div>
       <ul class="mt-8 grid gap-5 md:grid-cols-2">
         {
           REGULATORS.map((r) => (

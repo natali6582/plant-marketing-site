@@ -33,6 +33,21 @@ const painCards = [
   מסכי המערכת gallery on plan-t.org.il; `webp` is served with a jpg fallback.
   The third is a screen capture Natali supplied on 03/09/2026 — the automatic-
   reports settings dialog. It is not from the published gallery; see the PR.
+
+  The fourth and fifth are captures Natali supplied on 04/09/2026 — sales-
+  pipeline analysis and the client list. Plain rectangular crops, downscaled
+  to the same 1400px width; nothing in them is blurred, painted over or
+  invented. The crop lines were placed in measured gaps between content bands,
+  which is also why the period tabs are missing from the sales screen and the
+  filter row from the client screen: the floating "+" button overlaps both,
+  and no rectangle removes the button without taking the row with it.
+
+  DRAFT — captions and alt text need Natali's approval, and the screenshots
+  carry live-looking figures (client counts, portfolio totals). They must not
+  ship until she confirms the source is a demo environment. See the PR.
+
+  Order is the tour's argument: one client, then the office, then what the
+  office sends out, then the pipeline behind it, then the book it all runs on.
 */
 const tour = [
   {
@@ -58,6 +73,25 @@ const tour = [
     height: 497,
     alt: 'מסך הדוחות האוטומטיים ב-Plan-T: חלון סיכום ההגדרות של דוח תשואה — מועד השליחה, פירוט ההגדרות לכל דוח ואישור לפני ההפעלה',
     caption: 'דוח ללקוח בלחיצה — מסודר, ממותג ומוכן לשליחה.',
+  },
+  {
+    image: '/images/tour-sales',
+    formats: ['webp', 'jpg'],
+    width: 1400,
+    height: 367,
+    alt: 'מסך ניתוח תהליכי מכירה ב-Plan-T: מספר לקוחות וסך נכסים, ומצב נוכחי של פעולות, לידים, הזדמנויות מכירה, משימות ופגישות',
+    caption: 'ניתוח תהליכי מכירה — הלידים, ההזדמנויות והפעולות של המשרד במבט אחד.',
+  },
+  {
+    image: '/images/tour-clients',
+    formats: ['webp', 'jpg'],
+    width: 1400,
+    height: 335,
+    /* The filters are not in the frame — see the crop note above — so neither
+       the alt nor the caption claims them. Both describe the six tiles that
+       are actually visible, and neither repeats a figure from the screen. */
+    alt: 'מסך "הלקוחות שלי" ב-Plan-T: פעילים, פוטנציאליים ולא פעילים, כשירים, הצטרפו החודש וגיל ממוצע',
+    caption: 'הלקוחות שלי — פעילים, פוטנציאליים ולא פעילים, במבט אחד.',
   },
 ];
 ---
@@ -174,10 +208,26 @@ const tour = [
   <section class="band bg-surface-blue" aria-labelledby="tour-title">
     <div class="mx-auto max-w-6xl px-4">
     <h2 id="tour-title" class="reveal-lines text-center text-3xl font-bold text-brand-800">סיור קצר במוצר</h2>
-    <div class="mt-10 grid gap-8 md:grid-cols-3">
+    <!--
+      Option A: five cards, and the last row of two is centred rather than
+      left as an orphan pair.
+
+      Six columns with every card spanning two is the mechanism. It gives
+      exactly the same three-up row as before, and the fourth card starting at
+      column two puts the remaining pair in the middle at the same width as
+      every other card — so the short row reads as a decision. On mobile the
+      grid is a single column and none of this applies.
+    -->
+    <div class="mt-10 grid gap-8 md:grid-cols-6">
       {
-        tour.map((item) => (
-          <figure class="reveal card-lift overflow-hidden rounded-2xl border border-brand-200 bg-white hover:border-brand-400 shadow-sm">
+        tour.map((item, index) => (
+          <figure
+            class:list={[
+              'reveal card-lift overflow-hidden rounded-2xl border border-brand-200 bg-white hover:border-brand-400 shadow-sm',
+              'md:col-span-2',
+              index === 3 && 'md:col-start-2',
+            ]}
+          >
             <!-- M-12: lightbox on click. A real button, so Enter/Space work and
                  the target is announced; block + full width so wrapping the
                  image changes no layout. The alt travels to the dialog. -->

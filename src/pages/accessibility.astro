@@ -52,11 +52,24 @@ import PageHero from '../components/PageHero.astro';
 
     <section>
       <h2 class="text-2xl font-bold text-brand-800">פנייה בנושא נגישות</h2>
+      <!--
+        The &#32; before each link is load-bearing. Astro's compressHTML removes
+        whitespace that sits between text and an inline tag when it happens to
+        fall on a line break, so "דוא״ל:" fused straight onto the address. A
+        character reference is not whitespace to the compressor and is a space
+        to the browser, so it survives the wrap. Text-to-text line breaks still
+        collapse to a single space on their own and need nothing.
+
+        The address and the number stay in .ltr (direction: ltr;
+        unicode-bidi: isolate) so the Latin run cannot reorder against the
+        Hebrew around it. scripts/check-inline-ltr.mjs gates both halves.
+      -->
       <p class="mt-3">
-        נתקלתם בקושי? נשמח לשמוע ולתקן. רכז/ת הנגישות:
-        <span class="font-medium">[TBD — שם]</span>, דוא״ל:
+        נתקלתם בקושי? נשמח לשמוע ולתקן. רכז/ת הנגישות:&#32;
+        <span class="font-medium">[TBD — שם]</span>, דוא״ל:&#32;
         <a href="mailto:sales@plan-t.org.il" class="ltr font-medium text-brand-600 underline hover:text-brand-800">sales@plan-t.org.il</a>,
-        טלפון: <a href="tel:+972733861711" class="ltr font-medium text-brand-600 underline hover:text-brand-800">073-3861711</a>.
+        טלפון:&#32;
+        <a href="tel:+972733861711" class="ltr font-medium text-brand-600 underline hover:text-brand-800">073-3861711</a>.
       </p>
     </section>
   </article>

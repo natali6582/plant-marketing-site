@@ -121,10 +121,58 @@ body {
   background-color: var(--color-surface);
 }
 
-/* Numbers, phone numbers and dates must render LTR inside RTL text */
+/*
+  Numbers, phone numbers, dates and addresses must render LTR inside RTL text.
+
+  isolate stops the run from reordering against the Hebrew around it; nowrap
+  stops it from being cut in half by a line break. Both are the same promise:
+  the run is one atomic token. At 375px «sales@plan-t.org.il» in /privacy/ was
+  breaking after the hyphen, 46px of it stranded at the end of one line and
+  88px starting the next. The widest run on the whole site is that address at
+  133px, inside a 343px paragraph, so nothing here can overflow.
+*/
 .ltr {
   direction: ltr;
   unicode-bidi: isolate;
+  white-space: nowrap;
+}
+
+/*
+  FAQ accordion numbering.
+
+  The number used to be markup — <span class="ltr me-2">1.</span> — and that
+  carried two faults at once.
+
+  .ltr sets direction: ltr on the span, so the span's own me-2
+  (margin-inline-end) resolved to margin-RIGHT. In an RTL line the marker sits
+  at the right edge and the question runs off to its left, so the gap landed on
+  the outer side where nothing needed it, and the digit fused straight onto the
+  Hebrew: «1.למה». Measured at 375px: margin-right 8px, margin-left 0.
+
+  And a hand-typed number is not a list marker. Eight questions sat in a plain
+  <div>, so nothing announced them as a list of eight to a screen reader.
+
+  It is now a counter on a real <ol>. The marker keeps direction: ltr and
+  unicode-bidi: isolate, so "1." reads as an ordered Latin pair and cannot
+  reorder against the Hebrew around it. The gap is a PHYSICAL margin-left,
+  which is the side the question is actually on: a logical property here would
+  resolve against the marker's own ltr direction and flip back to the wrong
+  side, which is the bug this replaces.
+*/
+.faq-list {
+  counter-reset: faq;
+}
+
+.faq-item {
+  counter-increment: faq;
+}
+
+.faq-question::before {
+  content: counter(faq) ".";
+  direction: ltr;
+  unicode-bidi: isolate;
+  margin-left: 0.5rem;
+  color: var(--color-brand-600);
 }
 
 /* Visible keyboard focus everywhere */

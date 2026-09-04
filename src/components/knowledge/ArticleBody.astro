@@ -48,7 +48,7 @@ for (const part of parts) {
     parts.map((part) => {
       if (part.kind === 'html') return <Fragment set:html={part.html} />;
       if (part.name === 'keyfigures') return <KeyFigures ids={part.arg.split(',').map((s) => s.trim())} />;
-      if (part.name === 'layers') return <Layers items={LAYER_SETS[part.arg]} numbered={part.arg === 'concept'} />;
+      if (part.name === 'layers') return <Layers items={LAYER_SETS[part.arg]} />;
       if (part.name === 'timeline') return <Timeline items={TIMELINE[part.arg].items} />;
       return <Compare {...COMPARE[part.arg]} />;
     })

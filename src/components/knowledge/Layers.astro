@@ -10,6 +10,9 @@ import DuotoneIcon from '../DuotoneIcon.astro';
   exported PNG is none of those. It is an ordered list, so the order is carried
   by the markup and not only by the visual.
 
+  The number uses .rtl-marker rather than .ltr — see the note on that rule in
+  global.css for why the obvious choice puts the gap on the wrong side.
+
   Each layer may carry an icon, a question, and examples. The question column
   is what the doc's own table leads with — "מה יוצר רווח או הפסד?" — and it is
   the part that makes the stack teach rather than label.
@@ -25,8 +28,10 @@ export interface Layer {
 
 interface Props {
   items: Layer[];
-  /* Numbered when the stack is a sequence (the four layers); unnumbered when
-     it is a set of parallel concerns (the six planning layers). */
+  /* Both stacks are numbered, because both are numbered in the source and the
+     articles cite the numbers — "שכבה 2 ואת שכבה 4" is unreadable beside an
+     unnumbered list. The flag stays for a stack that is genuinely a set rather
+     than a sequence. */
   numbered?: boolean;
 }
 
@@ -45,7 +50,7 @@ const { items, numbered = true } = Astro.props;
           )}
           <div class="min-w-0">
             <h3 class="text-lg font-bold text-brand-800">
-              {numbered && <span class="ltr me-1 text-brand-500">{index + 1}</span>}
+              {numbered && <span class="rtl-marker text-brand-500">{index + 1}.</span>}
               {layer.title}
             </h3>
             <p class="mt-2 leading-relaxed text-ink-700">{layer.body}</p>

@@ -38,11 +38,11 @@ const { series } = Astro.props;
 
 const all = await getCollection('knowledge');
 const articles = all
-  .filter((a) => a.data.series === series.slug)
+  .filter((a) => a.data.series === series.slug && (!a.data.draft || KNOWLEDGE_DRAFTS))
   .sort((a, b) => (a.data.seriesOrder ?? 0) - (b.data.seriesOrder ?? 0));
 
 /* A series is only as publishable as its least ready part. */
-const anyDraft = articles.some((a) => a.data.draft);
+const anyDraft = KNOWLEDGE_DRAFTS && articles.some((a) => a.data.draft);
 ---
 
 <BaseLayout title={`${series.title} | Plan-T`} description={series.lead} noindex={anyDraft}>

@@ -6,7 +6,7 @@ import Layers from './Layers.astro';
 import LayersDiagram from './LayersDiagram.astro';
 import RegulatorsDiagram from './RegulatorsDiagram.astro';
 import Disclaimer from './Disclaimer.astro';
-import { BIG_IDEAS, CONCEPT_LAYERS, REGULATORS, TRACKS } from '../../data/knowledge';
+import { BIG_IDEAS, CONCEPT_LAYERS, KNOWLEDGE_DRAFTS, REGULATORS, TRACKS } from '../../data/knowledge';
 import { figuresPath } from './figures';
 import { getCollection } from 'astro:content';
 
@@ -34,16 +34,19 @@ const figures = await getCollection('figures');
 const latestYear = Math.max(...figures.map((f) => f.data.year));
 
 const articles = await getCollection('knowledge');
+const visibleArticles = articles.filter((article) => !article.data.draft || KNOWLEDGE_DRAFTS);
+const inTrack = (slug: string, article: (typeof articles)[number]) => {
+  const audience = article.data.audience;
+  return Array.isArray(audience) ? audience.includes(slug as never) : audience === slug;
+};
 const perTrack = (slug: string) =>
-  articles.filter((a) => {
-    const aud = a.data.audience;
-    return Array.isArray(aud) ? aud.includes(slug as never) : aud === slug;
-  }).length;
+  visibleArticles.filter((article) => inTrack(slug, article) || inTrack('shared', article)).length;
 ---
 
 <BaseLayout
   title="מרכז ידע | Plan-T"
   description="תוכן מקצועי וחינוכי על הנכסים, המוצרים והמעטפות בשוק הישראלי: מה מייצר את החשיפה, באיזו מעטפת היא מוחזקת, ומי מפקח על מה."
+  noindex={KNOWLEDGE_DRAFTS}
 >
   <PageHero size="compact" seed={4} eyebrow="מרכז ידע">
     <Fragment slot="title">הנכסים, המוצרים והמעטפות — מפה אחת</Fragment>
@@ -141,7 +144,8 @@ const perTrack = (slug: string) =>
 
       <p class="reveal mt-10 text-center">
         <a href={figuresPath(latestYear)} class="font-bold text-brand-600 underline hover:text-brand-800">
-          כל התקרות והסכומים לשנת <span class="ltr">{latestYear}</span>, בדף אחד
+          {KNOWLEDGE_DRAFTS ? 'כל התקרות והסכומים' : 'התקרות והסכומים המאומתים'} לשנת{' '}
+          <span class="ltr">{latestYear}</span>, בדף אחד
         </a>
       </p>
     </div>

@@ -21,9 +21,8 @@
   distinction between "typed" and "referenced" is still visible.
 
   Usage: node scripts/check-figures.mjs
-  Exits non-zero on any breach. Tier-0 sources are reported, not failed: they
-  are allowed while an article is draft, and listing them is how the "figures
-  needing a source" list stays honest.
+  Exits non-zero on any breach. Tier-0 sources are reported and may be cited by
+  drafts, but a published article that cites one fails the build.
 */
 import { readdirSync, readFileSync } from 'node:fs';
 
@@ -78,15 +77,26 @@ for (const file of files) {
   const split = text.indexOf('\n---', 3);
   const frontmatter = text.slice(0, split);
   const body = text.slice(split + 4);
+  const isDraft = /^draft:\s*true\s*$/m.test(frontmatter);
+  const articleFigures = new Set();
 
   for (const m of body.matchAll(/\{\{\s*figure\s*:\s*([a-z0-9-]+)\s*\}\}/g)) {
     used.add(m[1]);
+    articleFigures.add(m[1]);
     if (!figures[m[1]]) errors.push(`${slug}: {{figure:${m[1]}}} is not in figures.yaml`);
   }
   for (const m of body.matchAll(/\{\{\s*keyfigures\s*:\s*([^}]+)\}\}/g)) {
     for (const id of m[1].split(',').map((s) => s.trim())) {
       used.add(id);
+      articleFigures.add(id);
       if (!figures[id]) errors.push(`${slug}: {{keyfigures}} references ${id}, not in figures.yaml`);
+    }
+  }
+  if (!isDraft) {
+    for (const id of articleFigures) {
+      if (/tier:\s*0/.test(figures[id]?.source ?? '')) {
+        errors.push(`${slug}: published article cites tier-0 figure ${id}`);
+      }
     }
   }
 

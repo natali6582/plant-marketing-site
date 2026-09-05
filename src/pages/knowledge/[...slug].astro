@@ -65,7 +65,9 @@ const trackArticles = track
       .filter((a) => inTrack(track.slug, a) || inTrack('shared', a))
       .sort((a, b) => a.data.order - b.data.order)
   : [];
-const trackDrafts = track ? allArticles.filter((a) => a.data.draft && inTrack(track.slug, a)) : [];
+const trackDrafts = track && KNOWLEDGE_DRAFTS
+  ? allArticles.filter((a) => a.data.draft && (inTrack(track.slug, a) || inTrack('shared', a)))
+  : [];
 
 /* -------------------------------------------------------------- article -- */
 const article = kind === 'article' ? Astro.props.article : null;
@@ -90,7 +92,9 @@ const seriesNext = seriesIndex >= 0 ? seriesArticles[seriesIndex + 1] : undefine
 /* -------------------------------------------------------------- figures -- */
 const year = kind === 'figures' ? Astro.props.year : null;
 const allFigures = await getCollection('figures');
-const yearFigures = allFigures.filter((f) => f.data.year === year);
+const yearFigures = allFigures.filter(
+  (f) => f.data.year === year && (KNOWLEDGE_DRAFTS || f.data.source.tier !== 0)
+);
 const groups = [
   ...FIGURE_GROUPS.filter((g) => yearFigures.some((f) => f.data.group === g.key)),
   ...[...new Set(yearFigures.map((f) => f.data.group))]
@@ -110,7 +114,9 @@ const pageSummary =
     ? track!.lead
     : kind === 'article'
       ? article!.data.summary
-      : 'כל הסכומים והתקרות שמרכז הידע מצטט, במקום אחד — כל אחד עם השנה שאליה הוא מתייחס והמקור שממנו הוא נלקח.';
+      : KNOWLEDGE_DRAFTS
+        ? 'כל הסכומים והתקרות שבסקירה, כולל נתונים שעדיין טעונים אימות — כל אחד עם השנה והמקור או סטטוס האימות שלו.'
+        : 'הסכומים והתקרות המאומתים שמרכז הידע מצטט — כל אחד עם השנה שאליה הוא מתייחס והמקור שממנו הוא נלקח.';
 
 const crumbs = [
   { name: 'מרכז ידע', item: '/knowledge/' },
@@ -136,7 +142,7 @@ const breadcrumbLd = {
   title={`${pageTitle} | Plan-T`}
   description={pageSummary}
   ogType={kind === 'article' ? 'article' : undefined}
-  noindex={kind === 'article' && article!.data.draft}
+  noindex={KNOWLEDGE_DRAFTS || (kind === 'article' && article!.data.draft)}
 >
   <script type="application/ld+json" set:html={JSON.stringify(breadcrumbLd)} />
 

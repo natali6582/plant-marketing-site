@@ -43,7 +43,7 @@ export const TRACKS: TrackMeta[] = [
     lead: 'שוק ההון: נכסים סחירים, קרנות, נגזרים ומוצרים מובנים — מה מייצר את החשיפה ואיך היא נארזת.',
     audiencePath: '/planners/',
     audienceKey: 'planners',
-    icon: 'chart-line-up',
+    icon: 'holistic-view',
     emphasis: [3, 4],
   },
   {
@@ -158,7 +158,6 @@ export const PLANNING_LAYERS: Layer[] = [
 */
 export interface Regulator {
   name: string;
-  scope: string;
   icon: string;
   venue?: boolean;
 }
@@ -166,27 +165,22 @@ export interface Regulator {
 export const REGULATORS: Regulator[] = [
   {
     name: 'רשות שוק ההון, ביטוח וחיסכון',
-    scope: 'קרנות פנסיה, קופות גמל, קרנות השתלמות, ביטוחי מנהלים, חברות ביטוח, סוכני ביטוח, יועצים וסוכני שיווק פנסיוני. הוקמה ב-2016.',
     icon: 'shield-check',
   },
   {
     name: 'רשות ניירות ערך',
-    scope: 'הבורסה בת״א, תשקיפים, קרנות נאמנות, יועצי השקעות, מנהלי תיקים ומשווקי השקעות. פועלת מ-1969 מכוח חוק ניירות ערך התשכ״ח-1968.',
     icon: 'compliance',
   },
   {
     name: 'רשות המסים',
-    scope: 'מיסוי כל השכבות — רווחי הון, מס שבח, פטורי הפקדה, תיקון 190, מיסוי קרנות ריט ומיסוי חוצה גבולות של קרנות פרטיות זרות.',
     icon: 'scales',
   },
   {
     name: 'בנק ישראל',
-    scope: 'התאגידים הבנקאיים ושוק האשראי. קובע ריבית מוניטרית ומפרסם נתוני מאקרו רלוונטיים לכל אחד מהמקהלים.',
     icon: 'bank',
   },
   {
     name: 'הבורסה לניירות ערך בתל אביב',
-    scope: 'זירת מסחר וסליקה, ולא רגולטור: המסחר, המסלקות ומסלקת מעו״ף לנגזרים.',
     icon: 'chart-line-up',
     venue: true,
   },

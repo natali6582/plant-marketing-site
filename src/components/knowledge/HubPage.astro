@@ -2,11 +2,10 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PageHero from '../PageHero.astro';
 import DuotoneIcon from '../DuotoneIcon.astro';
-import Layers from './Layers.astro';
 import LayersDiagram from './LayersDiagram.astro';
 import RegulatorsDiagram from './RegulatorsDiagram.astro';
 import Disclaimer from './Disclaimer.astro';
-import { BIG_IDEAS, CONCEPT_LAYERS, KNOWLEDGE_DRAFTS, REGULATORS, TRACKS } from '../../data/knowledge';
+import { BIG_IDEAS, KNOWLEDGE_DRAFTS, TRACKS } from '../../data/knowledge';
 import { figuresPath } from './figures';
 import { getCollection } from 'astro:content';
 
@@ -25,9 +24,8 @@ import { getCollection } from 'astro:content';
   first: the wrapper is not the asset, liquidity is a property of the wrapper,
   and תיקון 190 is a tax arrangement rather than a product.
 
-  The regulators are HTML cards with live text, not the AI-generated diagram
-  that came with the brief — §5.5, and also because the generated image spells
-  Hebrew wrong.
+  The diagrams use live SVG text plus screen-reader summaries, not the
+  AI-generated images that came with the brief and spell Hebrew incorrectly.
 */
 
 const figures = await getCollection('figures');
@@ -80,15 +78,12 @@ const perTrack = (slug: string) =>
     <div class="mx-auto max-w-3xl px-4">
       <h2 id="map-title" class="reveal-lines text-3xl font-bold text-brand-800">מפת המושגים המשותפת</h2>
       <p class="reveal mt-4 leading-relaxed text-ink-700">
-        הסיווג מתחיל בשתי שאלות: מהי החשיפה הכלכלית, ובאיזו מעטפת היא מוחזקת. חמש השכבות האלה הן
+        הסיווג מתחיל בשתי שאלות: מהי החשיפה הכלכלית, ובאיזו מעטפת היא מוחזקת. ארבע השכבות האלה הן
         אותן שתי שאלות, מפורקות.
       </p>
-      <!-- Diagram first, cards under it: the diagram carries the shape and the
-           cards carry the words. See LayersDiagram.astro. -->
       <div class="reveal mt-8">
         <LayersDiagram />
       </div>
-      <Layers items={CONCEPT_LAYERS} />
     </div>
   </section>
 
@@ -102,23 +97,6 @@ const perTrack = (slug: string) =>
       <div class="reveal mt-8">
         <RegulatorsDiagram />
       </div>
-      <ul class="mt-8 grid gap-5 md:grid-cols-2">
-        {
-          REGULATORS.map((r) => (
-            <li
-              class:list={[
-                'reveal card-lift rounded-2xl border bg-white p-6 shadow-sm hover:border-brand-400',
-                r.venue ? 'border-dashed border-brand-300' : 'border-brand-200',
-              ]}
-            >
-              <DuotoneIcon name={r.icon} size="md" />
-              <h3 class="mt-3 text-lg font-bold text-brand-800">{r.name}</h3>
-              <p class="mt-2 leading-relaxed text-ink-700">{r.scope}</p>
-              {r.venue && <p class="mt-3 text-sm font-bold text-brand-600">זירת מסחר וסליקה, לא רגולטור</p>}
-            </li>
-          ))
-        }
-      </ul>
     </div>
   </section>
 

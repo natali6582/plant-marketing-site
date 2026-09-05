@@ -14,8 +14,8 @@ import { REGULATORS } from '../../data/knowledge';
   the exchange sits apart, dashed, because it is a venue and not a regulator —
   the one distinction the source is most insistent about.
 
-  aria-hidden and desktop-only, for the same reason as the layer stack: the
-  cards beside it carry the full scope text and say more.
+  The SVG is aria-hidden and desktop-only. A concise semantic summary follows
+  it for screen readers without recreating the deleted visual card grid.
 */
 
 const pillars = REGULATORS.filter((r) => !r.venue && r.name !== 'רשות המסים');
@@ -101,3 +101,14 @@ const SHORT: Record<string, string[]> = {
     זירת מסחר וסליקה — לא רגולטור
   </text>
 </svg>
+
+<div class="sr-only">
+  <h3>הגופים בתרשים</h3>
+  <ul>
+    <li>רשות שוק ההון, ביטוח וחיסכון: קרנות פנסיה, קופות גמל והשתלמות, חברות וסוכני ביטוח.</li>
+    <li>רשות ניירות ערך: הבורסה ותשקיפים, קרנות נאמנות, יועצים ומנהלי תיקים.</li>
+    <li>בנק ישראל: תאגידים בנקאיים, שוק האשראי וריבית מוניטרית.</li>
+    <li>רשות המסים: מיסוי כל השכבות.</li>
+    <li>הבורסה לניירות ערך בתל אביב: מקום מסחר וסליקה שאינו רגולטור.</li>
+  </ul>
+</div>

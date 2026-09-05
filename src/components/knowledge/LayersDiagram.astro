@@ -13,11 +13,10 @@ import { CONCEPT_LAYERS } from '../../data/knowledge';
   argument runs: the exposure exists first and the wrappers are put around it.
   The arrows say that; a list of four cards cannot.
 
-  It sits ABOVE the card stack rather than instead of it. The cards carry the
-  full text of each layer and the diagram carries the shape, so this is
-  aria-hidden — a screen reader gets the cards, which say more — and hidden
-  below md, where 640 logical pixels of stack would shrink the labels past
-  reading size and the cards are right there anyway.
+  The SVG carries the visual shape on desktop and stays aria-hidden. A semantic
+  ordered list follows it for screen readers, with explicit spaces between the
+  number and title. The list is visually hidden, so the page does not repeat the
+  diagram as a second set of cards.
 
   Colour comes from the site's tokens, so a palette change moves the diagram
   with everything else.
@@ -108,3 +107,15 @@ const TONE = ['var(--color-brand-100)', 'var(--color-brand-200)', 'var(--color-b
     })
   }
 </svg>
+
+<ol class="sr-only">
+  {
+    CONCEPT_LAYERS.map((layer, index) => (
+      <li>
+        <h3><span>{index + 1}.</span>&#32;{layer.title}</h3>
+        {layer.examples && <p>דוגמאות: {layer.examples.join(' · ')}</p>}
+        {layer.question && <p>{layer.question}</p>}
+      </li>
+    ))
+  }
+</ol>

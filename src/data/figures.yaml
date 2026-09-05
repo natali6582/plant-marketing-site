@@ -138,13 +138,13 @@ tikun-190-min-age:
   unit: "גיל"
   year: 2026
   label: גיל מזערי להיוון קצבה מוכרת
-  # NOT in section 9א. The section's own gate is "גיל הזכאות", defined as
-  # "גיל הפרישה או הגיל שבו החל יחיד לקבל קצבה מזכה, כולה או חלקה, לפי
-  # המאוחר" — retirement age, not 60. Whatever 60 is, it is not this section,
-  # and the article asserts it. Flagged rather than quietly kept.
-  note: לא נמצא בסעיף 9א לפקודה. הסעיף מותנה ב״גיל הזכאות״, שהוא ״גיל הפרישה או הגיל שבו החל יחיד לקבל קצבה מזכה, לפי המאוחר״ — ולא גיל 60. יש לאתר את המקור לגיל 60 או לתקן את המאמר.
+  # NOT in section 9א, whose gate is "גיל הזכאות" — retirement age or the age
+  # at which a קצבה מזכה began, whichever is later. The article no longer
+  # publishes 60 as a legal fact; it names the statutory test and says the
+  # market speaks of 60. The entry stays so the question stays visible.
+  note: 'לאימות — שאלה לנטלי: מאיפה בפועל מגיע גיל 60? שלוש אפשרויות: הגדרת ״גיל הזכאות״ בפקודה, חוק הפיקוח על שירותים פיננסיים (קצבה מגיל 60), או פרקטיקה של רשות המסים. סעיף 9א נבדק ואינו נוקב בגיל 60. המספר אינו מוצג במאמר.'
   group: tikun-190
-  source: { label: "לא נמצא בסעיף 9א — טעון בירור", url: "", tier: 0 }
+  source: { label: "לאימות — שאלה לנטלי, לא נמצא בסעיף 9א", url: "", tier: 0 }
 
 tikun-190-min-monthly-pension:
   value: 5306

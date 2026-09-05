@@ -109,11 +109,11 @@ gemel-lehashkaa-annual-ceiling:
   year: 2026
   label: תקרת הפקדה שנתית לחוסך, בכלל חשבונותיו
   # WAS 83,641.09. The agorot had no source; the published figure is round.
-  # The ceiling is statutory and index-linked, so the number changes each year
-  # by calculation rather than by decision — status "מחושב לפי הצמדה".
-  # The base amount and the indexation rule in חוק הפיקוח על שירותים פיננסיים
-  # (קופות גמל) could not be pulled out of the Nevo text in this pass, so this
-  # rests on corroboration and is not yet tier 1.
+  # The full text of חוק הפיקוח על שירותים פיננסיים (קופות גמל) was pulled from
+  # wikisource this pass and searched: it DEFINES קופת גמל להשקעה and sets no
+  # deposit ceiling. The ceiling lives in regulations and the Commissioner's
+  # circulars, not in the statute, which is why the primary law was never going
+  # to yield it. Status stays "מחושב לפי הצמדה" on corroboration.
   note: 'מצוטט מהמקור: "לא ניתן להפקיד יותר מ-83,641 ₪ בשנה קלנדרית (נכון ל-2026)". התקרה מוצמדת ומתעדכנת שנתית.'
   group: gemel
   source: { label: "כל-זכות — נכתב בסיוע היחידה לחינוך פיננסי ומחלקת קופות גמל ברשות שוק ההון", url: "https://www.kolzchut.org.il/he/קופת_גמל_להשקעה", tier: 2 }
@@ -168,18 +168,24 @@ capital-gains-real:
   value: 25
   unit: "%"
   year: 2026
-  label: מס על רווח הון ריאלי ליחיד, ככלל
-  note: נסיבות אישיות, מעמד בעל שליטה, פעילות עסקית ומס יסף עשויים לשנות את התוצאה.
+  label: השיעור המרבי על רווח הון ריאלי ליחיד
+  # The statute sets a CAP, not a flat rate: "בשיעור שלא יעלה על 25%". The
+  # label says so, because "מס של 25%" is a different claim from what the law
+  # actually says. Section 91 also sets 30% for a בעל מניות מהותי.
+  note: 'מצוטט מסעיף 91(ב)(1): "יחיד יהיה חייב במס על רווח הון ריאלי כאמור בסעיף 121, בשיעור שלא יעלה על 25%, ויראו את רווח ההון כשלב הגבוה ביותר בסולם הכנסתו החייבת". סעיף 91(ב)(2) קובע 30% לבעל מניות מהותי. השיעור אינו מתעדכן שנתית.'
   group: tax
-  source: { label: "רשות המסים — taxes.gov.il / gov.il", url: "", tier: 0 }
+  source: { label: "פקודת מס הכנסה, סעיף 91 — ויקיטקסט", url: "https://he.wikisource.org/wiki/פקודת_מס_הכנסה", tier: 1 }
 
 capital-gains-nominal-unlinked:
   value: 15
   unit: "%"
   year: 2026
-  label: מס על הכנסה נומינלית לא-צמודה, ככלל
+  label: השיעור המרבי על רווח הון באיגרת חוב או הלוואה שאינן צמודות למדד
+  # The old label — "הכנסה נומינלית לא-צמודה" — was looser than the statute.
+  # The rate attaches to specific instruments, not to nominal income at large.
+  note: 'מצוטט מסעיף 91(ב)(3)(א): "רווח הון במכירת איגרת חוב, נייר ערך מסחרי, מילווה או הלוואה, שאינם צמודים למדד, יחויב במס בשיעור שלא יעלה על 15%, או של 20% לענין בעל מניות מהותי". השיעור אינו מתעדכן שנתית.'
   group: tax
-  source: { label: "רשות המסים — taxes.gov.il / gov.il", url: "", tier: 0 }
+  source: { label: "פקודת מס הכנסה, סעיף 91 — ויקיטקסט", url: "https://he.wikisource.org/wiki/פקודת_מס_הכנסה", tier: 1 }
 
 bituach-menahalim-restriction-date:
   value: "ספטמבר 2023"
@@ -197,55 +203,73 @@ accredited-liquid-assets:
   value: 9411809
   unit: "₪"
   year: 2026
-  label: נכסים נזילים — מבחן עצמאי
-  note: קודקס רשות ניירות ערך מציג סכום מעוגל של 9.4 מיליון ₪ ומציין שסכומיו מעודכנים ל-2025 וצמודים למדד. יש לאמת מול הרשות ביום הפרסום.
+  # Base amount in the statute, current amount in the statute's own
+  # bracketed note. Both are quoted, because the article shows the base
+  # and points at the authority for the current figure.
+  label: נכסים נזילים — המבחן העצמאי, פרט (12)(א)
+  note: 'סכום הבסיס בחוק: שמונה מיליון שקלים חדשים (מתואם לשנת 2016). הסכום המוצמד: 9,411,809 ש״ח, החל משנת 2025. הסכומים משתנים ב-1 בינואר של כל שנה שלישית לפי שינוי המדד, כשהמדד היסודי הוא דצמבר 2015 — לא מדי שנה. מצוטט מהחוק: "השווי הכולל של הנכסים הנזילים שבבעלותו עולה על שמונה מיליון שקלים חדשים".'
   group: accredited
-  source: { label: "רשות ניירות ערך — isa.gov.il, טעון אימות ביום הפרסום", url: "", tier: 0 }
+  source: { label: "חוק ניירות ערך, התוספת הראשונה, פרט (12) — ויקיטקסט", url: "https://he.wikisource.org/wiki/חוק_ניירות_ערך", tier: 1 }
 
 accredited-income-individual:
   value: 1411772
   unit: "₪"
   year: 2026
-  label: הכנסה שנתית ליחיד, בכל אחת משתי השנים האחרונות
-  note: הסכומים בתוספת הראשונה לחוק ניירות ערך מוצמדים למדד. הסכום המדויק המוצג כאן טרם אומת מול הודעת עדכון הסכומים של רשות ניירות ערך — יש להציג את הסכום הבסיסי שבחוק ולהפנות לסכום העדכני באתר הרשות.
+  # Base amount in the statute, current amount in the statute's own
+  # bracketed note. Both are quoted, because the article shows the base
+  # and points at the authority for the current figure.
+  label: הכנסה שנתית ליחיד, פרט (12)(ב)
+  note: 'סכום הבסיס בחוק: 1.2 מיליון שקלים חדשים (מתואם לשנת 2016). הסכום המוצמד: 1,411,772 ש״ח, החל משנת 2025. הסכומים משתנים ב-1 בינואר של כל שנה שלישית לפי שינוי המדד, כשהמדד היסודי הוא דצמבר 2015 — לא מדי שנה. מצוטט מהחוק: "גובה הכנסתו בכל אחת מהשנתיים האחרונות, עולה על 1.2 מיליון שקלים חדשים".'
   group: accredited
-  source: { label: "רשות ניירות ערך — isa.gov.il, טעון אימות ביום הפרסום", url: "", tier: 0 }
+  source: { label: "חוק ניירות ערך, התוספת הראשונה, פרט (12) — ויקיטקסט", url: "https://he.wikisource.org/wiki/חוק_ניירות_ערך", tier: 1 }
 
 accredited-income-family:
   value: 2117657
   unit: "₪"
   year: 2026
-  label: הכנסה שנתית לתא משפחתי, בכל אחת משתי השנים האחרונות
-  note: הסכומים בתוספת הראשונה לחוק ניירות ערך מוצמדים למדד. הסכום המדויק המוצג כאן טרם אומת מול הודעת עדכון הסכומים של רשות ניירות ערך — יש להציג את הסכום הבסיסי שבחוק ולהפנות לסכום העדכני באתר הרשות.
+  # Base amount in the statute, current amount in the statute's own
+  # bracketed note. Both are quoted, because the article shows the base
+  # and points at the authority for the current figure.
+  label: הכנסה שנתית לתא משפחתי, פרט (12)(ב)
+  note: 'סכום הבסיס בחוק: 1.8 מיליון שקלים חדשים (מתואם לשנת 2016). הסכום המוצמד: 2,117,657 ש״ח, החל משנת 2025. הסכומים משתנים ב-1 בינואר של כל שנה שלישית לפי שינוי המדד, כשהמדד היסודי הוא דצמבר 2015 — לא מדי שנה. מצוטט מהחוק: "גובה הכנסת התא המשפחתי שאליו הוא משתייך עולה על 1.8 מיליון שקלים חדשים".'
   group: accredited
-  source: { label: "רשות ניירות ערך — isa.gov.il, טעון אימות ביום הפרסום", url: "", tier: 0 }
+  source: { label: "חוק ניירות ערך, התוספת הראשונה, פרט (12) — ויקיטקסט", url: "https://he.wikisource.org/wiki/חוק_ניירות_ערך", tier: 1 }
 
 accredited-combined-assets:
   value: 5882380
   unit: "₪"
   year: 2026
-  label: נכסים נזילים — רכיב הנכסים במבחן המשולב
-  note: הסכומים בתוספת הראשונה לחוק ניירות ערך מוצמדים למדד. הסכום המדויק המוצג כאן טרם אומת מול הודעת עדכון הסכומים של רשות ניירות ערך — יש להציג את הסכום הבסיסי שבחוק ולהפנות לסכום העדכני באתר הרשות.
+  # Base amount in the statute, current amount in the statute's own
+  # bracketed note. Both are quoted, because the article shows the base
+  # and points at the authority for the current figure.
+  label: רכיב הנכסים במבחן המשולב, פרט (12)(ג)
+  note: 'סכום הבסיס בחוק: חמישה מיליון שקלים חדשים (מתואם לשנת 2016). הסכום המוצמד: 5,882,380 ש״ח, החל משנת 2026. הסכומים משתנים ב-1 בינואר של כל שנה שלישית לפי שינוי המדד, כשהמדד היסודי הוא דצמבר 2015 — לא מדי שנה. מצוטט מהחוק: "השווי הכולל של הנכסים הנזילים שבבעלותו עולה על חמישה מיליון שקלים חדשים".'
   group: accredited
-  source: { label: "רשות ניירות ערך — isa.gov.il, טעון אימות ביום הפרסום", url: "", tier: 0 }
+  source: { label: "חוק ניירות ערך, התוספת הראשונה, פרט (12) — ויקיטקסט", url: "https://he.wikisource.org/wiki/חוק_ניירות_ערך", tier: 1 }
 
 accredited-combined-income-individual:
   value: 705885
   unit: "₪"
   year: 2026
-  label: הכנסה ליחיד — רכיב ההכנסה במבחן המשולב
-  note: הסכומים בתוספת הראשונה לחוק ניירות ערך מוצמדים למדד. הסכום המדויק המוצג כאן טרם אומת מול הודעת עדכון הסכומים של רשות ניירות ערך — יש להציג את הסכום הבסיסי שבחוק ולהפנות לסכום העדכני באתר הרשות.
+  # Base amount in the statute, current amount in the statute's own
+  # bracketed note. Both are quoted, because the article shows the base
+  # and points at the authority for the current figure.
+  label: רכיב ההכנסה ליחיד במבחן המשולב, פרט (12)(ג)
+  note: 'סכום הבסיס בחוק: שש מאות אלף שקלים חדשים (מתואם לשנת 2016). הסכום המוצמד: 705,885 ש״ח, החל משנת 2025. הסכומים משתנים ב-1 בינואר של כל שנה שלישית לפי שינוי המדד, כשהמדד היסודי הוא דצמבר 2015 — לא מדי שנה. מצוטט מהחוק: "גובה הכנסתו בכל אחת מהשנתיים האחרונות עולה על שש מאות אלף שקלים חדשים".'
   group: accredited
-  source: { label: "רשות ניירות ערך — isa.gov.il, טעון אימות ביום הפרסום", url: "", tier: 0 }
+  source: { label: "חוק ניירות ערך, התוספת הראשונה, פרט (12) — ויקיטקסט", url: "https://he.wikisource.org/wiki/חוק_ניירות_ערך", tier: 1 }
 
 accredited-combined-income-family:
   value: 1058827
   unit: "₪"
   year: 2026
-  label: הכנסה לתא משפחתי — רכיב ההכנסה במבחן המשולב
-  note: הסכומים בתוספת הראשונה לחוק ניירות ערך מוצמדים למדד. הסכום המדויק המוצג כאן טרם אומת מול הודעת עדכון הסכומים של רשות ניירות ערך — יש להציג את הסכום הבסיסי שבחוק ולהפנות לסכום העדכני באתר הרשות.
+  # Base amount in the statute, current amount in the statute's own
+  # bracketed note. Both are quoted, because the article shows the base
+  # and points at the authority for the current figure.
+  label: רכיב ההכנסה לתא משפחתי במבחן המשולב, פרט (12)(ג)
+  note: 'סכום הבסיס בחוק: תשע מאות אלף שקלים חדשים (מתואם לשנת 2016). הסכום המוצמד: 1,058,827 ש״ח, החל משנת 2025. הסכומים משתנים ב-1 בינואר של כל שנה שלישית לפי שינוי המדד, כשהמדד היסודי הוא דצמבר 2015 — לא מדי שנה. מצוטט מהחוק: "גובה הכנסה כאמור של התא המשפחתי שאליו הוא משתייך עולה על תשע מאות אלף שקלים חדשים".'
   group: accredited
-  source: { label: "רשות ניירות ערך — isa.gov.il, טעון אימות ביום הפרסום", url: "", tier: 0 }
+  source: { label: "חוק ניירות ערך, התוספת הראשונה, פרט (12) — ויקיטקסט", url: "https://he.wikisource.org/wiki/חוק_ניירות_ערך", tier: 1 }
 
 structured-deposit-principal-protection:
   value: 90
@@ -313,9 +337,12 @@ maof-contract-multiplier:
   unit: "₪"
   year: 2026
   label: מכפיל גודל החוזה בנגזרי מדד ת״א-35
-  note: גודל חוזה = המדד בנקודות כפול המכפיל.
+  # tase.co.il renders its specification pages client-side; curl returns the
+  # shell and no figure. Verifying this needs the page opened in a browser, or
+  # the TASE contract-specification PDF.
+  note: גודל חוזה = המדד בנקודות כפול המכפיל. טרם אומת — עמוד המפרט בבורסה מרונדר בצד הלקוח.
   group: securities
-  source: { label: "הבורסה לניירות ערך בתל אביב — tase.co.il", url: "", tier: 0 }
+  source: { label: "הבורסה לניירות ערך בתל אביב — tase.co.il, טרם נמשך", url: "", tier: 0 }
 
 reit-law-year:
   value: 2005

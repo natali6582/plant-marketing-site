@@ -46,45 +46,57 @@
 # and waits for the real link. scripts/check-figures.mjs lists them.
 
 keren-hishtalmut-salary-ceiling-employee:
-  value: 15712
+  value: 188544
   unit: "₪"
   year: 2026
-  label: משכורת קובעת מרבית לשכיר, לחודש
+  label: משכורת קובעת מרבית להפרשות לקרן השתלמות, לשנה
+  # WAS 15,712 ₪ לחודש. The official table states the ceiling annually, and
+  # 188,544 / 12 is exactly 15,712 — the number was right, the unit the source
+  # actually publishes was not. Verified 05/09/2026.
+  note: 'מצוטט מהמקור: "משכורת קובעת להפרשות לקרן השתלמות 3(ה) — 188,544 — לשנה".'
   group: keren-hishtalmut
-  source: { label: "רשות המסים — taxes.gov.il / gov.il", url: "", tier: 0 }
+  source: { label: "רשות המסים — לוח עזר לחישוב מס הכנסה ממשכורת ושכר עבודה, ינואר 2026, מעודכן לאפריל 2026, פרק ג טבלה ב", url: "https://www.gov.il/BlobFolder/generalpage/income-tax-monthly-deductions-booklet/he/generalInformation_income-tax-monthly-deductions-booklet_monthly-deductions-booklet-2026.pdf", tier: 1 }
 
 keren-hishtalmut-deposit-employee:
   value: 18854
   unit: "₪"
   year: 2026
   label: הפקדה שנתית מוטבת לשכיר
-  note: בהפקדות שכיחות של 2.5% עובד ו-7.5% מעסיק. הסכום מחושב מהמשכורת הקובעת המרבית ואינו תקרה בפני עצמו.
+  # Not published as a figure. It is 10% of the official 188,544 ceiling
+  # (2.5% employee + 7.5% employer) and computes to 18,854.4. A derived number
+  # is not a verified one, so it stays tier 0.
+  note: נגזר מהמשכורת הקובעת המרבית בהפקדות שכיחות של 2.5% עובד ו-7.5% מעסיק. הסכום אינו מתפרסם כתקרה בפני עצמו.
   group: keren-hishtalmut
-  source: { label: "רשות המסים — taxes.gov.il / gov.il", url: "", tier: 0 }
+  source: { label: "נגזר מהמקור הרשמי — לא מתפרסם כשלעצמו", url: "", tier: 0 }
 
 keren-hishtalmut-income-ceiling-self:
   value: 293397
   unit: "₪"
   year: 2026
-  label: תקרת הכנסה קובעת לעצמאי, לשנה
+  label: תקרת הכנסה קובעת בקרן השתלמות לעצמאיים, לשנה
+  note: 'מצוטט מהמקור: "תקרת הכנסה קובעת בקרן השתלמות לעצמאיים 17(5א) — 293,397 — לשנה".'
   group: keren-hishtalmut
-  source: { label: "רשות המסים — taxes.gov.il / gov.il", url: "", tier: 0 }
+  source: { label: "רשות המסים — לוח עזר לחישוב מס הכנסה ממשכורת ושכר עבודה, ינואר 2026, מעודכן לאפריל 2026, פרק ג טבלה ב", url: "https://www.gov.il/BlobFolder/generalpage/income-tax-monthly-deductions-booklet/he/generalInformation_income-tax-monthly-deductions-booklet_monthly-deductions-booklet-2026.pdf", tier: 1 }
 
 keren-hishtalmut-deduction-self:
   value: 13203
   unit: "₪"
   year: 2026
   label: ניכוי מרבי לעצמאי
+  # 4.5% of the official 293,397 ceiling computes to 13,202.9. Derived, not
+  # published as a figure of its own, so it stays tier 0.
+  note: נגזר מתקרת ההכנסה הקובעת. אינו מתפרסם כסכום בפני עצמו בלוח הניכויים.
   group: keren-hishtalmut
-  source: { label: "רשות המסים — taxes.gov.il / gov.il", url: "", tier: 0 }
+  source: { label: "נגזר מהמקור הרשמי — לא מתפרסם כשלעצמו", url: "", tier: 0 }
 
 keren-hishtalmut-deposit-ceiling-self:
   value: 20566
   unit: "₪"
   year: 2026
-  label: תקרת הפקדה מוטבת לעצמאי, פטורה ממס על הרווחים
+  label: הפקדה מוטבת לקרן השתלמות, לשנה
+  note: 'מצוטט מהמקור: "הפקדה מוטבת 9(16ב) ו-(16ב1) — 20,566 — לשנה".'
   group: keren-hishtalmut
-  source: { label: "רשות המסים — taxes.gov.il / gov.il", url: "", tier: 0 }
+  source: { label: "רשות המסים — לוח עזר לחישוב מס הכנסה ממשכורת ושכר עבודה, ינואר 2026, מעודכן לאפריל 2026, פרק ג טבלה ב", url: "https://www.gov.il/BlobFolder/generalpage/income-tax-monthly-deductions-booklet/he/generalInformation_income-tax-monthly-deductions-booklet_monthly-deductions-booklet-2026.pdf", tier: 1 }
 
 keren-hishtalmut-liquidity-years:
   value: 6
@@ -123,13 +135,13 @@ tikun-190-min-monthly-pension:
   value: 5306
   unit: "₪"
   year: 2026
-  label: קצבה חודשית מזערית ממקור פנסיוני, שאינו ביטוח לאומי
-  # This is the one figure in the file whose provenance is commercial rather
-  # than official, and the sources disagree. It was attributed to gov.il here
-  # before the previews were read; they say otherwise, so it says otherwise.
-  note: הסכום לפי טבלת הראל. מקורות אחרים מציינים כ-4,900 עד 5,300 ₪. יש לאמת מול רשות המסים סמוך למועד הפרסום או הפעולה.
+  label: מרכיב התגמולים — סכום קצבה מזערי, לחודש
+  # Carried a commercial attribution (טבלת הראל) after the previews were read.
+  # It is in fact published by the Tax Authority itself, at exactly this
+  # amount, in the 2026 deductions table. Verified 05/09/2026.
+  note: 'מצוטט מהמקור: "מרכיב התגמולים - סכום קצבה מזערי — 5,306 — לחודש".'
   group: tikun-190
-  source: { label: "טבלת הראל — מקור מסחרי, טעון אימות מול רשות המסים", url: "", tier: 0 }
+  source: { label: "רשות המסים — לוח עזר לחישוב מס הכנסה ממשכורת ושכר עבודה, ינואר 2026, מעודכן לאפריל 2026, פרק ג טבלה ב", url: "https://www.gov.il/BlobFolder/generalpage/income-tax-monthly-deductions-booklet/he/generalInformation_income-tax-monthly-deductions-booklet_monthly-deductions-booklet-2026.pdf", tier: 1 }
 
 tikun-190-first-tier:
   value: 38412

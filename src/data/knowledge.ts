@@ -215,38 +215,17 @@ export const BIG_IDEAS = [
 ];
 
 /*
-  Workers Builds shares build variables across branches. Keep main off even
-  when the review flag is set, and fail closed if CI cannot identify a branch.
-  These values are supplied by Workers Builds, not custom dashboard overrides.
-*/
-const knowledgeBranch = (import.meta.env.WORKERS_CI_BRANCH ?? '').trim();
-const knowledgeWorkersCi = import.meta.env.WORKERS_CI ?? '';
-const knowledgeCi = import.meta.env.CI ?? '';
-const knowledgePreview =
-  knowledgeWorkersCi === '1' && knowledgeBranch !== '' && knowledgeBranch !== 'main';
-
-/*
-  Allow npm run dev without impersonating Cloudflare. DEV is a development-mode
-  convenience, not a deployment boundary: never deploy development-mode output.
-  A normal local npm run build stays off without a verified Workers CI branch.
-*/
-const knowledgeLocalDev =
-  import.meta.env.DEV && knowledgeCi === '' && knowledgeWorkersCi === '' && knowledgeBranch === '';
-
-/*
   Two switches, because "review it" and "publish it" are two decisions.
 
-  KNOWLEDGE_ENABLED keeps Natali's guard exactly as written: Workers Builds
-  shares build variables across branches, so the review flag alone must never be
-  able to turn the section on for main, and an unidentifiable branch fails
-  closed.
+  KNOWLEDGE_ENABLED deliberately enables the complete review/demo output in any
+  build, including main. That is useful while the public workers.dev URL is the
+  approved management-demo site and no custom domain or route points at it.
+  Review output includes drafts and remains noindex.
 
-  KNOWLEDGE_PUBLIC is the separate, deliberate act of publishing. It is the only
-  thing that can switch the section on for the production branch, and it cannot
-  be set by accident on the way to a preview.
+  KNOWLEDGE_PUBLIC remains the separate curated-public switch. It includes only
+  content that has cleared the publication gates.
 */
-const knowledgeReview =
-  import.meta.env.KNOWLEDGE_ENABLED === 'true' && (knowledgePreview || knowledgeLocalDev);
+const knowledgeReview = import.meta.env.KNOWLEDGE_ENABLED === 'true';
 const knowledgePublic = import.meta.env.KNOWLEDGE_PUBLIC === 'true';
 
 export const KNOWLEDGE_ENABLED = knowledgeReview || knowledgePublic;

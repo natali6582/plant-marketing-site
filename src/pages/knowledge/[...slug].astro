@@ -35,10 +35,8 @@ export async function getStaticPaths() {
     { params: { slug: undefined }, props: { kind: 'hub' as const } },
     ...TRACKS.map((track) => ({ params: { slug: track.slug }, props: { kind: 'track' as const, track } })),
     /*
-      Drafts never reach production: with the flag off this route builds nothing
-      at all. With it on — staging — they do render, because a review of three
-      empty track pages reviews nothing. Each draft carries a visible banner and
-      a noindex, and every draft is filtered out of the sitemap regardless.
+      Demo mode includes every article so the complete concept can be presented
+      without exposing editorial-state labels. The section remains noindex.
     */
     ...articles
       .filter((a) => !a.data.draft || KNOWLEDGE_DRAFTS)
@@ -65,10 +63,6 @@ const trackArticles = track
       .filter((a) => inTrack(track.slug, a) || inTrack('shared', a))
       .sort((a, b) => a.data.order - b.data.order)
   : [];
-const trackDrafts = track && KNOWLEDGE_DRAFTS
-  ? allArticles.filter((a) => a.data.draft && (inTrack(track.slug, a) || inTrack('shared', a)))
-  : [];
-
 /* -------------------------------------------------------------- article -- */
 const article = kind === 'article' ? Astro.props.article : null;
 const articleTracks = article
@@ -177,12 +171,6 @@ const breadcrumbLd = {
                 ))}
               </ul>
             )}
-            {trackDrafts.length > 0 && (
-              <p class="reveal mt-8 text-sm text-ink-700">
-                <span class="font-bold">בהכנה:</span>&#32;
-                {trackDrafts.map((d) => d.data.title).join(' · ')}
-              </p>
-            )}
           </div>
         </section>
 
@@ -207,13 +195,7 @@ const breadcrumbLd = {
       <>
         <article class="band bg-white">
           <div class="mx-auto max-w-3xl px-4">
-            {article!.data.draft && (
-              <p class="rounded-xl border border-dashed border-warn-500 bg-warn-100 p-4 text-sm font-bold text-ink-900">
-                טיוטה — טעון אישור נטלי. המקורות עדיין ללא קישור מאומת, והעמוד אינו מפורסם ואינו
-                מאונדקס.
-              </p>
-            )}
-            <p class:list={['text-sm text-ink-700', article!.data.draft && 'mt-4']}>
+            <p class="text-sm text-ink-700">
               עודכן:&#32;<span class="ltr">{article!.data.updated}</span>&#32;· קריאה של&#32;
               <span class="ltr">{readingMinutes(article!.body ?? '')}</span>&#32;דקות
             </p>

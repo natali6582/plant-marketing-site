@@ -143,18 +143,18 @@ Each step above is independently reversible; do them in reverse order.
 
 ## מרכז הידע — פרסום מדורג
 
-למרכז הידע שני מתגים נפרדים, כי סקירה ופרסום הן שתי החלטות שונות:
+למרכז הידע שני מתגים נפרדים, כי דמו להנהלה והשקה בדומיין הם שתי החלטות שונות:
 
-- `KNOWLEDGE_ENABLED=true` מפעיל **מצב סקירה** רק ב־Workers Build של ענף מזוהה
-  שאינו `main`, או ב־`npm run dev` מקומי נקי. המצב כולל טיוטות ונתוני Tier‑0;
-  כל 31 עמודי הידע מקבלים `noindex`.
-- `KNOWLEDGE_PUBLIC=true` מפעיל **מצב ציבורי**, כולל ב־`main`. המצב מציג רק
-  מאמרים עם `draft: false`, אינו חושף שמות טיוטה ומסנן נתוני Tier‑0 מדף הנתונים.
+- `KNOWLEDGE_ENABLED=true` מפעיל **מצב דמו מלא** בכל סביבת Build, כולל `main`.
+  המצב כולל את כל 25 המאמרים ואת נתוני Tier‑0, בלי באנרי ״טיוטה״ או רשימות
+  ״בהכנה״; כל 31 עמודי הידע מקבלים `noindex`.
+- `KNOWLEDGE_PUBLIC=true` מפעיל **מצב ציבורי מסונן**. המצב מציג רק מאמרים עם
+  `draft: false`, אינו חושף שמות טיוטה ומסנן נתוני Tier‑0 מדף הנתונים.
 
 כששני המתגים כבויים לא נוצרים עמודי `/knowledge/`, אין רשומות שלהם ב־sitemap
 וקישורי הניווט מוסתרים. כשהמתג הציבורי דלוק והמצב הנוכחי הוא שכל 25 המאמרים
 טיוטות, נוצרים 25 עמודים באתר כולו: 20 עמודי האתר הרגילים ועוד 5 עמודי ידע
-(hub, שלושה מסלולים ודף נתוני 2026), ללא מאמרים. במצב סקירה נוצרים 51 עמודים
+(hub, שלושה מסלולים ודף נתוני 2026), ללא מאמרים. במצב דמו נוצרים 51 עמודים
 באתר כולו, מהם 31 עמודי ידע. הספירות אומתו פעמיים ויש לבדוק אותן מחדש אחרי
 שינוי תוכן.
 
@@ -162,7 +162,7 @@ Each step above is independently reversible; do them in reverse order.
 העמודים, כמו ה-`PUBLIC_*` — ולכן שינוי שלו מחייב **בנייה מחדש**, לא רק שמירה
 בדשבורד (ראו §5).
 
-### הגדרות שאומתו בדשבורד, 04/09/2026
+### הגדרות שאומתו בדשבורד, 05/09/2026
 
 ב־Worker `plant-marketing-site`, בחשבון `Sales@plan-t.org.il's Account`:
 
@@ -172,59 +172,49 @@ Each step above is independently reversible; do them in reverse order.
 - Deploy command: `npx wrangler deploy`.
 - Version command: `npx wrangler versions upload` — העלאת גרסת Preview, לא קידום לפרודקשן.
 - Variables and secrets של Builds: ריק בזמן הבדיקה; לא נשמרו שינויים.
+- Worker URL של Production: `plant-marketing-site.shrill-bread-1333.workers.dev`.
+- Preview URLs מופעלים.
+- אין Custom Domains ואין Zone Routes שמחוברים ל־Worker.
 
-**אין כאן משתנה נפרד לכל ענף.** שני המתגים הם משתני Builds משותפים. ההגנה על
-מצב הסקירה נעשית בקוד בעזרת הענף שמוזרק לבנייה. אין להגדיר ידנית או לדרוס את
-`WORKERS_CI`, את `WORKERS_CI_BRANCH` או את `CI` כדי לפתוח את השער.
+**אין כאן משתנה נפרד לכל ענף.** שני המתגים הם משתני Builds משותפים. מצב הדמו
+מיועד במפורש גם ל־`main` כל עוד כתובת ה־Workers היא אתר ההדגמה ואין Custom
+Domain או Route. לפני חיבור דומיין יש לכבות אותו ולבנות מחדש.
 
 | הקשר | `KNOWLEDGE_ENABLED` | `KNOWLEDGE_PUBLIC` | תוצאה |
 |---|---|---|---|
-| Workers Builds, ענף `main` | `true` או כל ערך אחר | לא `true` | הסקשן לא קיים |
-| Workers Builds, ענף `main` | כל ערך | `true` | מצב ציבורי; אין טיוטות או Tier‑0 |
-| Workers Builds, ענף מזוהה שאינו `main` | `true` | כל ערך | מצב סקירה מלא עם `noindex` |
-| Workers Builds, ענף חסר או ריק | `true` | לא `true` | הסקשן לא קיים |
-| `npm run dev` מקומי, בלי סימוני CI או ענף | `true` | לא `true` | מצב סקירה מלא עם `noindex` |
-| `npm run build` מקומי רגיל | `true` | לא `true` | הסקשן לא קיים |
-| כל הקשר | כל ערך | `true` | מצב ציבורי, אלא אם מצב הסקירה הפעיל כולל גם טיוטות |
+| כל Build, כולל `main` | `true` | כל ערך | מצב דמו מלא, ללא תוויות עריכה ועם `noindex` |
+| כל Build | לא `true` | `true` | מצב ציבורי מסונן; אין טיוטות או Tier‑0 |
+| כל Build | לא `true` | לא `true` | הסקשן לא קיים |
 
-### סדר הפעלה — ללא חלון סיכון לפרודקשן
+### סדר הפעלה — דמו הנהלה ב־Workers URL
 
 1. להשאיר את שני המתגים כבויים/לא מוגדרים בזמן הכנת ה־PR.
-2. להריץ פעמיים את שלושת המצבים ולוודא פלט זהה: כבוי, ציבורי ב־`main`, ו־Preview
-   מלא בענף שאינו `main`. לבדוק נתיבים, ניווט, `noindex`, sitemap והיעדר Tier‑0.
-3. למזג את ההגנה ל־`main` ולוודא שהבנייה שלו הצליחה. תיקון שנמצא רק בענף
-   Preview **אינו מגן על main**.
-4. לרענן את `preview/knowledge` מ־`main` ב־fast-forward בלבד. אם נדרשת הכרעת
-   מיזוג, לעצור — לא לבצע force push ולא לדרוס שינויים.
-5. לבדוק בדשבורד שענף production הוא `main` ופקודת הגרסה היא
-   `npx wrangler versions upload`. רק לאחר שהקוד המגן נמצא ב־`main`, להגדיר את
-   שני משתני ה־Build המשותפים: `KNOWLEDGE_ENABLED=true` ו־`KNOWLEDGE_PUBLIC=true`.
-6. לבנות מחדש את `main` ואת `preview/knowledge`. ב־main צריכים להופיע רק חמשת
-   עמודי המעטפת הציבוריים כל עוד אין מאמר מאושר; ב־Preview צריכים להופיע כל 31
-   עמודי הידע עם `noindex`.
+2. להריץ פעמיים את מצב הדמו ולוודא פלט זהה: 51 עמודים באתר, מהם 31 עמודי ידע;
+   כל עמודי הידע עם `noindex`, ללא באנר ״טיוטה״ וללא רשימת ״בהכנה״.
+3. למזג ל־`main` ולוודא שבניית Cloudflare של קומיט המיזוג הצליחה.
+4. לוודא בדשבורד שאין Custom Domain או Zone Route שמחובר ל־Worker.
+5. להגדיר רק `KNOWLEDGE_ENABLED=true`; להשאיר את `KNOWLEDGE_PUBLIC` לא מוגדר.
+6. לבנות מחדש את `main` ולאמת את `/knowledge/` ואת עמודי המדגם בכתובת
+   `plant-marketing-site.shrill-bread-1333.workers.dev`.
+7. לפני חיבור דומיין: לכבות את `KNOWLEDGE_ENABLED`, לבנות מחדש ולאמת שהסקשן
+   נעלם — או לבצע החלטת פרסום נפרדת ולהפעיל את המצב הציבורי המסונן.
 
 ### פיתוח מקומי וגבולות ההגנה
 
 לסקירה מקומית יש להוסיף/לעדכן רק `KNOWLEDGE_ENABLED=true` ב־`.env`, בלי לדרוס
-קובץ קיים או את ערכי ה־webhooks שבו, ולהריץ `npm run dev`. החריג המקומי דורש
-`import.meta.env.DEV` וללא ערכים ב־`CI`, ב־`WORKERS_CI` וב־`WORKERS_CI_BRANCH`.
-אם סביבת העבודה נושאת סימוני CI, לא לזייף ענף; להשתמש בתהליך מקומי נקי.
-
-`DEV` הוא מצב development, **לא הוכחה שמדובר בשרת מקומי**: גם build עם
-`NODE_ENV=development` או עם `--devOutput` יכול לייצר פלט כזה. פלט זה אינו
-מיועד לפריסה. לפריסה משתמשים בבנייה רגילה עם `NODE_ENV=production` ובנתיב
-ה־CI המאומת בלבד. קידום ידני של גרסת Preview לפרודקשן, או פריסה ידנית של
-תוצריה, עוקפים את כוונת ההגנה ואסורים לפני אישור הפרסום.
+קובץ קיים או את ערכי ה־webhooks שבו, ולהריץ `npm run dev`. אותו מתג עובד גם
+ב־`npm run build`; זהו מתג מפורש של תוכן, לא מנגנון לזיהוי סביבת הרצה.
 
 מקורות: [משתני Workers Builds](https://developers.cloudflare.com/workers/ci-cd/builds/configuration/#default-variables),
 [פקודת Preview](https://developers.cloudflare.com/workers/ci-cd/builds/configuration/#non-production-branch-deploy-command),
 [מצבי Vite](https://vite.dev/guide/env-and-mode#built-in-constants).
 
-### לפני הדלקה בפרודקשן
+### לפני חיבור דומיין ציבורי
 
-כל 25 המאמרים עדיין `draft: true`; 10 מתוך 35 הנתונים עדיין Tier‑0. מצב Public
-אינו מפרסם אותם. `npm run build` מריץ תחילה את `scripts/check-figures.mjs`, והבנייה
-נכשלת אם מאמר עם `draft: false` מצטט נתון Tier‑0.
+כל 25 המאמרים עדיין `draft: true`; 10 מתוך 35 הנתונים עדיין Tier‑0. מצב הדמו
+מציג אותם בכוונה לצורך הצגת הקונספט להנהלה. מצב Public אינו מפרסם אותם.
+`npm run build` מריץ תחילה את `scripts/check-figures.mjs`, והבנייה נכשלת אם מאמר
+עם `draft: false` מצטט נתון Tier‑0.
 
 כדי לפרסם מאמר: לאמת ולהוסיף מקור Tier‑1 עם URL, להסיר ממנו מקורות Tier‑0,
 לאמת כל נתון שהוא מצטט, לשנות ל־`draft: false`, ולהריץ את הבנייה פעמיים. רק

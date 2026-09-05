@@ -22,12 +22,7 @@ import { KNOWLEDGE_DRAFTS, KNOWLEDGE_ENABLED, SERIES } from '../../../data/knowl
 export async function getStaticPaths() {
   if (!KNOWLEDGE_ENABLED) return [];
 
-  /*
-    A series is only as publishable as its parts. With every article still a
-    draft, publishing the section would otherwise have put one page carrying a
-    "טיוטה" banner in front of real visitors — the only such leak the
-    production build had.
-  */
+  /* Demo mode includes series whose articles are still editorial drafts. */
   const all = await _gc('knowledge');
   return SERIES.filter((series) =>
     all.some((a) => a.data.series === series.slug && (!a.data.draft || KNOWLEDGE_DRAFTS))
@@ -41,7 +36,7 @@ const articles = all
   .filter((a) => a.data.series === series.slug && (!a.data.draft || KNOWLEDGE_DRAFTS))
   .sort((a, b) => (a.data.seriesOrder ?? 0) - (b.data.seriesOrder ?? 0));
 
-/* A series is only as publishable as its least ready part. */
+/* Keep demo series out of search indexes without displaying editorial state. */
 const anyDraft = KNOWLEDGE_DRAFTS && articles.some((a) => a.data.draft);
 ---
 
@@ -53,13 +48,6 @@ const anyDraft = KNOWLEDGE_DRAFTS && articles.some((a) => a.data.draft);
 
   <section class="band bg-white">
     <div class="mx-auto max-w-3xl px-4">
-      {
-        anyDraft && (
-          <p class="mb-6 rounded-xl border border-dashed border-warn-500 bg-warn-100 p-4 text-sm font-bold text-ink-900">
-            טיוטה — טעון אישור נטלי. הסדרה אינה מפורסמת ואינה מאונדקסת.
-          </p>
-        )
-      }
       <ol class="space-y-4">
         {
           articles.map((a, index) => (

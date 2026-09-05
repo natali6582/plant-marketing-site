@@ -99,9 +99,12 @@ keren-hishtalmut-liquidity-years:
   value: 6
   unit: "שנים"
   year: 2026
-  label: ותק למשיכה לכל מטרה
+  label: ותק למשיכה בפטור ממס מקרן השתלמות
+  # The statute also carries a shorter route the articles did not mention:
+  # three years at retirement age, and three years for study.
+  note: 'מצוטט מסעיף 9(16א)(א) לפקודה: "אם חלפו 6 שנים ממועד התשלום הראשון לאותו החשבון, ולגבי עובד שהגיע לגיל הפרישה – אם חלפו 3 שנים ממועד התשלום הראשון לאותו חשבון; ולגבי סכומים ששימשו את העובד לצורך השתלמותו – אם חלפו 3 שנים". השיעור אינו מתעדכן שנתית.'
   group: keren-hishtalmut
-  source: { label: "רשות שוק ההון, ביטוח וחיסכון — gov.il", url: "", tier: 0 }
+  source: { label: "פקודת מס הכנסה — ויקיטקסט, סעיף 9(16א)(א)", url: "https://he.wikisource.org/wiki/פקודת_מס_הכנסה", tier: 1 }
 
 gemel-lehashkaa-annual-ceiling:
   value: 83641
@@ -123,17 +126,25 @@ gemel-lehashkaa-annuity-age:
   unit: "גיל"
   year: 2026
   label: הגיל שממנו ניתן להעביר לקופה משלמת לקצבה
-  note: להעברה לשם קבלת קצבה בלבד, ובכפוף לתנאים.
+  # Searched the full text of חוק הפיקוח על שירותים פיננסיים (קופות גמל):
+  # no mention of 60 anywhere near קופת גמל להשקעה, קופה משלמת or קצבה. Like
+  # the deposit ceiling, this rule is not in the statute.
+  note: לא נמצא בחוק הפיקוח על שירותים פיננסיים (קופות גמל). הכלל אינו בחוק אלא בתקנות או בחוזרי הממונה, כמו תקרת ההפקדה.
   group: gemel
-  source: { label: "רשות שוק ההון, ביטוח וחיסכון — gov.il", url: "", tier: 0 }
+  source: { label: "לא נמצא בחוק הפיקוח — טעון בירור", url: "", tier: 0 }
 
 tikun-190-min-age:
   value: 60
   unit: "גיל"
   year: 2026
   label: גיל מזערי להיוון קצבה מוכרת
+  # NOT in section 9א. The section's own gate is "גיל הזכאות", defined as
+  # "גיל הפרישה או הגיל שבו החל יחיד לקבל קצבה מזכה, כולה או חלקה, לפי
+  # המאוחר" — retirement age, not 60. Whatever 60 is, it is not this section,
+  # and the article asserts it. Flagged rather than quietly kept.
+  note: לא נמצא בסעיף 9א לפקודה. הסעיף מותנה ב״גיל הזכאות״, שהוא ״גיל הפרישה או הגיל שבו החל יחיד לקבל קצבה מזכה, לפי המאוחר״ — ולא גיל 60. יש לאתר את המקור לגיל 60 או לתקן את המאמר.
   group: tikun-190
-  source: { label: "רשות המסים — taxes.gov.il / gov.il", url: "", tier: 0 }
+  source: { label: "לא נמצא בסעיף 9א — טעון בירור", url: "", tier: 0 }
 
 tikun-190-min-monthly-pension:
   value: 5306
@@ -160,9 +171,13 @@ tikun-190-tax-rate:
   value: 15
   unit: "%"
   year: 2026
-  label: מס על הרווח הנומינלי בהיוון קצבה מוכרת, בתנאים
+  label: מס על מרכיב הרווח היחסי בהיוון קצבה מוכרת
+  # Narrower than the label we carried. The statute taxes only the מרכיב
+  # הרווח היחסי — a defined fraction — not "the nominal profit" at large, and
+  # only the part that is not already exempt under 9א(ה)(1).
+  note: 'מצוטט מסעיף 9א(ה)(3) לפקודה: "על סכום שהתקבל עקב היוון קצבה מוכרת, אשר אינו פטור ממס לפי פסקה (1), יוטל מס רק בשל מרכיב הרווח היחסי, בשיעור של 15%". השיעור אינו מתעדכן שנתית.'
   group: tikun-190
-  source: { label: "רשות המסים — taxes.gov.il / gov.il", url: "", tier: 0 }
+  source: { label: "פקודת מס הכנסה — ויקיטקסט, סעיף 9א(ה)(3)", url: "https://he.wikisource.org/wiki/פקודת_מס_הכנסה", tier: 1 }
 
 capital-gains-real:
   value: 25
@@ -292,18 +307,23 @@ offerees-retail-12m:
   value: 35
   unit: ""
   year: 2026
-  label: ניצעי ריטייל בתקופה של 12 חודשים
-  note: לפי קודקס רשות ניירות ערך, בכפוף לדין ולסיווג.
+  label: מספר המשקיעים המרבי בהצעה שאינה לציבור, בתקופה של 12 חודשים
+  # It is in the regulations, not the codex — which answers the open question
+  # the last table asked. The codex is guidance; תקנה 2 is binding.
+  note: 'סעיף 15א(א)(1) לחוק קובע את הכלל ומפנה לתקנות: "הצעה או מכירה למשקיעים שמספרם אינו עולה על מספר שייקבע בתקנות... בצירוף מספר המשקיעים שלהם מכר ניירות ערך במהלך שנים עשר החודשים שקדמו". והמספר: "לפי תקנה 2 לתקנות ניירות ערך (פרטים לענין סעיפים 15א עד 15ג לחוק), התש״ס–2000, מספר המשקיעים המרבי הוא שלושים וחמישה".'
   group: securities
-  source: { label: "רשות ניירות ערך — isa.gov.il, קודקס", url: "", tier: 0 }
+  source: { label: "חוק ניירות ערך — ויקיטקסט, סעיף 15א(א)(1) ותקנה 2", url: "https://he.wikisource.org/wiki/חוק_ניירות_ערך", tier: 1 }
 
 offerees-joint-investment-retail:
   value: 50
   unit: ""
   year: 2026
   label: משקיעי ריטייל בהסדר השקעה משותפת, בכל זמן נתון
+  # Not in section 15א. Paragraph (7) is "הצעה או מכירה למשקיעים שהם אחד
+  # מהמפורטים בסעיף קטן (ב)" and carries no number. The 50 is elsewhere.
+  note: לא נמצא בסעיף 15א לחוק ניירות ערך. פסקה (7) מפנה למשקיעים שבסעיף קטן (ב) ואינה נוקבת במספר.
   group: securities
-  source: { label: "רשות ניירות ערך — isa.gov.il, קודקס", url: "", tier: 0 }
+  source: { label: "לא נמצא בסעיף 15א — טעון בירור", url: "", tier: 0 }
 
 purchase-tax-single-exempt:
   value: 1978745
@@ -349,9 +369,12 @@ reit-law-year:
   unit: "תאריך"
   year: 2026
   label: השנה שבה נחקק חוק קרנות הריט בישראל
-  note: תיקון 147 לפקודת מס הכנסה. מודל מיסוי חד-שלבי, ברמת בעלי המניות בלבד.
+  # The chapter exists and its amendment marker is תשס״ה, which spans
+  # September 2004 to October 2005 — so "2005" is likely but not settled by
+  # this source, and the amendment number 147 does not appear in it.
+  note: 'סעיף 64א2 לפקודה נושא את סימון התיקון "תשס״ה־9". תשס״ה משתרעת על 2004–2005, ומספר התיקון (147) אינו מופיע במקור — השנה המדויקת ומספר התיקון טעונים אישור.'
   group: real-estate
-  source: { label: "רשות המסים — taxes.gov.il", url: "", tier: 0 }
+  source: { label: "פקודת מס הכנסה — ויקיטקסט, סעיף 64א2 — מאשש חלקית", url: "https://he.wikisource.org/wiki/פקודת_מס_הכנסה", tier: 0 }
 
 purchase-tax-brackets-frozen-until:
   value: "15.1.2028"
@@ -369,7 +392,7 @@ kitzva-mezaka-ceiling:
   unit: "₪"
   year: 2026
   label: תקרת "קיצבה מזכה", לחודש
-  note: 'מצוטט מהמקור: "תקרת ״קיצבה מזכה״ 9א(א) — 9,430 — לחודש".'
+  note: 'מצוטט מהמקור: "תקרת ״קיצבה מזכה״ 9א(א) — 9,430 — לחודש". הפקודה קובעת שהסכום קבוע לתקופה: "8,190 שקלים חדשים (נקוב לשנת 2012; בשנת 2023, 9,120 ש״ח; בשנים 2024–2027, 9,430 ש״ח)" — כלומר אינו מתעדכן שנתית עד 2027.'
   group: tikun-190
   source: { label: "רשות המסים — לוח עזר לחישוב מס הכנסה ממשכורת ושכר עבודה, ינואר 2026, מעודכן לאפריל 2026, פרק ג טבלה ב", url: "https://www.gov.il/BlobFolder/generalpage/income-tax-monthly-deductions-booklet/he/generalInformation_income-tax-monthly-deductions-booklet_monthly-deductions-booklet-2026.pdf", tier: 1 }
 
@@ -378,7 +401,7 @@ kitzva-exemption-rate:
   unit: "%"
   year: 2026
   label: שיעור הפטור המרבי לקצבה מזכה
-  note: 'מצוטט מהמקור: "תיקון 275 לפקודת מס הכנסה, תוקן סעיף 9א(ז) לפקודה … 2026 — 57.5%". השיעור עולה ל-62.5% ב-2027 ול-67% מ-2028.'
+  note: 'מצוטט מהמקור: "תיקון 275 לפקודת מס הכנסה, תוקן סעיף 9א(ז) לפקודה … 2026 — 57.5%". מאושש בפקודה עצמה, סעיף 9א(ה)(1): "פטור ממס עד לסכום כולל שלא יעלה על 67% (החל משנת 2028; בשנת 2024, 52%; בשנת 2025, 57%; בשנת 2026, 57.5%; בשנת 2027, 62.5%)".'
   group: tikun-190
   source: { label: "רשות המסים — לוח עזר לחישוב מס הכנסה ממשכורת ושכר עבודה, ינואר 2026, מעודכן לאפריל 2026, פרק ג טבלה ב", url: "https://www.gov.il/BlobFolder/generalpage/income-tax-monthly-deductions-booklet/he/generalInformation_income-tax-monthly-deductions-booklet_monthly-deductions-booklet-2026.pdf", tier: 1 }
 

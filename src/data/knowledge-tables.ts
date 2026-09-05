@@ -121,11 +121,12 @@ export const COMPARE: Record<string, CompareTable> = {
 
   /* The two regimes the document names for an individual's capital gains. */
   'capital-gains': {
-    caption: 'שני שיעורי המס שהמסמך מבחין ביניהם ליחיד, ככלל.',
-    columns: ['רווח הון ריאלי', 'הכנסה נומינלית לא-צמודה'],
+    caption: 'שני השיעורים שסעיף 91 לפקודה קובע ליחיד. שניהם תקרות, לא שיעורים קבועים.',
+    columns: ['רווח הון ריאלי', 'איגרת חוב או הלוואה שאינן צמודות למדד'],
     rows: [
-      { label: 'השיעור', values: ['25%', '15%'] },
+      { label: 'השיעור', values: ['לא יעלה על 25%', 'לא יעלה על 15%'] },
       { label: 'הבסיס', values: ['הרווח בניכוי אינפלציה', 'הרווח הנומינלי'] },
+      { label: 'בעל מניות מהותי', values: ['30%', '20%'] },
       {
         label: 'מה עשוי לשנות את התוצאה',
         values: [

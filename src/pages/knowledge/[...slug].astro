@@ -9,7 +9,7 @@ import HubPage from '../../components/knowledge/HubPage.astro';
 import Layers from '../../components/knowledge/Layers.astro';
 import Disclaimer from '../../components/knowledge/Disclaimer.astro';
 import SourceList from '../../components/knowledge/SourceList.astro';
-import { KNOWLEDGE_ENABLED, PLANNING_LAYERS, SERIES, TRACKS } from '../../data/knowledge';
+import { KNOWLEDGE_DRAFTS, KNOWLEDGE_ENABLED, PLANNING_LAYERS, SERIES, TRACKS } from '../../data/knowledge';
 import { FIGURE_GROUPS, formatFigure, figuresPath, TIER_LABEL, wrapAtomicRuns } from '../../components/knowledge/figures';
 import { readingMinutes } from '../../components/knowledge/render';
 
@@ -41,7 +41,7 @@ export async function getStaticPaths() {
       a noindex, and every draft is filtered out of the sitemap regardless.
     */
     ...articles
-      .filter((a) => !a.data.draft || KNOWLEDGE_ENABLED)
+      .filter((a) => !a.data.draft || KNOWLEDGE_DRAFTS)
       .map((article) => ({ params: { slug: article.id }, props: { kind: 'article' as const, article } })),
     /* The route carries the year from the data, so January's edit moves the
        page rather than leaving a stale number in the URL. */
@@ -52,7 +52,7 @@ export async function getStaticPaths() {
 const { kind } = Astro.props;
 
 const allArticles = await getCollection('knowledge');
-const published = allArticles.filter((a) => !a.data.draft || KNOWLEDGE_ENABLED);
+const published = allArticles.filter((a) => !a.data.draft || KNOWLEDGE_DRAFTS);
 const inTrack = (slug: string, a: (typeof allArticles)[number]) => {
   const aud = a.data.audience;
   return Array.isArray(aud) ? (aud as string[]).includes(slug) : aud === slug;

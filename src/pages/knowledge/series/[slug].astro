@@ -3,7 +3,8 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import PageHero from '../../../components/PageHero.astro';
 import Disclaimer from '../../../components/knowledge/Disclaimer.astro';
-import { KNOWLEDGE_ENABLED, SERIES } from '../../../data/knowledge';
+import { getCollection as _gc } from 'astro:content';
+import { KNOWLEDGE_DRAFTS, KNOWLEDGE_ENABLED, SERIES } from '../../../data/knowledge';
 
 /*
   A reading order.
@@ -20,7 +21,17 @@ import { KNOWLEDGE_ENABLED, SERIES } from '../../../data/knowledge';
 
 export async function getStaticPaths() {
   if (!KNOWLEDGE_ENABLED) return [];
-  return SERIES.map((series) => ({ params: { slug: series.slug }, props: { series } }));
+
+  /*
+    A series is only as publishable as its parts. With every article still a
+    draft, publishing the section would otherwise have put one page carrying a
+    "טיוטה" banner in front of real visitors — the only such leak the
+    production build had.
+  */
+  const all = await _gc('knowledge');
+  return SERIES.filter((series) =>
+    all.some((a) => a.data.series === series.slug && (!a.data.draft || KNOWLEDGE_DRAFTS))
+  ).map((series) => ({ params: { slug: series.slug }, props: { series } }));
 }
 
 const { series } = Astro.props;

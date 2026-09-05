@@ -233,8 +233,31 @@ const knowledgePreview =
 const knowledgeLocalDev =
   import.meta.env.DEV && knowledgeCi === '' && knowledgeWorkersCi === '' && knowledgeBranch === '';
 
-export const KNOWLEDGE_ENABLED =
+/*
+  Two switches, because "review it" and "publish it" are two decisions.
+
+  KNOWLEDGE_ENABLED keeps Natali's guard exactly as written: Workers Builds
+  shares build variables across branches, so the review flag alone must never be
+  able to turn the section on for main, and an unidentifiable branch fails
+  closed.
+
+  KNOWLEDGE_PUBLIC is the separate, deliberate act of publishing. It is the only
+  thing that can switch the section on for the production branch, and it cannot
+  be set by accident on the way to a preview.
+*/
+const knowledgeReview =
   import.meta.env.KNOWLEDGE_ENABLED === 'true' && (knowledgePreview || knowledgeLocalDev);
+const knowledgePublic = import.meta.env.KNOWLEDGE_PUBLIC === 'true';
+
+export const KNOWLEDGE_ENABLED = knowledgeReview || knowledgePublic;
+
+/*
+  Drafts render for review and never in public. Before this, both were the same
+  flag, so publishing the section would have published 25 pages carrying a
+  "טיוטה" banner and an unverified figure to real visitors. Production shows
+  only what has cleared its sources.
+*/
+export const KNOWLEDGE_DRAFTS = knowledgeReview;
 
 export const SERIES: { slug: string; title: string; lead: string }[] = [
   {

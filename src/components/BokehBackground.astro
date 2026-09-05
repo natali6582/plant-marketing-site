@@ -1,4 +1,5 @@
 ---
+import { bokehUid } from './bokeh-uid';
 /*
   Bokeh field for the dark bands. One inline SVG, no image file, no dependency.
 
@@ -39,9 +40,15 @@ interface Props {
 
 const { intensity = 'full', seed = 1 } = Astro.props;
 
-/* Unique per instance: a page can carry two of these (hero and form band) and
-   duplicate filter ids would make the second one reference the first's. */
-const uid = Math.random().toString(36).slice(2, 8);
+/*
+  Unique per instance, and stable between builds. The counter has to live in a
+  module — see bokeh-uid.ts — because frontmatter re-runs on every render.
+
+  It used to be Math.random(), which solved uniqueness and broke
+  reproducibility: two builds of an unchanged commit produced different HTML, so
+  a deploy diff could never be trusted to show only real changes.
+*/
+const uid = bokehUid(Astro.url.pathname, seed);
 
 /* Half strength is the same field, quieter: every opacity scaled, and the two
    busiest layers — the small sharp discs and the beam — left out entirely. */

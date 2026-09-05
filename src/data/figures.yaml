@@ -62,12 +62,11 @@ keren-hishtalmut-deposit-employee:
   unit: "₪"
   year: 2026
   label: הפקדה שנתית מוטבת לשכיר
-  # Not published as a figure. It is 10% of the official 188,544 ceiling
-  # (2.5% employee + 7.5% employer) and computes to 18,854.4. A derived number
-  # is not a verified one, so it stays tier 0.
-  note: נגזר מהמשכורת הקובעת המרבית בהפקדות שכיחות של 2.5% עובד ו-7.5% מעסיק. הסכום אינו מתפרסם כתקרה בפני עצמו.
+  # Derived, and published as such: the formula is shown to the reader rather
+  # than the number being presented as if someone had published it.
+  note: 'נגזר: 10% מ-188,544 ₪ — המשכורת הקובעת המרבית לפי סעיף 3(ה) — בהפקדות שכיחות של 2.5% עובד ו-7.5% מעסיק.'
   group: keren-hishtalmut
-  source: { label: "נגזר מהמקור הרשמי — לא מתפרסם כשלעצמו", url: "", tier: 0 }
+  source: { label: "נגזר מ-רשות המסים — לוח עזר לחישוב מס הכנסה ממשכורת ושכר עבודה, ינואר 2026, מעודכן לאפריל 2026, פרק ג טבלה ב", url: "https://www.gov.il/BlobFolder/generalpage/income-tax-monthly-deductions-booklet/he/generalInformation_income-tax-monthly-deductions-booklet_monthly-deductions-booklet-2026.pdf", tier: 1 }
 
 keren-hishtalmut-income-ceiling-self:
   value: 293397
@@ -83,11 +82,9 @@ keren-hishtalmut-deduction-self:
   unit: "₪"
   year: 2026
   label: ניכוי מרבי לעצמאי
-  # 4.5% of the official 293,397 ceiling computes to 13,202.9. Derived, not
-  # published as a figure of its own, so it stays tier 0.
-  note: נגזר מתקרת ההכנסה הקובעת. אינו מתפרסם כסכום בפני עצמו בלוח הניכויים.
+  note: 'נגזר: 4.5% מ-293,397 ₪ — תקרת ההכנסה הקובעת לעצמאיים לפי סעיף 17(5א).'
   group: keren-hishtalmut
-  source: { label: "נגזר מהמקור הרשמי — לא מתפרסם כשלעצמו", url: "", tier: 0 }
+  source: { label: "נגזר מ-רשות המסים — לוח עזר לחישוב מס הכנסה ממשכורת ושכר עבודה, ינואר 2026, מעודכן לאפריל 2026, פרק ג טבלה ב", url: "https://www.gov.il/BlobFolder/generalpage/income-tax-monthly-deductions-booklet/he/generalInformation_income-tax-monthly-deductions-booklet_monthly-deductions-booklet-2026.pdf", tier: 1 }
 
 keren-hishtalmut-deposit-ceiling-self:
   value: 20566
@@ -107,12 +104,19 @@ keren-hishtalmut-liquidity-years:
   source: { label: "רשות שוק ההון, ביטוח וחיסכון — gov.il", url: "", tier: 0 }
 
 gemel-lehashkaa-annual-ceiling:
-  value: 83641.09
+  value: 83641
   unit: "₪"
   year: 2026
   label: תקרת הפקדה שנתית לחוסך, בכלל חשבונותיו
+  # WAS 83,641.09. The agorot had no source; the published figure is round.
+  # The ceiling is statutory and index-linked, so the number changes each year
+  # by calculation rather than by decision — status "מחושב לפי הצמדה".
+  # The base amount and the indexation rule in חוק הפיקוח על שירותים פיננסיים
+  # (קופות גמל) could not be pulled out of the Nevo text in this pass, so this
+  # rests on corroboration and is not yet tier 1.
+  note: 'מצוטט מהמקור: "לא ניתן להפקיד יותר מ-83,641 ₪ בשנה קלנדרית (נכון ל-2026)". התקרה מוצמדת ומתעדכנת שנתית.'
   group: gemel
-  source: { label: "רשות שוק ההון, ביטוח וחיסכון — gov.il", url: "", tier: 0 }
+  source: { label: "כל-זכות — נכתב בסיוע היחידה לחינוך פיננסי ומחלקת קופות גמל ברשות שוק ההון", url: "https://www.kolzchut.org.il/he/קופת_גמל_להשקעה", tier: 2 }
 
 gemel-lehashkaa-annuity-age:
   value: 60
@@ -203,6 +207,7 @@ accredited-income-individual:
   unit: "₪"
   year: 2026
   label: הכנסה שנתית ליחיד, בכל אחת משתי השנים האחרונות
+  note: הסכומים בתוספת הראשונה לחוק ניירות ערך מוצמדים למדד. הסכום המדויק המוצג כאן טרם אומת מול הודעת עדכון הסכומים של רשות ניירות ערך — יש להציג את הסכום הבסיסי שבחוק ולהפנות לסכום העדכני באתר הרשות.
   group: accredited
   source: { label: "רשות ניירות ערך — isa.gov.il, טעון אימות ביום הפרסום", url: "", tier: 0 }
 
@@ -211,6 +216,7 @@ accredited-income-family:
   unit: "₪"
   year: 2026
   label: הכנסה שנתית לתא משפחתי, בכל אחת משתי השנים האחרונות
+  note: הסכומים בתוספת הראשונה לחוק ניירות ערך מוצמדים למדד. הסכום המדויק המוצג כאן טרם אומת מול הודעת עדכון הסכומים של רשות ניירות ערך — יש להציג את הסכום הבסיסי שבחוק ולהפנות לסכום העדכני באתר הרשות.
   group: accredited
   source: { label: "רשות ניירות ערך — isa.gov.il, טעון אימות ביום הפרסום", url: "", tier: 0 }
 
@@ -219,6 +225,7 @@ accredited-combined-assets:
   unit: "₪"
   year: 2026
   label: נכסים נזילים — רכיב הנכסים במבחן המשולב
+  note: הסכומים בתוספת הראשונה לחוק ניירות ערך מוצמדים למדד. הסכום המדויק המוצג כאן טרם אומת מול הודעת עדכון הסכומים של רשות ניירות ערך — יש להציג את הסכום הבסיסי שבחוק ולהפנות לסכום העדכני באתר הרשות.
   group: accredited
   source: { label: "רשות ניירות ערך — isa.gov.il, טעון אימות ביום הפרסום", url: "", tier: 0 }
 
@@ -227,6 +234,7 @@ accredited-combined-income-individual:
   unit: "₪"
   year: 2026
   label: הכנסה ליחיד — רכיב ההכנסה במבחן המשולב
+  note: הסכומים בתוספת הראשונה לחוק ניירות ערך מוצמדים למדד. הסכום המדויק המוצג כאן טרם אומת מול הודעת עדכון הסכומים של רשות ניירות ערך — יש להציג את הסכום הבסיסי שבחוק ולהפנות לסכום העדכני באתר הרשות.
   group: accredited
   source: { label: "רשות ניירות ערך — isa.gov.il, טעון אימות ביום הפרסום", url: "", tier: 0 }
 
@@ -235,6 +243,7 @@ accredited-combined-income-family:
   unit: "₪"
   year: 2026
   label: הכנסה לתא משפחתי — רכיב ההכנסה במבחן המשולב
+  note: הסכומים בתוספת הראשונה לחוק ניירות ערך מוצמדים למדד. הסכום המדויק המוצג כאן טרם אומת מול הודעת עדכון הסכומים של רשות ניירות ערך — יש להציג את הסכום הבסיסי שבחוק ולהפנות לסכום העדכני באתר הרשות.
   group: accredited
   source: { label: "רשות ניירות ערך — isa.gov.il, טעון אימות ביום הפרסום", url: "", tier: 0 }
 
@@ -276,19 +285,19 @@ purchase-tax-single-exempt:
   value: 1978745
   unit: "₪"
   year: 2026
-  label: תקרת הפטור ממס רכישה לדירה יחידה
-  note: המדרגות מוקפאות עד 15.1.2028. המס בפועל תלוי בסיווג הרוכש, הנכס, התא המשפחתי וזכויות נוספות.
+  label: תקרת הפטור ממס רכישה לדירת מגורים יחידה
+  note: 'מצוטט מהמקור: "על חלק השווי שעד 1,978,745 שקלים חדשים- לא ישולם מס". המדרגות מוקפאות עד 15.1.2028, ולכן אינן מתעדכנות שנתית. המס בפועל תלוי בסיווג הרוכש, הנכס, התא המשפחתי וזכויות נוספות.'
   group: real-estate
-  source: { label: "רשות המסים — מיסוי מקרקעין, taxes.gov.il", url: "", tier: 0 }
+  source: { label: "רשות המסים — הוראת ביצוע מיסוי מקרקעין 1/2025, 16 בינואר 2025, פרק 2", url: "https://www.gov.il/BlobFolder/policy/inst-01-2025-3/he/realestate_inst-01-2025-3.pdf", tier: 1 }
 
 purchase-tax-additional-8pct-ceiling:
   value: 6055070
   unit: "₪"
   year: 2026
-  label: התקרה שעד אליה חלים 8% בדירה שאינה יחידה
-  note: הוראת שעה עד 31.12.2026. מעל התקרה — 10%.
+  label: התקרה שעד אליה חלים 8% מס רכישה בדירה שאינה יחידה
+  note: 'מצוטט מהמקור: "על חלק השווי שעד 6,055,070 ₪ -8%" ו-"על חלק השווי העולה על 6,055,070 ₪ -10%". סכומים מוקפאים.'
   group: real-estate
-  source: { label: "רשות המסים — מיסוי מקרקעין, taxes.gov.il", url: "", tier: 0 }
+  source: { label: "רשות המסים — הוראת ביצוע מיסוי מקרקעין 1/2025, 16 בינואר 2025, פרק 2", url: "https://www.gov.il/BlobFolder/policy/inst-01-2025-3/he/realestate_inst-01-2025-3.pdf", tier: 1 }
 
 pension-general-salary-ceiling:
   value: 55706
@@ -296,15 +305,6 @@ pension-general-salary-ceiling:
   year: 2026
   label: שכר קובע חודשי מרבי בקרן פנסיה כללית
   note: קרן פנסיה כללית קולטת הפקדות מעל התקרה של המקיפה, וללא הבטחת תשואה.
-  group: pension
-  source: { label: "רשות שוק ההון, ביטוח וחיסכון — gov.il", url: "", tier: 0 }
-
-capital-market-authority-supervised-assets:
-  value: 2700000000000
-  unit: "₪"
-  year: 2026
-  label: היקף הנכסים שבפיקוח רשות שוק ההון, ביטוח וחיסכון
-  note: המקור מציין "למעלה מ-2.7 טריליון ₪".
   group: pension
   source: { label: "רשות שוק ההון, ביטוח וחיסכון — gov.il", url: "", tier: 0 }
 
@@ -326,11 +326,49 @@ reit-law-year:
   group: real-estate
   source: { label: "רשות המסים — taxes.gov.il", url: "", tier: 0 }
 
-emergency-fund-months:
-  value: 6
-  unit: "חודשים"
+purchase-tax-brackets-frozen-until:
+  value: "15.1.2028"
+  unit: "תאריך"
   year: 2026
-  label: הכיסוי שאליו מכוונת שכבת הנזילות והחירום
-  note: המקור נוקב בטווח של שלושה עד שישה חודשי הוצאה.
+  label: המועד שעד אליו מוקפאות מדרגות מס הרכישה לדירה יחידה
+  # Added on Natali's instruction: the freeze changes the annual update
+  # schedule. These brackets do not move with the index until this date.
+  note: 'מצוטט מהמקור: "מדרגות מס הרכישה הרלוונטיות לגביו החל מיום ט״ז בטבת התשפ״ה (16.1.25) ועד ליום כ״ו בטבת התשפ״ו (15.1.2026), ואשר תהיינה רלוונטיות עד ליום ט״ז בטבת התשפ״ח (15.1.2028)".'
+  group: real-estate
+  source: { label: "רשות המסים — הוראת ביצוע מיסוי מקרקעין 1/2025, 16 בינואר 2025, פרק 2", url: "https://www.gov.il/BlobFolder/policy/inst-01-2025-3/he/realestate_inst-01-2025-3.pdf", tier: 1 }
+
+kitzva-mezaka-ceiling:
+  value: 9430
+  unit: "₪"
+  year: 2026
+  label: תקרת "קיצבה מזכה", לחודש
+  note: 'מצוטט מהמקור: "תקרת ״קיצבה מזכה״ 9א(א) — 9,430 — לחודש".'
+  group: tikun-190
+  source: { label: "רשות המסים — לוח עזר לחישוב מס הכנסה ממשכורת ושכר עבודה, ינואר 2026, מעודכן לאפריל 2026, פרק ג טבלה ב", url: "https://www.gov.il/BlobFolder/generalpage/income-tax-monthly-deductions-booklet/he/generalInformation_income-tax-monthly-deductions-booklet_monthly-deductions-booklet-2026.pdf", tier: 1 }
+
+kitzva-exemption-rate:
+  value: 57.5
+  unit: "%"
+  year: 2026
+  label: שיעור הפטור המרבי לקצבה מזכה
+  note: 'מצוטט מהמקור: "תיקון 275 לפקודת מס הכנסה, תוקן סעיף 9א(ז) לפקודה … 2026 — 57.5%". השיעור עולה ל-62.5% ב-2027 ול-67% מ-2028.'
+  group: tikun-190
+  source: { label: "רשות המסים — לוח עזר לחישוב מס הכנסה ממשכורת ושכר עבודה, ינואר 2026, מעודכן לאפריל 2026, פרק ג טבלה ב", url: "https://www.gov.il/BlobFolder/generalpage/income-tax-monthly-deductions-booklet/he/generalInformation_income-tax-monthly-deductions-booklet_monthly-deductions-booklet-2026.pdf", tier: 1 }
+
+tagmulim-min-accrual:
+  value: 110250
+  unit: "₪"
+  year: 2026
+  label: מרכיב התגמולים — סכום צבירה מזערי, למועד המשיכה
+  note: 'מצוטט מהמקור: "מרכיב התגמולים - סכום צבירה מזערי — 110,250 — למועד המשיכה".'
   group: pension
-  source: { label: "מחקר היסוד — עיקרון תכנוני, לא כלל דין", url: "", tier: 0 }
+  source: { label: "רשות המסים — לוח עזר לחישוב מס הכנסה ממשכורת ושכר עבודה, ינואר 2026, מעודכן לאפריל 2026, פרק ג טבלה ב", url: "https://www.gov.il/BlobFolder/generalpage/income-tax-monthly-deductions-booklet/he/generalInformation_income-tax-monthly-deductions-booklet_monthly-deductions-booklet-2026.pdf", tier: 1 }
+
+average-wage:
+  value: 13769
+  unit: "₪"
+  year: 2026
+  label: שכר ממוצע במשק
+  note: 'מצוטט מהמקור: "שכר ממוצע במשק — 13,769". נתון בסיס שממנו נגזרות תקרות אחרות.'
+  group: pension
+  source: { label: "רשות המסים — לוח עזר לחישוב מס הכנסה ממשכורת ושכר עבודה, ינואר 2026, מעודכן לאפריל 2026, פרק ג טבלה ב", url: "https://www.gov.il/BlobFolder/generalpage/income-tax-monthly-deductions-booklet/he/generalInformation_income-tax-monthly-deductions-booklet_monthly-deductions-booklet-2026.pdf", tier: 1 }

@@ -1,0 +1,32 @@
+[
+  {
+    "file": "README.md",
+    "identical": true,
+    "sha256": "0a2c1aad900411c0c9851328b2c2d55c0ca98a6c9001a433789c0d6dccbdbf0b"
+  },
+  {
+    "file": "agents-decision-guide.md",
+    "identical": true,
+    "sha256": "533b86afd7c7ae2bda732ad40393606f1c96d14eeba2c67d8ef7c2ac0ca7b36c"
+  },
+  {
+    "file": "content-approval.md",
+    "identical": true,
+    "sha256": "7ddfc9300e7d4a1696d9520e0c02dee12cd6749831a1ab59a398be77287cc6bd"
+  },
+  {
+    "file": "examples.json",
+    "identical": true,
+    "sha256": "ef0e3a52b4e85e367ca30e553c033cc171b7769b6ef20d9f376986d4d0a33d08"
+  },
+  {
+    "file": "planners-decision-guide.md",
+    "identical": true,
+    "sha256": "0c74c82890f1730cd35a1dfa301796cfd157bb73a43f2e8e476712f2f8f1172e"
+  },
+  {
+    "file": "wealth-decision-guide.md",
+    "identical": true,
+    "sha256": "d742b44970e3d96b3558d7a9b822d7220cc76c75a8a7f78a5e903ce08bf67f3f"
+  }
+]

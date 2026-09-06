@@ -1,0 +1,164 @@
+[
+  {
+    "batch": 2,
+    "file": "README.md",
+    "identical": true,
+    "sha256": "fb895d2c03eef0f29aba55510e21d8031cc1db1b9748d0a5a6baa1b8a0c23276"
+  },
+  {
+    "batch": 2,
+    "file": "agents-meeting-kit.md",
+    "identical": true,
+    "sha256": "a3527f8602c63c81cddbe176407f87648a6048239e6e115f82bd0d965270237c"
+  },
+  {
+    "batch": 2,
+    "file": "content-approval.md",
+    "identical": true,
+    "sha256": "9689db1f9b0201acbc97f757480e4b28f9263cb54a8bf583c697ee6088703fed"
+  },
+  {
+    "batch": 2,
+    "file": "examples.json",
+    "identical": true,
+    "sha256": "181c399c3662b904ec74c5146163135dba1032ebb9e8d2b367345835eaab750c"
+  },
+  {
+    "batch": 2,
+    "file": "planners-meeting-kit.md",
+    "identical": true,
+    "sha256": "db5f64d580dffa6e54d322f3ad09744848e933900b02cd0a7eb7103fa367c3dd"
+  },
+  {
+    "batch": 2,
+    "file": "wealth-meeting-kit.md",
+    "identical": true,
+    "sha256": "5e3a3419e4d146096d634ed76bbbc851e2c226764627b1bf691715dbfd803459"
+  },
+  {
+    "batch": 3,
+    "file": "README.md",
+    "identical": true,
+    "sha256": "f684ad99ae6310d2e8fab249c86d2bac3e986aaa5d0ea52a78698d43a0cf8fe3"
+  },
+  {
+    "batch": 3,
+    "file": "agents-case.md",
+    "identical": true,
+    "sha256": "61e1bb868685e9e8b856195b0e91fe368a62be097ab25dfa2b09e4803602d3e3"
+  },
+  {
+    "batch": 3,
+    "file": "content-approval.md",
+    "identical": true,
+    "sha256": "f85f2b41a1aa063a46287e997524e4133bb7142ae305994031de7e296512e91d"
+  },
+  {
+    "batch": 3,
+    "file": "examples.json",
+    "identical": true,
+    "sha256": "e4891ea43bd53aa9f11c5e898408ccc9153deb49c381e974b74d5bd65f040ddf"
+  },
+  {
+    "batch": 3,
+    "file": "planners-case.md",
+    "identical": true,
+    "sha256": "30edd79cde171b41cd8cb6bd6c511932cebe910def3be5265dadea3292b2583a"
+  },
+  {
+    "batch": 3,
+    "file": "wealth-case.md",
+    "identical": true,
+    "sha256": "4248c6acc57779b0ea2e974445fafd2f810e46312f26e7b9aa8c2fb6ee0ec18e"
+  },
+  {
+    "batch": 4,
+    "file": "README.md",
+    "identical": true,
+    "sha256": "7e39e8859e86865f6ace74fb9650b10120e08403942e89e457f6f390f7c9ab0d"
+  },
+  {
+    "batch": 4,
+    "file": "content-approval.md",
+    "identical": true,
+    "sha256": "324555dc1824b65bdb9403fd5497f202bf9dcef3b2ae1f8bc627b9ae0b3d424f"
+  },
+  {
+    "batch": 4,
+    "file": "examples.json",
+    "identical": true,
+    "sha256": "b5fd98d3e512a2bac5cdfece256f629ea1045b06a609ece5152bb165d968b1ee"
+  },
+  {
+    "batch": 4,
+    "file": "liquidity-content.md",
+    "identical": true,
+    "sha256": "d3981ee392d160894e8510262080e8bd9ebe7f20ac3150ddb78ac8cec806eb77"
+  },
+  {
+    "batch": 4,
+    "file": "liquidity-spec.md",
+    "identical": true,
+    "sha256": "4e216deb6c142a7f5ea5a7918052b2a99f3924800e71427d9eda3f1af00c5f06"
+  },
+  {
+    "batch": 4,
+    "file": "pause-content.md",
+    "identical": true,
+    "sha256": "ebd2bff3e96e9372581e92acce62abc415634eda5115e59d9bcd463423ecf3d8"
+  },
+  {
+    "batch": 4,
+    "file": "pause-spec.md",
+    "identical": true,
+    "sha256": "7059f2ee3ffc3e32c8d747826eec795d5463b828d76543f24e32c12be6b30825"
+  },
+  {
+    "batch": 4,
+    "file": "target-content.md",
+    "identical": true,
+    "sha256": "57c9ce7f40362e91696c2c3ef6d61edbcda2ef386dbabda2dcc38cef11872715"
+  },
+  {
+    "batch": 4,
+    "file": "target-spec.md",
+    "identical": true,
+    "sha256": "d9a28ae00c08cf2f8bbff36f0acaea62a8d258f35dd98987164dc07280f7e8b1"
+  },
+  {
+    "batch": 5,
+    "file": "README.md",
+    "identical": true,
+    "sha256": "0a2c1aad900411c0c9851328b2c2d55c0ca98a6c9001a433789c0d6dccbdbf0b"
+  },
+  {
+    "batch": 5,
+    "file": "agents-decision-guide.md",
+    "identical": true,
+    "sha256": "533b86afd7c7ae2bda732ad40393606f1c96d14eeba2c67d8ef7c2ac0ca7b36c"
+  },
+  {
+    "batch": 5,
+    "file": "content-approval.md",
+    "identical": true,
+    "sha256": "7ddfc9300e7d4a1696d9520e0c02dee12cd6749831a1ab59a398be77287cc6bd"
+  },
+  {
+    "batch": 5,
+    "file": "examples.json",
+    "identical": true,
+    "sha256": "ef0e3a52b4e85e367ca30e553c033cc171b7769b6ef20d9f376986d4d0a33d08"
+  },
+  {
+    "batch": 5,
+    "file": "planners-decision-guide.md",
+    "identical": true,
+    "sha256": "0c74c82890f1730cd35a1dfa301796cfd157bb73a43f2e8e476712f2f8f1172e"
+  },
+  {
+    "batch": 5,
+    "file": "wealth-decision-guide.md",
+    "identical": true,
+    "sha256": "d742b44970e3d96b3558d7a9b822d7220cc76c75a8a7f78a5e903ce08bf67f3f"
+  }
+]

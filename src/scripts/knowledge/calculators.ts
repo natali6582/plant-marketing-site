@@ -15,19 +15,22 @@ function renderChart(svg: SVGSVGElement, result: ToolResult) {
   const max = Math.max(1, ...all);
   const min = Math.min(0, ...all);
   const span = max - min;
-  const months = Math.max(1, ...result.curves.map(c => c.values.length - 1));
+  const horizon = Math.max(0, ...result.curves.map(c => c.values.length - 1));
+  const months = Math.max(1, horizon);
   const colors = ['#1f3f8f', '#1c70b2', '#565f8b'];
   for (let i = 0; i <= 4; i++) {
     const y = 18 + i * 50;
     add('line', { x1: '72', x2: '548', y1: String(y), y2: String(y), stroke: '#dce8f7' });
     add('text', { x: '65', y: String(y + 4), 'text-anchor': 'end', direction: 'ltr' }, formatNumber(max - span * i / 4, 0));
   }
-  for (let i = 0; i <= 4; i++) add('text', { x: String(72 + i * 119), y: '243', 'text-anchor': 'middle', direction: 'ltr' }, formatNumber(months * i / 4, 0));
+  const ticks = Math.min(4, horizon);
+  for (let i = 0; i <= ticks; i++) add('text', { x: String(72 + i / Math.max(1, ticks) * 476), y: '243', 'text-anchor': 'middle', direction: 'ltr' }, formatNumber(horizon * i / Math.max(1, ticks), 0));
   add('text', { x: '310', y: '266', 'text-anchor': 'middle', direction: 'rtl' }, 'חודשים');
   add('text', { x: '24', y: '10', 'text-anchor': 'middle', direction: 'rtl' }, '₪');
   result.curves.forEach((curve, index) => {
     const points = curve.values.map((v, m) => `${72 + m / months * 476},${18 + (max - v) / span * 200}`).join(' ');
     add('polyline', { points, fill: 'none', stroke: colors[index % colors.length], 'stroke-width': '2.5', ...(index === 1 ? { 'stroke-dasharray': '6 4' } : {}) });
+    if (horizon === 0) add('circle', { cx: '72', cy: String(18 + (max - curve.values[0]) / span * 200), r: '3.5', fill: colors[index % colors.length] });
   });
   return colors;
 }

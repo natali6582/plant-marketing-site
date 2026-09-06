@@ -1,0 +1,65 @@
+[
+  {
+    "track": "agents",
+    "desktop": {
+      "fiction": "מקרה בדיוני להמחשה",
+      "links": [
+        "/knowledge/agents/fees/?balance=300000&deposit=2000&years=30&return=4&depositFeeA=1&feeA=0.6&depositFeeB=0&feeB=0.4",
+        "/knowledge/agents/fees/?balance=300000&deposit=2000&years=30&return=0&depositFeeA=1&feeA=0.6&depositFeeB=0&feeB=0.4",
+        "/knowledge/agents/fees/?balance=300000&deposit=2000&years=30&return=-2&depositFeeA=1&feeA=0.6&depositFeeB=0&feeB=0.4",
+        "/knowledge/agents/fees/?balance=300000&deposit=2000&years=30&return=4&depositFeeA=1&feeA=0.6&depositFeeB=0&feeB=0.4",
+        "/knowledge/agents/fees/?balance=300000&deposit=2000&years=30&return=0&depositFeeA=1&feeA=0.6&depositFeeB=0&feeB=0.4",
+        "/knowledge/agents/fees/?balance=300000&deposit=2000&years=30&return=-2&depositFeeA=1&feeA=0.6&depositFeeB=0&feeB=0.4"
+      ],
+      "scrollWidth": 1425,
+      "tables": 3,
+      "width": 1425
+    },
+    "mobile": {
+      "scrollWidth": 375,
+      "width": 375
+    }
+  },
+  {
+    "track": "planners",
+    "desktop": {
+      "fiction": "מקרה בדיוני להמחשה",
+      "links": [
+        "/knowledge/planners/withdrawals/?balance=240000&withdrawal=20000&years=3&return=2&inflation=2&fee=0.4&indexed=1&timing=start",
+        "/knowledge/planners/withdrawals/?balance=240000&withdrawal=24000&years=3&return=2&inflation=2&fee=0.4&indexed=1&timing=start",
+        "/knowledge/planners/withdrawals/?balance=240000&withdrawal=20000&years=3&return=0&inflation=2&fee=0.4&indexed=0&timing=start",
+        "/knowledge/planners/withdrawals/?balance=240000&withdrawal=20000&years=3&return=2&inflation=2&fee=0.4&indexed=1&timing=start",
+        "/knowledge/planners/withdrawals/?balance=240000&withdrawal=24000&years=3&return=2&inflation=2&fee=0.4&indexed=1&timing=start",
+        "/knowledge/planners/withdrawals/?balance=240000&withdrawal=20000&years=3&return=0&inflation=2&fee=0.4&indexed=0&timing=start"
+      ],
+      "scrollWidth": 1425,
+      "tables": 3,
+      "width": 1425
+    },
+    "mobile": {
+      "scrollWidth": 375,
+      "width": 375
+    }
+  },
+  {
+    "track": "wealth",
+    "desktop": {
+      "fiction": "מקרה בדיוני להמחשה",
+      "links": [
+        "/knowledge/planners/withdrawals/?balance=120000&withdrawal=40000&years=1&return=0&inflation=0&fee=0&indexed=0&timing=start",
+        "/knowledge/planners/withdrawals/?balance=120000&withdrawal=30000&years=1&return=0&inflation=0&fee=0&indexed=0&timing=start",
+        "/knowledge/wealth/real-return/?balance=750000&deposit=0&years=0.5&return=0&inflation=0&fee=0",
+        "/knowledge/planners/withdrawals/?balance=120000&withdrawal=40000&years=1&return=0&inflation=0&fee=0&indexed=0&timing=start",
+        "/knowledge/planners/withdrawals/?balance=120000&withdrawal=30000&years=1&return=0&inflation=0&fee=0&indexed=0&timing=start",
+        "/knowledge/wealth/real-return/?balance=750000&deposit=0&years=0.5&return=0&inflation=0&fee=0"
+      ],
+      "scrollWidth": 1425,
+      "tables": 3,
+      "width": 1425
+    },
+    "mobile": {
+      "scrollWidth": 375,
+      "width": 375
+    }
+  }
+]

@@ -1,0 +1,16 @@
+PASS 200 https://bituachnet.cma.gov.il/
+PASS 200 https://gemelnet.cma.gov.il/
+PASS 200 https://pensuni.com/?p=34700
+PASS 200 https://pensuni.com/?p=7139
+PASS 200 https://pensuni.com/?page_id=53
+PASS 200 https://pensyanet.cma.gov.il/
+PASS 200 https://www.btl.gov.il/Simulators/Pages/default.aspx
+PASS 200 https://www.gov.il/he/pages/sign-in-insured?chapterindex=3
+PASS 200 https://www.gov.il/he/service/itc-request-for-fixed-rights-at-retirement-age
+PASS 200 https://www.gov.il/he/service/management_fee_calculator
+PASS 200 https://www.gov.il/he/service/pension_savings_search
+PASS 200 https://www.gov.il/he/service/simulator-employee
+PASS 200 https://www.swiftness.co.il/
+13/13 external URLs verified by HTTP. WAF blocks/timeouts are not counted as passes.
+(node:20992) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)

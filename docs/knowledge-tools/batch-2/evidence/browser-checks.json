@@ -1,0 +1,56 @@
+[
+  {
+    "track": "agents",
+    "initial": {
+      "blank": true,
+      "scrollWidth": 1425,
+      "title": "מה השתנה מאז הסקירה הקודמת — ומה צריך לבדוק בתיק?",
+      "width": 1425
+    },
+    "filled": {
+      "filled": true,
+      "printMatches": true
+    },
+    "mobile": {
+      "reset": true,
+      "scrollWidth": 375,
+      "width": 375
+    }
+  },
+  {
+    "track": "planners",
+    "initial": {
+      "blank": true,
+      "scrollWidth": 1425,
+      "title": "איזו תמונה צריך לבנות לפני שמתחילים לתכנן?",
+      "width": 1425
+    },
+    "filled": {
+      "filled": true,
+      "printMatches": true
+    },
+    "mobile": {
+      "reset": true,
+      "scrollWidth": 375,
+      "width": 375
+    }
+  },
+  {
+    "track": "wealth",
+    "initial": {
+      "blank": true,
+      "scrollWidth": 1425,
+      "title": "מי מחזיק במה — ומתי הכסף יכול להיות זמין?",
+      "width": 1425
+    },
+    "filled": {
+      "filled": true,
+      "printMatches": true
+    },
+    "mobile": {
+      "reset": true,
+      "scrollWidth": 375,
+      "width": 375
+    }
+  }
+]

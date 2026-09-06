@@ -32,7 +32,7 @@ function renderChart(svg: SVGSVGElement, result: ToolResult) {
   return colors;
 }
 
-function render(root: HTMLElement, result: ToolResult) {
+export function render(root: HTMLElement, result: ToolResult) {
   const dl = document.createElement('dl'); dl.className = 'kw-metrics';
   for (const m of result.metrics) {
     const group = document.createElement('div'); group.className = 'kw-metric';

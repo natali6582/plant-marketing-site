@@ -1,0 +1,15 @@
+---
+import KnowledgeWorkLayout from '../../layouts/KnowledgeWorkLayout.astro';
+import { formatNumber } from '../../lib/knowledge-calculators';
+import { cases } from '../../data/knowledge-batches/batch-3';
+const { item } = Astro.props as { item: typeof cases[number] };
+---
+<KnowledgeWorkLayout title={item.title} question={item.title} description={item.explanation} track={item.track} fiction>
+  <section><h2>{item.question}</h2><h3>מצב התחלתי</h3><p>{item.initial}</p></section>
+  <section class="kw-section"><h2>מידע חסר</h2><ul>{item.missing.map(t=><li>{t}</li>)}</ul></section>
+  <section class="kw-section"><h2>חלופות — פתיחה במחשבון</h2><p>כל קישור פותח את המחשבון המקורי עם נתוני החלופה. ההנחות גלויות בו וניתנות לשינוי. החישוב מניח תשואה ואינפלציה קבועות, ללא מס או פרמטרי חוק.</p><ol>{item.scenarios.map(s=><li><a href={s.url}>{s.title}</a></li>)}</ol></section>
+  <section class="kw-section"><h2>דוגמה פתורה — תוצאות החלופות</h2>{item.scenarios.map(s=><article class="kw-example"><h3>{s.title}</h3><details><summary>כל נתוני הקלט של החלופה</summary><ul>{s.inputs.map(i=><li>{i.label}: <bdi>{i.value}</bdi></li>)}</ul></details><div class="kw-table-wrap"><table class="kw-table"><caption>תוצאות שחושבו במנוע המשותף</caption><tbody>{s.result.metrics.map(m=><tr><th scope="row">{m.label}</th><td>{typeof m.value==='number' ? <bdi class="kw-number" dir="ltr">{formatNumber(m.value)} {m.unit}</bdi> : m.value}</td></tr>)}</tbody></table></div><p>{s.interpretation}</p><a href={s.url}>פתיחת החלופה במחשבון</a></article>)}</section>
+  <section class="kw-section"><h2>רגישות להנחות</h2><p>{item.sensitivity}</p></section>
+  <section class="kw-section"><h2>שאלות לפגישה</h2><ul>{item.questions.map(t=><li>{t}</li>)}</ul></section>
+  <section class="kw-section"><h2>גבולות המקרה</h2><p>{item.limits}</p></section>
+</KnowledgeWorkLayout>

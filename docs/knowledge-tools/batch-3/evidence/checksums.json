@@ -1,0 +1,32 @@
+[
+  {
+    "file": "README.md",
+    "identical": true,
+    "sha256": "f684ad99ae6310d2e8fab249c86d2bac3e986aaa5d0ea52a78698d43a0cf8fe3"
+  },
+  {
+    "file": "agents-case.md",
+    "identical": true,
+    "sha256": "61e1bb868685e9e8b856195b0e91fe368a62be097ab25dfa2b09e4803602d3e3"
+  },
+  {
+    "file": "content-approval.md",
+    "identical": true,
+    "sha256": "f85f2b41a1aa063a46287e997524e4133bb7142ae305994031de7e296512e91d"
+  },
+  {
+    "file": "examples.json",
+    "identical": true,
+    "sha256": "e4891ea43bd53aa9f11c5e898408ccc9153deb49c381e974b74d5bd65f040ddf"
+  },
+  {
+    "file": "planners-case.md",
+    "identical": true,
+    "sha256": "30edd79cde171b41cd8cb6bd6c511932cebe910def3be5265dadea3292b2583a"
+  },
+  {
+    "file": "wealth-case.md",
+    "identical": true,
+    "sha256": "4248c6acc57779b0ea2e974445fafd2f810e46312f26e7b9aa8c2fb6ee0ec18e"
+  }
+]

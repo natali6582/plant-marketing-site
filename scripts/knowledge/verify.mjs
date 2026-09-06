@@ -22,8 +22,10 @@ function main() {
   run('build', ['scripts/knowledge/build.mjs']);
   run('pages-and-internal-links', ['scripts/knowledge/check.mjs']);
   run('external-links', ['--experimental-strip-types', 'scripts/knowledge/links.mjs']);
-  run('export-1', ['--experimental-strip-types', 'scripts/knowledge/evidence.mjs', '--out', join(out, 'run-1')]);
-  run('export-2', ['--experimental-strip-types', 'scripts/knowledge/evidence.mjs', '--out', join(out, 'run-2')]);
+  const batchIndex = process.argv.indexOf('--batch');
+  const exportArgs = batchIndex < 0 ? ['scripts/knowledge/evidence.mjs'] : ['scripts/knowledge/export-batch.mjs', '--batch', process.argv[batchIndex + 1]];
+  run('export-1', ['--experimental-strip-types', ...exportArgs, '--out', join(out, 'run-1')]);
+  run('export-2', ['--experimental-strip-types', ...exportArgs, '--out', join(out, 'run-2')]);
   const checksums = readdirSync(join(out, 'run-1')).sort().map(file => {
     const a = readFileSync(join(out, 'run-1', file)); const b = readFileSync(join(out, 'run-2', file));
     return { file, identical: a.equals(b), sha256: createHash('sha256').update(a).digest('hex') };

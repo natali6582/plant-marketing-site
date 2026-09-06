@@ -5,6 +5,7 @@ import DuotoneIcon from '../DuotoneIcon.astro';
 import LayersDiagram from './LayersDiagram.astro';
 import RegulatorsDiagram from './RegulatorsDiagram.astro';
 import Disclaimer from './Disclaimer.astro';
+import LearningPaths from './LearningPaths.astro';
 import { BIG_IDEAS, KNOWLEDGE_DRAFTS, TRACKS } from '../../data/knowledge';
 import { figuresPath } from './figures';
 import { getCollection } from 'astro:content';
@@ -74,6 +75,8 @@ const perTrack = (slug: string) =>
       </ul>
     </div>
   </section>
+
+  <LearningPaths />
 
   <!-- The three framings, which are the section's thesis. -->
   <section class="band bg-white" aria-labelledby="ideas-title">

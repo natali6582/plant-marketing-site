@@ -13,10 +13,7 @@ import { KNOWLEDGE_DRAFTS, KNOWLEDGE_ENABLED, SERIES } from '../../../data/knowl
   page and the "חלק X מתוך Y" line the articles print for themselves cannot
   disagree — both count the same sorted list.
 
-  Only one series ships in this PR. The brief named three; the research
-  document supports a pension reading order and does not yet carry enough on
-  retirement tax or intergenerational transfer to order four to six articles,
-  so those two are listed in the PR backlog rather than shipped as empty pages.
+  Each series is emitted only when at least one of its articles is visible.
 */
 
 export async function getStaticPaths() {
@@ -37,7 +34,7 @@ const articles = all
   .sort((a, b) => (a.data.seriesOrder ?? 0) - (b.data.seriesOrder ?? 0));
 
 /* Keep demo series out of search indexes without displaying editorial state. */
-const anyDraft = KNOWLEDGE_DRAFTS && articles.some((a) => a.data.draft);
+const anyDraft = KNOWLEDGE_DRAFTS || articles.some((a) => a.data.draft);
 ---
 
 <BaseLayout title={`${series.title} | Plan-T`} description={series.lead} noindex={anyDraft}>
@@ -63,6 +60,11 @@ const anyDraft = KNOWLEDGE_DRAFTS && articles.some((a) => a.data.draft);
           ))
         }
       </ol>
+      {series.audience && <nav class="mt-8 space-y-3" aria-label="המשך לימוד ותרגול">
+        <p><a class="text-brand-600 underline" href="/knowledge/total-investment-costs/">מפת העלות הכוללת — קריאת השלמה</a></p>
+        <p><a class="text-brand-600 underline" href={`/knowledge/${series.audience}/#meeting-tools`}>לכלים ולערכות הפגישה במסלול</a></p>
+        <p><a class="text-brand-600 underline" href="/knowledge/">חזרה למרכז הידע</a></p>
+      </nav>}
       <Disclaimer />
     </div>
   </section>

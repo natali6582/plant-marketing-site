@@ -6,10 +6,10 @@ import { pathToFileURL } from 'node:url';
 function walk(path) { return readdirSync(path).flatMap(name => { const p = join(path, name); return statSync(p).isDirectory() ? walk(p) : [p]; }); }
 function collectLinks() {
 const links = new Set(DIRECTORY.map(t => t.url));
-// Every external source used on a new knowledge-work page joins the same network check.
+// Include sources on knowledge-work pages and maintained investment guides.
 if (existsSync('dist/knowledge')) for (const file of walk('dist/knowledge').filter(p => p.endsWith('.html'))) {
   const html = readFileSync(file, 'utf8');
-  if (!html.includes('class="knowledge-work"')) continue;
+  if (!html.includes('class="knowledge-work"') && !html.includes('data-article-maintenance')) continue;
   const body = html.split('<main id="main">')[1]?.split('</main>')[0] ?? '';
   for (const [, url] of body.matchAll(/href="(https:\/\/[^"#]+)(?:#[^"]*)?"/g)) links.add(url.replaceAll('&amp;', '&'));
 }

@@ -1,0 +1,22 @@
+---
+import KnowledgeWorkLayout from '../../layouts/KnowledgeWorkLayout.astro';
+import Calculator from './Calculator.astro';
+import { TOOL_CONTENT, workedExample } from '../../data/knowledge-tools';
+import { formatNumber } from '../../lib/knowledge-calculators';
+import type { ToolKind } from '../../lib/knowledge-calculators';
+const { kind } = Astro.props as { kind: ToolKind };
+const content = TOOL_CONTENT[kind];
+const example = workedExample(kind);
+---
+<KnowledgeWorkLayout title={content.title} question={content.question} description={content.explanation} track={content.track}>
+  <Calculator kind={kind} />
+  <section class="kw-example" aria-labelledby="worked-example">
+    <h2 id="worked-example">דוגמה פתורה</h2>
+    <p>{content.example}</p>
+    <div class="kw-table-wrap"><table class="kw-table"><caption>תוצאות הדוגמה — חושבו באותו מנוע</caption><tbody>{example.result.metrics.map(m => <tr><th scope="row">{m.label}</th><td>{typeof m.value === 'number' ? <bdi dir="ltr" class="kw-number">{formatNumber(m.value)}{m.unit ? ` ${m.unit}` : ''}</bdi> : m.value}</td></tr>)}</tbody></table></div>
+    <p><a href={example.url}>פתיחת המחשבון עם נתוני הדוגמה</a></p>
+  </section>
+  <section class="kw-section"><h2>איך משתמשים בתוצאה בפגישת לקוח</h2><ol>{content.guide.map(t => <li>{t}</li>)}</ol></section>
+  <section class="kw-section"><h2>רשימת בדיקה לפגישה</h2><div class="kw-columns"><div><h3>מה להכין</h3><ul>{content.prepare.map(t => <li>{t}</li>)}</ul></div><div><h3>מה לשאול</h3><ul>{content.ask.map(t => <li>{t}</li>)}</ul></div></div></section>
+  <section class="kw-section"><h2>גבולות התוצאה</h2><p>{content.limits}</p></section>
+</KnowledgeWorkLayout>

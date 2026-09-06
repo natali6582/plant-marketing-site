@@ -1,0 +1,718 @@
+<!doctype html><html lang="he" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>דוגמת הדפסה — fees</title><style>
+@layer properties;
+@layer theme, base, components, utilities;
+@layer theme {
+  :root, :host { --font-sans: "Heebo", "Arial Hebrew", "Segoe UI", system-ui, sans-serif; --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+      "Courier New", monospace; --color-red-50: oklch(97.1% 0.013 17.38); --color-red-800: oklch(44.4% 0.177 26.899); --color-white: #fff; --spacing: 0.25rem; --container-xs: 20rem; --container-xl: 36rem; --container-2xl: 42rem; --container-3xl: 48rem; --container-4xl: 56rem; --container-5xl: 64rem; --container-6xl: 72rem; --text-xs: 0.75rem; --text-xs--line-height: calc(1 / 0.75); --text-sm: 0.875rem; --text-sm--line-height: calc(1.25 / 0.875); --text-lg: 1.125rem; --text-lg--line-height: calc(1.75 / 1.125); --text-xl: 1.25rem; --text-xl--line-height: calc(1.75 / 1.25); --text-2xl: 1.5rem; --text-2xl--line-height: calc(2 / 1.5); --text-3xl: 1.875rem; --text-3xl--line-height: calc(2.25 / 1.875); --text-4xl: 2.25rem; --text-4xl--line-height: calc(2.5 / 2.25); --text-5xl: 3rem; --text-5xl--line-height: 1; --text-6xl: 3.75rem; --text-6xl--line-height: 1; --font-weight-normal: 400; --font-weight-medium: 500; --font-weight-bold: 700; --font-weight-black: 900; --tracking-wide: 0.025em; --tracking-widest: 0.1em; --leading-tight: 1.25; --leading-relaxed: 1.625; --radius-lg: 0.5rem; --radius-xl: 0.75rem; --radius-2xl: 1rem; --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1); --default-transition-duration: 150ms; --default-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); --default-font-family: var(--font-sans); --default-mono-font-family: var(--font-mono); --color-ink-200: #ccd0e2; --color-ink-400: #777fa8; --color-ink-500: #565f8b; --color-ink-600: #414872; --color-ink-700: #31365a; --color-ink-900: #101228; --color-ink-950: #080918; --color-brand-50: #eef4fb; --color-brand-100: #dce8f7; --color-brand-200: #b9d3ee; --color-brand-300: #98c8e8; --color-brand-400: #5faee0; --color-brand-500: #3898d8; --color-brand-600: #1c70b2; --color-brand-700: #2850a0; --color-brand-800: #1f3f8f; --color-brand-900: #17306e; --color-brand-950: #0f2050; --color-icon-navy: #18395c; --color-accent-300: #b2db75; --color-accent-400: #9bcf4e; --color-accent-500: #8dc63f; --color-warn-100: #fdf1d4; --color-warn-500: #c07f0c; --color-surface: #f8f8f8; --color-surface-blue: #e8f0f8; }
+}
+@layer base {
+  *, ::after, ::before, ::backdrop, ::file-selector-button { box-sizing: border-box; margin: 0px; padding: 0px; border: 0px solid; }
+  html, :host { line-height: 1.5; text-size-adjust: 100%; tab-size: 4; font-family: var(--default-font-family, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"); font-feature-settings: var(--default-font-feature-settings, normal); font-variation-settings: var(--default-font-variation-settings, normal); -webkit-tap-highlight-color: transparent; }
+  hr { height: 0px; color: inherit; border-top-width: 1px; }
+  abbr:where([title]) { text-decoration: underline dotted; }
+  h1, h2, h3, h4, h5, h6 { font-size: inherit; font-weight: inherit; }
+  a { color: inherit; text-decoration: inherit; }
+  b, strong { font-weight: bolder; }
+  code, kbd, samp, pre { font-family: var(--default-mono-font-family, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace); font-feature-settings: var(--default-mono-font-feature-settings, normal); font-variation-settings: var(--default-mono-font-variation-settings, normal); font-size: 1em; }
+  small { font-size: 80%; }
+  sub, sup { font-size: 75%; line-height: 0; position: relative; vertical-align: baseline; }
+  sub { bottom: -0.25em; }
+  sup { top: -0.5em; }
+  table { text-indent: 0px; border-color: inherit; border-collapse: collapse; }
+  progress { vertical-align: baseline; }
+  summary { display: list-item; }
+  ol, ul, menu { list-style: none; }
+  img, svg, video, canvas, audio, iframe, embed, object { display: block; vertical-align: middle; }
+  img, video { max-width: 100%; height: auto; }
+  button, input, select, optgroup, textarea, ::file-selector-button { font: inherit; letter-spacing: inherit; color: inherit; border-radius: 0px; background-color: transparent; opacity: 1; }
+  :where(select:is([multiple], [size])) optgroup { font-weight: bolder; }
+  :where(select:is([multiple], [size])) optgroup option { padding-inline-start: 20px; }
+  ::file-selector-button { margin-inline-end: 4px; }
+  ::placeholder { opacity: 1; }
+  @supports (not (-webkit-appearance: -apple-pay-button)) or (contain-intrinsic-size: 1px) {
+  ::placeholder {
+  color: currentcolor;
+  @supports (color: color-mix(in lab, red, red)) {
+  color: color-mix(currentcolor, transparent);
+}
+}
+}
+  textarea { resize: vertical; }
+  ::-webkit-search-decoration { appearance: none; }
+  ::-webkit-date-and-time-value { min-height: 1lh; text-align: inherit; }
+  ::-webkit-datetime-edit { display: inline-flex; }
+  ::-webkit-datetime-edit-fields-wrapper { padding: 0px; }
+  ::-webkit-datetime-edit, ::-webkit-datetime-edit-year-field, ::-webkit-datetime-edit-month-field, ::-webkit-datetime-edit-day-field, ::-webkit-datetime-edit-hour-field, ::-webkit-datetime-edit-minute-field, ::-webkit-datetime-edit-second-field, ::-webkit-datetime-edit-millisecond-field, ::-webkit-datetime-edit-meridiem-field { padding-block: 0px; }
+  ::-webkit-calendar-picker-indicator { line-height: 1; }
+  button, input:where([type="button"], [type="reset"], [type="submit"]), ::file-selector-button { appearance: button; }
+  ::-webkit-inner-spin-button, ::-webkit-outer-spin-button { height: auto; }
+  [hidden]:where(:not([hidden="until-found"])) { display: none !important; }
+}
+@layer utilities {
+  .collapse { visibility: collapse; }
+  .invisible { visibility: hidden; }
+  .visible { visibility: visible; }
+  .sr-only { position: absolute; width: 1px; height: 1px; padding: 0px; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border-width: 0px; }
+  .absolute { position: absolute; }
+  .fixed { position: fixed; }
+  .relative { position: relative; }
+  .static { position: static; }
+  .sticky { position: sticky; }
+  .inset-0 { inset: 0px; }
+  .start-auto { inset-inline-start: auto; }
+  .end-0 { inset-inline-end: calc(var(--spacing) * 0); }
+  .top-0 { top: 0px; }
+  .top-1 { top: var(--spacing); }
+  .isolate { isolation: isolate; }
+  .-z-10 { z-index: calc(-10); }
+  .z-10 { z-index: 10; }
+  .z-50 { z-index: 50; }
+  .container {
+  width: 100%;
+  @media (width >= 40rem) {
+  max-width: 40rem;
+}
+  @media (width >= 48rem) {
+  max-width: 48rem;
+}
+  @media (width >= 64rem) {
+  max-width: 64rem;
+}
+  @media (width >= 80rem) {
+  max-width: 80rem;
+}
+  @media (width >= 96rem) {
+  max-width: 96rem;
+}
+}
+  .mx-4 { margin-inline: calc(var(--spacing) * 4); }
+  .mx-auto { margin-inline: auto; }
+  .my-8 { margin-block: calc(var(--spacing) * 8); }
+  .ms-1 { margin-inline-start: var(--spacing); }
+  .mt-1 { margin-top: var(--spacing); }
+  .mt-2 { margin-top: calc(var(--spacing) * 2); }
+  .mt-3 { margin-top: calc(var(--spacing) * 3); }
+  .mt-4 { margin-top: calc(var(--spacing) * 4); }
+  .mt-5 { margin-top: calc(var(--spacing) * 5); }
+  .mt-6 { margin-top: calc(var(--spacing) * 6); }
+  .mt-8 { margin-top: calc(var(--spacing) * 8); }
+  .mt-10 { margin-top: calc(var(--spacing) * 10); }
+  .mt-12 { margin-top: calc(var(--spacing) * 12); }
+  .mt-14 { margin-top: calc(var(--spacing) * 14); }
+  .mb-1 { margin-bottom: var(--spacing); }
+  .mb-3 { margin-bottom: calc(var(--spacing) * 3); }
+  .block { display: block; }
+  .contents { display: contents; }
+  .flex { display: flex; }
+  .grid { display: grid; }
+  .hidden { display: none; }
+  .inline { display: inline; }
+  .inline-block { display: inline-block; }
+  .inline-flex { display: inline-flex; }
+  .table { display: table; }
+  .h-3 { height: calc(var(--spacing) * 3); }
+  .h-4 { height: calc(var(--spacing) * 4); }
+  .h-6 { height: calc(var(--spacing) * 6); }
+  .h-10 { height: calc(var(--spacing) * 10); }
+  .h-full { height: 100%; }
+  .max-h-\[70px\] { max-height: 70px; }
+  .min-h-screen { min-height: 100vh; }
+  .w-3 { width: calc(var(--spacing) * 3); }
+  .w-4 { width: calc(var(--spacing) * 4); }
+  .w-6 { width: calc(var(--spacing) * 6); }
+  .w-40 { width: calc(var(--spacing) * 40); }
+  .w-56 { width: calc(var(--spacing) * 56); }
+  .w-64 { width: calc(var(--spacing) * 64); }
+  .w-auto { width: auto; }
+  .w-full { width: 100%; }
+  .max-w-2xl { max-width: var(--container-2xl); }
+  .max-w-3xl { max-width: var(--container-3xl); }
+  .max-w-4xl { max-width: var(--container-4xl); }
+  .max-w-5xl { max-width: var(--container-5xl); }
+  .max-w-6xl { max-width: var(--container-6xl); }
+  .max-w-xl { max-width: var(--container-xl); }
+  .max-w-xs { max-width: var(--container-xs); }
+  .min-w-0 { min-width: 0px; }
+  .flex-1 { flex: 1 1 0%; }
+  .flex-shrink { flex-shrink: 1; }
+  .shrink-0 { flex-shrink: 0; }
+  .border-collapse { border-collapse: collapse; }
+  .transform { transform: var(--tw-rotate-x,) var(--tw-rotate-y,) var(--tw-rotate-z,) var(--tw-skew-x,) var(--tw-skew-y,); }
+  .cursor-pointer { cursor: pointer; }
+  .cursor-zoom-in { cursor: zoom-in; }
+  .resize { resize: both; }
+  .scroll-mt-24 { scroll-margin-top: calc(var(--spacing) * 24); }
+  .list-inside { list-style-position: inside; }
+  .list-disc { list-style-type: disc; }
+  .list-none { list-style-type: none; }
+  .grid-cols-2 { grid-template-columns: repeat(2, minmax(0px, 1fr)); }
+  .flex-col { flex-direction: column; }
+  .flex-wrap { flex-wrap: wrap; }
+  .items-baseline { align-items: baseline; }
+  .items-center { align-items: center; }
+  .items-start { align-items: flex-start; }
+  .justify-between { justify-content: space-between; }
+  .justify-center { justify-content: center; }
+  .gap-1 { gap: var(--spacing); }
+  .gap-2 { gap: calc(var(--spacing) * 2); }
+  .gap-3 { gap: calc(var(--spacing) * 3); }
+  .gap-4 { gap: calc(var(--spacing) * 4); }
+  .gap-5 { gap: calc(var(--spacing) * 5); }
+  .gap-6 { gap: calc(var(--spacing) * 6); }
+  .gap-8 { gap: calc(var(--spacing) * 8); }
+  :where(.space-y-1 > :not(:last-child)) { --tw-space-y-reverse: 0; margin-block-start: calc(var(--spacing) * var(--tw-space-y-reverse)); margin-block-end: calc(var(--spacing) * calc(1 - var(--tw-space-y-reverse))); }
+  :where(.space-y-2 > :not(:last-child)) { --tw-space-y-reverse: 0; margin-block-start: calc(calc(var(--spacing) * 2) * var(--tw-space-y-reverse)); margin-block-end: calc(calc(var(--spacing) * 2) * calc(1 - var(--tw-space-y-reverse))); }
+  :where(.space-y-3 > :not(:last-child)) { --tw-space-y-reverse: 0; margin-block-start: calc(calc(var(--spacing) * 3) * var(--tw-space-y-reverse)); margin-block-end: calc(calc(var(--spacing) * 3) * calc(1 - var(--tw-space-y-reverse))); }
+  :where(.space-y-4 > :not(:last-child)) { --tw-space-y-reverse: 0; margin-block-start: calc(calc(var(--spacing) * 4) * var(--tw-space-y-reverse)); margin-block-end: calc(calc(var(--spacing) * 4) * calc(1 - var(--tw-space-y-reverse))); }
+  :where(.space-y-5 > :not(:last-child)) { --tw-space-y-reverse: 0; margin-block-start: calc(calc(var(--spacing) * 5) * var(--tw-space-y-reverse)); margin-block-end: calc(calc(var(--spacing) * 5) * calc(1 - var(--tw-space-y-reverse))); }
+  :where(.space-y-6 > :not(:last-child)) { --tw-space-y-reverse: 0; margin-block-start: calc(calc(var(--spacing) * 6) * var(--tw-space-y-reverse)); margin-block-end: calc(calc(var(--spacing) * 6) * calc(1 - var(--tw-space-y-reverse))); }
+  :where(.space-y-8 > :not(:last-child)) { --tw-space-y-reverse: 0; margin-block-start: calc(calc(var(--spacing) * 8) * var(--tw-space-y-reverse)); margin-block-end: calc(calc(var(--spacing) * 8) * calc(1 - var(--tw-space-y-reverse))); }
+  .overflow-hidden { overflow: hidden; }
+  .overflow-x-auto { overflow-x: auto; }
+  .rounded { border-radius: 0.25rem; }
+  .rounded-2xl { border-radius: var(--radius-2xl); }
+  .rounded-full { border-radius: calc(infinity * 1px); }
+  .rounded-lg { border-radius: var(--radius-lg); }
+  .rounded-xl { border-radius: var(--radius-xl); }
+  .border { border-style: var(--tw-border-style); border-width: 1px; }
+  .border-s { border-inline-start-style: var(--tw-border-style); border-inline-start-width: 1px; }
+  .border-s-2 { border-inline-start-style: var(--tw-border-style); border-inline-start-width: 2px; }
+  .border-t { border-top-style: var(--tw-border-style); border-top-width: 1px; }
+  .border-b { border-bottom-style: var(--tw-border-style); border-bottom-width: 1px; }
+  .border-dashed { --tw-border-style: dashed; border-style: dashed; }
+  .border-brand-100 { border-color: var(--color-brand-100); }
+  .border-brand-200 { border-color: var(--color-brand-200); }
+  .border-brand-300 { border-color: var(--color-brand-300); }
+  .border-brand-700 { border-color: var(--color-brand-700); }
+  .border-brand-800 { border-color: var(--color-brand-800); }
+  .border-transparent { border-color: transparent; }
+  .border-warn-500 { border-color: var(--color-warn-500); }
+  .bg-accent-500 { background-color: var(--color-accent-500); }
+  .bg-brand-50 { background-color: var(--color-brand-50); }
+  .bg-brand-100 { background-color: var(--color-brand-100); }
+  .bg-brand-500 { background-color: var(--color-brand-500); }
+  .bg-brand-600 { background-color: var(--color-brand-600); }
+  .bg-brand-700 { background-color: var(--color-brand-700); }
+  .bg-brand-800 { background-color: var(--color-brand-800); }
+  .bg-brand-900 { background-color: var(--color-brand-900); }
+  .bg-ink-900 { background-color: var(--color-ink-900); }
+  .bg-ink-950 { background-color: var(--color-ink-950); }
+  .bg-red-50 { background-color: var(--color-red-50); }
+  .bg-surface { background-color: var(--color-surface); }
+  .bg-surface-blue { background-color: var(--color-surface-blue); }
+  .bg-warn-100 { background-color: var(--color-warn-100); }
+  .bg-white { background-color: var(--color-white); }
+  .bg-gradient-to-b { --tw-gradient-position: to bottom in oklab; background-image: linear-gradient(var(--tw-gradient-stops)); }
+  .bg-gradient-to-l { --tw-gradient-position: to left in oklab; background-image: linear-gradient(var(--tw-gradient-stops)); }
+  .from-brand-800 { --tw-gradient-from: var(--color-brand-800); --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position)); }
+  .from-brand-900\/75 {
+  --tw-gradient-from: color-mix(in srgb, #17306e 75%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+  --tw-gradient-from: color-mix(in oklab, var(--color-brand-900) 75%, transparent);
+}
+  --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
+}
+  .from-ink-950\/85 {
+  --tw-gradient-from: color-mix(in srgb, #080918 85%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+  --tw-gradient-from: color-mix(in oklab, var(--color-ink-950) 85%, transparent);
+}
+  --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
+}
+  .from-white { --tw-gradient-from: var(--color-white); --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position)); }
+  .via-brand-800\/66 {
+  --tw-gradient-via: color-mix(in srgb, #1f3f8f 66%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+  --tw-gradient-via: color-mix(in oklab, var(--color-brand-800) 66%, transparent);
+}
+  --tw-gradient-via-stops: var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-via) var(--tw-gradient-via-position), var(--tw-gradient-to) var(--tw-gradient-to-position); --tw-gradient-stops: var(--tw-gradient-via-stops);
+}
+  .via-ink-950\/60 {
+  --tw-gradient-via: color-mix(in srgb, #080918 60%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+  --tw-gradient-via: color-mix(in oklab, var(--color-ink-950) 60%, transparent);
+}
+  --tw-gradient-via-stops: var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-via) var(--tw-gradient-via-position), var(--tw-gradient-to) var(--tw-gradient-to-position); --tw-gradient-stops: var(--tw-gradient-via-stops);
+}
+  .to-brand-100 { --tw-gradient-to: var(--color-brand-100); --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position)); }
+  .to-brand-700 { --tw-gradient-to: var(--color-brand-700); --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position)); }
+  .to-brand-700\/56 {
+  --tw-gradient-to: color-mix(in srgb, #2850a0 56%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+  --tw-gradient-to: color-mix(in oklab, var(--color-brand-700) 56%, transparent);
+}
+  --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
+}
+  .to-ink-950\/85 {
+  --tw-gradient-to: color-mix(in srgb, #080918 85%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+  --tw-gradient-to: color-mix(in oklab, var(--color-ink-950) 85%, transparent);
+}
+  --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
+}
+  .object-cover { object-fit: cover; }
+  .\[object-position\:center_30\%\] { object-position: center 30%; }
+  .p-2 { padding: calc(var(--spacing) * 2); }
+  .p-3 { padding: calc(var(--spacing) * 3); }
+  .p-4 { padding: calc(var(--spacing) * 4); }
+  .p-5 { padding: calc(var(--spacing) * 5); }
+  .p-6 { padding: calc(var(--spacing) * 6); }
+  .p-8 { padding: calc(var(--spacing) * 8); }
+  .px-2 { padding-inline: calc(var(--spacing) * 2); }
+  .px-3 { padding-inline: calc(var(--spacing) * 3); }
+  .px-4 { padding-inline: calc(var(--spacing) * 4); }
+  .px-5 { padding-inline: calc(var(--spacing) * 5); }
+  .px-6 { padding-inline: calc(var(--spacing) * 6); }
+  .px-8 { padding-inline: calc(var(--spacing) * 8); }
+  .px-10 { padding-inline: calc(var(--spacing) * 10); }
+  .py-0\.5 { padding-block: calc(var(--spacing) * 0.5); }
+  .py-1 { padding-block: var(--spacing); }
+  .py-2 { padding-block: calc(var(--spacing) * 2); }
+  .py-3 { padding-block: calc(var(--spacing) * 3); }
+  .py-4 { padding-block: calc(var(--spacing) * 4); }
+  .py-8 { padding-block: calc(var(--spacing) * 8); }
+  .py-10 { padding-block: calc(var(--spacing) * 10); }
+  .py-12 { padding-block: calc(var(--spacing) * 12); }
+  .py-16 { padding-block: calc(var(--spacing) * 16); }
+  .py-20 { padding-block: calc(var(--spacing) * 20); }
+  .py-24 { padding-block: calc(var(--spacing) * 24); }
+  .ps-2 { padding-inline-start: calc(var(--spacing) * 2); }
+  .ps-3 { padding-inline-start: calc(var(--spacing) * 3); }
+  .ps-6 { padding-inline-start: calc(var(--spacing) * 6); }
+  .pt-2 { padding-top: calc(var(--spacing) * 2); }
+  .pb-5 { padding-bottom: calc(var(--spacing) * 5); }
+  .pb-6 { padding-bottom: calc(var(--spacing) * 6); }
+  .pb-16 { padding-bottom: calc(var(--spacing) * 16); }
+  .text-center { text-align: center; }
+  .text-left { text-align: left; }
+  .text-start { text-align: start; }
+  .align-super { vertical-align: super; }
+  .align-top { vertical-align: top; }
+  .text-2xl { font-size: var(--text-2xl); line-height: var(--tw-leading, var(--text-2xl--line-height)); }
+  .text-3xl { font-size: var(--text-3xl); line-height: var(--tw-leading, var(--text-3xl--line-height)); }
+  .text-4xl { font-size: var(--text-4xl); line-height: var(--tw-leading, var(--text-4xl--line-height)); }
+  .text-5xl { font-size: var(--text-5xl); line-height: var(--tw-leading, var(--text-5xl--line-height)); }
+  .text-6xl { font-size: var(--text-6xl); line-height: var(--tw-leading, var(--text-6xl--line-height)); }
+  .text-lg { font-size: var(--text-lg); line-height: var(--tw-leading, var(--text-lg--line-height)); }
+  .text-sm { font-size: var(--text-sm); line-height: var(--tw-leading, var(--text-sm--line-height)); }
+  .text-xl { font-size: var(--text-xl); line-height: var(--tw-leading, var(--text-xl--line-height)); }
+  .text-xs { font-size: var(--text-xs); line-height: var(--tw-leading, var(--text-xs--line-height)); }
+  .text-\[9px\] { font-size: 9px; }
+  .leading-relaxed { --tw-leading: var(--leading-relaxed); line-height: var(--leading-relaxed); }
+  .leading-tight { --tw-leading: var(--leading-tight); line-height: var(--leading-tight); }
+  .font-black { --tw-font-weight: var(--font-weight-black); font-weight: var(--font-weight-black); }
+  .font-bold { --tw-font-weight: var(--font-weight-bold); font-weight: var(--font-weight-bold); }
+  .font-medium { --tw-font-weight: var(--font-weight-medium); font-weight: var(--font-weight-medium); }
+  .font-normal { --tw-font-weight: var(--font-weight-normal); font-weight: var(--font-weight-normal); }
+  .tracking-wide { --tw-tracking: var(--tracking-wide); letter-spacing: var(--tracking-wide); }
+  .tracking-widest { --tw-tracking: var(--tracking-widest); letter-spacing: var(--tracking-widest); }
+  .whitespace-nowrap { white-space: nowrap; }
+  .text-accent-300 { color: var(--color-accent-300); }
+  .text-accent-400 { color: var(--color-accent-400); }
+  .text-brand-100 { color: var(--color-brand-100); }
+  .text-brand-300 { color: var(--color-brand-300); }
+  .text-brand-500 { color: var(--color-brand-500); }
+  .text-brand-600 { color: var(--color-brand-600); }
+  .text-brand-700 { color: var(--color-brand-700); }
+  .text-brand-800 { color: var(--color-brand-800); }
+  .text-ink-200 { color: var(--color-ink-200); }
+  .text-ink-400 { color: var(--color-ink-400); }
+  .text-ink-500 { color: var(--color-ink-500); }
+  .text-ink-700 { color: var(--color-ink-700); }
+  .text-ink-900 { color: var(--color-ink-900); }
+  .text-ink-950 { color: var(--color-ink-950); }
+  .text-red-800 { color: var(--color-red-800); }
+  .text-white { color: var(--color-white); }
+  .underline { text-decoration-line: underline; }
+  .decoration-brand-300 { text-decoration-color: var(--color-brand-300); }
+  .underline-offset-2 { text-underline-offset: 2px; }
+  .underline-offset-8 { text-underline-offset: 8px; }
+  .antialiased { -webkit-font-smoothing: antialiased; }
+  .accent-brand-600 { accent-color: var(--color-brand-600); }
+  .opacity-45 { opacity: 0.45; }
+  .shadow { --tw-shadow: 0 1px 3px 0 var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 1px 2px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1)); box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow); }
+  .shadow-2xl { --tw-shadow: 0 25px 50px -12px var(--tw-shadow-color, rgb(0 0 0 / 0.25)); box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow); }
+  .shadow-lg { --tw-shadow: 0 10px 15px -3px var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 4px 6px -4px var(--tw-shadow-color, rgb(0 0 0 / 0.1)); box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow); }
+  .shadow-sm { --tw-shadow: 0 1px 3px 0 var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 1px 2px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1)); box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow); }
+  .shadow-xl { --tw-shadow: 0 20px 25px -5px var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 8px 10px -6px var(--tw-shadow-color, rgb(0 0 0 / 0.1)); box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow); }
+  .ring { --tw-ring-shadow: var(--tw-ring-inset,) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color, currentcolor); box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow); }
+  .shadow-brand-950\/30 {
+  --tw-shadow-color: color-mix(in srgb, #0f2050 30%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+  --tw-shadow-color: color-mix(in oklab, color-mix(in oklab, var(--color-brand-950) 30%, transparent) var(--tw-shadow-alpha), transparent);
+}
+}
+  .outline { outline-style: var(--tw-outline-style); outline-width: 1px; }
+  .blur { --tw-blur: blur(8px); filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,); }
+  .grayscale { --tw-grayscale: grayscale(100%); filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,); }
+  .filter { filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,); }
+  .backdrop-filter { backdrop-filter: var(--tw-backdrop-blur,) var(--tw-backdrop-brightness,) var(--tw-backdrop-contrast,) var(--tw-backdrop-grayscale,) var(--tw-backdrop-hue-rotate,) var(--tw-backdrop-invert,) var(--tw-backdrop-opacity,) var(--tw-backdrop-saturate,) var(--tw-backdrop-sepia,); }
+  .transition { transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events; transition-timing-function: var(--tw-ease, var(--default-transition-timing-function)); transition-duration: var(--tw-duration, var(--default-transition-duration)); }
+  .transition-colors { transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to; transition-timing-function: var(--tw-ease, var(--default-transition-timing-function)); transition-duration: var(--tw-duration, var(--default-transition-duration)); }
+  .transition-transform { transition-property: transform, translate, scale, rotate; transition-timing-function: var(--tw-ease, var(--default-transition-timing-function)); transition-duration: var(--tw-duration, var(--default-transition-duration)); }
+  .ease-in-out { --tw-ease: var(--ease-in-out); transition-timing-function: var(--ease-in-out); }
+  .group-open\:rotate-180:is(:where(.group):is([open], :popover-open, :open) *) { rotate: 180deg; }
+  @media (hover: hover) {
+  .group-hover\:-translate-x-1:is(:where(.group):hover *) { --tw-translate-x: calc(var(--spacing) * -1); translate: var(--tw-translate-x) var(--tw-translate-y); }
+}
+  .open\:border-brand-300:is([open], :popover-open, :open) { border-color: var(--color-brand-300); }
+  @media (hover: hover) {
+  .hover\:border-brand-400:hover { border-color: var(--color-brand-400); }
+  .hover\:bg-brand-50:hover { background-color: var(--color-brand-50); }
+  .hover\:bg-brand-700:hover { background-color: var(--color-brand-700); }
+  .hover\:text-brand-600:hover { color: var(--color-brand-600); }
+  .hover\:text-brand-700:hover { color: var(--color-brand-700); }
+  .hover\:text-brand-800:hover { color: var(--color-brand-800); }
+  .hover\:text-white:hover { color: var(--color-white); }
+  .hover\:underline:hover { text-decoration-line: underline; }
+}
+  .focus\:border-brand-400:focus { border-color: var(--color-brand-400); }
+  .disabled\:opacity-60:disabled { opacity: 0.6; }
+  @media (width >= 40rem) {
+  .sm\:col-span-1 { grid-column: span 1 / span 1; }
+  .sm\:col-span-2 { grid-column: span 2 / span 2; }
+  .sm\:col-span-3 { grid-column: span 3 / span 3; }
+  .sm\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0px, 1fr)); }
+  .sm\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0px, 1fr)); }
+  .sm\:grid-cols-\[1fr_1fr_auto\] { grid-template-columns: 1fr 1fr auto; }
+  .sm\:flex-row { flex-direction: row; }
+  .sm\:justify-center { justify-content: center; }
+  .sm\:p-10 { padding: calc(var(--spacing) * 10); }
+  .sm\:text-xl { font-size: var(--text-xl); line-height: var(--tw-leading, var(--text-xl--line-height)); }
+}
+  @media (width >= 48rem) {
+  .md\:col-span-2 { grid-column: span 2 / span 2; }
+  .md\:col-start-2 { grid-column-start: 2; }
+  .md\:mx-6 { margin-inline: calc(var(--spacing) * 6); }
+  .md\:mt-16 { margin-top: calc(var(--spacing) * 16); }
+  .md\:block { display: block; }
+  .md\:flex { display: flex; }
+  .md\:hidden { display: none; }
+  .md\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0px, 1fr)); }
+  .md\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0px, 1fr)); }
+  .md\:grid-cols-6 { grid-template-columns: repeat(6, minmax(0px, 1fr)); }
+  .md\:flex-row { flex-direction: row; }
+  .md\:justify-between { justify-content: space-between; }
+  .md\:justify-start { justify-content: flex-start; }
+  .md\:border-s { border-inline-start-style: var(--tw-border-style); border-inline-start-width: 1px; }
+  .md\:border-brand-200 { border-color: var(--color-brand-200); }
+  .md\:p-6 { padding: calc(var(--spacing) * 6); }
+  .md\:p-8 { padding: calc(var(--spacing) * 8); }
+  .md\:py-16 { padding-block: calc(var(--spacing) * 16); }
+  .md\:py-24 { padding-block: calc(var(--spacing) * 24); }
+  .md\:py-28 { padding-block: calc(var(--spacing) * 28); }
+  .md\:ps-8 { padding-inline-start: calc(var(--spacing) * 8); }
+  .md\:text-start { text-align: start; }
+  .md\:text-2xl { font-size: var(--text-2xl); line-height: var(--tw-leading, var(--text-2xl--line-height)); }
+  .md\:text-3xl { font-size: var(--text-3xl); line-height: var(--tw-leading, var(--text-3xl--line-height)); }
+  .md\:text-5xl { font-size: var(--text-5xl); line-height: var(--tw-leading, var(--text-5xl--line-height)); }
+  .md\:text-6xl { font-size: var(--text-6xl); line-height: var(--tw-leading, var(--text-6xl--line-height)); }
+}
+  @media (width >= 64rem) {
+  .lg\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0px, 1fr)); }
+  .lg\:grid-cols-4 { grid-template-columns: repeat(4, minmax(0px, 1fr)); }
+}
+  .\[\&\:\:-webkit-details-marker\]\:hidden::-webkit-details-marker { display: none; }
+}
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+h1, h2 { font-weight: 700; }
+body { font-family: var(--font-sans); color: var(--color-ink-900); background-color: var(--color-surface); }
+.ltr { direction: ltr; unicode-bidi: isolate; white-space: nowrap; }
+.faq-list { counter-reset: faq 0; }
+.faq-item { counter-increment: faq 1; }
+.rtl-marker, .faq-question::before { direction: rtl; unicode-bidi: isolate; margin-left: 0.5rem; }
+.faq-question::before { content: counter(faq) "."; color: var(--color-brand-600); }
+@media (max-width: 639px) {
+  .compare, .compare thead, .compare tbody, .compare tr, .compare th, .compare td { display: block; width: auto; }
+  .compare thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .compare tr { border-top: 1px solid var(--color-brand-200); padding-block: 0.5rem; }
+  .compare tbody th[scope="row"] { padding-inline: 0px; font-size: 1rem; }
+  .compare td { padding-inline: 0px; padding-block: 0.25rem; }
+  .compare td::before { content: attr(data-label) ': '; font-weight: 700; color: var(--color-brand-700); }
+}
+.kb-prose > * + * { margin-top: 1.25rem; }
+.kb-prose h2 { margin-top: 2.5rem; font-size: 1.5rem; font-weight: 700; line-height: 1.3; color: var(--color-brand-800); }
+.kb-prose h3 { margin-top: 2rem; font-size: 1.125rem; font-weight: 700; color: var(--color-brand-800); }
+.kb-prose p, .kb-prose li { line-height: 1.8; color: var(--color-ink-700); }
+.kb-prose ul, .kb-prose ol { padding-inline-start: 1.5rem; }
+.kb-prose ul { list-style: disc; }
+.kb-prose ol { list-style: decimal; }
+.kb-prose li + li { margin-top: 0.5rem; }
+.kb-prose strong { font-weight: 700; color: var(--color-ink-900); }
+.kb-prose a:not([class]) { color: var(--color-brand-600); text-decoration: underline; }
+.kb-prose .not-prose { color: inherit; }
+.kb-prose .not-prose ul, .kb-prose .not-prose ol, .kb-prose ul.not-prose, .kb-prose ol.not-prose { list-style: none; padding-inline-start: 0px; }
+:focus-visible { outline: 3px solid var(--color-brand-500); outline-offset: 2px; }
+.skip-link { position: absolute; inset-inline-start: 0.5rem; top: -100%; z-index: 100; padding: 0.5rem 1rem; border-radius: 0.5rem; background: var(--color-ink-900); color: rgb(255, 255, 255); transition: top 0.15s; }
+.skip-link:focus { top: 0.5rem; }
+@media (prefers-reduced-motion: no-preference) {
+  .js .reveal { opacity: 0; transform: translateY(20px); transition-property: ; transition-duration: ; transition-timing-function: ; transition-behavior: ; transition-delay: var(--reveal-delay, 0ms); }
+  .js .reveal.is-visible { opacity: 1; transform: none; }
+  .js .reveal.reveal--float { transform: translateY(60px); transition-duration: var(--motion-float); transition-timing-function: var(--ease-float); }
+  .js .reveal.reveal--expand { transform: scale(0.96); transition-duration: var(--motion-float); transition-timing-function: var(--ease-float); }
+}
+:root { --motion-interactive: 250ms; --motion-card: 300ms; --motion-reveal: 500ms; --reveal-stagger: 70ms; --motion-line: 1200ms; --line-stagger: 100ms; --ease-line: cubic-bezier(0.215, 0.61, 0.355, 1); --motion-float: 1100ms; --ease-float: cubic-bezier(0.45, 0, 0.55, 1); --hero-slope: 27px; }
+@media (min-width: 48rem) {
+  :root { --hero-slope: 72px; }
+}
+.band { padding-block: 44px; }
+.band--large { padding-block: 54px; }
+@media (min-width: 64rem) {
+  .band { padding-block: 88px; }
+  .band--large { padding-block: 108px; }
+}
+.hero-slope { clip-path: polygon(0 0, 100% 0, 100% calc(100% - var(--hero-slope)), 0 100%); padding-bottom: calc(var(--hero-slope) + 1rem); }
+.btn-pill { background-size: 200% 100%; background-position: 0px 0px; transition-property: background-position, color, box-shadow; transition-duration: var(--motion-interactive); transition-timing-function: ease-in-out; }
+.btn-pill:hover, .btn-pill:focus-visible { background-position: 100% 0px; }
+.btn-pill:active { transition: none; }
+.btn-solid { background-image: linear-gradient( 90deg, var(--color-brand-600) 0%, var(--color-brand-600) 50%, var(--color-brand-700) 50%, var(--color-brand-700) 100% ); }
+.btn-invert { background-image: linear-gradient( 90deg, #fff 0%, #fff 50%, var(--color-brand-50) 50%, var(--color-brand-50) 100% ); }
+.btn-ghost { box-shadow: rgb(255, 255, 255) 0px 0px 0px 2px inset; background-image: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 50%, rgb(255, 255, 255) 50%, rgb(255, 255, 255) 100%); }
+.btn-ghost:hover, .btn-ghost:focus-visible { color: var(--color-ink-950); }
+.accent-rule { border-inline-start-width: 4px; }
+.accent-rule--navy { border-inline-start-color: var(--color-icon-navy); }
+.accent-rule--sky { border-inline-start-color: var(--color-brand-500); }
+.duotone-icon { display: block; width: 56px; height: 56px; }
+.duotone-icon--md { width: 44px; height: 44px; }
+@media (min-width: 48rem) {
+  .duotone-icon { width: 72px; height: 72px; }
+  .duotone-icon--md { width: 44px; height: 44px; }
+}
+.duotone-icon__base { fill: var(--color-icon-navy); }
+.duotone-icon__accent { fill: var(--color-brand-500); }
+[data-band="dark"] .duotone-icon__base { fill: rgb(255, 255, 255); }
+[data-band="dark"] .duotone-icon__accent { fill: var(--color-brand-300); }
+.bokeh-host { position: relative; isolation: isolate; overflow: hidden; }
+.bokeh { position: absolute; inset: 0px; z-index: -1; width: 100%; height: 100%; pointer-events: none; }
+.logo-mark { transition: transform var(--motion-interactive) ease-out, filter var(--motion-interactive) ease-out; }
+.logo:hover .logo-mark, .logo:focus-visible .logo-mark { transform: translateY(-2px); filter: drop-shadow(rgba(56, 152, 216, 0.45) 0px 6px 12px); }
+@media (prefers-reduced-motion: no-preference) {
+  .js .logo-mark { animation: logo-mark-in 600ms var(--ease-float) backwards; }
+  .js .logo-wordmark { animation: logo-wordmark-in 500ms var(--ease-float) 150ms backwards; }
+}
+@keyframes logo-mark-in { 
+  0% { opacity: 0; transform: scale(0.6) rotate(-12deg); }
+  100% { opacity: 1; transform: none; }
+}
+@keyframes logo-wordmark-in { 
+  0% { opacity: 0; transform: translateX(-12px); }
+  100% { opacity: 1; transform: none; }
+}
+.logo-lockup { display: flex; direction: ltr; align-items: center; gap: 8px; }
+.logo-lockup__mark { width: auto; height: 36px; }
+.logo-lockup__text { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; max-width: 112px; }
+.logo-lockup__word { width: auto; height: 18px; }
+.logo-lockup__tagline { font-size: 9px; line-height: 1.25; letter-spacing: 0.005em; color: var(--color-ink-500); }
+@media (min-width: 64rem) {
+  .logo-lockup { gap: 12px; }
+  .logo-lockup__mark { height: 52px; }
+  .logo-lockup__text { max-width: none; gap: 3px; }
+  .logo-lockup__word { height: 25px; }
+  .logo-lockup__tagline { font-size: 11px; white-space: nowrap; }
+}
+.card-lift { transform: translateZ(0px); transition: box-shadow var(--motion-card) ease-in-out, transform var(--motion-card) ease-in-out; }
+.card-lift:hover, .card-lift:focus-within { transform: scale(1.01); box-shadow: rgba(0, 0, 0, 0.25) 0px 2px 18px; }
+@media (prefers-reduced-motion: reduce) {
+  .card-lift:hover, .card-lift:focus-within { transform: none; }
+}
+.marquee { position: relative; overflow: hidden; }
+.marquee::before, .marquee::after { content: ""; position: absolute; top: 0px; bottom: 0px; z-index: 1; width: 5rem; pointer-events: none; }
+@media (min-width: 40rem) {
+  .marquee::before, .marquee::after { width: 10rem; }
+}
+.marquee::before { left: 0px; background: linear-gradient(to right, var(--color-surface-blue) 0%, transparent 100%); }
+.marquee::after { right: 0px; background: linear-gradient(to left, var(--color-surface-blue) 0%, transparent 100%); }
+.marquee__track { display: flex; width: max-content; direction: ltr; --set-width: 33.3333%; --marquee-dir: 1; animation: marquee-scroll var(--marquee-duration, 45s) linear infinite; }
+[dir="ltr"] .marquee__track { --marquee-dir: -1; }
+@keyframes marquee-scroll { 
+  0% { transform: translateX(0px); }
+  100% { transform: translateX(calc(var(--marquee-dir) * var(--set-width))); }
+}
+.marquee:hover .marquee__track, .marquee:focus-within .marquee__track { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) {
+  .marquee__track { animation: auto ease 0s 1 normal none running none; width: 100%; flex-wrap: wrap; justify-content: center; }
+  .marquee__item[data-clone] { display: none; }
+  .marquee::before, .marquee::after { display: none; }
+}
+.js .reveal-lines { perspective: 400px; }
+@media (prefers-reduced-motion: no-preference) {
+  .js .reveal-lines.is-armed:not(.is-split) { opacity: 0; }
+  .js .reveal-lines.is-armed.is-split .line { display: block; opacity: 0; transform: rotateX(-80deg); transform-origin: center top -50px; transition-property: ; transition-duration: ; transition-timing-function: ; transition-behavior: ; transition-delay: var(--line-delay, 0ms); }
+  .js .reveal-lines.is-armed.is-visible .line { opacity: 1; transform: none; }
+}
+.lightbox { padding: 0px; border: 0px; background: transparent; max-width: 92vw; max-height: 90vh; }
+.lightbox::backdrop { background: rgba(8, 9, 24, 0.85); }
+.lightbox img { display: block; max-width: 92vw; max-height: 90vh; width: auto; height: auto; object-fit: contain; border-radius: 1rem; }
+.lightbox-close { position: absolute; top: 0.5rem; inset-inline-end: 0.5rem; width: 2.75rem; height: 2.75rem; border-radius: 9999px; background: rgba(8, 9, 24, 0.7); color: rgb(255, 255, 255); font-size: 1.75rem; line-height: 1; }
+.lightbox-close:focus-visible { outline: 3px solid var(--color-brand-500); outline-offset: 2px; }
+.lightbox-open:focus-visible { outline: 3px solid var(--color-brand-500); outline-offset: -3px; }
+@property --tw-rotate-x { syntax: "*"; inherits: false; }
+@property --tw-rotate-y { syntax: "*"; inherits: false; }
+@property --tw-rotate-z { syntax: "*"; inherits: false; }
+@property --tw-skew-x { syntax: "*"; inherits: false; }
+@property --tw-skew-y { syntax: "*"; inherits: false; }
+@property --tw-space-y-reverse { syntax: "*"; inherits: false; initial-value: 0; }
+@property --tw-border-style { syntax: "*"; inherits: false; initial-value: solid; }
+@property --tw-gradient-position { syntax: "*"; inherits: false; }
+@property --tw-gradient-from { syntax: "<color>"; inherits: false; initial-value: #0000; }
+@property --tw-gradient-via { syntax: "<color>"; inherits: false; initial-value: #0000; }
+@property --tw-gradient-to { syntax: "<color>"; inherits: false; initial-value: #0000; }
+@property --tw-gradient-stops { syntax: "*"; inherits: false; }
+@property --tw-gradient-via-stops { syntax: "*"; inherits: false; }
+@property --tw-gradient-from-position { syntax: "<length-percentage>"; inherits: false; initial-value: 0%; }
+@property --tw-gradient-via-position { syntax: "<length-percentage>"; inherits: false; initial-value: 50%; }
+@property --tw-gradient-to-position { syntax: "<length-percentage>"; inherits: false; initial-value: 100%; }
+@property --tw-leading { syntax: "*"; inherits: false; }
+@property --tw-font-weight { syntax: "*"; inherits: false; }
+@property --tw-tracking { syntax: "*"; inherits: false; }
+@property --tw-shadow { syntax: "*"; inherits: false; initial-value: 0 0 #0000; }
+@property --tw-shadow-color { syntax: "*"; inherits: false; }
+@property --tw-shadow-alpha { syntax: "<percentage>"; inherits: false; initial-value: 100%; }
+@property --tw-inset-shadow { syntax: "*"; inherits: false; initial-value: 0 0 #0000; }
+@property --tw-inset-shadow-color { syntax: "*"; inherits: false; }
+@property --tw-inset-shadow-alpha { syntax: "<percentage>"; inherits: false; initial-value: 100%; }
+@property --tw-ring-color { syntax: "*"; inherits: false; }
+@property --tw-ring-shadow { syntax: "*"; inherits: false; initial-value: 0 0 #0000; }
+@property --tw-inset-ring-color { syntax: "*"; inherits: false; }
+@property --tw-inset-ring-shadow { syntax: "*"; inherits: false; initial-value: 0 0 #0000; }
+@property --tw-ring-inset { syntax: "*"; inherits: false; }
+@property --tw-ring-offset-width { syntax: "<length>"; inherits: false; initial-value: 0px; }
+@property --tw-ring-offset-color { syntax: "*"; inherits: false; initial-value: #fff; }
+@property --tw-ring-offset-shadow { syntax: "*"; inherits: false; initial-value: 0 0 #0000; }
+@property --tw-outline-style { syntax: "*"; inherits: false; initial-value: solid; }
+@property --tw-blur { syntax: "*"; inherits: false; }
+@property --tw-brightness { syntax: "*"; inherits: false; }
+@property --tw-contrast { syntax: "*"; inherits: false; }
+@property --tw-grayscale { syntax: "*"; inherits: false; }
+@property --tw-hue-rotate { syntax: "*"; inherits: false; }
+@property --tw-invert { syntax: "*"; inherits: false; }
+@property --tw-opacity { syntax: "*"; inherits: false; }
+@property --tw-saturate { syntax: "*"; inherits: false; }
+@property --tw-sepia { syntax: "*"; inherits: false; }
+@property --tw-drop-shadow { syntax: "*"; inherits: false; }
+@property --tw-drop-shadow-color { syntax: "*"; inherits: false; }
+@property --tw-drop-shadow-alpha { syntax: "<percentage>"; inherits: false; initial-value: 100%; }
+@property --tw-drop-shadow-size { syntax: "*"; inherits: false; }
+@property --tw-backdrop-blur { syntax: "*"; inherits: false; }
+@property --tw-backdrop-brightness { syntax: "*"; inherits: false; }
+@property --tw-backdrop-contrast { syntax: "*"; inherits: false; }
+@property --tw-backdrop-grayscale { syntax: "*"; inherits: false; }
+@property --tw-backdrop-hue-rotate { syntax: "*"; inherits: false; }
+@property --tw-backdrop-invert { syntax: "*"; inherits: false; }
+@property --tw-backdrop-opacity { syntax: "*"; inherits: false; }
+@property --tw-backdrop-saturate { syntax: "*"; inherits: false; }
+@property --tw-backdrop-sepia { syntax: "*"; inherits: false; }
+@property --tw-ease { syntax: "*"; inherits: false; }
+@property --tw-translate-x { syntax: "*"; inherits: false; initial-value: 0; }
+@property --tw-translate-y { syntax: "*"; inherits: false; initial-value: 0; }
+@property --tw-translate-z { syntax: "*"; inherits: false; initial-value: 0; }
+@layer properties {
+  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {
+  *, ::before, ::after, ::backdrop { --tw-rotate-x: initial; --tw-rotate-y: initial; --tw-rotate-z: initial; --tw-skew-x: initial; --tw-skew-y: initial; --tw-space-y-reverse: 0; --tw-border-style: solid; --tw-gradient-position: initial; --tw-gradient-from: #0000; --tw-gradient-via: #0000; --tw-gradient-to: #0000; --tw-gradient-stops: initial; --tw-gradient-via-stops: initial; --tw-gradient-from-position: 0%; --tw-gradient-via-position: 50%; --tw-gradient-to-position: 100%; --tw-leading: initial; --tw-font-weight: initial; --tw-tracking: initial; --tw-shadow: 0 0 #0000; --tw-shadow-color: initial; --tw-shadow-alpha: 100%; --tw-inset-shadow: 0 0 #0000; --tw-inset-shadow-color: initial; --tw-inset-shadow-alpha: 100%; --tw-ring-color: initial; --tw-ring-shadow: 0 0 #0000; --tw-inset-ring-color: initial; --tw-inset-ring-shadow: 0 0 #0000; --tw-ring-inset: initial; --tw-ring-offset-width: 0px; --tw-ring-offset-color: #fff; --tw-ring-offset-shadow: 0 0 #0000; --tw-outline-style: solid; --tw-blur: initial; --tw-brightness: initial; --tw-contrast: initial; --tw-grayscale: initial; --tw-hue-rotate: initial; --tw-invert: initial; --tw-opacity: initial; --tw-saturate: initial; --tw-sepia: initial; --tw-drop-shadow: initial; --tw-drop-shadow-color: initial; --tw-drop-shadow-alpha: 100%; --tw-drop-shadow-size: initial; --tw-backdrop-blur: initial; --tw-backdrop-brightness: initial; --tw-backdrop-contrast: initial; --tw-backdrop-grayscale: initial; --tw-backdrop-hue-rotate: initial; --tw-backdrop-invert: initial; --tw-backdrop-opacity: initial; --tw-backdrop-saturate: initial; --tw-backdrop-sepia: initial; --tw-ease: initial; --tw-translate-x: 0; --tw-translate-y: 0; --tw-translate-z: 0; }
+}
+}
+.knowledge-owner[data-astro-cid-6ajekfh7] { margin-block: 0.8rem; color: var(--color-ink-700); font-size: 0.9rem; }
+.knowledge-work { max-width: 1160px; margin-inline: auto; padding: 40px 24px 72px; color: var(--color-ink-900); font-size: 1rem; line-height: 1.75; }
+.knowledge-work *, .knowledge-work ::before, .knowledge-work ::after { box-sizing: border-box; }
+.knowledge-work h1 { font-size: clamp(1.9rem, 3.5vw, 2.8rem); line-height: 1.25; max-width: 24ch; margin-block: 18px; color: var(--color-brand-800); }
+.knowledge-work h2 { font-size: 1.45rem; line-height: 1.4; margin-block: 0px 14px; color: var(--color-brand-800); }
+.knowledge-work h3 { font-size: 1.05rem; font-weight: 700; margin-block: 14px 8px; }
+.knowledge-work p { margin-block: 0px 12px; }
+.knowledge-work a:not(.kw-button) { color: var(--color-brand-600); text-decoration: underline; text-underline-offset: 0.18em; }
+.knowledge-work nav { font-size: 0.9rem; }
+.kw-heading { margin-bottom: 30px; border-bottom: 1px solid var(--color-brand-200); padding-bottom: 20px; }
+.kw-lead { max-width: 80ch; font-size: 1.1rem; }
+.kw-fiction { display: inline-block; margin-top: 14px; padding: 4px 12px; border: 1px solid var(--color-brand-300); border-radius: 6px; background: var(--color-surface-blue); font-weight: 700; }
+.kw-assumptions { margin-block: 18px 24px; border-inline-start: 4px solid var(--color-brand-600); background: var(--color-surface-blue); padding: 18px 22px; border-radius: 4px 12px 12px 4px; }
+.kw-assumptions h2 { font-size: 1rem; margin-bottom: 8px; }
+.kw-assumptions p { margin-bottom: 6px; font-size: 0.93rem; }
+.kw-calculator { display: grid; grid-template-columns: minmax(260px, 0.9fr) minmax(0px, 1.3fr); gap: 26px; align-items: start; }
+.kw-inputs, .kw-panel { border: 1px solid var(--color-brand-200); background: white; border-radius: 16px; padding: 24px; }
+.kw-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.kw-inputs h2, .kw-inputs .kw-actions, .kw-inputs .kw-error, .kw-inputs .kw-wide { grid-column: 1 / -1; }
+.kw-field { display: flex; flex-direction: column; gap: 6px; min-width: 0px; font-size: 0.92rem; }
+.kw-field-label { font-weight: 500; }
+.kw-field input:not([type="checkbox"]), .kw-field select, .kw-field textarea { width: 100%; min-width: 0px; min-height: 46px; font: inherit; border: 1px solid var(--color-ink-400); border-radius: 7px; color: var(--color-ink-900); background: white; padding: 9px 11px; }
+.kw-field input[type="number"] { direction: ltr; text-align: start; font-variant-numeric: tabular-nums; }
+.kw-field input[type="checkbox"] { width: 22px; height: 22px; accent-color: var(--color-brand-800); }
+.kw-checkbox { flex-direction: row; align-items: center; gap: 10px; }
+.kw-field small { font-size: 0.8rem; color: var(--color-ink-600); }
+.kw-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 8px; }
+.kw-button { display: inline-flex; align-items: center; justify-content: center; min-height: 46px; padding: 10px 20px; border-radius: 30px; border: 1px solid var(--color-brand-800); background: var(--color-brand-800); color: white; font-style: inherit; font-variant: inherit; font-stretch: inherit; font-size: inherit; line-height: inherit; font-family: inherit; font-optical-sizing: inherit; font-size-adjust: inherit; font-kerning: inherit; font-feature-settings: inherit; font-variation-settings: inherit; font-language-override: inherit; font-weight: 700; text-decoration: none; cursor: pointer; }
+.kw-button-secondary { color: var(--color-brand-800); background: white; }
+.knowledge-work :focus-visible { outline: 3px solid var(--color-brand-600); outline-offset: 3px; }
+.kw-error { color: rgb(141, 32, 32); font-weight: 500; }
+.kw-metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 0px; }
+.kw-metric { padding: 16px; border-radius: 10px; background: var(--color-brand-50); min-width: 0px; }
+.kw-metric dt { font-size: 0.86rem; line-height: 1.5; color: var(--color-ink-700); }
+.kw-metric dd { margin-top: 8px; font-size: 1.35rem; line-height: 1.5; font-weight: 700; color: var(--color-brand-900); overflow-wrap: anywhere; }
+.kw-number { display: inline-block; direction: ltr; unicode-bidi: isolate; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.kw-chart { display: block; width: 100%; height: auto; margin-block: 20px 8px; overflow: visible; }
+.kw-chart text { font: 12px Arial, sans-serif; fill: var(--color-ink-700); }
+.kw-legend { display: flex; flex-wrap: wrap; gap: 12px; font-size: 0.85rem; }
+.kw-legend span { display: inline-flex; align-items: center; gap: 6px; }
+.kw-legend i { width: 24px; height: 3px; display: inline-block; }
+.kw-notes { font-size: 0.9rem; margin-top: 16px; }
+.knowledge-work ul, .knowledge-work ol { padding-inline-start: 24px; }
+.knowledge-work ul { list-style: disc; }
+.knowledge-work ol { list-style: decimal; }
+.knowledge-work li + li { margin-top: 8px; }
+.kw-section { margin-top: 38px; }
+.kw-example { padding: 26px; background: white; border: 1px solid var(--color-brand-200); border-radius: 16px; margin-top: 32px; }
+.kw-table-wrap { overflow-x: auto; max-width: 100%; }
+.kw-table { width: 100%; border-collapse: collapse; font-size: 0.94rem; }
+.kw-table caption { text-align: start; font-weight: 700; padding-block: 10px; }
+.kw-table th, .kw-table td { text-align: start; border-bottom: 1px solid var(--color-brand-200); padding: 10px 12px; vertical-align: top; }
+.kw-table th { background: var(--color-brand-50); }
+.kw-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+.kw-demo { margin-top: 42px; padding: 26px; background: var(--color-surface-blue); border-radius: 16px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+.kw-demo p { margin: 0px; }
+.kw-directory { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.kw-directory article { padding: 24px; border: 1px solid var(--color-brand-200); border-radius: 12px; background: white; }
+.kw-directory dt { font-size: 0.85rem; font-weight: 700; margin-top: 12px; color: var(--color-ink-700); }
+.kw-directory dd { margin-top: 3px; }
+.kw-print-value { display: none; }
+@media (max-width: 760px) {
+  .knowledge-work { padding: 24px 16px 48px; }
+  .kw-calculator, .kw-columns, .kw-directory { grid-template-columns: 1fr; }
+  .kw-inputs, .kw-panel, .kw-example { padding: 18px; }
+  .kw-demo { flex-direction: column; align-items: start; }
+  .kw-metric { padding: 12px; }
+  .kw-metric dd { font-size: 1.15rem; }
+}
+@media (max-width: 380px) {
+  .kw-inputs, .kw-metrics { grid-template-columns: 1fr; }
+}
+@media all {
+  @page { size: a4; margin: 14mm; }
+  body:has(.knowledge-work) > header, body:has(.knowledge-work) > footer, body:has(.knowledge-work) .skip-link { display: none !important; }
+  .knowledge-work { max-width: none; padding: 0px; font-size: 10pt; line-height: 1.5; }
+  .knowledge-work h1 { font-size: 22pt; max-width: none; }
+  .knowledge-work h2 { font-size: 14pt; break-after: avoid; }
+  .knowledge-work h3 { break-after: avoid; }
+  .knowledge-work .kw-actions, .knowledge-work .kw-heading nav { display: none !important; }
+  .knowledge-work .kw-calculator { grid-template-columns: 1fr; gap: 12px; }
+  .knowledge-work .kw-inputs { grid-template-columns: repeat(3, 1fr); padding: 12px; gap: 8px; }
+  .knowledge-work .kw-inputs h2 { margin: 0px; }
+  .knowledge-work .kw-inputs input, .knowledge-work .kw-inputs select { min-height: 28px; padding: 3px 6px; }
+  .knowledge-work .kw-panel, .knowledge-work .kw-example, .knowledge-work .kw-assumptions { border-radius: 0px; padding: 12px; }
+  .knowledge-work .kw-metrics { grid-template-columns: repeat(2, 1fr); }
+  .knowledge-work .kw-metric { padding: 8px; break-inside: avoid; }
+  .knowledge-work .kw-metric dd { font-size: 12pt; }
+  .knowledge-work .kw-chart { max-height: 65mm; }
+  .knowledge-work .kw-section { margin-top: 18px; }
+  .knowledge-work .kw-demo { break-inside: avoid; margin-top: 16px; padding: 10px; }
+  .knowledge-work .kw-button { color: black; background: white; border: 1px solid rgb(102, 102, 102); }
+  .knowledge-work .kw-table tr, .knowledge-work .kw-directory article { break-inside: avoid; }
+  .knowledge-work .kw-directory { grid-template-columns: 1fr; }
+  .knowledge-work .kw-heading { margin-bottom: 14px; padding-bottom: 10px; }
+  .knowledge-work a { color: black !important; }
+  .knowledge-work .kw-table-wrap { overflow: visible; }
+  .knowledge-work .kw-print-value { display: block; white-space: pre-wrap; overflow-wrap: anywhere; }
+  .knowledge-work [data-print-field] { display: none !important; }
+  .knowledge-work aside { margin-top: 16px; font-size: 9pt; }
+}
+body { background: white; } .knowledge-work { width: 182mm; max-width:100%; margin:auto; padding:0; }</style></head><body><article class="knowledge-work"><header class="kw-heading"><nav aria-label="מיקום במרכז הידע"><a href="/knowledge/">מרכז ידע</a><span aria-hidden="true"> / </span><a href="/knowledge/agents/">סוכני ביטוח</a></nav><h1>איך שני מבני דמי ניהול משנים את החיסכון לאורך זמן?</h1><p class="kw-lead">משווים שני תרחישים עם אותה יתרה, אותה הפקדה ואותה תשואה משוערת. כך אפשר לבודד את השפעת העלויות, ואז להחזיר את התוצאה לשיחה על מטרות הלקוח ועל תנאי המוצר.</p><p class="knowledge-owner" data-astro-cid-6ajekfh7="">בעלים: נטלי · עודכן: <bdi dir="ltr" data-astro-cid-6ajekfh7="">2026-09-06</bdi></p></header><section data-calculator="fees" aria-label="מחשבון תרחישים" data-initialized="true"><aside class="kw-assumptions" aria-label="הנחות החישוב"><h2>הנחות החישוב — גלויות לאורך כל הדרך</h2><p>התשואה והאינפלציה קבועות בתרחיש. שיעור שנתי מומר לחודשי לפי <bdi dir="ltr">(1 + r)^(1/12) − 1</bdi>. דמי הניהול מצבירה מחולקים ב־<bdi dir="ltr">12</bdi> ונגבים בכל חודש אחרי התשואה.</p><p>הפקדה נטו נכנסת בתחילת החודש. משיכת תחילת חודש קודמת לתשואה; משיכת סוף חודש מתבצעת אחרי התשואה ודמי הניהול. החישוב אינו כולל מס, עלויות נוספות או תנאי מוצר.</p><p>ברירות המחדל הן מספרים לדוגמה. ההפקדות קבועות בסכומן הנומינלי. ההצמדה, אם הופעלה, מתחילה במשיכה השנייה.</p></aside><div class="kw-calculator"><form class="kw-inputs" novalidate=""><h2>הנתונים לתרחיש</h2><label class="kw-field" for="fees-balance"><span class="kw-field-label">יתרה התחלתית<small> · ₪</small></span><input id="fees-balance" name="balance" type="number" inputmode="decimal" value="300000" min="0" max="1000000000" step="100" required=""></label><label class="kw-field" for="fees-deposit"><span class="kw-field-label">הפקדה חודשית<small> · ₪</small></span><input id="fees-deposit" name="deposit" type="number" inputmode="decimal" value="2000" min="0" max="1000000000" step="100" required=""></label><label class="kw-field" for="fees-years"><span class="kw-field-label">תקופת החישוב<small> · שנים</small></span><input id="fees-years" name="years" type="number" inputmode="decimal" value="30" min="0" max="100" step="1" required=""></label><label class="kw-field" for="fees-return"><span class="kw-field-label">תשואה שנתית נומינלית משוערת<small> · %</small></span><input id="fees-return" name="return" type="number" inputmode="decimal" value="4" min="-99" max="100" step="0.1" required=""></label><label class="kw-field" for="fees-depositFeeA"><span class="kw-field-label">תרחיש א׳ — דמי ניהול מהפקדה<small> · %</small></span><input id="fees-depositFeeA" name="depositFeeA" type="number" inputmode="decimal" value="1" min="0" max="100" step="0.1" required=""></label><label class="kw-field" for="fees-feeA"><span class="kw-field-label">תרחיש א׳ — דמי ניהול מצבירה, לשנה<small> · %</small></span><input id="fees-feeA" name="feeA" type="number" inputmode="decimal" value="0.6" min="0" max="100" step="0.1" required=""></label><label class="kw-field" for="fees-depositFeeB"><span class="kw-field-label">תרחיש ב׳ — דמי ניהול מהפקדה<small> · %</small></span><input id="fees-depositFeeB" name="depositFeeB" type="number" inputmode="decimal" value="0" min="0" max="100" step="0.1" required=""></label><label class="kw-field" for="fees-feeB"><span class="kw-field-label">תרחיש ב׳ — דמי ניהול מצבירה, לשנה<small> · %</small></span><input id="fees-feeB" name="feeB" type="number" inputmode="decimal" value="0.4" min="0" max="100" step="0.1" required=""></label><p class="kw-error" data-error="" role="alert" hidden=""></p><div class="kw-actions"><button class="kw-button" type="submit">חישוב התרחיש</button><button class="kw-button kw-button-secondary" type="button" data-print="">הדפסה / שמירה כ־PDF</button></div></form><div class="kw-panel"><h2>התוצאה לפי ההנחות</h2><div data-results="" aria-live="polite" aria-atomic="true"><dl class="kw-metrics"><div class="kw-metric"><dt>יתרה בסוף התקופה — תרחיש א׳</dt><dd><bdi dir="ltr" class="kw-number">2,036,744.02 ₪</bdi></dd></div><div class="kw-metric"><dt>יתרה בסוף התקופה — תרחיש ב׳</dt><dd><bdi dir="ltr" class="kw-number">2,143,607.64 ₪</bdi></dd></div><div class="kw-metric"><dt>סך דמי הניהול — א׳</dt><dd><bdi dir="ltr" class="kw-number">192,491.85 ₪</bdi></dd></div><div class="kw-metric"><dt>סך דמי הניהול — ב׳</dt><dd><bdi dir="ltr" class="kw-number">127,839.99 ₪</bdi></dd></div><div class="kw-metric"><dt>הפרש ביתרה: ב׳ פחות א׳</dt><dd><bdi dir="ltr" class="kw-number">106,863.61 ₪</bdi></dd></div><div class="kw-metric"><dt>ההפרש כאחוז מיתרת א׳</dt><dd><bdi dir="ltr" class="kw-number">5.25 %</bdi></dd></div></dl></div><svg class="kw-chart" data-chart="" viewBox="0 0 560 270" role="img" aria-label="מסלול היתרה לאורך חודשי התרחיש"><title>יתרות בסוף כל חודש; ציר הזמן משמאל לימין</title><line x1="72" x2="548" y1="18" y2="18" stroke="#dce8f7"></line><text x="65" y="22" text-anchor="end" direction="ltr">2,143,608</text><line x1="72" x2="548" y1="68" y2="68" stroke="#dce8f7"></line><text x="65" y="72" text-anchor="end" direction="ltr">1,607,706</text><line x1="72" x2="548" y1="118" y2="118" stroke="#dce8f7"></line><text x="65" y="122" text-anchor="end" direction="ltr">1,071,804</text><line x1="72" x2="548" y1="168" y2="168" stroke="#dce8f7"></line><text x="65" y="172" text-anchor="end" direction="ltr">535,902</text><line x1="72" x2="548" y1="218" y2="218" stroke="#dce8f7"></line><text x="65" y="222" text-anchor="end" direction="ltr">0</text><text x="72" y="243" text-anchor="middle" direction="ltr">0</text><text x="191" y="243" text-anchor="middle" direction="ltr">90</text><text x="310" y="243" text-anchor="middle" direction="ltr">180</text><text x="429" y="243" text-anchor="middle" direction="ltr">270</text><text x="548" y="243" text-anchor="middle" direction="ltr">360</text><text x="310" y="266" text-anchor="middle" direction="rtl">חודשים</text><text x="24" y="10" text-anchor="middle" direction="rtl">₪</text><polyline points="72,190.0098030300308 73.32222222222222,189.74696391822937 74.64444444444445,189.4833961893606 75.96666666666667,189.21909782362306 77.28888888888889,188.95406679561614 78.61111111111111,188.68830107432464 79.93333333333334,188.42179862310317 81.25555555555556,188.1545573996605 82.57777777777778,187.88657535604403 83.9,187.61785043862403 85.22222222222223,187.34838058807784 86.54444444444445,187.07816373937413 87.86666666666667,186.80719782175723 89.18888888888888,186.53548075873093 90.51111111111112,186.26301046804292 91.83333333333333,185.98978486166857 93.15555555555555,185.71580184579506 94.47777777777777,185.44105932080532 95.8,185.16555518126194 97.12222222222222,184.88928731589098 98.44444444444444,184.61225360756583 99.76666666666667,184.33445193329104 101.08888888888889,184.05588016418594 102.41111111111111,183.7765361654684 103.73333333333333,183.49641779643852 105.05555555555556,183.21552291046206 106.37777777777777,182.93384935495408 107.69999999999999,182.65139497136258 109.02222222222223,182.36815759515176 110.34444444444445,182.08413505578545 111.66666666666666,181.7993251767106 112.98888888888888,181.5137257753405 114.3111111111111,181.2273346630381 115.63333333333333,180.9401496450993 116.95555555555555,180.65216852073584 118.27777777777777,180.36338908305882 119.6,180.07380911906165 120.92222222222222,179.78342640960292 122.24444444444444,179.4922387293896 123.56666666666666,179.20024384695998 124.88888888888889,178.9074395246664 126.21111111111111,178.6138235186582 127.53333333333333,178.31939357886463 128.85555555555555,178.02414744897754 130.17777777777778,177.72808286643394 131.5,177.43119756239884 132.82222222222222,177.13348926174777 134.14444444444445,176.83495568304946 135.46666666666667,176.53559453854825 136.7888888888889,176.2354035341465 138.11111111111111,175.9343803693872 139.43333333333334,175.63252273743623 140.75555555555553,175.3298283250646 142.07777777777778,175.02629481263088 143.39999999999998,174.72191987406342 144.72222222222223,174.41670117684225 146.04444444444445,174.11063638198166 147.36666666666667,173.80372314401188 148.6888888888889,173.4959591109613 150.01111111111112,173.1873419243384 151.33333333333331,172.87786921911365 152.65555555555557,172.56753862370152 153.97777777777776,172.25634775994203 155.3,171.9442942430828 156.6222222222222,171.63137568176074 157.94444444444446,171.3175896779835 159.26666666666665,171.00293382711135 160.5888888888889,170.68740571783863 161.9111111111111,170.3710029321753 163.23333333333335,170.0537230454283 164.55555555555554,169.7355636261833 165.8777777777778,169.41652223628563 167.2,169.09659643082185 168.52222222222224,168.77578375810103 169.84444444444443,168.45408175963587 171.16666666666669,168.13148797012383 172.48888888888888,167.80799991742842 173.8111111111111,167.48361512256002 175.13333333333333,167.1583310996571 176.45555555555555,166.83214535596693 177.77777777777777,166.50505539182672 179.10000000000002,166.17705870064432 180.42222222222222,165.8481527688791 181.74444444444447,165.51833507602254 183.06666666666666,165.1876030945791 184.38888888888889,164.85595429004667 185.7111111111111,164.52338612089736 187.03333333333333,164.1898960385578 188.35555555555555,163.8554814873898 189.67777777777778,163.52013990467054 191,163.1838687205732 192.32222222222222,162.84666535814713 193.64444444444445,162.50852723329803 194.9666666666667,162.16945175476826 196.2888888888889,161.829436324117 197.61111111111111,161.4884783357002 198.93333333333334,161.1465751766507 200.25555555555556,160.8037242268583 201.57777777777775,160.45992285894945 202.9,160.1151684382674 204.22222222222223,159.76945832285173 205.54444444444445,159.42278986341833 206.86666666666667,159.0751604033389 208.18888888888887,158.7265672786208 209.5111111111111,158.37700781788644 210.83333333333334,158.02647934235299 212.15555555555557,157.6749791658116 213.4777777777778,157.32250459460718 214.79999999999998,156.9690529276174 216.1222222222222,156.61462145623221 217.44444444444446,156.259207464333 218.76666666666668,155.90280822827177 220.0888888888889,155.54542101685027 221.4111111111111,155.18704309129922 222.73333333333332,154.827671705257 224.05555555555554,154.46730410474893 225.3777777777778,154.105937528166 226.70000000000002,153.74356920624373 228.0222222222222,153.38019636204092 229.34444444444443,153.01581621091842 230.66666666666666,152.65042596051785 231.9888888888889,152.28402281074 233.31111111111113,151.91660395372355 234.63333333333333,151.54816657382355 235.95555555555555,151.17870784758972 237.27777777777777,150.8082249437449 238.6,150.4367150231634 239.92222222222225,150.0641752388491 241.24444444444444,149.69060273591373 242.56666666666666,149.31599465155503 243.88888888888889,148.9403481150347 245.2111111111111,148.56366024765651 246.53333333333333,148.18592816274412 247.85555555555555,147.80714896561906 249.17777777777778,147.42731975357853 250.5,147.04643761587312 251.82222222222222,146.6644996336845 253.14444444444445,146.2815028801032 254.46666666666667,145.89744442010584 255.7888888888889,145.51232131053308 257.1111111111111,145.12613060006663 258.43333333333334,144.73886932920698 259.7555555555556,144.35053453025057 261.0777777777778,143.96112322726702 262.4,143.5706324360764 263.72222222222223,143.1790591642263 265.0444444444445,142.7864004109689 266.3666666666667,142.39265316723805 267.68888888888887,141.99781441562618 269.01111111111106,141.60188113036105 270.33333333333337,141.20485027728273 271.65555555555557,140.80671881382034 272.97777777777776,140.40748368896857 274.29999999999995,140.00714184326455 275.6222222222222,139.60569020876414 276.94444444444446,139.20312570901854 278.26666666666665,138.7994452590508 279.5888888888889,138.39464576533211 280.9111111111111,137.98872412575795 282.23333333333335,137.58167722962457 283.55555555555554,137.17350195760497 284.8777777777778,136.76419518172509 286.20000000000005,136.35375376533972 287.52222222222224,135.9421745631087 288.84444444444443,135.5294544209725 290.16666666666663,135.11559017612834 291.48888888888894,134.70057865700574 292.81111111111113,134.28441668324234 294.1333333333333,133.86710106565948 295.4555555555555,133.44862860623775 296.77777777777777,133.02899609809256 298.1,132.60820032544945 299.4222222222222,132.1862380636195 300.7444444444444,131.7631060789746 302.06666666666666,131.33880112892282 303.3888888888889,130.9133199618833 304.7111111111111,130.48665931726146 306.0333333333333,130.05881592542414 307.35555555555555,129.62978650767425 308.6777777777778,129.19956777622602 310,128.76815643417936 311.3222222222222,128.33554917549503 312.64444444444445,127.90174268496898 313.96666666666664,127.4667336382072 315.2888888888889,127.03051870160002 316.6111111111111,126.59309453229665 317.9333333333334,126.15445777817962 319.2555555555556,125.71460507783912 320.5777777777778,125.27353306054697 321.9,124.83123834623116 323.22222222222223,124.38771754544972 324.5444444444445,123.94296725936476 325.8666666666667,123.49698407971646 327.18888888888887,123.04976458879705 328.5111111111111,122.6013053594244 329.8333333333333,122.15160295491597 331.1555555555555,121.70065392906234 332.4777777777778,121.24845482610081 333.8,120.79500218068902 335.12222222222226,120.34029251787832 336.44444444444446,119.88432235308707 337.76666666666665,119.42708819207407 339.0888888888889,118.96858653091172 340.4111111111111,118.50881385595918 341.73333333333335,118.04776664383539 343.05555555555554,117.58544136139216 344.37777777777774,117.12183446568703 345.7,116.65694240395615 347.0222222222222,116.19076161358704 348.3444444444445,115.72328852209128 349.6666666666667,115.25451954707717 350.9888888888889,114.7844510962222 352.31111111111113,114.31307956724568 353.6333333333333,113.84040134788087 354.9555555555556,113.3664128158476 356.27777777777777,112.89111033882426 357.59999999999997,112.41449027442015 358.9222222222222,111.93654897014743 360.2444444444444,111.45728276339322 361.56666666666666,110.97668798139152 362.8888888888889,110.49476094119498 364.2111111111111,110.0114979496468 365.53333333333336,109.52689530335232 366.85555555555555,109.04094928865072 368.1777777777778,108.55365618158658 369.5,108.06501224788117 370.8222222222222,107.57501374290409 372.14444444444445,107.08365691164431 373.46666666666664,106.59093798868162 374.7888888888889,106.0968531981576 376.1111111111111,105.60139875374689 377.43333333333334,105.1045708586279 378.7555555555556,104.60636570545391 380.0777777777778,104.1067794763239 381.40000000000003,103.60580834275316 382.72222222222223,103.10344846564408 384.0444444444444,102.59969599525662 385.3666666666667,102.09454707117891 386.68888888888887,101.58799782229764 388.0111111111111,101.08004436676832 389.3333333333333,100.5706828119856 390.6555555555555,100.05990925455347 391.9777777777778,99.54771978025524 393.3,99.03411046402364 394.62222222222226,98.51907736991076 395.94444444444446,98.00261655105774 397.26666666666665,97.48472404966469 398.5888888888889,96.96539589696026 399.9111111111111,96.44462811317126 401.23333333333335,95.92241670749219 402.55555555555554,95.3987576780546 403.87777777777774,94.87364701189645 405.2,94.34708068493137 406.5222222222222,93.81905466191775 407.8444444444445,93.289564896428 409.1666666666667,92.75860733081726 410.4888888888889,92.22617789619261 411.81111111111113,91.69227251238163 413.1333333333333,91.1568870879013 414.4555555555556,90.62001751992656 415.77777777777777,90.08165969425889 417.09999999999997,89.54180948529483 418.4222222222222,89.00046275599429 419.7444444444444,88.45761535784891 421.06666666666666,87.91326313085017 422.3888888888889,87.36740190345765 423.7111111111111,86.82002749256696 425.03333333333336,86.27113570347771 426.35555555555555,85.72072232986139 427.6777777777778,85.1687831537291 429,84.61531394539922 430.3222222222222,84.06031046346506 431.64444444444445,83.5037684547623 432.96666666666664,82.94568365433638 434.2888888888889,82.38605178540988 435.6111111111111,81.82486855934972 436.93333333333334,81.26212967563427 438.2555555555556,80.69783082182039 439.5777777777778,80.13196767351046 440.90000000000003,79.5645358943191 442.22222222222223,78.99553113584015 443.5444444444444,78.42494903761308 444.8666666666667,77.85278522708981 446.18888888888887,77.27903531960106 447.5111111111111,76.70369491832284 448.8333333333333,76.12675961424264 450.1555555555555,75.5482249861258 451.4777777777778,74.96808660048148 452.8,74.3863400115288 454.12222222222226,73.80298076116264 455.44444444444446,73.21800437891962 456.76666666666665,72.63140638194373 458.0888888888889,72.0431822749521 459.4111111111111,71.45332755020038 460.73333333333335,70.86183768744833 462.05555555555554,70.26870815392519 463.37777777777774,69.67393440429474 464.7,69.07751188062079 466.0222222222222,68.47943601233202 467.3444444444445,67.87970221618696 468.6666666666667,67.278305896239 469.9888888888889,66.67524244380107 471.31111111111113,66.07050723741031 472.6333333333333,65.46409564279278 473.9555555555556,64.85600301282773 475.27777777777777,64.24622468751218 476.59999999999997,63.63475599392521 477.9222222222222,63.02159224619193 479.2444444444444,62.40672874544786 480.56666666666666,61.79016077980268 481.8888888888889,61.17188362430431 483.2111111111111,60.55189254090254 484.53333333333336,59.930182778412906 485.85555555555555,59.306749572480044 487.1777777777778,58.68158814554138 488.5,58.05469370679046 489.8222222222222,57.42606145214017 491.14444444444445,56.79568656418599 492.46666666666664,56.16356421216905 493.7888888888889,55.52968955193916 495.1111111111111,54.89405772591762 496.43333333333334,54.25666386306 497.7555555555556,53.617503078818864 499.0777777777778,52.976570475106286 500.40000000000003,52.333861140256374 501.72222222222223,51.68937014898756 503.0444444444444,51.04309256236488 504.3666666666667,50.3950234277622 505.68888888888887,49.745157778824094 507.0111111111111,49.09349063542794 508.3333333333333,48.44001700364574 509.6555555555555,47.784731875705766 510.9777777777778,47.12763022995421 512.3,46.46870703081678 513.6222222222223,45.80795722876006 514.9444444444445,45.14537576025275 516.2666666666667,44.48095754772695 517.588888888889,43.814697499539214 518.911111111111,43.14659050993155 520.2333333333333,42.476631458992266 521.5555555555555,41.804815212616724 522.8777777777777,41.13113662246809 524.2,40.45559052593772 525.5222222222221,39.778171746105784 526.8444444444444,39.098875091701416 528.1666666666667,38.41769535706305 529.4888888888888,37.734627322098476 530.8111111111111,37.04966575224489 532.1333333333333,36.36280539842869 533.4555555555555,35.674040997025315 534.7777777777778,34.98336726981891 536.0999999999999,34.29077892396188 537.4222222222222,33.596270651934276 538.7444444444444,32.89983713150314 540.0666666666666,32.2014730256818 541.3888888888889,31.501172982688875 542.7111111111111,30.798931635907273 544.0333333333333,30.094743603843106 545.3555555555556,29.388603490084428 546.6777777777778,28.680505883259915 548,27.970445356997324" fill="none" stroke="#1f3f8f" stroke-width="2.5"></polyline><polyline points="72,190.0098030300308 73.32222222222222,189.74038122535285 74.64444444444445,189.4701675050685 75.96666666666667,189.1991595414883 77.28888888888889,188.92735500008084 78.61111111111111,188.65475153945275 79.93333333333334,188.38134681132868 81.25555555555556,188.1071384605308 82.57777777777778,187.83212412495888 83.9,187.55630143556954 85.22222222222223,187.27966801635614 86.54444444444445,187.00222148432823 87.86666666666667,186.72395944949088 89.18888888888888,186.44487951482435 90.51111111111112,186.16497927626318 91.83333333333333,185.88425632267564 93.15555555555555,185.60270823584307 94.47777777777777,185.32033259043868 95.8,185.037126954007 97.12222222222222,184.75308888694278 98.44444444444444,184.46821594247 99.76666666666667,184.18250566662084 101.08888888888889,183.8959555982144 102.41111111111111,183.60856326883575 103.73333333333333,183.32032620281427 105.05555555555556,183.0312419172028 106.37777777777777,182.74130792175592 107.69999999999999,182.45052171890856 109.02222222222223,182.15888080375453 110.34444444444445,181.866382664025 111.66666666666666,181.57302478006673 112.98888888888888,181.27880462482045 114.3111111111111,180.983719663799 115.63333333333333,180.6877673550657 116.95555555555555,180.39094514921214 118.27777777777777,180.0932504893366 119.6,179.7946808110216 120.92222222222222,179.49523354231223 122.24444444444444,179.19490610369368 123.56666666666666,178.89369590806908 124.88888888888889,178.59160036073743 126.21111111111111,178.28861685937096 127.53333333333333,177.98474279399292 128.85555555555555,177.6799755469549 130.17777777777778,177.37431249291456 131.5,177.06775099881264 132.82222222222222,176.76028842385074 134.14444444444445,176.4519221194681 135.46666666666667,176.14264942931908 136.7888888888889,175.83246768925028 138.11111111111111,175.52137422727742 139.43333333333334,175.20936636356248 140.75555555555553,174.8964414103905 142.07777777777778,174.58259667214648 143.39999999999998,174.2678294452922 144.72222222222223,173.9521370183428 146.04444444444445,173.63551667184367 147.36666666666667,173.31796567834672 148.6888888888889,172.99948130238707 150.01111111111112,172.6800608004595 151.33333333333331,172.3597014209947 152.65555555555557,172.03840040433562 153.97777777777776,171.71615498271382 155.3,171.39296238022533 156.6222222222222,171.0688198128071 157.94444444444446,170.74372448821276 159.26666666666665,170.41767360598865 160.5888888888889,170.09066435744973 161.9111111111111,169.76269392565527 163.23333333333335,169.43375948538474 164.55555555555554,169.1038582031134 165.8777777777778,168.77298723698775 167.2,168.44114373680145 168.52222222222224,168.10832484397025 169.84444444444443,167.77452769150779 171.16666666666669,167.43974940400057 172.48888888888888,167.1039870975835 173.8111111111111,166.76723787991486 175.13333333333333,166.42949885015136 176.45555555555555,166.09076709892327 177.77777777777777,165.75103970830926 179.10000000000002,165.41031375181143 180.42222222222222,165.06858629432986 181.74444444444447,164.72585439213748 183.06666666666666,164.3821150928547 184.38888888888889,164.0373654354239 185.7111111111111,163.69160245008405 187.03333333333333,163.344823158345 188.35555555555555,162.9970245729619 189.67777777777778,162.64820369790945 191,162.2983575283561 192.32222222222222,161.9474830506381 193.64444444444445,161.5955772422337 194.9666666666667,161.24263707173685 196.2888888888889,160.88865949883137 197.61111111111111,160.5336414742646 198.93333333333334,160.17757993982116 200.25555555555556,159.82047182829655 201.57777777777775,159.4623140634709 202.9,159.10310356008227 204.22222222222223,158.74283722380025 205.54444444444445,158.38151195119912 206.86666666666667,158.01912462973124 208.18888888888887,157.65567213770026 209.5111111111111,157.29115134423418 210.83333333333334,156.9255591092583 212.15555555555557,156.55889228346834 213.4777777777778,156.19114770830313 214.79999999999998,155.8223222159176 216.1222222222222,155.45241262915536 217.44444444444446,155.0814157615212 218.76666666666668,154.70932841715407 220.0888888888889,154.33614739079906 221.4111111111111,153.96186946778008 222.73333333333332,153.58649142397212 224.05555555555554,153.21001002577339 225.3777777777778,152.83242203007754 226.70000000000002,152.45372418424571 228.0222222222222,152.07391322607862 229.34444444444443,151.6929858837882 230.66666666666666,151.31093887596958 231.9888888888889,150.9277689115729 233.31111111111113,150.54347268987487 234.63333333333333,150.1580469004502 235.95555555555555,149.7714882231433 237.27777777777777,149.38379332803964 238.6,148.99495887543696 239.92222222222225,148.60498151581658 241.24444444444444,148.21385788981453 242.56666666666666,147.82158462819262 243.88888888888889,147.42815835180934 245.2111111111111,147.03357567159094 246.53333333333333,146.63783318850204 247.85555555555555,146.24092749351638 249.17777777777778,145.8428551675876 250.5,145.44361278161958 251.82222222222222,145.0431968964371 253.14444444444445,144.6416040627561 254.46666666666667,144.23883082115395 255.7888888888889,143.83487370203966 257.1111111111111,143.4297292256241 258.43333333333334,143.0233939018899 259.7555555555556,142.6158642305614 261.0777777777778,142.2071367010746 262.4,141.79720779254683 263.72222222222223,141.38607397374636 265.0444444444445,140.9737317030621 266.3666666666667,140.56017742847308 267.68888888888887,140.1454075875178 269.01111111111106,139.72941860726354 270.33333333333337,139.31220690427568 271.65555555555557,138.89376888458665 272.97777777777776,138.4741009436651 274.29999999999995,138.0531994663849 275.6222222222222,137.63106082699392 276.94444444444446,137.2076813890827 278.26666666666665,136.78305750555324 279.5888888888889,136.35718551858776 280.9111111111111,135.93006175961673 282.23333333333335,135.50168254928772 283.55555555555554,135.07204419743343 284.8777777777778,134.64114300304004 286.20000000000005,134.20897525421532 287.52222222222224,133.77553722815654 288.84444444444443,133.34082519111854 290.16666666666663,132.90483539838146 291.48888888888894,132.46756409421855 292.81111111111113,132.02900751186377 294.1333333333333,131.58916187347947 295.4555555555555,131.14802339012357 296.77777777777777,130.70558826171725 298.1,130.261852677012 299.4222222222222,129.81681281355682 300.7444444444444,129.37046483766537 302.06666666666666,128.92280490438287 303.3888888888889,128.47382915745305 304.7111111111111,128.02353372928482 306.0333333333333,127.57191474091906 307.35555555555555,127.11896830199517 308.6777777777778,126.66469051071749 310,126.2090774538219 311.3222222222222,125.75212520654182 312.64444444444445,125.29382983257459 313.96666666666664,124.83418738404752 315.2888888888889,124.3731939014839 316.6111111111111,123.91084541376881 317.9333333333334,123.44713793811505 319.2555555555556,122.98206748002868 320.5777777777778,122.51563003327473 321.9,122.04782157984262 323.22222222222223,121.57863808991164 324.5444444444445,121.10807552181598 325.8666666666667,120.63612982201033 327.18888888888887,120.1627969250346 328.5111111111111,119.68807275347905 329.8333333333333,119.21195321794916 331.1555555555555,118.73443421703038 332.4777777777778,118.25551163725285 333.8,117.77518135305584 335.12222222222226,117.29343922675241 336.44444444444446,116.81028110849356 337.76666666666665,116.32570283623258 339.0888888888889,115.83970023568926 340.4111111111111,115.35226912031382 341.73333333333335,114.86340529125091 343.05555555555554,114.37310453730339 344.37777777777774,113.88136263489612 345.7,113.38817534803948 347.0222222222222,112.89353842829304 348.3444444444445,112.39744761472878 349.6666666666667,111.8998986338945 350.9888888888889,111.40088719977697 352.31111111111113,110.90040901376504 353.6333333333333,110.39845976461257 354.9555555555556,109.89503512840129 356.27777777777777,109.3901307685036 357.59999999999997,108.88374233554515 358.9222222222222,108.37586546736746 360.2444444444444,107.86649578899025 361.56666666666666,107.35562891257382 362.8888888888889,106.8432604373812 364.2111111111111,106.32938594974028 365.53333333333336,105.81400102300577 366.85555555555555,105.2971012175211 368.1777777777778,104.77868208058011 369.5,104.25873914638876 370.8222222222222,103.73726793602664 372.14444444444445,103.21426395740836 373.46666666666664,102.68972270524489 374.7888888888889,102.16363966100468 376.1111111111111,101.6360102928749 377.43333333333334,101.10683005572218 378.7555555555556,100.5760943910537 380.0777777777778,100.04379872697766 381.40000000000003,99.50993847816407 382.72222222222223,98.97450904580528 384.0444444444444,98.43750581757621 385.3666666666667,97.89892416759474 386.68888888888887,97.3587594563818 388.0111111111111,96.81700703082149 389.3333333333333,96.27366222412083 390.6555555555555,95.7287203557698 391.9777777777778,95.18217673150076 393.3,94.6340266432482 394.62222222222226,94.08426536910812 395.94444444444446,93.53288817329732 397.26666666666665,92.9798903061127 398.5888888888889,92.42526700389021 399.9111111111111,91.86901348896397 401.23333333333335,91.311124969625 402.55555555555554,90.75159664007997 403.87777777777774,90.19042368040978 405.2,89.62760125652815 406.5222222222222,89.06312452013984 407.8444444444445,88.49698860869891 409.1666666666667,87.92918864536696 410.4888888888889,87.35971973897091 411.81111111111113,86.78857698396106 413.1333333333333,86.21575546036878 414.4555555555556,85.64125023376401 415.77777777777777,85.06505635521289 417.09999999999997,84.48716886123506 418.4222222222222,83.907582773761 419.7444444444444,83.326293100089 421.06666666666666,82.74329483284227 422.3888888888889,82.15858294992572 423.7111111111111,81.57215241448276 425.03333333333336,80.98399817485188 426.35555555555555,80.39411516452319 427.6777777777778,79.80249830209468 429,79.2091424912285 430.3222222222222,78.61404262060708 431.64444444444445,78.0171935638891 432.96666666666664,77.41859017966523 434.2888888888889,76.81822731141398 435.6111111111111,76.21609978745721 436.93333333333334,75.61220242091555 438.2555555555556,75.0065300096638 439.5777777777778,74.39907733628608 440.90000000000003,73.78983916803084 442.22222222222223,73.17881025676584 443.5444444444444,72.56598533893293 444.8666666666667,71.95135913550271 446.18888888888887,71.33492635192903 447.5111111111111,70.71668167810338 448.8333333333333,70.09661978830928 450.1555555555555,69.47473534117613 451.4777777777778,68.85102297963348 452.8,68.22547733086468 454.12222222222226,67.59809300626074 455.44444444444446,66.96886460137384 456.76666666666665,66.33778669587076 458.0888888888889,65.70485385348621 459.4111111111111,65.07006062197603 460.73333333333335,64.43340153307018 462.05555555555554,63.794871102425645 463.37777777777774,63.154463829579186 464.7,62.51217419790003 466.0222222222222,61.867996674542184 467.3444444444445,61.22192571039699 468.6666666666667,60.573955740045115 469.9888888888889,59.924081181708765 471.31111111111113,59.272296437203565 472.6333333333333,58.618595891890216 473.9555555555556,57.962973914626296 475.27777777777777,57.30542485771767 476.59999999999997,56.64594305686982 477.9222222222222,55.98452283113911 479.2444444444444,55.321158482883824 480.56666666666666,54.655844297715085 481.8888888888889,53.98857454444757 483.2111111111111,53.31934347505027 484.53333333333336,52.64814532459684 485.85555555555555,51.974974311216066 487.1777777777778,51.299824636041926 488.5,50.62269048316373 489.8222222222222,49.943566019576004 491.14444444444445,49.26244539512821 492.46666666666664,48.5793227424744 493.7888888888889,47.89419217702266 495.1111111111111,47.20704779688432 496.43333333333334,46.517883682823296 497.7555555555556,45.82669389820496 499.0777777777778,45.13347248894503 500.40000000000003,44.438213483458334 501.72222222222223,43.7409108926073 503.0444444444444,43.04155870965038 504.3666666666667,42.34015091019036 505.68888888888887,41.6366814521224 507.0111111111111,40.931144275582 508.3333333333333,40.22353330289281 509.6555555555555,39.51384243851432 510.9777777777778,38.80206556898922 512.3,38.0881965628909 513.6222222222223,37.37222927077056 514.9444444444445,36.654157525104154 516.2666666666667,35.93397514023937 517.588888888889,35.21167591234236 518.911111111111,34.4872536193442 520.2333333333333,33.76070202088736 521.5555555555555,33.032014858271936 522.8777777777777,32.30118585440175 524.2,31.568208713730236 525.5222222222221,30.833077122206213 526.8444444444444,30.095784747219568 528.1666666666667,29.356325237546585 529.4888888888888,28.614692223295382 530.8111111111111,27.87087931585087 532.1333333333333,27.124880107819855 533.4555555555555,26.37668817297581 534.7777777777778,25.626297066203442 536.0999999999999,24.873700323443302 537.4222222222222,24.118891461635975 538.7444444444444,23.36186397866635 540.0666666666666,22.60261135330748 541.3888888888889,21.841127045164516 542.7111111111111,21.077404494618353 544.0333333333333,20.31143712276907 545.3555555555556,19.543218331379276 546.6777777777778,18.772741502817222 548,18" fill="none" stroke="#1c70b2" stroke-width="2.5" stroke-dasharray="6 4"></polyline></svg><div class="kw-legend" data-legend=""><span><i aria-hidden="true" style="background-color: rgb(31, 63, 143);"></i>תרחיש א׳</span><span><i aria-hidden="true" style="background-color: rgb(28, 112, 178);"></i>תרחיש ב׳</span></div><div class="kw-notes" data-notes=""><p>סך דמי הניהול הוא סכום החיובים בפועל בסימולציה. ההפרש ביתרה כולל גם את השפעתם על הצבירה בהמשך.</p><p>דמי ניהול הם שיקול אחד לצד כיסוי, נזילות, תנאי המוצר והתאמה למטרות.</p></div><noscript><p>התוצאות המוצגות הן של הדוגמה. יש להפעיל JavaScript כדי לשנות נתונים ולחשב תרחיש חדש.</p></noscript></div></div></section><section class="kw-example" aria-labelledby="worked-example"><h2 id="worked-example">דוגמה פתורה</h2><p>דוגמה בדיונית: יתרה התחלתית של 300,000 ₪, הפקדה חודשית של 2,000 ₪, תקופה של 30 שנה ותשואה שנתית נומינלית משוערת של 4%. בתרחיש א׳: 1% מההפקדה ו־0.6% לשנה מהצבירה. בתרחיש ב׳: 0% מההפקדה ו־0.4% לשנה מהצבירה. אלו הנחות להמחשה, לא הצעות מסחריות.</p><div class="kw-table-wrap"><table class="kw-table"><caption>תוצאות הדוגמה — חושבו באותו מנוע</caption><tbody><tr><th scope="row">יתרה בסוף התקופה — תרחיש א׳</th><td><bdi dir="ltr" class="kw-number">2,036,744.02 ₪</bdi></td></tr><tr><th scope="row">יתרה בסוף התקופה — תרחיש ב׳</th><td><bdi dir="ltr" class="kw-number">2,143,607.64 ₪</bdi></td></tr><tr><th scope="row">סך דמי הניהול — א׳</th><td><bdi dir="ltr" class="kw-number">192,491.85 ₪</bdi></td></tr><tr><th scope="row">סך דמי הניהול — ב׳</th><td><bdi dir="ltr" class="kw-number">127,839.99 ₪</bdi></td></tr><tr><th scope="row">הפרש ביתרה: ב׳ פחות א׳</th><td><bdi dir="ltr" class="kw-number">106,863.61 ₪</bdi></td></tr><tr><th scope="row">ההפרש כאחוז מיתרת א׳</th><td><bdi dir="ltr" class="kw-number">5.25 %</bdi></td></tr></tbody></table></div><p><a href="/knowledge/agents/fees/?balance=300000&amp;deposit=2000&amp;years=30&amp;return=4&amp;depositFeeA=1&amp;feeA=0.6&amp;depositFeeB=0&amp;feeB=0.4">פתיחת המחשבון עם נתוני הדוגמה</a></p></section><section class="kw-section"><h2>איך משתמשים בתוצאה בפגישת לקוח</h2><ol><li>פותחים בהגדרת המטרה והתקופה: לאיזה שימוש מיועד הכסף ומתי צפוי צורך בו.</li><li>מעתיקים את שני רכיבי דמי הניהול מהצעות כתובות ומשאירים את יתר ההנחות זהות.</li><li>מציגים גם את סך החיובים וגם את ההפרש ביתרה. אלה שני מספרים שונים.</li><li>משנים את התשואה ואת התקופה ובודקים אם ההפרש נשאר רלוונטי להחלטה.</li></ol></section><section class="kw-section"><h2>רשימת בדיקה לפגישה</h2><div class="kw-columns"><div><h3>מה להכין</h3><ul><li>יתרה עדכנית ותאריך הדוח</li><li>הפקדה חודשית צפויה</li><li>שתי הצעות עם דמי ניהול מהפקדה ומצבירה, ותוקף ההטבה</li></ul></div><div><h3>מה לשאול</h3><ul><li>האם ההפקדות צפויות להשתנות?</li><li>אילו כיסויים, תנאי משיכה או מאפייני שירות שונים בין החלופות?</li><li>האם דמי הניהול שהוזנו חלים לאורך כל התקופה?</li></ul></div></div></section><section class="kw-section"><h2>גבולות התוצאה</h2><p>אין כאן השוואת כיסוי ביטוחי, מס, הוצאות אחרות או התאמת מוצר. התשואה קבועה וזהה בין התרחישים. דמי הניהול נגבים לפי מוסכמת החישוב המוצגת, שעשויה להיות שונה מהחיוב בפועל.</p></section><section class="kw-demo" aria-label="תיאום הדגמה"><p>כאן עובדים על מספרים לדוגמה; ב־<bdi dir="ltr">Plan-T</bdi> עובדים על תיק הלקוח האמיתי.</p><a class="kw-button" href="/contact/">תיאום הדגמה</a></section><aside class="not-prose mt-12 rounded-2xl border border-brand-200 bg-surface-blue p-5 text-sm leading-relaxed text-ink-700" aria-label="הבהרה"><p class="font-bold text-brand-800">הבהרה</p><p class="mt-2">המידע באתר הוא מידע כללי בלבד. הוא אינו מהווה ייעוץ פנסיוני, שיווק פנסיוני, ייעוץ השקעות, שיווק השקעות, ייעוץ מס או ייעוץ משפטי, ואינו מותאם לנסיבותיו של אדם מסוים. הנתונים נכונים למועד העדכון המצוין ויש לאמתם מול המקור הרשמי. להחלטה אישית יש להתייעץ עם בעל רישיון מתאים.</p></aside></article></body></html>

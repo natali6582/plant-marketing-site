@@ -6,12 +6,22 @@
   "scripts": {
     "dev": "astro dev",
     "build": "node scripts/check-figures.mjs && astro build",
-    "preview": "astro preview"
+    "preview": "astro preview",
+    "test:knowledge": "vitest run",
+    "typecheck:knowledge": "tsc -p tsconfig.knowledge.json",
+    "build:knowledge": "node scripts/knowledge/build.mjs",
+    "check:knowledge": "node scripts/knowledge/check.mjs",
+    "check:knowledge-links": "node --experimental-strip-types scripts/knowledge/links.mjs",
+    "evidence:knowledge": "node --experimental-strip-types scripts/knowledge/evidence.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",
     "@tailwindcss/vite": "^4.3.3",
     "astro": "^7.2.4",
     "tailwindcss": "^4.3.3"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.3",
+    "vitest": "^3.2.6"
   }
 }

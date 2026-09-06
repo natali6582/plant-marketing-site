@@ -1,0 +1,41 @@
+
+ RUN  v3.2.6 C:/Users/Nataliek/Documents/Codex/2026-09-06/new-chat/work/plant-marketing-site
+
+ ✓ src/lib/finance-core.test.ts > finance-core: independent hand/formula vectors > V1: 100,000 / 1,000 = exactly 100 funded months; first shortfall 101 3ms
+ ✓ src/lib/finance-core.test.ts > finance-core: independent hand/formula vectors > V2: 12 × 1,000 × 0.98 = 11,760 1ms
+ ✓ src/lib/finance-core.test.ts > finance-core: independent hand/formula vectors > V3: 100,000 × 1.01^12 = 112,682.50 displayed 0ms
+ ✓ src/lib/finance-core.test.ts > finance-core: independent hand/formula vectors > V4: nominal 100,000 / annual inflation 1.02 = real 98,039.22 1ms
+ ✓ src/lib/finance-core.test.ts > finance-core: independent hand/formula vectors > V5: annual fee 1.2% / 12 → 100,000 × 0.999^12 1ms
+ ✓ src/lib/finance-core.test.ts > finance-core: independent hand/formula vectors > zero horizon preserves initial balance and records no cash flow 1ms
+ ✓ src/lib/finance-core.test.ts > finance-core: independent hand/formula vectors > negative monthly return: 1,000 × 0.9 = 900 0ms
+ ✓ src/lib/finance-core.test.ts > finance-core: independent hand/formula vectors > fee > return: 1,000 × 1.001 × 0.998 = 998.998 0ms
+ ✓ src/lib/finance-core.test.ts > finance-core: independent hand/formula vectors > withdrawal timing: start (1,000−100)×1.1=990; end 1,000×1.1−100=1,000 1ms
+ ✓ src/lib/finance-core.test.ts > finance-core: independent hand/formula vectors > approved order: (1,000+200×.98−100)×1.01×.999=1,105.85304 0ms
+ ✓ src/lib/finance-core.test.ts > finance-core: independent hand/formula vectors > indexation starts in month 2: 100 then 110, both timing choices 1ms
+ ✓ src/lib/finance-core.test.ts > finance-core: independent hand/formula vectors > partial withdrawal: 250 funds 100+100+50 and records 50 shortfall 0ms
+ ✓ src/lib/finance-core.test.ts > finance-core: independent hand/formula vectors > 100% deposit fee leaves zero net deposits 0ms
+ ✓ src/lib/finance-core.test.ts > finance-core: independent hand/formula vectors > month overrides allow a paused deposit, no mutable input or hidden state 0ms
+ ✓ src/lib/finance-core.test.ts > finance-core: independent hand/formula vectors > every monthly row conserves cash: opening+deposit+return−fees−withdrawal=closing 2ms
+ ✓ src/lib/finance-core.test.ts > finance-core: independent hand/formula vectors > decomposition sums exactly to real final value, fee drag includes lost growth 2ms
+ ✓ src/lib/finance-core.test.ts > finance-core: independent hand/formula vectors > comparison uses A as denominator and null when A is zero 1ms
+ ✓ src/lib/finance-core.test.ts > finance-core: independent hand/formula vectors > rejects invalid input {"initialBalance":-1,"months":12} 1ms
+ ✓ src/lib/finance-core.test.ts > finance-core: independent hand/formula vectors > rejects invalid input {"initialBalance":1,"months":-1} 0ms
+ ✓ src/lib/finance-core.test.ts > finance-core: independent hand/formula vectors > rejects invalid input {"initialBalance":1,"months":1.5} 0ms
+ ✓ src/lib/finance-core.test.ts > finance-core: independent hand/formula vectors > rejects invalid input {"initialBalance":1,"months":1201} 0ms
+ ✓ src/lib/finance-core.test.ts > finance-core: independent hand/formula vectors > rejects invalid input {"initialBalance":null,"months":1} 0ms
+ ✓ src/lib/finance-core.test.ts > finance-core: independent hand/formula vectors > rejects invalid input {"initialBalance":null,"months":1} 0ms
+ ✓ src/lib/finance-core.test.ts > finance-core: independent hand/formula vectors > rejects invalid input {"initialBalance":1,"months":1,"depositFee":1.1} 1ms
+ ✓ src/lib/finance-core.test.ts > finance-core: independent hand/formula vectors > rejects invalid input {"initialBalance":1,"months":1,"monthlyReturn":-1} 0ms
+ ✓ src/lib/finance-core.test.ts > finance-core: independent hand/formula vectors > rejects invalid input {"initialBalance":1,"months":1,"monthlyInflation":-1} 0ms
+ ✓ src/lib/knowledge-calculators.test.ts > knowledge tool contracts and URL prefills > fees: every input survives URL round-trip and yields identical results 10ms
+ ✓ src/lib/knowledge-calculators.test.ts > knowledge tool contracts and URL prefills > withdrawals: every input survives URL round-trip and yields identical results 5ms
+ ✓ src/lib/knowledge-calculators.test.ts > knowledge tool contracts and URL prefills > real: every input survives URL round-trip and yields identical results 4ms
+ ✓ src/lib/knowledge-calculators.test.ts > knowledge tool contracts and URL prefills > invalid/unknown/HTML query values cannot overwrite valid defaults 2ms
+ ✓ src/lib/knowledge-calculators.test.ts > knowledge tool contracts and URL prefills > zero withdrawal is not described as an infinite lifespan 1ms
+ ✓ src/lib/knowledge-calculators.test.ts > knowledge tool contracts and URL prefills > negative rates are accepted when within the documented bounds 2ms
+
+ Test Files  2 passed (2)
+      Tests  32 passed (32)
+   Start at  07:09:33
+   Duration  981ms (transform 152ms, setup 0ms, collect 212ms, tests 45ms, environment 1ms, prepare 678ms)
+

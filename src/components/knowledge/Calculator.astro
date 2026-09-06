@@ -1,0 +1,47 @@
+---
+import { calculateTool, defaultsFor, fieldsFor, formatNumber } from '../../lib/knowledge-calculators';
+import type { ToolKind } from '../../lib/knowledge-calculators';
+const { kind } = Astro.props as { kind: ToolKind };
+const fields = fieldsFor(kind);
+const initial = calculateTool(kind, defaultsFor(kind));
+---
+<section data-calculator={kind} aria-label="מחשבון תרחישים">
+  <aside class="kw-assumptions" aria-label="הנחות החישוב">
+    <h2>הנחות החישוב — גלויות לאורך כל הדרך</h2>
+    <p>התשואה והאינפלציה קבועות בתרחיש. שיעור שנתי מומר לחודשי לפי <bdi dir="ltr">(1 + r)^(1/12) − 1</bdi>. דמי הניהול מצבירה מחולקים ב־<bdi dir="ltr">12</bdi> ונגבים בכל חודש אחרי התשואה.</p>
+    <p>הפקדה נטו נכנסת בתחילת החודש. משיכת תחילת חודש קודמת לתשואה; משיכת סוף חודש מתבצעת אחרי התשואה ודמי הניהול. החישוב אינו כולל מס, עלויות נוספות או תנאי מוצר.</p>
+    <p>ברירות המחדל הן מספרים לדוגמה. ההפקדות קבועות בסכומן הנומינלי. ההצמדה, אם הופעלה, מתחילה במשיכה השנייה.</p>
+  </aside>
+  <div class="kw-calculator">
+    <form class="kw-inputs" novalidate>
+      <h2>הנתונים לתרחיש</h2>
+      {fields.map(f => (
+        <label class:list={['kw-field', typeof f.value === 'boolean' && 'kw-checkbox kw-wide']} for={`${kind}-${f.key}`}>
+          <span class="kw-field-label">{f.label}{f.unit && <small> · {f.unit}</small>}</span>
+          {typeof f.value === 'boolean' ? <input id={`${kind}-${f.key}`} name={f.key} type="checkbox" checked={f.value} /> :
+            f.options ? <select id={`${kind}-${f.key}`} name={f.key}>{f.options.map(o => <option value={o.value} selected={o.value === f.value}>{o.label}</option>)}</select> :
+            <input id={`${kind}-${f.key}`} name={f.key} type="number" inputmode="decimal" value={f.value} min={f.min} max={f.max} step={f.step} required />}
+        </label>
+      ))}
+      <p class="kw-error" data-error role="alert" hidden></p>
+      <div class="kw-actions">
+        <button class="kw-button" type="submit">חישוב התרחיש</button>
+        <button class="kw-button kw-button-secondary" type="button" data-print>הדפסה / שמירה כ־PDF</button>
+      </div>
+    </form>
+    <div class="kw-panel">
+      <h2>התוצאה לפי ההנחות</h2>
+      <div data-results aria-live="polite" aria-atomic="true">
+        <dl class="kw-metrics">{initial.metrics.map(m => <div class="kw-metric"><dt>{m.label}</dt><dd>{typeof m.value === 'number' ? <bdi class="kw-number" dir="ltr">{formatNumber(m.value)}{m.unit ? ` ${m.unit}` : ''}</bdi> : m.value}</dd></div>)}</dl>
+      </div>
+      <svg class="kw-chart" data-chart viewBox="0 0 560 270" role="img" aria-label="מסלול היתרה לאורך חודשי התרחיש"></svg>
+      <div class="kw-legend" data-legend></div>
+      <div class="kw-notes" data-notes>{initial.notes.map(n => <p>{n}</p>)}</div>
+      <noscript><p>התוצאות המוצגות הן של הדוגמה. יש להפעיל JavaScript כדי לשנות נתונים ולחשב תרחיש חדש.</p></noscript>
+    </div>
+  </div>
+</section>
+<script>
+  import { initializeCalculators } from '../../scripts/knowledge/calculators';
+  initializeCalculators();
+</script>

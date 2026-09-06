@@ -1,0 +1,406 @@
+{
+  "schemaVersion": 1,
+  "model": "pension-aum-v1",
+  "currency": "ILS",
+  "toleranceIls": 1,
+  "contract": {
+    "supportedInputs": [
+      "p0",
+      "deposit",
+      "salaryGrowth",
+      "ret",
+      "feeAum",
+      "years"
+    ],
+    "period": "year",
+    "rates": "fractions",
+    "depositTiming": "end-of-period",
+    "returnAndAumFeeBasis": "opening-balance",
+    "excluded": [
+      "feeDeposit",
+      "withdrawals",
+      "taxes"
+    ],
+    "assumptions": "illustrative, not regulatory limits"
+  },
+  "coverage": {
+    "variedInputs": [
+      "p0",
+      "deposit",
+      "salaryGrowth",
+      "ret",
+      "feeAum",
+      "years"
+    ],
+    "fixedInputs": {},
+    "originalGrid": {
+      "variedInputs": [
+        "ret",
+        "feeAum"
+      ],
+      "fixedInputs": {
+        "p0": 100000,
+        "deposit": 24000,
+        "salaryGrowth": 0.02,
+        "years": 10
+      },
+      "note": "These Excel fixtures do not validate changes to the fixed inputs or excluded features."
+    },
+    "additionalFixtureIds": [
+      "years-30",
+      "deposit-0",
+      "p0-0",
+      "salgrowth-0",
+      "n-equals-g"
+    ],
+    "negativeReturnsVerified": false,
+    "note": "Selected variations of every supported input are covered, not every combination or numeric range. Negative returns and excluded features have no Excel fixtures. The equality case validates the Excel closed-form limit; the JS model uses an annual recurrence."
+  },
+  "source": {
+    "workbook": "docs/models/pension-aum-v1/pension_example_recalc.xlsx",
+    "workbookSha256": "061a3c8e95d20439bb0268247bcf003e25597de6cc13223001358d78eb3cca73",
+    "report": "docs/models/pension-aum-v1/verify_report.json",
+    "reportSha256": "b1f7be46eac1b29c7a298ed4773ae1d57dc6eb79ec11449184b9189049750f6c",
+    "verifiedAtPath": "/tmp/fresh/pension/pension.xlsx",
+    "verificationResult": "PASS",
+    "verificationChecks": 18,
+    "expectedValues": "original cached values from the supplied LibreOffice-recalculated workbook",
+    "baseInputCells": {
+      "p0": "Assumptions!C2",
+      "deposit": "Assumptions!C3",
+      "salaryGrowth": "Assumptions!C4",
+      "ret": "Assumptions!C5",
+      "feeAum": "Assumptions!C6",
+      "years": "Assumptions!C7"
+    },
+    "baseGridCell": "Output!D7"
+  },
+  "fixtures": [
+    {
+      "id": "base",
+      "inputs": {
+        "p0": 100000,
+        "deposit": 24000,
+        "salaryGrowth": 0.02,
+        "ret": 0.04,
+        "feeAum": 0.005,
+        "years": 10
+      },
+      "expectedClosingBalance": 447626.821064296,
+      "source": {
+        "closingBalanceCell": "Output!B1",
+        "returnCell": "Output!A7",
+        "feeAumCell": "Output!D4"
+      }
+    },
+    {
+      "id": "return-low-fee-low",
+      "inputs": {
+        "p0": 100000,
+        "deposit": 24000,
+        "salaryGrowth": 0.02,
+        "ret": 0.02,
+        "feeAum": 0.002,
+        "years": 10
+      },
+      "expectedClosingBalance": 403834.856599844,
+      "source": {
+        "closingBalanceCell": "Output!B5",
+        "returnCell": "Output!A5",
+        "feeAumCell": "Output!B4"
+      }
+    },
+    {
+      "id": "return-low-fee-base",
+      "inputs": {
+        "p0": 100000,
+        "deposit": 24000,
+        "salaryGrowth": 0.02,
+        "ret": 0.02,
+        "feeAum": 0.005,
+        "years": 10
+      },
+      "expectedClosingBalance": 396631.338356635,
+      "source": {
+        "closingBalanceCell": "Output!D5",
+        "returnCell": "Output!A5",
+        "feeAumCell": "Output!D4"
+      }
+    },
+    {
+      "id": "return-low-fee-high",
+      "inputs": {
+        "p0": 100000,
+        "deposit": 24000,
+        "salaryGrowth": 0.02,
+        "ret": 0.02,
+        "feeAum": 0.008,
+        "years": 10
+      },
+      "expectedClosingBalance": 389577.104082856,
+      "source": {
+        "closingBalanceCell": "Output!F5",
+        "returnCell": "Output!A5",
+        "feeAumCell": "Output!F4"
+      }
+    },
+    {
+      "id": "return-base-fee-low",
+      "inputs": {
+        "p0": 100000,
+        "deposit": 24000,
+        "salaryGrowth": 0.02,
+        "ret": 0.04,
+        "feeAum": 0.002,
+        "years": 10
+      },
+      "expectedClosingBalance": 455907.262606481,
+      "source": {
+        "closingBalanceCell": "Output!B7",
+        "returnCell": "Output!A7",
+        "feeAumCell": "Output!B4"
+      }
+    },
+    {
+      "id": "return-base-fee-high",
+      "inputs": {
+        "p0": 100000,
+        "deposit": 24000,
+        "salaryGrowth": 0.02,
+        "ret": 0.04,
+        "feeAum": 0.008,
+        "years": 10
+      },
+      "expectedClosingBalance": 439517.357315344,
+      "source": {
+        "closingBalanceCell": "Output!F7",
+        "returnCell": "Output!A7",
+        "feeAumCell": "Output!F4"
+      }
+    },
+    {
+      "id": "return-high-fee-low",
+      "inputs": {
+        "p0": 100000,
+        "deposit": 24000,
+        "salaryGrowth": 0.02,
+        "ret": 0.06,
+        "feeAum": 0.002,
+        "years": 10
+      },
+      "expectedClosingBalance": 515744.347418258,
+      "source": {
+        "closingBalanceCell": "Output!B9",
+        "returnCell": "Output!A9",
+        "feeAumCell": "Output!B4"
+      }
+    },
+    {
+      "id": "return-high-fee-base",
+      "inputs": {
+        "p0": 100000,
+        "deposit": 24000,
+        "salaryGrowth": 0.02,
+        "ret": 0.06,
+        "feeAum": 0.005,
+        "years": 10
+      },
+      "expectedClosingBalance": 506231.614995703,
+      "source": {
+        "closingBalanceCell": "Output!D9",
+        "returnCell": "Output!A9",
+        "feeAumCell": "Output!D4"
+      }
+    },
+    {
+      "id": "return-high-fee-high",
+      "inputs": {
+        "p0": 100000,
+        "deposit": 24000,
+        "salaryGrowth": 0.02,
+        "ret": 0.06,
+        "feeAum": 0.008,
+        "years": 10
+      },
+      "expectedClosingBalance": 496914.400149312,
+      "source": {
+        "closingBalanceCell": "Output!F9",
+        "returnCell": "Output!A9",
+        "feeAumCell": "Output!F4"
+      }
+    },
+    {
+      "id": "years-30",
+      "inputs": {
+        "p0": 100000,
+        "deposit": 24000,
+        "salaryGrowth": 0.02,
+        "ret": 0.04,
+        "feeAum": 0.005,
+        "years": 30
+      },
+      "expectedClosingBalance": 1873370.76342911,
+      "source": {
+        "closingBalanceCell": "Output!B1",
+        "returnCell": "Output!A7",
+        "feeAumCell": "Output!D4",
+        "workbook": "docs/models/pension-aum-v1/extra/years-30/years-30.xlsx",
+        "workbookSha256": "e503b2aec57743b68fa31cc52d6b8c1c570e965ab23435e3bacd1fb6d34249cc",
+        "report": "docs/models/pension-aum-v1/extra/years-30/verify_report.json",
+        "reportSha256": "a165fdf79399eb542614766e9e8c57fa40467d8dc3542cc0d1de25ccd85554be",
+        "verifiedAtPath": "/tmp/fx/years-30/years-30.xlsx",
+        "verificationResult": "PASS",
+        "verificationChecks": 18,
+        "inputCells": {
+          "p0": "Assumptions!C2",
+          "deposit": "Assumptions!C3",
+          "salaryGrowth": "Assumptions!C4",
+          "ret": "Assumptions!C5",
+          "feeAum": "Assumptions!C6",
+          "years": "Assumptions!C7"
+        },
+        "baseGridCell": "Output!D7"
+      }
+    },
+    {
+      "id": "deposit-0",
+      "inputs": {
+        "p0": 100000,
+        "deposit": 0,
+        "salaryGrowth": 0.02,
+        "ret": 0.04,
+        "feeAum": 0.005,
+        "years": 10
+      },
+      "expectedClosingBalance": 141059.876062112,
+      "source": {
+        "closingBalanceCell": "Output!B1",
+        "returnCell": "Output!A7",
+        "feeAumCell": "Output!D4",
+        "workbook": "docs/models/pension-aum-v1/extra/deposit-0/deposit-0.xlsx",
+        "workbookSha256": "cdb79be81a82e8cd9bb6487312aea1bb610853eb4390409223801b44e8c6a442",
+        "report": "docs/models/pension-aum-v1/extra/deposit-0/verify_report.json",
+        "reportSha256": "7d4944444dfa749cc415514a420fdaa8a58966a6568f83c3123e62c9f24e2c62",
+        "verifiedAtPath": "/tmp/fx/deposit-0/deposit-0.xlsx",
+        "verificationResult": "PASS",
+        "verificationChecks": 18,
+        "inputCells": {
+          "p0": "Assumptions!C2",
+          "deposit": "Assumptions!C3",
+          "salaryGrowth": "Assumptions!C4",
+          "ret": "Assumptions!C5",
+          "feeAum": "Assumptions!C6",
+          "years": "Assumptions!C7"
+        },
+        "baseGridCell": "Output!D7"
+      }
+    },
+    {
+      "id": "p0-0",
+      "inputs": {
+        "p0": 0,
+        "deposit": 24000,
+        "salaryGrowth": 0.02,
+        "ret": 0.04,
+        "feeAum": 0.005,
+        "years": 10
+      },
+      "expectedClosingBalance": 306566.945002184,
+      "source": {
+        "closingBalanceCell": "Output!B1",
+        "returnCell": "Output!A7",
+        "feeAumCell": "Output!D4",
+        "workbook": "docs/models/pension-aum-v1/extra/p0-0/p0-0.xlsx",
+        "workbookSha256": "853a613038497323978fb7fa930fcace8f6cf33d5567d4d44f76af97f0bbe049",
+        "report": "docs/models/pension-aum-v1/extra/p0-0/verify_report.json",
+        "reportSha256": "286af7a88b65dd86ba99d321c6c16cde954723cf446120f9c1fa506d72374533",
+        "verifiedAtPath": "/tmp/fx/p0-0/p0-0.xlsx",
+        "verificationResult": "PASS",
+        "verificationChecks": 18,
+        "inputCells": {
+          "p0": "Assumptions!C2",
+          "deposit": "Assumptions!C3",
+          "salaryGrowth": "Assumptions!C4",
+          "ret": "Assumptions!C5",
+          "feeAum": "Assumptions!C6",
+          "years": "Assumptions!C7"
+        },
+        "baseGridCell": "Output!D7"
+      }
+    },
+    {
+      "id": "salgrowth-0",
+      "inputs": {
+        "p0": 100000,
+        "deposit": 24000,
+        "salaryGrowth": 0,
+        "ret": 0.04,
+        "feeAum": 0.005,
+        "years": 10
+      },
+      "expectedClosingBalance": 422613.311916596,
+      "source": {
+        "closingBalanceCell": "Output!B1",
+        "returnCell": "Output!A7",
+        "feeAumCell": "Output!D4",
+        "workbook": "docs/models/pension-aum-v1/extra/salgrowth-0/salgrowth-0.xlsx",
+        "workbookSha256": "2a3fa3cd9dabfada524d7607080a28be64bde4fe7b3d9a1614e3778f3dd7e21a",
+        "report": "docs/models/pension-aum-v1/extra/salgrowth-0/verify_report.json",
+        "reportSha256": "2d68133c567b564d3d928f59891a6d34494480ad60bf50efdc078dd75decdc39",
+        "verifiedAtPath": "/tmp/fx/salgrowth-0/salgrowth-0.xlsx",
+        "verificationResult": "PASS",
+        "verificationChecks": 18,
+        "inputCells": {
+          "p0": "Assumptions!C2",
+          "deposit": "Assumptions!C3",
+          "salaryGrowth": "Assumptions!C4",
+          "ret": "Assumptions!C5",
+          "feeAum": "Assumptions!C6",
+          "years": "Assumptions!C7"
+        },
+        "baseGridCell": "Output!D7"
+      }
+    },
+    {
+      "id": "n-equals-g",
+      "inputs": {
+        "p0": 100000,
+        "deposit": 24000,
+        "salaryGrowth": 0.035,
+        "ret": 0.04,
+        "feeAum": 0.005,
+        "years": 10
+      },
+      "expectedClosingBalance": 468155.240843822,
+      "source": {
+        "closingBalanceCell": "Output!B1",
+        "returnCell": "Output!A7",
+        "feeAumCell": "Output!D4",
+        "workbook": "docs/models/pension-aum-v1/extra/n-equals-g/n-equals-g.xlsx",
+        "workbookSha256": "8021e982f493661a581d0169dd9350d4ebade052bac1471cefce97fab797cdf9",
+        "report": "docs/models/pension-aum-v1/extra/n-equals-g/verify_report.json",
+        "reportSha256": "391476ff54611435101b3c9a5bbc519f820eecc0585e22727279d1668e3f6529",
+        "verifiedAtPath": "/tmp/fx/n-equals-g/n-equals-g.xlsx",
+        "verificationResult": "PASS",
+        "verificationChecks": 18,
+        "inputCells": {
+          "p0": "Assumptions!C2",
+          "deposit": "Assumptions!C3",
+          "salaryGrowth": "Assumptions!C4",
+          "ret": "Assumptions!C5",
+          "feeAum": "Assumptions!C6",
+          "years": "Assumptions!C7"
+        },
+        "baseGridCell": "Output!D7"
+      }
+    }
+  ],
+  "additionalSource": {
+    "archive": "docs/models/pension-aum-v1/extra/pension-aum-v1-fixtures-extra.zip",
+    "archiveSha256": "08221ad309480636518a3a6b6490b7fa6e74f312e8ab4f01a2c61b8f89b4ce91",
+    "manifest": "docs/models/pension-aum-v1/extra/manifest.json",
+    "manifestSha256": "5803cb7af0ddf53cdd9827dac261d8096d531d140d30ac386683eeb348aa7544",
+    "expectedValues": "original Output!B1 caches from five supplied LibreOffice-recalculated workbooks",
+    "nativeVerification": "Supplier reports PASS/0 and identical native runs; only run-1 artifacts supplied. The exporter does not replay native recalculation."
+  }
+}

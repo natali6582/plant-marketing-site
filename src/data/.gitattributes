@@ -1,0 +1,2 @@
+# The model gate verifies the exact bytes produced by the fixture exporter.
+model-fixtures.json -text

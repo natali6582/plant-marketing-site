@@ -11,6 +11,7 @@
       {{layers:concept}}                             a block
       {{compare:pension-vs-menahalim}}               a block
       {{timeline:policy-generations}}                a block
+      {{calculator:fee-impact}}                      a block
 
   and GitHub-style alerts for callouts:
 
@@ -34,7 +35,7 @@ export type Part =
   | { kind: 'html'; html: string }
   | { kind: 'block'; name: string; arg: string };
 
-const BLOCK = /<p>\s*\{\{\s*(keyfigures|layers|compare|timeline)\s*:\s*([^}]+?)\s*\}\}\s*<\/p>/g;
+const BLOCK = /<p>\s*\{\{\s*(keyfigures|layers|compare|timeline|calculator)\s*:\s*([^}]+?)\s*\}\}\s*<\/p>/g;
 const INLINE = /\{\{\s*figure\s*:\s*([a-z0-9-]+)\s*\}\}/g;
 
 /*

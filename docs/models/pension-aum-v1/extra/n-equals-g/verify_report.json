@@ -1,0 +1,116 @@
+{
+ "file": "/tmp/fx/n-equals-g/n-equals-g.xlsx",
+ "type": "pension",
+ "result": "PASS",
+ "error": null,
+ "checks": [
+  {
+   "id": "A1",
+   "check": "recalc",
+   "status": "PASS",
+   "detail": "formulas=106, errors=0"
+  },
+  {
+   "id": "A2",
+   "check": "required-sheets",
+   "status": "PASS",
+   "detail": ""
+  },
+  {
+   "id": "A3",
+   "check": "hardcoded-in-formula",
+   "status": "PASS",
+   "detail": ""
+  },
+  {
+   "id": "A8",
+   "check": "unsupported-functions",
+   "status": "PASS",
+   "detail": ""
+  },
+  {
+   "id": "A11",
+   "check": "division-guard",
+   "status": "PASS",
+   "detail": ""
+  },
+  {
+   "id": "A4",
+   "check": "row-consistency",
+   "status": "PASS",
+   "detail": ""
+  },
+  {
+   "id": "A13",
+   "check": "period-cells-are-formulas",
+   "status": "PASS",
+   "detail": ""
+  },
+  {
+   "id": "A5",
+   "check": "orphan-assumption",
+   "status": "PASS",
+   "detail": ""
+  },
+  {
+   "id": "A6",
+   "check": "assumption-source",
+   "status": "PASS",
+   "detail": ""
+  },
+  {
+   "id": "B",
+   "check": "plausibility-ranges",
+   "status": "PASS",
+   "detail": ""
+  },
+  {
+   "id": "A7",
+   "check": "subtotals-are-formulas",
+   "status": "PASS",
+   "detail": ""
+  },
+  {
+   "id": "A9",
+   "check": "sensitivity-table",
+   "status": "PASS",
+   "detail": "5x5 grid independently recomputed; max delta=4.65661e-10; headline=B1"
+  },
+  {
+   "id": "A10",
+   "check": "percent-as-fraction",
+   "status": "PASS",
+   "detail": ""
+  },
+  {
+   "id": "A12",
+   "check": "readme-content",
+   "status": "PASS",
+   "detail": ""
+  },
+  {
+   "id": "C0",
+   "check": "active-periods",
+   "status": "PASS",
+   "detail": "10 contiguous period headers"
+  },
+  {
+   "id": "C1",
+   "check": "roll-forward",
+   "status": "PASS",
+   "detail": ""
+  },
+  {
+   "id": "C1a",
+   "check": "open=prev-close (link)",
+   "status": "PASS",
+   "detail": ""
+  },
+  {
+   "id": "C1b",
+   "check": "no-negative-balance",
+   "status": "PASS",
+   "detail": ""
+  }
+ ]
+}

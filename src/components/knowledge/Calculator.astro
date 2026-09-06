@@ -1,313 +1,47 @@
 ---
-import fixtures from '../../data/model-fixtures.json';
-import { closingBalance } from '../../lib/pension.mjs';
-
-const baseFixture = fixtures.fixtures.find(({ id }) => id === 'base');
-if (!baseFixture) throw new Error('pension-aum-v1: base fixture is missing.');
-
-const baseInputs = baseFixture.inputs;
-const baseRows = closingBalance(baseInputs);
-const finalBalance = baseRows.at(-1)?.close ?? baseInputs.p0;
-const returnAxis = [0.02, 0.03, 0.04, 0.05, 0.06];
-const feeAxis = [0.003, 0.004, 0.005, 0.006, 0.007];
-const money = new Intl.NumberFormat('he-IL', {
-  style: 'currency',
-  currency: 'ILS',
-  minimumFractionDigits: 2,
-  maximumFractionDigits: 2,
-});
-const percent = new Intl.NumberFormat('he-IL', {
-  minimumFractionDigits: 1,
-  maximumFractionDigits: 2,
-});
-const annualFields = [
-  ['open', 'יתרת פתיחה'],
-  ['deposit', 'הפקדה'],
-  ['gain', 'תשואה'],
-  ['fee', 'דמי ניהול מצבירה'],
-  ['close', 'יתרת סגירה'],
-] as const;
-const sensitivityRows = returnAxis.map((ret) => ({
-  ret,
-  cells: feeAxis.map((feeAum) => {
-    const rows = closingBalance({ ...baseInputs, ret, feeAum });
-    return { feeAum, value: rows.at(-1)?.close ?? baseInputs.p0 };
-  }),
-}));
+import { calculateTool, defaultsFor, fieldsFor, formatNumber } from '../../lib/knowledge-calculators';
+import type { ToolKind } from '../../lib/knowledge-calculators';
+const { kind } = Astro.props as { kind: ToolKind };
+const fields = fieldsFor(kind);
+const initial = calculateTool(kind, defaultsFor(kind));
 ---
-
-<section
-  class="not-prose my-8 space-y-6"
-  data-pension-calculator="aum-v1"
-  data-state="ready"
-  aria-label="מחשבון השפעת דמי ניהול מצבירה"
->
-  <section
-    id="pension-assumptions"
-    class="rounded-2xl border border-brand-200 bg-surface-blue p-5 md:p-6"
-    aria-labelledby="pension-assumptions-title"
-  >
-    <h2 id="pension-assumptions-title" class="text-xl font-bold text-brand-800">
-      הנחות להמחשה — לא תקרות רגולטוריות
-    </h2>
-    <p class="mt-3 leading-relaxed text-ink-700">
-      הערכים ההתחלתיים נועדו להמחשה בלבד וניתנים לשינוי. ההפקדה מתבצעת בסוף כל שנה. התשואה
-      ודמי הניהול מחושבים על יתרת הפתיחה. החישוב אינו כולל דמי ניהול מהפקדה, משיכות או מסים.
-    </p>
-    <p class="mt-2 text-sm leading-relaxed text-ink-700">
-      טווחי הקלט מגבילים את ההדגמה ואינם תקרות חוקיות.
-    </p>
-  </section>
-
-  <form class="rounded-2xl border border-brand-200 bg-white p-5 shadow-sm md:p-6" data-pension-form novalidate>
-    <fieldset disabled>
-      <legend class="text-xl font-bold text-brand-800">הנחות החישוב</legend>
-
-      <div class="mt-5 grid gap-5 sm:grid-cols-2">
-        <label class="block text-sm font-bold text-ink-900" for="pension-input-p0">
-          יתרת פתיחה (₪)
+<section data-calculator={kind} aria-label="מחשבון תרחישים">
+  <aside class="kw-assumptions" aria-label="הנחות החישוב">
+    <h2>הנחות החישוב — גלויות לאורך כל הדרך</h2>
+    <p>התשואה והאינפלציה קבועות בתרחיש. שיעור שנתי מומר לחודשי לפי <bdi dir="ltr">(1 + r)^(1/12) − 1</bdi>. דמי הניהול מצבירה מחולקים ב־<bdi dir="ltr">12</bdi> ונגבים בכל חודש אחרי התשואה.</p>
+    <p>הפקדה נטו נכנסת בתחילת החודש. משיכת תחילת חודש קודמת לתשואה; משיכת סוף חודש מתבצעת אחרי התשואה ודמי הניהול. החישוב אינו כולל מס, עלויות נוספות או תנאי מוצר.</p>
+    <p>ברירות המחדל הן מספרים לדוגמה. ההפקדות קבועות בסכומן הנומינלי. ההצמדה, אם הופעלה, מתחילה במשיכה השנייה.</p>
+  </aside>
+  <div class="kw-calculator">
+    <form class="kw-inputs" novalidate>
+      <h2>הנתונים לתרחיש</h2>
+      {fields.map(f => (
+        <label class:list={['kw-field', typeof f.value === 'boolean' && 'kw-checkbox kw-wide']} for={`${kind}-${f.key}`}>
+          <span class="kw-field-label">{f.label}{f.unit && <small> · {f.unit}</small>}</span>
+          {typeof f.value === 'boolean' ? <input id={`${kind}-${f.key}`} name={f.key} type="checkbox" checked={f.value} /> :
+            f.options ? <select id={`${kind}-${f.key}`} name={f.key}>{f.options.map(o => <option value={o.value} selected={o.value === f.value}>{o.label}</option>)}</select> :
+            <input id={`${kind}-${f.key}`} name={f.key} type="number" inputmode="decimal" value={f.value} min={f.min} max={f.max} step={f.step} required />}
         </label>
-        <input
-          class="ltr -mt-3 w-full rounded-xl border border-brand-200 bg-white px-4 py-3 text-ink-900 disabled:cursor-not-allowed disabled:bg-neutral-100 sm:mt-0"
-          id="pension-input-p0"
-          name="p0"
-          type="number"
-          value={baseInputs.p0}
-          min="0"
-          max="1000000000"
-          step="0.01"
-          required
-        />
-
-        <label class="block text-sm font-bold text-ink-900" for="pension-input-deposit">
-          הפקדה שנתית ראשונה (₪)
-        </label>
-        <input
-          class="ltr -mt-3 w-full rounded-xl border border-brand-200 bg-white px-4 py-3 text-ink-900 disabled:cursor-not-allowed disabled:bg-neutral-100 sm:mt-0"
-          id="pension-input-deposit"
-          name="deposit"
-          type="number"
-          value={baseInputs.deposit}
-          min="0"
-          max="1000000000"
-          step="0.01"
-          required
-        />
-
-        <label class="block text-sm font-bold text-ink-900" for="pension-input-salaryGrowth">
-          שינוי שנתי בהפקדה (%)
-        </label>
-        <input
-          class="ltr -mt-3 w-full rounded-xl border border-brand-200 bg-white px-4 py-3 text-ink-900 disabled:cursor-not-allowed disabled:bg-neutral-100 sm:mt-0"
-          id="pension-input-salaryGrowth"
-          name="salaryGrowth"
-          type="number"
-          value={baseInputs.salaryGrowth * 100}
-          min="-100"
-          max="100"
-          step="0.01"
-          required
-        />
-
-        <label class="block text-sm font-bold text-ink-900" for="pension-input-ret">
-          תשואה שנתית להמחשה (%)
-        </label>
-        <input
-          class="ltr -mt-3 w-full rounded-xl border border-brand-200 bg-white px-4 py-3 text-ink-900 disabled:cursor-not-allowed disabled:bg-neutral-100 sm:mt-0"
-          id="pension-input-ret"
-          name="ret"
-          type="number"
-          value={baseInputs.ret * 100}
-          min="-100"
-          max="100"
-          step="0.01"
-          required
-        />
-
-        <label class="block text-sm font-bold text-ink-900" for="pension-input-feeAum">
-          דמי ניהול שנתיים מצבירה (%)
-        </label>
-        <input
-          class="ltr -mt-3 w-full rounded-xl border border-brand-200 bg-white px-4 py-3 text-ink-900 disabled:cursor-not-allowed disabled:bg-neutral-100 sm:mt-0"
-          id="pension-input-feeAum"
-          name="feeAum"
-          type="number"
-          value={baseInputs.feeAum * 100}
-          min="0"
-          max="100"
-          step="0.01"
-          required
-        />
-
-        <label class="block text-sm font-bold text-ink-900" for="pension-input-years">
-          תקופת החישוב (שנים)
-        </label>
-        <input
-          class="ltr -mt-3 w-full rounded-xl border border-brand-200 bg-white px-4 py-3 text-ink-900 disabled:cursor-not-allowed disabled:bg-neutral-100 sm:mt-0"
-          id="pension-input-years"
-          name="years"
-          type="number"
-          value={baseInputs.years}
-          min="0"
-          max="100"
-          step="1"
-          required
-        />
+      ))}
+      <p class="kw-error" data-error role="alert" hidden></p>
+      <div class="kw-actions">
+        <button class="kw-button" type="submit">חישוב התרחיש</button>
+        <button class="kw-button kw-button-secondary" type="button" data-print>הדפסה / שמירה כ־PDF</button>
       </div>
-
-      <div class="mt-6 flex flex-wrap gap-3">
-        <button
-          type="submit"
-          class="rounded-xl bg-brand-700 px-5 py-3 font-bold text-white disabled:cursor-not-allowed disabled:opacity-60"
-        >
-          חישוב מחדש
-        </button>
-        <button
-          type="button"
-          class="rounded-xl border border-brand-300 bg-white px-5 py-3 font-bold text-brand-800 disabled:cursor-not-allowed disabled:opacity-60"
-          data-pension-reset
-        >
-          איפוס להנחות ההמחשה
-        </button>
+    </form>
+    <div class="kw-panel">
+      <h2>התוצאה לפי ההנחות</h2>
+      <div data-results aria-live="polite" aria-atomic="true">
+        <dl class="kw-metrics">{initial.metrics.map(m => <div class="kw-metric"><dt>{m.label}</dt><dd>{typeof m.value === 'number' ? <bdi class="kw-number" dir="ltr">{formatNumber(m.value)}{m.unit ? ` ${m.unit}` : ''}</bdi> : m.value}</dd></div>)}</dl>
       </div>
-    </fieldset>
-
-    <noscript>
-      <p class="mt-4 rounded-xl bg-neutral-100 p-4 text-sm leading-relaxed text-ink-700">
-        מוצגת המחשה לפי ההנחות ההתחלתיות. לשינוי ההנחות נדרשת הפעלת JavaScript.
-      </p>
-    </noscript>
-  </form>
-
-  <p class="text-sm font-bold text-brand-800" data-pension-status role="status" aria-live="polite"></p>
-  <p class="hidden rounded-xl bg-red-50 p-4 text-sm font-bold text-red-800" data-pension-error role="alert"></p>
-
-  <section class="space-y-6" data-pension-results aria-labelledby="pension-results-title">
-    <div class="rounded-2xl bg-brand-800 p-6 text-white shadow-sm md:p-8">
-      <h2 id="pension-results-title" class="text-lg font-bold text-white">יתרה בסוף התקופה</h2>
-      <p class="mt-3 text-3xl font-bold tracking-tight md:text-4xl" data-pension-balance data-value={finalBalance}>
-        <bdi dir="ltr">{money.format(finalBalance)}</bdi>
-      </p>
+      <svg class="kw-chart" data-chart viewBox="0 0 560 270" role="img" aria-label="מסלול היתרה לאורך חודשי התרחיש"></svg>
+      <div class="kw-legend" data-legend></div>
+      <div class="kw-notes" data-notes>{initial.notes.map(n => <p>{n}</p>)}</div>
+      <noscript><p>התוצאות המוצגות הן של הדוגמה. יש להפעיל JavaScript כדי לשנות נתונים ולחשב תרחיש חדש.</p></noscript>
     </div>
-
-    <div
-      class="overflow-x-auto rounded-2xl border border-brand-200 bg-white shadow-sm"
-      data-pension-table-scroll
-      tabindex="0"
-      aria-label="טבלת פירוט שנתי של החישוב, ניתנת לגלילה אופקית"
-    >
-      <table class="w-full min-w-[52rem] border-collapse text-sm" data-pension-years>
-        <caption class="p-5 text-right text-xl font-bold text-brand-800 md:p-6">
-          פירוט שנתי של החישוב
-        </caption>
-        <thead class="bg-surface-blue text-brand-800">
-          <tr>
-            <th class="px-4 py-3 text-right" scope="col">שנה</th>
-            {annualFields.map(([, label]) => <th class="px-4 py-3 text-right" scope="col">{label}</th>)}
-          </tr>
-        </thead>
-        <tbody>
-          {baseRows.map((row) => (
-            <tr class="border-t border-brand-100" data-year={row.year}>
-              <th class="px-4 py-3 text-right font-bold text-brand-800" scope="row">
-                <bdi dir="ltr">{row.year}</bdi>
-              </th>
-              {annualFields.map(([field]) => (
-                <td class="px-4 py-3 text-right text-ink-700" data-field={field} data-value={row[field]}>
-                  <bdi dir="ltr">{money.format(row[field])}</bdi>
-                </td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-
-    <div
-      class="overflow-x-auto rounded-2xl border border-brand-200 bg-white shadow-sm"
-      data-pension-table-scroll
-      tabindex="0"
-      aria-label="טבלת רגישות היתרה, ניתנת לגלילה אופקית"
-    >
-      <table class="w-full min-w-[48rem] border-collapse text-sm" data-pension-sensitivity>
-        <caption class="p-5 text-right text-xl font-bold text-brand-800 md:p-6">
-          רגישות היתרה לתשואה ולדמי ניהול מצבירה
-        </caption>
-        <thead class="bg-surface-blue text-brand-800">
-          <tr>
-            <th class="px-3 py-3 text-right" scope="col">תשואה / דמי ניהול</th>
-            {feeAxis.map((feeAum) => (
-              <th
-                class="px-3 py-3 text-center"
-                scope="col"
-                data-fee-aum={feeAum}
-                data-base-axis={feeAum === baseInputs.feeAum ? 'true' : undefined}
-              >
-                <bdi dir="ltr">{percent.format(feeAum * 100)}%</bdi>
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {sensitivityRows.map(({ ret, cells }) => (
-            <tr class="border-t border-brand-100">
-              <th
-                class="bg-surface-blue px-3 py-3 text-right font-bold text-brand-800"
-                scope="row"
-                data-return={ret}
-                data-base-axis={ret === baseInputs.ret ? 'true' : undefined}
-              >
-                <bdi dir="ltr">{percent.format(ret * 100)}%</bdi>
-              </th>
-              {cells.map(({ feeAum, value }) => {
-                const isBase = ret === baseInputs.ret && feeAum === baseInputs.feeAum;
-                return (
-                  <td
-                    class:list={[
-                      'px-3 py-3 text-center text-ink-700',
-                      isBase && 'bg-accent-100 font-bold text-brand-900',
-                    ]}
-                    data-return={ret}
-                    data-fee-aum={feeAum}
-                    data-value={value}
-                    data-base-case={isBase ? 'true' : undefined}
-                  >
-                    <bdi dir="ltr">{money.format(value)}</bdi>
-                    {isBase && <span class="mt-1 block text-xs">תרחיש הבסיס</span>}
-                  </td>
-                );
-              })}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-  <p>
-    <a class="font-bold text-brand-700 underline underline-offset-4 hover:text-brand-800" href="#pension-methodology">
-      מתודולוגיית החישוב
-    </a>
-  </p>
-
-  <section
-    id="pension-methodology"
-    class="rounded-2xl border border-brand-200 bg-white p-5 shadow-sm md:p-6"
-    aria-labelledby="pension-methodology-title"
-  >
-    <h2 id="pension-methodology-title" class="text-xl font-bold text-brand-800">מתודולוגיית החישוב</h2>
-    <p class="mt-3 leading-relaxed text-ink-700">
-      החישוב השנתי הושווה לתוצאות שמורות של מודלי Excel בתרחישים מוגדרים. אין בכך בדיקה של כל
-      שילוב קלטים, הבטחת תשואה או התאמה למוצר פנסיוני מסוים.
-    </p>
-    <p class="mt-3 leading-relaxed text-ink-700">
-      תשואות שליליות נבדקו בבדיקות חישוב, אך עדיין אינן מכוסות בתרחישי Excel מאומתים.
-    </p>
-  </section>
+  </div>
 </section>
-
 <script>
-  import { initPensionCalculators } from '../../scripts/pension-calculator';
-
-  initPensionCalculators();
+  import { initializeCalculators } from '../../scripts/knowledge/calculators';
+  initializeCalculators();
 </script>

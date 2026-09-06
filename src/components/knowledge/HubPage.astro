@@ -15,14 +15,12 @@ import { getCollection } from 'astro:content';
   its body bails out, which leaked an empty /knowledge/ into production builds
   with the flag off. As a component it simply is not called.
 
-  DRAFT — every line needs Natali's approval. The whole section is educational
-  content in a supervised field, and the source research cites its sources as
-  bare markers with no URLs, so nothing here is published: every article is
-  draft: true and the section sits behind KNOWLEDGE_ENABLED.
+  Professional approval is tracked in docs/knowledge-tools/status.md.
+  KNOWLEDGE_ENABLED controls availability; KNOWLEDGE_DRAFTS preserves noindex
+  until Natali's line-by-line review and an explicit indexing decision.
 
-  The opening section is the argument the rest of the hub makes, so it comes
-  first: the wrapper is not the asset, liquidity is a property of the wrapper,
-  and תיקון 190 is a tax arrangement rather than a product.
+  Meeting resources are directly reachable below the hero. The conceptual
+  sections retain their order after this navigation block.
 
   The diagrams use live SVG text plus screen-reader summaries, not the
   AI-generated images that came with the brief and spell Hebrew incorrectly.
@@ -54,6 +52,29 @@ const perTrack = (slug: string) =>
       מסביר את ההבחנה הזו, ומה היא משנה בפועל.
     </Fragment>
   </PageHero>
+
+  <section class="meeting-tools" aria-labelledby="meeting-tools-title">
+    <div class="meeting-tools-inner">
+      <div class="meeting-tools-header">
+        <div>
+          <h2 id="meeting-tools-title">כלים וערכות לפגישה</h2>
+          <p>מחשבונים, ערכות ומדריכים לשימוש בפגישת לקוח.</p>
+        </div>
+        <a class="meeting-tools-directory" href="/knowledge/tools/">למדריך הכלים המקצועיים</a>
+      </div>
+      <ul>
+        {TRACKS.map((track) => (
+          <li>
+            <a class="meeting-tools-track" href={`/knowledge/${track.slug}/#meeting-tools`}>
+              <DuotoneIcon name={track.icon} />
+              <span class="meeting-tools-name">{track.name}</span>
+              <span class="meeting-tools-label">לכלים ולערכות במסלול</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
 
   <!-- The three framings, which are the section's thesis. -->
   <section class="band bg-white" aria-labelledby="ideas-title">
@@ -146,3 +167,19 @@ const perTrack = (slug: string) =>
     <Disclaimer />
   </div>
 </BaseLayout>
+
+<style>
+  .meeting-tools { padding: 40px 16px; background: var(--color-surface-blue); }
+  .meeting-tools-inner { max-width: 1024px; margin-inline: auto; }
+  .meeting-tools-header { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 20px; }
+  .meeting-tools h2 { font-size: 1.875rem; font-weight: 700; color: var(--color-brand-800); }
+  .meeting-tools p { margin-top: 8px; line-height: 1.7; color: var(--color-ink-700); }
+  .meeting-tools-directory { padding: 12px 18px; border: 1px solid var(--color-brand-600); border-radius: 12px; color: var(--color-brand-600); font-weight: 700; text-decoration: underline; text-underline-offset: 4px; }
+  .meeting-tools ul { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; margin-top: 24px; padding: 0; list-style: none; }
+  .meeting-tools-track { display: flex; height: 100%; flex-direction: column; align-items: flex-start; gap: 8px; padding: 20px; border: 1px solid var(--color-brand-200); border-radius: 16px; background: white; }
+  .meeting-tools-name { color: var(--color-brand-800); font-size: 1.125rem; font-weight: 700; }
+  .meeting-tools-label { color: var(--color-brand-600); text-decoration: underline; text-underline-offset: 4px; }
+  .meeting-tools a:hover { border-color: var(--color-brand-600); background: var(--color-brand-50); }
+  .meeting-tools a:focus-visible { outline: 3px solid var(--color-brand-600); outline-offset: 4px; }
+  @media (max-width: 640px) { .meeting-tools ul { grid-template-columns: 1fr; } }
+</style>

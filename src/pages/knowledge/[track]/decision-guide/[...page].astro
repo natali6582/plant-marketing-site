@@ -1,0 +1,7 @@
+---
+import DecisionGuide from '../../../../components/knowledge/DecisionGuide.astro';
+import { guides } from '../../../../data/knowledge-batches/batch-5';
+export function getStaticPaths(){return import.meta.env.KNOWLEDGE_ENABLED==='true'?guides.map(guide=>({params:{track:guide.track,page:undefined},props:{guide}})):[];}
+const { guide }=Astro.props;
+---
+<DecisionGuide guide={guide}/>

@@ -1,0 +1,72 @@
+{
+  "desktop": {
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "navigation": [
+      {
+        "path": "/knowledge/tools/",
+        "robots": "noindex, nofollow",
+        "title": "איזה כלי מתאים לשאלה שעלתה בפגישה?"
+      },
+      {
+        "focus": "",
+        "hash": "#meeting-tools",
+        "headerBottom": 77,
+        "heading": "כלים וערכות לפגישת לקוח",
+        "headingTop": 482,
+        "overflow": false,
+        "path": "/knowledge/agents/",
+        "resources": 5
+      },
+      {
+        "focus": "meeting-tools",
+        "hash": "#meeting-tools",
+        "headerBottom": 77,
+        "heading": "כלים וערכות לפגישת לקוח",
+        "headingTop": 512,
+        "overflow": false,
+        "path": "/knowledge/planners/",
+        "resources": 5
+      },
+      {
+        "focus": "meeting-tools",
+        "hash": "#meeting-tools",
+        "headerBottom": 77,
+        "heading": "כלים וערכות לפגישת לקוח",
+        "headingTop": 482,
+        "overflow": false,
+        "path": "/knowledge/wealth/",
+        "resources": 5
+      }
+    ],
+    "keyboard": {
+      "focus": "meeting-tools",
+      "hash": "#meeting-tools",
+      "headerBottom": 77,
+      "headingTop": 136,
+      "path": "/knowledge/agents/"
+    }
+  },
+  "mobile": {
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "layout": {
+      "headingTop": 246,
+      "lastCardBottom": 951,
+      "overflow": false,
+      "viewport": 390
+    },
+    "anchor": {
+      "hash": "#meeting-tools",
+      "headerBottom": 68,
+      "headingTop": 136,
+      "overflow": false,
+      "path": "/knowledge/wealth/",
+      "resources": 5
+    }
+  }
+}

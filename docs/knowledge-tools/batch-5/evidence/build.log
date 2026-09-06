@@ -1,0 +1,105 @@
+
+  FIGURES NEEDING A SOURCE — 10 of 35, tier 0:
+    gemel-lehashkaa-annuity-age
+    tikun-190-min-age
+    tikun-190-first-tier
+    bituach-menahalim-restriction-date
+    structured-deposit-principal-protection
+    structured-deposit-min-months
+    offerees-joint-investment-retail
+    pension-general-salary-ceiling
+    maof-contract-multiplier
+    reit-law-year
+
+  Not cited by any article yet — 20:
+    tikun-190-min-age  tikun-190-first-tier  capital-gains-nominal-unlinked  accredited-liquid-assets  accredited-income-individual  accredited-income-family  accredited-combined-assets  accredited-combined-income-individual  accredited-combined-income-family  structured-deposit-principal-protection  structured-deposit-min-months  purchase-tax-single-exempt  purchase-tax-additional-8pct-ceiling  maof-contract-multiplier  reit-law-year  purchase-tax-brackets-frozen-until  kitzva-mezaka-ceiling  kitzva-exemption-rate  tagmulim-min-accrual  average-wage
+
+  25 articles, 35 figures, 15 cited — 0 breaches
+
+07:46:46 [content] Syncing content
+07:46:46 [content] Synced content
+07:46:46 [types] Generated 600ms
+07:46:46 [build] output: "static"
+07:46:46 [build] mode: "static"
+07:46:46 [build] directory: C:\Users\Nataliek\Documents\Codex\2026-09-06\new-chat\work\plant-marketing-site\dist\
+07:46:46 [build] Collecting build info...
+07:46:47 [build] ✓ Completed in 618ms.
+07:46:47 [build] Building static entrypoints...
+07:46:47 [vite] ✓ built in 388ms
+07:46:47 [vite] ✓ built in 54ms
+07:46:47 [build] Rearranging server assets...
+
+ generating static routes 
+07:46:47   ├─ /404.html (+15ms) 
+07:46:47   ├─ /about/index.html (+6ms) 
+07:46:47   ├─ /accessibility/index.html (+4ms) 
+07:46:47   ├─ /agents/index.html (+6ms) 
+07:46:47   ├─ /careers/index.html (+4ms) 
+07:46:47   ├─ /community/index.html (+5ms) 
+07:46:47   ├─ /contact/index.html (+4ms) 
+07:46:47   ├─ /faq/index.html (+6ms) 
+07:46:47   ├─ /knowledge/series/pension-guide/index.html (+6ms) 
+07:46:47   ├─ /knowledge/tools/index.html (+3ms) 
+07:46:47   ├─ /knowledge/agents/case-study/index.html (+3ms) 
+07:46:47   ├─ /knowledge/planners/case-study/index.html (+3ms) 
+07:46:47   ├─ /knowledge/wealth/case-study/index.html (+4ms) 
+07:46:47   ├─ /knowledge/agents/decision-guide/index.html (+3ms) 
+07:46:47   ├─ /knowledge/planners/decision-guide/index.html (+2ms) 
+07:46:47   ├─ /knowledge/wealth/decision-guide/index.html (+2ms) 
+07:46:47   ├─ /knowledge/agents/meeting-kits/index.html (+3ms) 
+07:46:47   ├─ /knowledge/planners/meeting-kits/index.html (+2ms) 
+07:46:47   ├─ /knowledge/wealth/meeting-kits/index.html (+2ms) 
+07:46:47   ├─ /knowledge/agents/scenario-tool/index.html (+4ms) 
+07:46:47   ├─ /knowledge/planners/scenario-tool/index.html (+3ms) 
+07:46:47   ├─ /knowledge/wealth/scenario-tool/index.html (+3ms) 
+07:46:47   ├─ /knowledge/agents/fees/index.html (+3ms) 
+07:46:47   ├─ /knowledge/planners/withdrawals/index.html (+3ms) 
+07:46:47   ├─ /knowledge/wealth/real-return/index.html (+3ms) 
+07:46:47   ├─ /knowledge/index.html (+4ms) 
+07:46:47   ├─ /knowledge/agents/index.html (+4ms) 
+07:46:47   ├─ /knowledge/planners/index.html (+3ms) 
+07:46:47   ├─ /knowledge/wealth/index.html (+4ms) 
+07:46:47   ├─ /knowledge/accredited-investor/index.html (+5ms) 
+07:46:47   ├─ /knowledge/bituach-menahalim/index.html (+3ms) 
+07:46:47   ├─ /knowledge/cross-border-tax/index.html (+2ms) 
+07:46:47   ├─ /knowledge/direct-real-estate/index.html (+2ms) 
+07:46:47   ├─ /knowledge/due-diligence-checklist/index.html (+2ms) 
+07:46:47   ├─ /knowledge/four-layers/index.html (+4ms) 
+07:46:47   ├─ /knowledge/gemel-lehashkaa/index.html (+3ms) 
+07:46:47   ├─ /knowledge/how-it-fits-agents/index.html (+3ms) 
+07:46:47   ├─ /knowledge/how-it-fits-planners/index.html (+2ms) 
+07:46:47   ├─ /knowledge/how-it-fits-wealth/index.html (+2ms) 
+07:46:47   ├─ /knowledge/keren-hishtalmut/index.html (+4ms) 
+07:46:47   ├─ /knowledge/kupat-gemel/index.html (+2ms) 
+07:46:47   ├─ /knowledge/licensing-boundaries/index.html (+3ms) 
+07:46:47   ├─ /knowledge/mutual-funds/index.html (+2ms) 
+07:46:47   ├─ /knowledge/options-derivatives/index.html (+2ms) 
+07:46:47   ├─ /knowledge/pension-fund/index.html (+2ms) 
+07:46:47   ├─ /knowledge/pension-products-map/index.html (+2ms) 
+07:46:47   ├─ /knowledge/private-funds-intro/index.html (+2ms) 
+07:46:47   ├─ /knowledge/private-markets/index.html (+2ms) 
+07:46:47   ├─ /knowledge/regulators-israel/index.html (+2ms) 
+07:46:47   ├─ /knowledge/reit-and-funds/index.html (+2ms) 
+07:46:47   ├─ /knowledge/savings-policy/index.html (+3ms) 
+07:46:47   ├─ /knowledge/structured-products/index.html (+3ms) 
+07:46:47   ├─ /knowledge/tikun-190/index.html (+2ms) 
+07:46:47   ├─ /knowledge/tradable-assets/index.html (+2ms) 
+07:46:47   ├─ /knowledge/figures-2026/index.html (+5ms) 
+07:46:47   ├─ /packages/enterprise/index.html (+4ms) 
+07:46:47   ├─ /packages/funds/index.html (+3ms) 
+07:46:47   ├─ /packages/planner/index.html (+2ms) 
+07:46:47   ├─ /packages/pro/index.html (+2ms) 
+07:46:47   ├─ /packages/index.html (+3ms) 
+07:46:47   ├─ /planners/index.html (+3ms) 
+07:46:47   ├─ /privacy/index.html (+3ms) 
+07:46:47   ├─ /product/index.html (+5ms) 
+07:46:47   ├─ /solutions/index.html (+3ms) 
+07:46:47   ├─ /wealth/index.html (+3ms) 
+07:46:47   ├─ /webinar/index.html (+2ms) 
+07:46:47   ├─ /index.html (+4ms) 
+07:46:47 ✓ Completed in 306ms.
+
+07:46:47 [build] ✓ Completed in 793ms.
+07:46:47 [@astrojs/sitemap] `sitemap-index.xml` created at `dist`
+07:46:47 [build] 67 page(s) built in 1.45s
+07:46:47 [build] Complete!

@@ -1,0 +1,53 @@
+name: Knowledge center checks
+on:
+  pull_request:
+  push:
+    branches: ['feat/knowledge-tools-batch-*']
+  workflow_dispatch:
+permissions:
+  contents: read
+defaults:
+  run:
+    shell: bash
+jobs:
+  calculations-and-pages:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.19.0'
+          cache: npm
+      - run: npm ci
+      - run: npm run typecheck:knowledge
+      - run: npm run test:knowledge 2>&1 | tee vectors.log
+      - run: npm run build:knowledge
+      - run: npm run check:knowledge
+      - run: npm run evidence:knowledge -- --out evidence/run-1
+      - run: npm run evidence:knowledge -- --out evidence/run-2
+      - run: diff -r evidence/run-1 evidence/run-2
+      - run: node scripts/knowledge/reproduce-batches.mjs --out evidence/batches
+      - uses: actions/upload-artifact@v4
+        with:
+          name: knowledge-calculation-evidence
+          path: |
+            vectors.log
+            evidence/run-1
+            evidence/batches
+  external-links:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.19.0'
+          cache: npm
+      - run: npm ci
+      - run: node --experimental-strip-types --test scripts/knowledge/links.test.mjs
+      - run: npm run build:knowledge
+      - run: npm run check:knowledge-links 2>&1 | tee links.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: knowledge-link-evidence
+          path: links.log

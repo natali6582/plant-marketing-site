@@ -1,0 +1,57 @@
+[
+  {
+    "file": "README.md",
+    "identical": true,
+    "sha256": "3895e1bbac03f17f91c8c0e73296246d47d505fca0cf31a38f39159d5dae7876"
+  },
+  {
+    "file": "content-approval.md",
+    "identical": true,
+    "sha256": "4b7c817502a1c7c985ce5cf68afc669693fcfafd6bb1cc968f32da6e7e471f59"
+  },
+  {
+    "file": "directory.md",
+    "identical": true,
+    "sha256": "62f467073837a439da61cf9ac1d9c9cbc91b091b5a23fb6077c2fec4f27414f2"
+  },
+  {
+    "file": "examples.json",
+    "identical": true,
+    "sha256": "5f263f42f67d766ecb8d881129af1fbf17d62840087a223168f72dd40dcbb78d"
+  },
+  {
+    "file": "fees-content.md",
+    "identical": true,
+    "sha256": "a6057aaf6e5fcba0b445b9f2bb310c65b0c2c3c5fe94218d290de9099697e824"
+  },
+  {
+    "file": "fees-spec.md",
+    "identical": true,
+    "sha256": "5386f503db7c95240398503e99de4b35f329aa41244c9b2d3f0f0d794b1ebbb0"
+  },
+  {
+    "file": "real-content.md",
+    "identical": true,
+    "sha256": "099cade7af9abeb00aa71664c10c980cc1ce41fe411c209e81e4a7663b6da561"
+  },
+  {
+    "file": "real-spec.md",
+    "identical": true,
+    "sha256": "6fec7924b8bef9eb71c4074aa4de5c6021874f7ca868502e7fb25e8bcc0d6b02"
+  },
+  {
+    "file": "vectors.json",
+    "identical": true,
+    "sha256": "7166511dc1886c3d7a72f3230699a4cd4ed20a7ccd5619de36690bf6adfc2955"
+  },
+  {
+    "file": "withdrawals-content.md",
+    "identical": true,
+    "sha256": "346f8ef20fb5e26196e7f09ba3b47aa5638bbf7ae9508c5dfd2c58e622b56ff5"
+  },
+  {
+    "file": "withdrawals-spec.md",
+    "identical": true,
+    "sha256": "dd7942ef16882e303dbcaba72076bff95f606c84fc1644b5d635257434c0dbb0"
+  }
+]

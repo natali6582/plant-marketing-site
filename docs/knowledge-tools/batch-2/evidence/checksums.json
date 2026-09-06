@@ -1,0 +1,32 @@
+[
+  {
+    "file": "README.md",
+    "identical": true,
+    "sha256": "fb895d2c03eef0f29aba55510e21d8031cc1db1b9748d0a5a6baa1b8a0c23276"
+  },
+  {
+    "file": "agents-meeting-kit.md",
+    "identical": true,
+    "sha256": "a3527f8602c63c81cddbe176407f87648a6048239e6e115f82bd0d965270237c"
+  },
+  {
+    "file": "content-approval.md",
+    "identical": true,
+    "sha256": "9689db1f9b0201acbc97f757480e4b28f9263cb54a8bf583c697ee6088703fed"
+  },
+  {
+    "file": "examples.json",
+    "identical": true,
+    "sha256": "181c399c3662b904ec74c5146163135dba1032ebb9e8d2b367345835eaab750c"
+  },
+  {
+    "file": "planners-meeting-kit.md",
+    "identical": true,
+    "sha256": "db5f64d580dffa6e54d322f3ad09744848e933900b02cd0a7eb7103fa367c3dd"
+  },
+  {
+    "file": "wealth-meeting-kit.md",
+    "identical": true,
+    "sha256": "5e3a3419e4d146096d634ed76bbbc851e2c226764627b1bf691715dbfd803459"
+  }
+]

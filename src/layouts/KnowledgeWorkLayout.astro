@@ -1,0 +1,25 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Disclaimer from '../components/knowledge/Disclaimer.astro';
+import Ownership from '../components/knowledge/Ownership.astro';
+import '../styles/knowledge-work.css';
+const { title, question = title, description, track = 'shared', fiction = false } = Astro.props;
+const audience = { agents: 'סוכני ביטוח', planners: 'מתכננים פיננסיים', wealth: 'מנהלי עושר', shared: 'כל הקהלים' }[track as string];
+---
+<BaseLayout title={`${title} | מרכז ידע | Plan-T`} description={description} noindex={true}>
+  <article class="knowledge-work">
+    <header class="kw-heading">
+      <nav aria-label="מיקום במרכז הידע"><a href="/knowledge/">מרכז ידע</a><span aria-hidden="true"> / </span>{track !== 'shared' ? <a href={`/knowledge/${track}/`}>{audience}</a> : <span>{audience}</span>}</nav>
+      {fiction && <p class="kw-fiction">מקרה בדיוני להמחשה</p>}
+      <h1>{question}</h1>
+      <p class="kw-lead">{description}</p>
+      <Ownership />
+    </header>
+    <slot />
+    <section class="kw-demo" aria-label="תיאום הדגמה">
+      <p><slot name="bridge">כאן עובדים על מספרים לדוגמה; ב־<bdi dir="ltr">Plan-T</bdi> עובדים על תיק הלקוח האמיתי.</slot></p>
+      <a class="kw-button" href="/contact/">תיאום הדגמה</a>
+    </section>
+    <Disclaimer />
+  </article>
+</BaseLayout>

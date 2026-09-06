@@ -1,0 +1,6 @@
+---
+import ToolsDirectory from '../../../components/knowledge/ToolsDirectory.astro';
+import { KNOWLEDGE_ENABLED } from '../../../data/knowledge';
+export function getStaticPaths() { return KNOWLEDGE_ENABLED ? [{ params: { directory: undefined } }] : []; }
+---
+<ToolsDirectory />

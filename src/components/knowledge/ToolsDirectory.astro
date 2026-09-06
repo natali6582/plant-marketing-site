@@ -1,0 +1,12 @@
+---
+import KnowledgeWorkLayout from '../../layouts/KnowledgeWorkLayout.astro';
+import { DIRECTORY } from '../../data/knowledge-directory';
+import { TRACKS } from '../../data/knowledge';
+---
+<KnowledgeWorkLayout title="כלים מקצועיים לפי קהל" question="איזה כלי מתאים לשאלה שעלתה בפגישה?" description="מדריך שימוש לכלים רשמיים ולכלים חיצוניים: מה אפשר לבדוק, מה להכין מראש ואיפה התוצאה נעצרת.">
+  <p>הכלים נפתחים באתרים של הגופים המפעילים אותם. פרטי זיהוי והרשאות מזינים רק באתר השירות הרלוונטי. חלק מהשירותים מחייבים הזדהות או תשלום.</p>
+  <nav class="kw-actions" aria-label="קפיצה לקהל">{TRACKS.map(t => <a class="kw-button kw-button-secondary" href={`#${t.slug}`}>{t.name}</a>)}</nav>
+  {TRACKS.map(track => <section id={track.slug} class="kw-section"><h2>{track.name}</h2>{[true, false].map(official => <><h3>{official ? 'מקורות רשמיים ושירותי מידע מפוקחים' : 'כלים חיצוניים — בקרדיט ליוצרים'}</h3><div class="kw-directory">{DIRECTORY.filter(t => t.audience === track.slug && t.official === official).map(tool => <article id={tool.id}><h3><a href={tool.url} target="_blank" rel="noopener noreferrer">{tool.title} <span aria-label="נפתח בלשונית חדשה">↗</span></a></h3><p>{tool.source}</p><dl><dt>מה הכלי עושה</dt><dd>{tool.does}</dd><dt>מתי להשתמש</dt><dd>{tool.when}</dd><dt>מה להכין</dt><dd>{tool.prepare}</dd><dt>מה התוצאה לא אומרת</dt><dd>{tool.limits}</dd></dl></article>)}</div></>)}</section>)}
+  <section class="kw-example"><h2>דוגמת שימוש בפגישה</h2><p>הלקוח מציג הצעת דמי ניהול חדשה. בודקים הקשר במחשבון הרשמי, מתעדים את ההצעה ותוקפה, ואז משתמשים במחשבון התרחישים שלנו כדי להמחיש את השפעת העלויות לאורך התקופה שנבחרה. חוזרים בסיום לשאלות הכיסוי, הנזילות וההתאמה למטרה.</p><a href="/knowledge/agents/fees/">למחשבון דמי הניהול בתוך התוכנית</a></section>
+  <Fragment slot="bridge">מהבירור המקצועי לתמונת הלקוח: אפשר להכיר את דרך העבודה ב־<bdi dir="ltr">Plan-T</bdi> בהדגמה.</Fragment>
+</KnowledgeWorkLayout>

@@ -1,0 +1,7 @@
+---
+import ScenarioTool from '../../../../components/knowledge/ScenarioTool.astro';
+import { scenarioTools } from '../../../../data/knowledge-batches/batch-4';
+export function getStaticPaths(){return import.meta.env.KNOWLEDGE_ENABLED==='true'?scenarioTools.map(tool=>({params:{track:tool.track,page:undefined},props:{tool}})):[];}
+const { tool }=Astro.props;
+---
+<ScenarioTool tool={tool}/>

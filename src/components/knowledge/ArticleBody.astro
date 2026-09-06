@@ -4,7 +4,7 @@ import KeyFigures from './KeyFigures.astro';
 import Layers from './Layers.astro';
 import Compare from './Compare.astro';
 import Timeline from './Timeline.astro';
-import Calculator from './Calculator.astro';
+import PensionCalculator from './PensionCalculator.astro';
 import { inlineFigures, renderAlerts, splitBlocks } from './render';
 import type { FigureData } from './figures';
 import { CONCEPT_LAYERS, PLANNING_LAYERS } from '../../data/knowledge';
@@ -52,7 +52,7 @@ for (const part of parts) {
       if (part.name === 'keyfigures') return <KeyFigures ids={part.arg.split(',').map((s) => s.trim())} />;
       if (part.name === 'layers') return <Layers items={LAYER_SETS[part.arg]} />;
       if (part.name === 'timeline') return <Timeline items={TIMELINE[part.arg].items} />;
-      if (part.name === 'calculator') return <Calculator />;
+      if (part.name === 'calculator') return <PensionCalculator />;
       return <Compare {...COMPARE[part.arg]} />;
     })
   }

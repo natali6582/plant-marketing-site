@@ -232,10 +232,22 @@ export const KNOWLEDGE_ENABLED = knowledgeReview || knowledgePublic;
 */
 export const KNOWLEDGE_DRAFTS = knowledgeReview;
 
-export const SERIES: { slug: string; title: string; lead: string }[] = [
+export const SERIES: { slug: string; title: string; lead: string; audience?: 'planners' | 'wealth' }[] = [
   {
     slug: 'pension-guide',
     title: 'מדריך פנסיה מקצועי',
     lead: 'שבעת עמודי הליבה של הפנסיה הצוברת והחיסכון, בסדר קריאה אחד.',
+  },
+  {
+    slug: 'investment-decisions',
+    title: 'ממכשיר השקעה להחלטה מנומקת',
+    lead: 'מסלול למתכננים פיננסיים: שיטת ניתוח, קרנות סל, אג״ח ומוצרים מובנים. כחצי שעה לקריאה ראשונה ולהתנסות, בקצב שלכם.',
+    audience: 'planners',
+  },
+  {
+    slug: 'wealth-decisions',
+    title: 'נזילות, קרנות פרטיות והון משפחתי',
+    lead: 'מסלול למנהלי עושר: התחייבויות הון, דוחות קרנות, אשראי פרטי, נדל״ן ומטבע. כחצי שעה לקריאה ראשונה, עם כלים להמשך העבודה.',
+    audience: 'wealth',
   },
 ];

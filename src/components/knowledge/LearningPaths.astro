@@ -1,0 +1,35 @@
+---
+import { getCollection } from 'astro:content';
+import { KNOWLEDGE_DRAFTS, SERIES } from '../../data/knowledge';
+interface Props { track?: string }
+const { track } = Astro.props;
+const articles = await getCollection('knowledge');
+const paths = SERIES.filter(series => series.audience && (!track || series.audience === track)).map(series => ({
+  ...series,
+  articles: articles.filter(a => a.data.series === series.slug && (!a.data.draft || KNOWLEDGE_DRAFTS)),
+})).filter(series => series.articles.length > 0);
+---
+{paths.length > 0 && <section class="learning-paths" aria-labelledby="learning-paths-title">
+  <div class="learning-paths-inner">
+    <p class="learning-eyebrow">להעמיק ולעבוד עם הידע</p>
+    <h2 id="learning-paths-title">מסלולי למידה מקצועיים</h2>
+    <p>מהשאלה של הלקוח, דרך הבנת ההשקעה, אל השאלות שצריך לבדוק בפגישה.</p>
+    <ul>{paths.map(path => <li>
+      <p class="learning-audience">{path.audience === 'planners' ? 'למתכננים פיננסיים' : 'למנהלי עושר'} · {path.articles.length} פרקים</p>
+      <h3><a href={`/knowledge/series/${path.slug}/`}>{path.title}</a></h3>
+      <p>{path.lead}</p>
+      <a class="learning-start" href={`/knowledge/series/${path.slug}/`}>למסלול הלמידה ←</a>
+    </li>)}</ul>
+  </div>
+</section>}
+<style>
+  .learning-paths { padding: 48px 16px; background: white; }
+  .learning-paths-inner { max-width: 1024px; margin-inline: auto; }
+  .learning-eyebrow, .learning-audience { color: var(--color-brand-700); font-weight: 700; font-size: .9rem; }
+  .learning-paths h2 { color: var(--color-brand-800); font-size: 1.875rem; margin-block: .5rem; }
+  .learning-paths h3 { color: var(--color-brand-800); font-weight: 700; font-size: 1.25rem; margin-block: .75rem; }
+  .learning-paths p { line-height: 1.8; }
+  .learning-paths ul { list-style: none; padding: 0; margin-top: 24px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 20px; }
+  .learning-paths li { padding: 24px; border: 1px solid var(--color-brand-200); border-radius: 16px; background: var(--color-surface-blue); }
+  .learning-start { display: inline-block; color: var(--color-brand-700); font-weight: 700; margin-top: 16px; text-decoration: underline; text-underline-offset: 4px; }
+</style>

@@ -11,6 +11,7 @@ import Disclaimer from '../../components/knowledge/Disclaimer.astro';
 import SourceList from '../../components/knowledge/SourceList.astro';
 import TrackResources from '../../components/knowledge/TrackResources.astro';
 import Ownership from '../../components/knowledge/Ownership.astro';
+import LearningPaths from '../../components/knowledge/LearningPaths.astro';
 import { KNOWLEDGE_DRAFTS, KNOWLEDGE_ENABLED, PLANNING_LAYERS, SERIES, TRACKS } from '../../data/knowledge';
 import { FIGURE_GROUPS, formatFigure, figuresPath, TIER_LABEL, wrapAtomicRuns } from '../../components/knowledge/figures';
 import { readingMinutes } from '../../components/knowledge/render';
@@ -151,6 +152,7 @@ const breadcrumbLd = {
     kind === 'track' && (
       <>
         <TrackResources track={track!.slug} />
+        {track!.slug !== 'agents' && <LearningPaths track={track!.slug} />}
         <section class="band bg-white" aria-labelledby="articles-title">
           <div class="mx-auto max-w-5xl px-4">
             <h2 id="articles-title" class="reveal-lines text-3xl font-bold text-brand-800">המאמרים</h2>
@@ -221,6 +223,13 @@ const breadcrumbLd = {
             </div>
 
             <SourceList sources={article!.data.sources} />
+            {article!.data.reviewed && (
+              <p class="mt-6 text-sm leading-relaxed text-ink-700" data-article-maintenance>
+                אחריות לתוכן: {article!.data.contentOwner} · בדיקת מקורות: <time datetime={article!.data.reviewed} class="ltr">{article!.data.reviewed}</time>
+                {article!.data.reviewAfter && <> · בדיקה מתוכננת: <time datetime={article!.data.reviewAfter} class="ltr">{article!.data.reviewAfter}</time></>}
+                <br />בדיקה מוקדמת תידרש אם ישתנו המקורות או תנאי המכשיר המתואר.
+              </p>
+            )}
 
             {related.length > 0 && (
               <section class="not-prose mt-10" aria-labelledby="related-title">

@@ -1,0 +1,20 @@
+[
+  {
+    "track": "agents",
+    "controlsHidden": true,
+    "printValues": true,
+    "width": 687.859375
+  },
+  {
+    "track": "planners",
+    "controlsHidden": true,
+    "printValues": true,
+    "width": 687.859375
+  },
+  {
+    "track": "wealth",
+    "controlsHidden": true,
+    "printValues": true,
+    "width": 687.859375
+  }
+]

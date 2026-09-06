@@ -1,0 +1,31 @@
+---
+import KnowledgeWorkLayout from '../../layouts/KnowledgeWorkLayout.astro';
+import type { MeetingKit } from '../../data/knowledge-batches/batch-2';
+const { kit } = Astro.props as { kit: MeetingKit };
+---
+<KnowledgeWorkLayout title={kit.title} question={kit.question} description={kit.explanation} track={kit.track}>
+  <section class="kw-section"><h2>איך להכין ולהוביל את הפגישה</h2><ol>{kit.guide.map(t => <li>{t}</li>)}</ol></section>
+  <section class="kw-section" data-meeting-kit>
+    <h2>תבנית למילוי בפגישה</h2>
+    <p>הטופס מתחיל ריק. הנתונים נשארים בדף הפתוח בלבד ואינם נשמרים או נשלחים. רענון הדף מוחק אותם. אפשר לעבוד בכינוי וללא פרטי זיהוי.</p>
+    <div class="kw-actions"><button type="button" class="kw-button" data-kit-print>הדפסה / שמירה כ־PDF</button><button type="button" class="kw-button kw-button-secondary" data-kit-example>מילוי דוגמה בדיונית</button><button type="button" class="kw-button kw-button-secondary" data-kit-clear>ניקוי הטופס</button></div>
+    <p data-kit-status role="status" aria-live="polite"></p>
+    {kit.sections.map((section, si) => <fieldset class="kw-example kw-kit-section"><legend>{section.title}</legend><div class="kw-columns">{section.fields.map(field => <label class="kw-field" for={`kit-${field.key}`}><span class="kw-field-label">{field.label}</span><small id={`hint-${field.key}`}>{field.hint}</small><textarea id={`kit-${field.key}`} name={field.key} rows="4" autocomplete="off" spellcheck="false" dir="auto" aria-describedby={`hint-${field.key}`} data-print-field data-sample={field.sample}></textarea><span class="kw-print-value" dir="auto">לא מולא</span></label>)}</div></fieldset>)}
+  </section>
+  <section class="kw-example"><h2>דוגמה מלאה — מקרה בדיוני להמחשה</h2><p>{kit.example}</p>{kit.sections.map(section => <div class="kw-section"><h3>{section.title}</h3><dl>{section.fields.map(f => <div class="kw-sample-row"><dt>{f.label}</dt><dd dir="auto">{f.sample}</dd></div>)}</dl></div>)}</section>
+  <section class="kw-section"><h2>גבולות התבנית</h2><p>{kit.limits}</p></section>
+  <Fragment slot="bridge">כאן מכינים את מבנה הפגישה; בהדגמה אפשר לבחון עבודה על תיק לקוח ב־<bdi dir="ltr">Plan-T</bdi>.</Fragment>
+</KnowledgeWorkLayout>
+<script>
+  import { initializeMeetingKits } from '../../scripts/knowledge/meeting-kits';
+  initializeMeetingKits();
+</script>
+<style>
+  .kw-kit-section { min-width: 0; padding-top: 16px; }
+  .kw-kit-section legend { font-weight: 700; padding-inline: 10px; color: var(--color-brand-800); }
+  .kw-kit-section .kw-columns { row-gap: 24px; }
+  .kw-sample-row { padding-block: 10px; border-bottom: 1px solid var(--color-brand-100); }
+  .kw-sample-row dt { font-weight: 700; }
+  .kw-sample-row dd { margin-block: 6px 0; }
+  @media print { .kw-kit-section .kw-field { break-inside: avoid; } .kw-kit-section .kw-columns { display: block; } .kw-kit-section .kw-field + .kw-field { margin-top: 12px; } }
+</style>

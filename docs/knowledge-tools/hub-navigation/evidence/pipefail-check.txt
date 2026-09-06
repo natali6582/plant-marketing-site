@@ -1,0 +1,2 @@
+PASS: upstream exit 0 remains exit 0 through tee
+PASS: upstream exit 7 remains exit 7 through tee

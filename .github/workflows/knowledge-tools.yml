@@ -6,6 +6,9 @@ on:
   workflow_dispatch:
 permissions:
   contents: read
+defaults:
+  run:
+    shell: bash
 jobs:
   calculations-and-pages:
     runs-on: ubuntu-latest

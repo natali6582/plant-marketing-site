@@ -1,0 +1,6 @@
+
+> plant-marketing-site@0.1.0 check:knowledge
+> node scripts/knowledge/check.mjs
+
+47 knowledge pages; 2241 internal links; largest first-party script payload 10372 bytes gzip
+PASS: knowledge noindex, disclaimers, ownership, internal links and page-weight guardrails.

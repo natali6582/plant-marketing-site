@@ -1,0 +1,22 @@
+=== financial-model-builder verify ===
+file: /tmp/fx/salgrowth-0/salgrowth-0.xlsx
+type: pension
+A1  recalc............................ PASS  formulas=106, errors=0
+A2  required-sheets................... PASS  
+A3  hardcoded-in-formula.............. PASS  
+A8  unsupported-functions............. PASS  
+A11 division-guard.................... PASS  
+A4  row-consistency................... PASS  
+A13 period-cells-are-formulas......... PASS  
+A5  orphan-assumption................. PASS  
+A6  assumption-source................. PASS  
+B   plausibility-ranges............... PASS  
+A7  subtotals-are-formulas............ PASS  
+A9  sensitivity-table................. PASS  5x5 grid independently recomputed; max delta=5.23869e-10; headline=B1
+A10 percent-as-fraction............... PASS  
+A12 readme-content.................... PASS  
+C0  active-periods.................... PASS  10 contiguous period headers
+C1  roll-forward...................... PASS  
+C1a open=prev-close (link)............ PASS  
+C1b no-negative-balance............... PASS  
+RESULT: PASS (0 fail, 0 warn)

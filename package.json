@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev",
-    "build": "node scripts/check-figures.mjs && astro build",
+    "build": "node scripts/check-figures.mjs && node scripts/check-model.mjs && astro build",
     "preview": "astro preview",
     "test:knowledge": "vitest run",
     "typecheck:knowledge": "tsc -p tsconfig.knowledge.json",

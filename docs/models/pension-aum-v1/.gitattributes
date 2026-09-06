@@ -1,0 +1,3 @@
+# Approved evidence is hashed byte-for-byte, including JSON and native stdout.
+verify_report.json -text
+extra/** -text

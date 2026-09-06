@@ -1,0 +1,9 @@
+---
+import MeetingKitPage from '../../../../components/knowledge/MeetingKit.astro';
+import { kits } from '../../../../data/knowledge-batches/batch-2';
+export function getStaticPaths() {
+  return import.meta.env.KNOWLEDGE_ENABLED === 'true' ? kits.map(kit => ({ params: { track: kit.track, page: undefined }, props: { kit } })) : [];
+}
+const { kit } = Astro.props;
+---
+<MeetingKitPage kit={kit} />

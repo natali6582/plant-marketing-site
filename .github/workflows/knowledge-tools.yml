@@ -23,12 +23,14 @@ jobs:
       - run: npm run evidence:knowledge -- --out evidence/run-1
       - run: npm run evidence:knowledge -- --out evidence/run-2
       - run: diff -r evidence/run-1 evidence/run-2
+      - run: node scripts/knowledge/reproduce-batches.mjs --out evidence/batches
       - uses: actions/upload-artifact@v4
         with:
           name: knowledge-calculation-evidence
           path: |
             vectors.log
             evidence/run-1
+            evidence/batches
   external-links:
     runs-on: ubuntu-latest
     steps:

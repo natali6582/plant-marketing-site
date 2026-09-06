@@ -12,8 +12,6 @@ related:
   - 'bituach-menahalim'
   - 'kupat-gemel'
   - 'pension-products-map'
-figures:
-  - 'pension-general-salary-ceiling'
 sources:
   - { label: "gov.il / רשות שוק ההון — המסמך מציין gov ללא קישור", url: "", tier: 0 }
 ---
@@ -25,8 +23,6 @@ sources:
 {{compare:pension-fund-types}}
 
 קרן פנסיה מקיפה היא ברירת המחדל לרוב החוסכים, וההפקדה אליה מוגבלת בתקרה חודשית. קרן פנסיה כללית — ״משלימה״ — קולטת את ההפקדות שמעל אותה תקרה, בשכר קובע חודשי גבוה יותר.
-
-{{keyfigures:pension-general-salary-ceiling}}
 
 ## שלושה דברים נפרדים
 

@@ -126,25 +126,29 @@ gemel-lehashkaa-annuity-age:
   unit: "גיל"
   year: 2026
   label: הגיל שממנו ניתן להעביר לקופה משלמת לקצבה
-  # Searched the full text of חוק הפיקוח על שירותים פיננסיים (קופות גמל):
-  # no mention of 60 anywhere near קופת גמל להשקעה, קופה משלמת or קצבה. Like
-  # the deposit ceiling, this rule is not in the statute.
-  note: לא נמצא בחוק הפיקוח על שירותים פיננסיים (קופות גמל). הכלל אינו בחוק אלא בתקנות או בחוזרי הממונה, כמו תקרת ההפקדה.
+  # The rule is in the transfer regulations, not the supervision law. Two
+  # citations in the task brief were off and are corrected here against the
+  # source itself: the provision is תקנה 2(א)(7), not 3(א)(7) — תקנה 2 is
+  # "העברת כספים לקופת גמל לקצבה" and תקנה 3 is transfers to a
+  # NON-annuity fund, the wrong direction. And the age is set by סעיף 5 of
+  # חוק גיל פרישה (גיל הפרישה המוקדמת, 60 לגבר ולאישה), not סעיף 3,
+  # which sets 67/65. The regulation's own definitions section points at סעיף 5.
+  note: 'הכלל אינו בחוק הפיקוח אלא בתקנות ההעברה — העברת כספים מקופת גמל להשקעה לקופה משלמת לקצבה מותרת רק משהגיע העמית לגיל הפרישה המוקדמת, לפי תקנה 2(א)(7) לתקנות ההעברה. חוק גיל פרישה, תשס״ד-2004, סעיף 5, קובע את גיל הפרישה המוקדמת על 60 לגבר ולאישה.'
   group: gemel
-  source: { label: "לא נמצא בחוק הפיקוח — טעון בירור", url: "", tier: 0 }
+  source: { label: "תקנות הפיקוח על שירותים פיננסיים (קופות גמל) (העברת כספים בין קופות גמל), תשס״ח-2008, תקנה 2(א)(7) — נבו", url: "https://www.nevo.co.il/law_html/law01/999_929.htm", tier: 1 }
 
 tikun-190-min-age:
   value: 60
   unit: "גיל"
   year: 2026
   label: גיל מזערי להיוון קצבה מוכרת
-  # NOT in section 9א, whose gate is "גיל הזכאות" — retirement age or the age
-  # at which a קצבה מזכה began, whichever is later. The article no longer
-  # publishes 60 as a legal fact; it names the statutory test and says the
-  # market speaks of 60. The entry stays so the question stays visible.
-  note: 'לאימות — שאלה לנטלי: מאיפה בפועל מגיע גיל 60? שלוש אפשרויות: הגדרת ״גיל הזכאות״ בפקודה, חוק הפיקוח על שירותים פיננסיים (קצבה מגיל 60), או פרקטיקה של רשות המסים. סעיף 9א נבדק ואינו נוקב בגיל 60. המספר אינו מוצג במאמר.'
+  # Source located, tier 0 held on purpose. The age is in the withdrawal
+  # regulations, not in §9א, which sets only the tax. nevo blocks automation
+  # for this page, so the exact sub-paragraph of תקנה 38 has NOT been read and
+  # is deliberately not guessed. The internal "שאלה לנטלי" note is gone.
+  note: 'הגיל נקבע בתקנות המשיכה ולא בסעיף 9א לפקודה: תקנות מס הכנסה (כללים לאישור ולניהול קופות גמל), תשכ״ד-1964, תקנה 38, מתנות את התשלום ואת ההיוון בהגעה לגיל 60; סעיף 9א(ה)(3) חל לאחר מכן ומטיל 15% על רכיב הרווח היחסי. ממתין לקריאה ידנית של תקנה 38(ד)/(ה) ולציון הפסקה המדויקת.'
   group: tikun-190
-  source: { label: "לאימות — שאלה לנטלי, לא נמצא בסעיף 9א", url: "", tier: 0 }
+  source: { label: "תקנות מס הכנסה (כללים לאישור ולניהול קופות גמל), תשכ״ד-1964, תקנה 38 — נבו. ממתין לקריאה ידנית", url: "https://www.nevo.co.il/law_html/law01/255_208.htm", tier: 0 }
 
 tikun-190-min-monthly-pension:
   value: 5306
@@ -162,10 +166,19 @@ tikun-190-first-tier:
   value: 38412
   unit: "₪"
   year: 2026
-  label: "הרובד הראשון"
-  note: המסמך מציין את הסכום כמופיע במקורות מקצועיים ולא בפרסום רשמי. טעון אימות מול רשות המסים לפני פרסום.
+  label: 'תקרת ההפקדה המוטבת לעצמאי לפי סעיפים 45א ו-47 (מכונה בשוק ״הרובד הראשון״)'
+  # DERIVED, and the derivation is not the one the brief described. The brief
+  # said to cite "chapter ג, the 232,800 line" of the רשות המסים booklet.
+  # There is no such line — 232,800 appears nowhere in the 2026 booklet.
+  # What the booklet does carry is 19,400 ₪ לחודש for
+  # "תקרת הסכום לזיכוי בעד דמי ביטוח ותגמולים 45א(ה)(2)", and 19,400 × 12
+  # is exactly 232,800. That is the tier-1 anchor, and it is the one named
+  # in the note. 16.5% × 232,800 = 38,412; 11% = 25,608 and 5.5% = 12,804.
+  # Checked while here: the booklet's "עמית מוטב 47(א)(7)" row is 26,436 ₪
+  # לשנה (= 16% × 13,769 × 12), a minimum deposit, not an income ceiling.
+  note: 'סכום נגזר: 16.5% מתקרת הכנסה שנתית של 232,800 ₪ — שהיא פי 12 מתקרת 45א(ה)(2) שבלוח העזר, 19,400 ₪ לחודש. הסכום מתפצל ל-25,608 ₪ בניכוי (11%) ול-12,804 ₪ בזיכוי (5.5%). התקרה השנתית עצמה אינה מופיעה כשורה בלוח.'
   group: tikun-190
-  source: { label: "מקורות מקצועיים — טעון אימות ראשוני", url: "", tier: 0 }
+  source: { label: "רשות המסים — לוח עזר לחישוב מס הכנסה ממשכורת ושכר עבודה, ינואר 2026, מעודכן לאפריל 2026, פרק ג (שורת 45א(ה)(2)) — סכום נגזר", url: "https://www.gov.il/BlobFolder/generalpage/income-tax-monthly-deductions-booklet/he/generalInformation_income-tax-monthly-deductions-booklet_monthly-deductions-booklet-2026.pdf", tier: 1 }
 
 tikun-190-tax-rate:
   value: 15
@@ -210,9 +223,13 @@ bituach-menahalim-restriction-date:
   # /knowledge/figures-2023/ page for one entry.
   year: 2026
   label: המועד שממנו הוגבלה הצטרפות חדשה לביטוח מנהלים
-  note: ההגבלה חלה על חלק השכר שמעל פעמיים השכר הממוצע, בכפוף לתקנות ולחריגים.
+  # TIER 2 ONLY, deliberately. The brief asked for the regulation amendment
+  # itself on gov.il or nevo; searches restricted to those domains did not
+  # return it, and Kol-Zchut does not name or link it either. Rule: do not
+  # upgrade what was not read. Kol-Zchut does confirm both 2026 numbers below.
+  note: 'ב-1.9.2023 תוקנו תקנות קופות הגמל כך שפוליסת ביטוח חדשה יכולה לקלוט הפקדות רק בעד חלק השכר שמעל פעמיים השכר הממוצע במשק, ובתנאי שההפקדות עד אותה תקרה מופנות לקופת גמל לקצבה שאינה פוליסת ביטוח. נכון ל-2026: שכר חודשי של 27,538 ₪, והפקדה חודשית מזערית לקצבה של 5,645.29 ₪ (20.5% מפעמיים השכר הממוצע, 13,769 ₪).'
   group: pension
-  source: { label: "רשות שוק ההון, ביטוח וחיסכון — gov.il", url: "", tier: 0 }
+  source: { label: "כל-זכות — נכתב בסיוע רשות שוק ההון. מקור מסביר בלבד: תיקון התקנות עצמו טרם אותר ב-gov.il או בנבו", url: "https://www.kolzchut.org.il/he/ביטוח_מנהלים", tier: 2 }
 
 accredited-liquid-assets:
   value: 9411809
@@ -291,17 +308,23 @@ structured-deposit-principal-protection:
   unit: "%"
   year: 2026
   label: הגנת קרן מזערית בפיקדון בנקאי מובנה העוקב אחר מדד
-  note: לפי עמדת רשות ניירות ערך ממאי 2026, לצורך בידול מקרן נאמנות עוקבת.
+  # TIER 2, pending the PDF. The staff position itself was not found on
+  # isa.gov.il; the one ISA PDF the search surfaced turned out to be legal
+  # position 105-27 on forecast cash-flow disclosure — unrelated, zero
+  # mentions of פיקדון. Not cited. Upgrade to tier 1 when the real PDF is in hand.
+  note: 'עמדת סגל רשות ניירות ערך ממאי 2026 קובעת מתי מוצר בנקאי מובנה הוא פיקדון ולא קרן נאמנות: הגנה של 90% על הקרן לכל הפחות, ובלי נזילות יומית. העמדה פורסמה לאחר שהרשות עצרה בסוף 2025 את שיווק הפיקדון של לאומי שהיה צמוד למדד S&P 500.'
   group: securities
-  source: { label: "רשות ניירות ערך — isa.gov.il, עמדה ממאי 2026", url: "", tier: 0 }
+  source: { label: "כלכליסט, מאי 2026 — מקור מסביר. עמדת הסגל עצמה טרם אותרה ב-isa.gov.il; מדווח גם ב-TheMarker מ-5.5.2026", url: "https://www.calcalist.co.il/market/article/b1ubfuw0bg", tier: 2 }
 
 structured-deposit-min-months:
   value: 3
   unit: "חודשים"
   year: 2026
-  label: התקופה המזערית היוצרת בידול לפי אותה עמדה
+  label: משיכה מהפיקדון לכל היותר אחת לשלושה חודשים (ללא נזילות יומית)
+  # Same position, same tier-2 fallback as the 90% entry above.
+  note: 'עמדת סגל רשות ניירות ערך ממאי 2026: מוצר כזה לא יכול לכלול נזילות יומית, וניתן למשוך את הפיקדון לכל הפחות אחת לשלושה חודשים. זה מה שמבדל אותו מקרן נאמנות עוקבת, שבה הנזילות יומית.'
   group: securities
-  source: { label: "רשות ניירות ערך — isa.gov.il, עמדה ממאי 2026", url: "", tier: 0 }
+  source: { label: "כלכליסט, מאי 2026 — מקור מסביר. עמדת הסגל עצמה טרם אותרה ב-isa.gov.il; מדווח גם ב-TheMarker מ-5.5.2026", url: "https://www.calcalist.co.il/market/article/b1ubfuw0bg", tier: 2 }
 
 offerees-retail-12m:
   value: 35
@@ -319,11 +342,15 @@ offerees-joint-investment-retail:
   unit: ""
   year: 2026
   label: משקיעי ריטייל בהסדר השקעה משותפת, בכל זמן נתון
-  # Not in section 15א. Paragraph (7) is "הצעה או מכירה למשקיעים שהם אחד
-  # מהמפורטים בסעיף קטן (ב)" and carries no number. The 50 is elsewhere.
-  note: לא נמצא בסעיף 15א לחוק ניירות ערך. פסקה (7) מפנה למשקיעים שבסעיף קטן (ב) ואינה נוקבת במספר.
+  # Verified against the codex PDF itself, downloaded and read (HTTP 200):
+  # "אם המוצר הוא הסדר השקעה משותפת, הוא גם מוגבל בעד 50 משקיעי ריטייל בכל
+  # זמן נתון", and again: "סך כל המשקיעים שאינם ״כשירים למוצרי השקעה״ במוצר
+  # כזה אינו יכול לעלות על 50 בכל זמן נתון". The separate staff-position
+  # document named in the brief was not located on isa.gov.il, so only the
+  # codex URL is cited — the title is named in the label, not linked.
+  note: 'המגבלה אינה בסעיף 15א לחוק ניירות ערך אלא בעמדת סגל הרשות: בהסדר השקעה משותפת לא יעלה מספר המשקיעים שאינם כשירים על 50 בכל זמן נתון. המגבלה מוצגת גם בקודקס ההשקעות של הרשות, לצד מכסה של 35 ניצעי ריטייל ב-12 חודשים.'
   group: securities
-  source: { label: "לא נמצא בסעיף 15א — טעון בירור", url: "", tier: 0 }
+  source: { label: "רשות ניירות ערך — קודקס ההשקעות (עמדות סגל בדבר הצעה ותיווך של הסדרי השקעה משותפת)", url: "https://www.new.isa.gov.il/images/Fittings/isa/asset_library_pic/al_lobby/al_lobby-63b3dc4fa5dd2/Investment_codex169251.pdf", tier: 1 }
 
 purchase-tax-single-exempt:
   value: 1978745
@@ -343,38 +370,21 @@ purchase-tax-additional-8pct-ceiling:
   group: real-estate
   source: { label: "רשות המסים — הוראת ביצוע מיסוי מקרקעין 1/2025, 16 בינואר 2025, פרק 2", url: "https://www.gov.il/BlobFolder/policy/inst-01-2025-3/he/realestate_inst-01-2025-3.pdf", tier: 1 }
 
-pension-general-salary-ceiling:
-  value: 55706
-  unit: "₪"
-  year: 2026
-  label: שכר קובע חודשי מרבי בקרן פנסיה כללית
-  note: קרן פנסיה כללית קולטת הפקדות מעל התקרה של המקיפה, וללא הבטחת תשואה.
-  group: pension
-  source: { label: "רשות שוק ההון, ביטוח וחיסכון — gov.il", url: "", tier: 0 }
-
-maof-contract-multiplier:
-  value: 50
-  unit: "₪"
-  year: 2026
-  label: מכפיל גודל החוזה בנגזרי מדד ת״א-35
-  # tase.co.il renders its specification pages client-side; curl returns the
-  # shell and no figure. Verifying this needs the page opened in a browser, or
-  # the TASE contract-specification PDF.
-  note: גודל חוזה = המדד בנקודות כפול המכפיל. טרם אומת — עמוד המפרט בבורסה מרונדר בצד הלקוח.
-  group: securities
-  source: { label: "הבורסה לניירות ערך בתל אביב — tase.co.il, טרם נמשך", url: "", tier: 0 }
-
 reit-law-year:
-  value: 2005
+  # Quoted, so it renders as 2005 and not "2,005". unit "תאריך" has no case in
+  # formatFigure(), so a numeric value falls through to Intl.NumberFormat and
+  # picks up a thousands separator on a year. A string value is returned as-is,
+  # which is exactly how bituach-menahalim-restriction-date already works.
+  value: "2005"
   unit: "תאריך"
   year: 2026
   label: השנה שבה נחקק חוק קרנות הריט בישראל
-  # The chapter exists and its amendment marker is תשס״ה, which spans
-  # September 2004 to October 2005 — so "2005" is likely but not settled by
-  # this source, and the amendment number 147 does not appear in it.
-  note: 'סעיף 64א2 לפקודה נושא את סימון התיקון "תשס״ה־9". תשס״ה משתרעת על 2004–2005, ומספר התיקון (147) אינו מופיע במקור — השנה המדויקת ומספר התיקון טעונים אישור.'
+  # Settled by the circular, verbatim: "בחוק לתיקון פקודת מס הכנסה (מספר 147)
+  # התשס״ה-2005, הוסף לפקודת מס הכנסה ... מכשיר השקעה הוני — קרן להשקעות
+  # במקרקעין ... הוסף כפרק שני 1 בחלק ד' לפקודה (סעיפים 64א2-64א11)".
+  note: 'המכשיר נוסף לפקודת מס הכנסה בחוק לתיקון פקודת מס הכנסה (מס׳ 147), התשס״ה-2005, כפרק שני 1 בחלק ד לפקודה, סעיפים 64א2 עד 64א11.'
   group: real-estate
-  source: { label: "פקודת מס הכנסה — ויקיטקסט, סעיף 64א2 — מאשש חלקית", url: "https://he.wikisource.org/wiki/פקודת_מס_הכנסה", tier: 0 }
+  source: { label: "רשות המסים — חוזר מס הכנסה 4/2018, קרן להשקעות במקרקעין", url: "https://www.gov.il/BlobFolder/policy/income-tax-professional-inst-4-2018/he/Policy_IncomeTaxProfessionalInst_hoz_04_2018_acc.pdf", tier: 1 }
 
 purchase-tax-brackets-frozen-until:
   value: "15.1.2028"

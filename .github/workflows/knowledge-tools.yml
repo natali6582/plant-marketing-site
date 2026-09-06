@@ -43,6 +43,7 @@ jobs:
           node-version: '22.19.0'
           cache: npm
       - run: npm ci
+      - run: node --experimental-strip-types --test scripts/knowledge/links.test.mjs
       - run: npm run build:knowledge
       - run: npm run check:knowledge-links 2>&1 | tee links.log
       - uses: actions/upload-artifact@v4

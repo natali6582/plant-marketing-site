@@ -170,3 +170,32 @@ export function decompose(input: SimulationInput) {
     inflationDrag: withFees.finalBalance - withFees.realFinalBalance,
     nominalFinal: withFees.finalBalance, realFinal: withFees.realFinalBalance };
 }
+/** Required constant start-of-month deposit; no withdrawals or monthly overrides. */
+export function requiredMonthlyDeposit(input: Pick<SimulationInput, 'initialBalance' | 'months' | 'monthlyReturn' | 'annualAccumulationFee'>, target: number): number {
+  if (!Number.isFinite(target) || target < 0) throw new RangeError('Target must be finite and nonnegative');
+  const startingOnly = simulate(input).finalBalance;
+  if (startingOnly >= target) return 0;
+  if (input.months === 0) throw new RangeError('A future deposit cannot meet a target at zero horizon');
+  const unitDeposit = simulate({ ...input, initialBalance: 0, deposit: 1 }).finalBalance;
+  if (!(unitDeposit > 0) || !Number.isFinite(unitDeposit)) throw new RangeError('Deposit coefficient is not finite and positive');
+  return (target - startingOnly) / unitDeposit;
+}
+
+export interface CashFlow { inflow: number; outflow: number }
+export interface CashLedgerRow extends CashFlow { month: number; openingBalance: number; closingBalance: number; gap: number }
+/** Cash arithmetic only. Deficits carry forward; a negative balance is not funded credit. */
+export function cashLedger(initialBalance: number, flows: ReadonlyArray<Readonly<CashFlow>>) {
+  if (!Number.isFinite(initialBalance) || initialBalance < 0) throw new RangeError('Initial cash must be finite and nonnegative');
+  if (flows.length > 1200) throw new RangeError('Ledger horizon exceeds 1200 months');
+  let balance = initialBalance;
+  const rows: CashLedgerRow[] = [];
+  for (let index = 0; index < flows.length; index++) {
+    const { inflow, outflow } = flows[index];
+    if (![inflow, outflow].every(n => Number.isFinite(n) && n >= 0)) throw new RangeError('Cash flows must be finite and nonnegative');
+    const openingBalance = balance;
+    balance += inflow - outflow;
+    if (!Number.isFinite(balance)) throw new RangeError('Cash balance is not finite');
+    rows.push({ month: index + 1, openingBalance, inflow, outflow, closingBalance: balance, gap: Math.max(0, -balance) });
+  }
+  return { rows, finalBalance: balance, gapMonths: rows.filter(r=>r.gap>0).map(r=>r.month), maximumGap: Math.max(0,...rows.map(r=>r.gap)) };
+}

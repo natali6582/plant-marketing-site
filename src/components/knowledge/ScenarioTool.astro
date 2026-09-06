@@ -1,0 +1,25 @@
+---
+import KnowledgeWorkLayout from '../../layouts/KnowledgeWorkLayout.astro';
+import { scenarioFields } from '../../lib/knowledge-scenarios';
+import { formatNumber } from '../../lib/knowledge-calculators';
+import { scenarioTools, scenarioExample } from '../../data/knowledge-batches/batch-4';
+const { tool } = Astro.props as {tool: typeof scenarioTools[number]};
+const fields=scenarioFields(tool.kind);const example=scenarioExample(tool.kind);
+---
+<KnowledgeWorkLayout title={tool.title} question={tool.question} description={tool.explanation} track={tool.track}>
+  <section data-scenario={tool.kind} aria-label="מחשבון תרחישים">
+    <aside class="kw-assumptions"><h2>הנחות החישוב</h2><p>{tool.assumptions.split('(1 + r)^(1/12) − 1').map((part,i)=><Fragment>{i>0&&<bdi dir="ltr">(1 + r)^(1/12) − 1</bdi>}{part}</Fragment>)}</p><p>ברירות המחדל הן נתוני דוגמה בלבד.</p></aside>
+    <div class="kw-calculator"><form class="kw-inputs" novalidate autocomplete="off"><h2>הנתונים לתרחיש</h2>{fields.map(f=><label class="kw-field" for={`scenario-${f.key}`}><span class="kw-field-label">{f.label}{f.unit&&<small> · {f.unit}</small>}</span><input id={`scenario-${f.key}`} type="number" inputmode="decimal" name={f.key} value={f.value} min={f.min} max={f.max} step={f.step} required /></label>)}
+      {tool.kind==='liquidity'&&<div class="kw-wide" data-ledger-inputs>{example.values.flows.map((f,i)=><fieldset class="kw-flow-row"><legend>חודש <bdi dir="ltr">{i+1}</bdi></legend><label class="kw-field">תקבול · ₪<input type="number" inputmode="decimal" min="0" max="1000000000" step="100" value={f.inflow} data-inflow /></label><label class="kw-field">תשלום · ₪<input type="number" inputmode="decimal" min="0" max="1000000000" step="100" value={f.outflow} data-outflow /></label></fieldset>)}</div>}
+      <p class="kw-error" data-error role="alert" hidden></p><div class="kw-actions"><button type="submit" class="kw-button">חישוב התרחיש</button><button type="button" class="kw-button kw-button-secondary" data-print>הדפסה / שמירה כ־PDF</button><a href={example.url} data-share>קישור עם הנתונים</a></div>
+    </form><div class="kw-panel"><h2>התוצאה לפי ההנחות</h2><div data-results aria-live="polite" aria-atomic="true"><dl class="kw-metrics">{example.result.metrics.map(m=><div class="kw-metric"><dt>{m.label}</dt><dd>{typeof m.value==='number'?<bdi dir="ltr" class="kw-number">{formatNumber(m.value)} {m.unit}</bdi>:m.value}</dd></div>)}</dl></div><svg class="kw-chart" data-chart viewBox="0 0 560 270" role="img" aria-label="יתרות בסוף כל חודש, ציר הזמן משמאל לימין"></svg><div class="kw-legend" data-legend></div><div class="kw-notes" data-notes>{example.result.notes.map(n=><p>{n}</p>)}</div><div class="kw-table-wrap" data-ledger-results></div><noscript>מוצגת הדוגמה בלבד. יש להפעיל JavaScript לשינוי נתונים ולחישוב.</noscript></div></div>
+  </section>
+  <section class="kw-example"><h2>דוגמה פתורה — מקרה בדיוני להמחשה</h2><p>{tool.example}</p><div class="kw-table-wrap"><table class="kw-table"><caption>תוצאות הדוגמה שחושבו במנוע המשותף</caption><tbody>{example.result.metrics.map(m=><tr><th scope="row">{m.label}</th><td>{typeof m.value==='number'?<bdi class="kw-number" dir="ltr">{formatNumber(m.value)} {m.unit}</bdi>:m.value}</td></tr>)}</tbody></table></div>{example.ledger&&<div class="kw-table-wrap"><table class="kw-table"><caption>לוח הדוגמה — כל הסכומים ב־₪</caption><thead><tr>{['חודש','יתרת פתיחה','תקבול','תשלום','יתרת סגירה','פער'].map(t=><th scope="col">{t}</th>)}</tr></thead><tbody>{example.ledger.rows.map(r=><tr>{[r.month,r.openingBalance,r.inflow,r.outflow,r.closingBalance,r.gap].map(v=><td><bdi dir="ltr">{formatNumber(v,0)}</bdi></td>)}</tr>)}</tbody></table></div>}<a href={example.url}>פתיחת המחשבון עם נתוני הדוגמה</a></section>
+  <section class="kw-section"><h2>שימוש בפגישת לקוח</h2><ol>{tool.guide.map(t=><li>{t}</li>)}</ol></section><section class="kw-section"><h2>רשימת בדיקה לפגישה</h2><ul>{tool.checklist.map(t=><li>{t}</li>)}</ul></section><section class="kw-section"><h2>גבולות התוצאה</h2><p>{tool.limits}</p></section>
+</KnowledgeWorkLayout>
+<script>import { initializeScenarios } from '../../scripts/knowledge/scenarios'; initializeScenarios();</script>
+<style>
+  :global(.knowledge-work .kw-flow-row) { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; border-top: 1px solid var(--color-brand-200); margin-top: 16px; padding-top: 10px; min-width: 0; }
+  :global(.knowledge-work .kw-flow-row legend) { font-weight: 700; padding-inline-end: 8px; }
+  @media print { :global(.knowledge-work .kw-flow-row) { break-inside: avoid; } }
+</style>

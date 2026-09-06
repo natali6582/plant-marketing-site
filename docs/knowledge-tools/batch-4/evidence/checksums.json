@@ -1,0 +1,47 @@
+[
+  {
+    "file": "README.md",
+    "identical": true,
+    "sha256": "7e39e8859e86865f6ace74fb9650b10120e08403942e89e457f6f390f7c9ab0d"
+  },
+  {
+    "file": "content-approval.md",
+    "identical": true,
+    "sha256": "324555dc1824b65bdb9403fd5497f202bf9dcef3b2ae1f8bc627b9ae0b3d424f"
+  },
+  {
+    "file": "examples.json",
+    "identical": true,
+    "sha256": "b5fd98d3e512a2bac5cdfece256f629ea1045b06a609ece5152bb165d968b1ee"
+  },
+  {
+    "file": "liquidity-content.md",
+    "identical": true,
+    "sha256": "d3981ee392d160894e8510262080e8bd9ebe7f20ac3150ddb78ac8cec806eb77"
+  },
+  {
+    "file": "liquidity-spec.md",
+    "identical": true,
+    "sha256": "4e216deb6c142a7f5ea5a7918052b2a99f3924800e71427d9eda3f1af00c5f06"
+  },
+  {
+    "file": "pause-content.md",
+    "identical": true,
+    "sha256": "ebd2bff3e96e9372581e92acce62abc415634eda5115e59d9bcd463423ecf3d8"
+  },
+  {
+    "file": "pause-spec.md",
+    "identical": true,
+    "sha256": "7059f2ee3ffc3e32c8d747826eec795d5463b828d76543f24e32c12be6b30825"
+  },
+  {
+    "file": "target-content.md",
+    "identical": true,
+    "sha256": "57c9ce7f40362e91696c2c3ef6d61edbcda2ef386dbabda2dcc38cef11872715"
+  },
+  {
+    "file": "target-spec.md",
+    "identical": true,
+    "sha256": "d9a28ae00c08cf2f8bbff36f0acaea62a8d258f35dd98987164dc07280f7e8b1"
+  }
+]

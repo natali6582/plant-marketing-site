@@ -1,3 +1,5 @@
+> RETIRED 2026-09-06 — the UI this contract describes was removed so the site keeps one fee engine (`src/lib/finance-core.ts`, behind `/knowledge/agents/fees/`). Kept for reference until the retarget task replaces the model and its fixtures.
+
 # Step 11 — knowledge-center pension calculator UI contract
 
 Status: proposed for approval; documentation only. No calculator UI or RED browser assertions have been implemented or run by writing this document.

@@ -9,6 +9,8 @@ import HubPage from '../../components/knowledge/HubPage.astro';
 import Layers from '../../components/knowledge/Layers.astro';
 import Disclaimer from '../../components/knowledge/Disclaimer.astro';
 import SourceList from '../../components/knowledge/SourceList.astro';
+import TrackResources from '../../components/knowledge/TrackResources.astro';
+import Ownership from '../../components/knowledge/Ownership.astro';
 import { KNOWLEDGE_DRAFTS, KNOWLEDGE_ENABLED, PLANNING_LAYERS, SERIES, TRACKS } from '../../data/knowledge';
 import { FIGURE_GROUPS, formatFigure, figuresPath, TIER_LABEL, wrapAtomicRuns } from '../../components/knowledge/figures';
 import { readingMinutes } from '../../components/knowledge/render';
@@ -148,6 +150,7 @@ const breadcrumbLd = {
   {
     kind === 'track' && (
       <>
+        <TrackResources track={track!.slug} />
         <section class="band bg-white" aria-labelledby="articles-title">
           <div class="mx-auto max-w-5xl px-4">
             <h2 id="articles-title" class="reveal-lines text-3xl font-bold text-brand-800">המאמרים</h2>
@@ -253,6 +256,7 @@ const breadcrumbLd = {
       <>
         <section class="band bg-white">
           <div class="mx-auto max-w-3xl px-4">
+            <Ownership />
             <p class="text-sm text-ink-700">
               כל מאמר במרכז הידע מקשר לכאן במקום להקליד מספר בגוף הטקסט. עדכון כאן מעדכן את כל
               האתר.

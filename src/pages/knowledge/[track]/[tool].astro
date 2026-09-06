@@ -1,0 +1,11 @@
+---
+import ToolPage from '../../../components/knowledge/ToolPage.astro';
+import { KNOWLEDGE_ENABLED } from '../../../data/knowledge';
+import { TOOL_CONTENT } from '../../../data/knowledge-tools';
+export function getStaticPaths() {
+  if (!KNOWLEDGE_ENABLED) return [];
+  return Object.entries(TOOL_CONTENT).map(([kind, data]) => ({ params: { track: data.track, tool: data.slug }, props: { kind } }));
+}
+const { kind } = Astro.props;
+---
+<ToolPage kind={kind} />

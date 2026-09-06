@@ -1,0 +1,6 @@
+---
+import { KNOWLEDGE_OWNER, KNOWLEDGE_UPDATED } from '../../data/knowledge-tools';
+const { updated = KNOWLEDGE_UPDATED } = Astro.props;
+---
+<p class="knowledge-owner">בעלים: {KNOWLEDGE_OWNER} · עודכן: <bdi dir="ltr">{updated}</bdi></p>
+<style>.knowledge-owner { margin-block: .8rem; color: var(--color-ink-700); font-size: .9rem; }</style>

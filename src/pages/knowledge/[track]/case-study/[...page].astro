@@ -1,0 +1,7 @@
+---
+import CaseStudy from '../../../../components/knowledge/CaseStudy.astro';
+import { cases } from '../../../../data/knowledge-batches/batch-3';
+export function getStaticPaths() { return import.meta.env.KNOWLEDGE_ENABLED === 'true' ? cases.map(item=>({params:{track:item.track,page:undefined},props:{item}})) : []; }
+const { item } = Astro.props;
+---
+<CaseStudy item={item} />

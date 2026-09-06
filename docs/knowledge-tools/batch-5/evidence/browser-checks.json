@@ -1,0 +1,59 @@
+[
+  {
+    "track": "agents",
+    "desktop": {
+      "blank": true,
+      "lastChecked": true,
+      "scrollWidth": 1425,
+      "width": 1425
+    },
+    "filled": {
+      "fields": 3,
+      "printMatches": true
+    },
+    "mobile": {
+      "blank": true,
+      "owner": "בעלים: נטלי · עודכן: 2026-09-06",
+      "scrollWidth": 375,
+      "width": 375
+    }
+  },
+  {
+    "track": "planners",
+    "desktop": {
+      "blank": true,
+      "lastChecked": true,
+      "scrollWidth": 1425,
+      "width": 1425
+    },
+    "filled": {
+      "fields": 3,
+      "printMatches": true
+    },
+    "mobile": {
+      "blank": true,
+      "owner": "בעלים: נטלי · עודכן: 2026-09-06",
+      "scrollWidth": 375,
+      "width": 375
+    }
+  },
+  {
+    "track": "wealth",
+    "desktop": {
+      "blank": true,
+      "lastChecked": true,
+      "scrollWidth": 1425,
+      "width": 1425
+    },
+    "filled": {
+      "fields": 5,
+      "printMatches": true
+    },
+    "mobile": {
+      "blank": true,
+      "owner": "בעלים: נטלי · עודכן: 2026-09-06",
+      "scrollWidth": 375,
+      "width": 375
+    }
+  }
+]

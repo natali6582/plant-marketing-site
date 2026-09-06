@@ -1,0 +1,20 @@
+[
+  {
+    "track": "agents",
+    "controlsHidden": true,
+    "printedAnswers": true,
+    "width": 687.859375
+  },
+  {
+    "track": "planners",
+    "controlsHidden": true,
+    "printedAnswers": true,
+    "width": 687.859375
+  },
+  {
+    "track": "wealth",
+    "controlsHidden": true,
+    "printedAnswers": true,
+    "width": 687.859375
+  }
+]

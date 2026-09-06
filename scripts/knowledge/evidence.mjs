@@ -13,7 +13,7 @@ function main() {
   if (existsSync(out)) throw new Error('Refusing to reuse an existing evidence directory');
   mkdirSync(out, { recursive: true });
   const save = (name, value) => writeFileSync(join(out, name), value, { encoding: 'utf8', flag: 'wx' });
-  const frame = readFileSync('docs/knowledge-tools/calculation-contract.md', 'utf8').split('## Inputs')[0];
+  const frame = readFileSync('docs/knowledge-tools/frame.md', 'utf8').replaceAll('\r\n', '\n');
   const approval = ['| Item | Document line | SHA-256 of exact text | Owner | Status | Approval date |', '|---|---:|---|---|---|---|'];
   const register = (name, content) => {
     save(name, content);

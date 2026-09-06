@@ -1,0 +1,46 @@
+[
+  {
+    "File": "content-approval.md",
+    "Identical": true
+  },
+  {
+    "File": "directory.md",
+    "Identical": true
+  },
+  {
+    "File": "examples.json",
+    "Identical": true
+  },
+  {
+    "File": "fees-content.md",
+    "Identical": true
+  },
+  {
+    "File": "fees-spec.md",
+    "Identical": true
+  },
+  {
+    "File": "README.md",
+    "Identical": true
+  },
+  {
+    "File": "real-content.md",
+    "Identical": true
+  },
+  {
+    "File": "real-spec.md",
+    "Identical": true
+  },
+  {
+    "File": "vectors.json",
+    "Identical": true
+  },
+  {
+    "File": "withdrawals-content.md",
+    "Identical": true
+  },
+  {
+    "File": "withdrawals-spec.md",
+    "Identical": true
+  }
+]

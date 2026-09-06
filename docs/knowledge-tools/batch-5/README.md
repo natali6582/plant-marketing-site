@@ -14,6 +14,9 @@ Rules on every item:
 
 Execution amendment: Natali explicitly instructed the agent to complete all stages without intermediate approvals. Build and review preparation are authorized. Line-by-line content sign-off remains pending, and no merge or publication is authorized. Never invent a sign-off.
 
-# Phase 1 delivery
 
-Three specs, three complete content drafts, directory and exact numeric evidence. Run npm run test:knowledge for the verbose vector report. Run this exporter into two fresh directories and compare their files. No timestamps, random values, cached calculations or prior outputs affect these artifacts.
+# Batch 5 review package
+
+The drafts, field/spec contracts and fictional examples are generated from the same data used by the knowledge pages. No invented professional sign-off. See content-approval.md.
+
+Verification: the shared core tests, page/link checks, two byte-identical fresh exports, desktop/mobile stills, and print samples are in evidence/. No merge or publication performed.

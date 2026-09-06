@@ -1,0 +1,19 @@
+---
+import KnowledgeWorkLayout from '../../layouts/KnowledgeWorkLayout.astro';
+import type { DecisionGuide } from '../../data/knowledge-batches/batch-5';
+import { lastChecked } from '../../data/knowledge-batches/batch-5';
+const { guide }=Astro.props as {guide:DecisionGuide};
+---
+<KnowledgeWorkLayout title={guide.title} question={guide.question} description={guide.explanation} track={guide.track}>
+  <p>נבדק לאחרונה: <bdi dir="ltr">{lastChecked}</bdi></p>
+  <section class="kw-section"><h2>מה להכין לפגישה</h2><ul>{guide.prepare.map(t=><li>{t}</li>)}</ul></section>
+  <section class="kw-section" data-meeting-kit><h2>רשימת בדיקה ושאלות לבירור</h2><p>לכל נושא, רשמו מה ידוע, איזה מסמך חסר ומי אחראי להשלמה. אין ציון או החלטה אוטומטית. הטקסט אינו נשמר או נשלח; רענון מוחק אותו. אפשר להשתמש בכינוי לתיק, ללא פרטי זיהוי.</p>
+    <div class="kw-actions"><button type="button" class="kw-button" data-kit-print>הדפסה / שמירה כ־PDF</button><button type="button" class="kw-button kw-button-secondary" data-kit-example>מילוי דוגמה בדיונית</button><button type="button" class="kw-button kw-button-secondary" data-kit-clear>ניקוי הטופס</button></div><p data-kit-status role="status" aria-live="polite"></p>
+    {guide.sections.map(section=><article class="kw-example"><h3>{section.title}</h3><p>{section.context} {section.source&&<a href={guide.sources.find(s=>s.id===section.source)!.url}>מקור רשמי</a>}</p><ul>{section.questions.map(q=><li>{q}</li>)}</ul><label class="kw-field" for={`decision-${section.key}`}><span class="kw-field-label">מה ידוע, מה חסר ומי אחראי — {section.title}</span><textarea id={`decision-${section.key}`} rows="3" dir="auto" autocomplete="off" spellcheck="false" data-print-field data-sample={section.sample}></textarea><span class="kw-print-value" dir="auto">לא מולא</span></label></article>)}
+  </section>
+  <section class="kw-example"><h2>דוגמה פתורה — מקרה בדיוני להמחשה</h2><p>{guide.example}</p><dl>{guide.sections.map(s=><div class="kw-section"><dt><strong>{s.title}</strong></dt><dd>{s.sample}</dd></div>)}</dl></section>
+  <section class="kw-section"><h2>גבולות המדריך</h2><p>{guide.limits}</p></section>
+  <section class="kw-section"><h2>מקורות רשמיים</h2><ul>{guide.sources.map(s=><li><a href={s.url}>{s.title}</a><p>{s.note} נבדק לאחרונה: <bdi dir="ltr">{lastChecked}</bdi>.</p></li>)}</ul></section>
+  <Fragment slot="bridge">כאן מכינים שאלות לפגישה; בהדגמה אפשר לבחון עבודה על תיק לקוח ב־<bdi dir="ltr">Plan-T</bdi>.</Fragment>
+</KnowledgeWorkLayout>
+<script>import { initializeMeetingKits } from '../../scripts/knowledge/meeting-kits';initializeMeetingKits();</script>

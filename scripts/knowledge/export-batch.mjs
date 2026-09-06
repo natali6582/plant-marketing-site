@@ -9,7 +9,7 @@ async function main() {
   const out = resolve(process.argv[outIndex + 1]);
   if (existsSync(out)) throw new Error('Refusing to reuse an output directory');
   const { drafts, examples } = await import(`../../src/data/knowledge-batches/batch-${batch}.ts`);
-  const frame = readFileSync('docs/knowledge-tools/frame.md', 'utf8');
+  const frame = readFileSync('docs/knowledge-tools/frame.md', 'utf8').replaceAll('\r\n', '\n');
   mkdirSync(out, { recursive: true });
   const save = (name, text) => writeFileSync(join(out, name), text, { encoding: 'utf8', flag: 'wx' });
   const approval = ['| Document | Line | Exact-line SHA-256 | Owner | Status | Approved on |', '|---|---:|---|---|---|---|'];

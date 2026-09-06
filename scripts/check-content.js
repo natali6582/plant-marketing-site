@@ -17,8 +17,8 @@
        cannot quietly change what the form collects.
     4. No blank region. A removed section must not leave an empty band, and the
        scroll reveal must not make a region render empty when it should have content.
-    5. The pension calculator contract (step 11) — inputs, Excel-pinned cases,
-       annual output, sensitivity grid, accessibility and side-effect isolation.
+    5. The draft fee calculator stays removed — its route 404s, the hub neither
+       links to it nor shows its card, and no served page carries its markup.
 
   These started life as one-off console snippets during steps 2A and 2B. They live
   in a file so a later change cannot break them silently.
@@ -489,535 +489,88 @@ for (const r of ['/', '/product/']) {
   }
 }
 
-// --- 5. pension calculator contract (step 11, RED-first) -------------------
-//
-// This block is deliberately separate from ROUTES. The generic marketing-page
-// copy rules above do not apply to knowledge-center audience labels. The fixture
-// subset is copied from src/data/model-fixtures.json, SHA-256
-// 04dcf064b6524a59be54041aa126c6a1cb94189ded171f289bf6acd799c785c6.
-// The source gate remains scripts/check-model.mjs; these values are only the
-// browser-facing examples needed to prove the UI maps inputs correctly.
-const PENSION_ROUTE = '/knowledge/fee-impact-calculator/';
-const PENSION_TITLE = 'השפעת דמי ניהול מצבירה';
-const PENSION_BASE = {
-  id: 'base',
-  inputs: { p0: 100000, deposit: 24000, salaryGrowth: 0.02, ret: 0.04, feeAum: 0.005, years: 10 },
-  expected: 447626.821064296,
-};
-const PENSION_CASES = [
-  PENSION_BASE,
-  { id: 'return-low-fee-low', inputs: { ...PENSION_BASE.inputs, ret: 0.02, feeAum: 0.002 }, expected: 403834.856599844 },
-  { id: 'return-low-fee-base', inputs: { ...PENSION_BASE.inputs, ret: 0.02 }, expected: 396631.338356635 },
-  { id: 'return-low-fee-high', inputs: { ...PENSION_BASE.inputs, ret: 0.02, feeAum: 0.008 }, expected: 389577.104082856 },
-  { id: 'return-base-fee-low', inputs: { ...PENSION_BASE.inputs, feeAum: 0.002 }, expected: 455907.262606481 },
-  { id: 'return-base-fee-high', inputs: { ...PENSION_BASE.inputs, feeAum: 0.008 }, expected: 439517.357315344 },
-  { id: 'return-high-fee-low', inputs: { ...PENSION_BASE.inputs, ret: 0.06, feeAum: 0.002 }, expected: 515744.347418258 },
-  { id: 'return-high-fee-base', inputs: { ...PENSION_BASE.inputs, ret: 0.06 }, expected: 506231.614995703 },
-  { id: 'return-high-fee-high', inputs: { ...PENSION_BASE.inputs, ret: 0.06, feeAum: 0.008 }, expected: 496914.400149312 },
-  { id: 'years-30', inputs: { ...PENSION_BASE.inputs, years: 30 }, expected: 1873370.76342911 },
-  { id: 'deposit-0', inputs: { ...PENSION_BASE.inputs, deposit: 0 }, expected: 141059.876062112 },
-  { id: 'p0-0', inputs: { ...PENSION_BASE.inputs, p0: 0 }, expected: 306566.945002184 },
-  { id: 'salgrowth-0', inputs: { ...PENSION_BASE.inputs, salaryGrowth: 0 }, expected: 422613.311916596 },
-  { id: 'n-equals-g', inputs: { ...PENSION_BASE.inputs, salaryGrowth: 0.035 }, expected: 468155.240843822 },
-];
-const PENSION_INPUTS = {
-  p0: { label: 'יתרת פתיחה (₪)', value: '100000', min: '0', max: '1000000000', step: '0.01' },
-  deposit: { label: 'הפקדה שנתית ראשונה (₪)', value: '24000', min: '0', max: '1000000000', step: '0.01' },
-  salaryGrowth: { label: 'שינוי שנתי בהפקדה (%)', value: '2', min: '-100', max: '100', step: '0.01' },
-  ret: { label: 'תשואה שנתית להמחשה (%)', value: '4', min: '-100', max: '100', step: '0.01' },
-  feeAum: { label: 'דמי ניהול שנתיים מצבירה (%)', value: '0.5', min: '0', max: '100', step: '0.01' },
-  years: { label: 'תקופת החישוב (שנים)', value: '10', min: '0', max: '100', step: '1' },
-};
-const PENSION_DISCLAIMER = 'הבהרה המידע באתר הוא מידע כללי בלבד. הוא אינו מהווה ייעוץ פנסיוני, שיווק פנסיוני, ייעוץ השקעות, שיווק השקעות, ייעוץ מס או ייעוץ משפטי, ואינו מותאם לנסיבותיו של אדם מסוים. הנתונים נכונים למועד העדכון המצוין ויש לאמתם מול המקור הרשמי. להחלטה אישית יש להתייעץ עם בעל רישיון מתאים.';
-const PENSION_EXTRA_IDS = ['years-30', 'deposit-0', 'p0-0', 'salgrowth-0', 'n-equals-g'];
-const PENSION_ORIGINAL_GRID_IDS = PENSION_CASES.slice(1, 9).map((fixture) => fixture.id);
+// --- 5. the fee calculator is gone (one engine on the site) ----------------
+/*
+  The site answers "what do fees cost me" with one engine. The draft annual
+  calculator at /knowledge/fee-impact-calculator/ was removed on 2026-09-06;
+  the shared monthly engine behind /knowledge/agents/fees/ is the one that
+  stays. These three assertions are what stops it coming back by accident.
 
-const pensionLegacy = { checks, failures: fails.length, unverified: unverified.length };
-const pensionGroupResults = [];
-const pensionWait = (win, ms = 40) => new Promise((resolve) => win.setTimeout(resolve, ms));
-const pensionVisible = (el, win) => {
-  if (!el || el.hidden) return false;
-  const style = win.getComputedStyle(el);
-  const rect = el.getBoundingClientRect();
-  return style.display !== 'none' && style.visibility !== 'hidden'
-    && parseFloat(style.opacity || '1') > 0 && rect.width > 0 && rect.height > 0;
-};
-const pensionNumber = (el, attribute = 'data-value') =>
-  el?.hasAttribute(attribute) ? Number(el.getAttribute(attribute)) : Number.NaN;
-const pensionUiValue = (name, value) => String(
-  ['salaryGrowth', 'ret', 'feeAum'].includes(name) ? value * 100 : value,
-);
-const pensionApprox = (actual, expected, tolerance = 1) =>
-  Number.isFinite(actual) && Math.abs(actual - expected) <= tolerance;
-const pensionClosedForm = ({ p0, deposit, salaryGrowth, ret, feeAum, years }) => {
-  if (years === 0) return p0;
-  const net = 1 + ret - feeAum;
-  const growth = 1 + salaryGrowth;
-  const opening = p0 * (net ** years);
-  const deposits = Math.abs(net - growth) < 1e-12
-    ? deposit * years * (net ** (years - 1))
-    : deposit * ((net ** years) - (growth ** years)) / (net - growth);
-  return opening + deposits;
-};
-const pensionRequire = (condition, message) => {
-  if (!condition) throw new Error(message);
-};
+  They are deliberately written against the SERVED build rather than the
+  source tree, because the failure that matters is a calculator reaching a
+  reader — a stray import that never renders is not what this guards.
 
-async function pensionLoadFrame() {
-  const frame = document.createElement('iframe');
-  frame.style.cssText = 'position:fixed;top:0;left:0;opacity:0;pointer-events:none;z-index:-1;border:0;width:1280px;height:900px';
-  frame.src = PENSION_ROUTE;
-  document.body.appendChild(frame);
-  await new Promise((resolve, reject) => {
-    frame.onload = resolve;
-    frame.onerror = () => reject(new Error('calculator route load failed'));
-    setTimeout(() => reject(new Error('calculator route timed out')), 15000);
-  });
-  await frame.contentWindow.document.fonts.ready;
-  await pensionWait(frame.contentWindow, 120);
-  return frame;
-}
+  (a) is only genuinely RED in a review build. The article carried
+  draft: true, so a public build never emitted the route in the first place.
+*/
+const REMOVED_ROUTE = '/knowledge/fee-impact-calculator/';
+const REMOVED_CARD = 'כלי המחשה';
+const CALC_MARKERS = ['PensionCalculator', 'pension-calculator', '{{calculator:'];
 
-function pensionContext(frame) {
-  const win = frame.contentWindow;
-  const doc = win.document;
-  const root = doc.querySelector('[data-pension-calculator="aum-v1"]');
-  return { frame, win, doc, root, form: root && root.querySelector('[data-pension-form]') };
-}
+const removalLegacy = { checks, failures: fails.length };
 
-function pensionNeedRoot(frame) {
-  const context = pensionContext(frame);
-  pensionRequire(context.root, 'calculator root missing');
-  pensionRequire(context.form, 'calculator form missing');
-  return context;
-}
-
-async function pensionDrive(frame, inputs, { submit = true } = {}) {
-  const { win, root, form } = pensionNeedRoot(frame);
-  for (const [name, value] of Object.entries(inputs)) {
-    const control = root.querySelector(`#pension-input-${name}`);
-    pensionRequire(control, `input ${name} missing`);
-    control.value = pensionUiValue(name, value);
-    control.dispatchEvent(new win.Event('input', { bubbles: true }));
-    control.dispatchEvent(new win.Event('change', { bubbles: true }));
-  }
-  if (submit) form.requestSubmit();
-  await pensionWait(win, 80);
-  return pensionNeedRoot(frame);
-}
-
-async function pensionDriveRaw(frame, overrides) {
-  await pensionDrive(frame, PENSION_BASE.inputs);
-  const { win, root, form } = pensionNeedRoot(frame);
-  for (const [name, value] of Object.entries(overrides)) {
-    const control = root.querySelector(`#pension-input-${name}`);
-    pensionRequire(control, `input ${name} missing`);
-    control.value = value;
-    control.dispatchEvent(new win.Event('input', { bubbles: true }));
-  }
-  form.requestSubmit();
-  await pensionWait(win, 80);
-  return pensionNeedRoot(frame);
-}
-
-async function pensionGroup(id, run) {
-  try {
-    await run();
-    note(true, `[${id}] pension calculator contract`);
-    pensionGroupResults.push({ id, result: 'PASS' });
-  } catch (error) {
-    const detail = error instanceof Error ? error.message : String(error);
-    note(false, `[${id}] ${detail}`);
-    pensionGroupResults.push({ id, result: 'FAIL', detail });
-  }
-}
-
-let pensionFrame;
+// (a) the route must not be served, in either build mode.
+let removedStatus = null;
 try {
-  pensionFrame = await pensionLoadFrame();
-  const pensionResponse = await fetch(PENSION_ROUTE, { cache: 'no-store' });
+  const res = await fetch(REMOVED_ROUTE, { redirect: 'manual' });
+  removedStatus = res.status;
+} catch (e) {
+  removedStatus = `error: ${e.message}`;
+}
+note(removedStatus === 404, `${REMOVED_ROUTE} served ${removedStatus}, expected 404`);
 
-  await pensionGroup('C01', async () => {
-    const { doc, root } = pensionContext(pensionFrame);
-    const h1s = [...doc.querySelectorAll('main h1')].map((el) => norm(el.textContent));
-    pensionRequire(pensionResponse.status === 200, `route status ${pensionResponse.status}, expected 200`);
-    pensionRequire(doc.querySelectorAll('[data-pension-calculator="aum-v1"]').length === 1,
-      `calculator root count ${doc.querySelectorAll('[data-pension-calculator="aum-v1"]').length}, expected 1`);
-    pensionRequire(root && h1s.length === 1 && h1s[0] === PENSION_TITLE,
-      `h1 mismatch: ${JSON.stringify(h1s)}`);
-    pensionRequire(doc.title.includes(PENSION_TITLE), `title mismatch: ${doc.title}`);
-  });
-
-  await pensionGroup('C02', async () => {
-    const { root } = pensionNeedRoot(pensionFrame);
-    const controls = [...root.querySelectorAll('[data-pension-form] input[type="number"]')];
-    pensionRequire(controls.length === 6, `numeric input count ${controls.length}, expected 6`);
-    for (const [name, expected] of Object.entries(PENSION_INPUTS)) {
-      const control = root.querySelector(`#pension-input-${name}`);
-      const label = control && root.querySelector(`label[for="${control.id}"]`);
-      pensionRequire(control && control.name === name, `${name}: missing or wrong name`);
-      pensionRequire(label && norm(label.textContent) === expected.label, `${name}: label mismatch`);
-      for (const attr of ['value', 'min', 'max', 'step']) {
-        pensionRequire(control.getAttribute(attr) === expected[attr],
-          `${name}: ${attr}=${control.getAttribute(attr)}, expected ${expected[attr]}`);
-      }
-      pensionRequire(control.required, `${name}: required missing`);
-    }
-  });
-
-  await pensionGroup('C03', async () => {
-    const { win, root } = pensionNeedRoot(pensionFrame);
-    const section = root.querySelector('#pension-assumptions');
-    const text = norm(section && section.innerText);
-    pensionRequire(pensionVisible(section, win), 'illustrative assumptions are not visible');
-    for (const copy of [
-      'הנחות להמחשה — לא תקרות רגולטוריות',
-      'הערכים ההתחלתיים נועדו להמחשה בלבד וניתנים לשינוי. ההפקדה מתבצעת בסוף כל שנה. התשואה ודמי הניהול מחושבים על יתרת הפתיחה. החישוב אינו כולל דמי ניהול מהפקדה, משיכות או מסים.',
-      'טווחי הקלט מגבילים את ההדגמה ואינם תקרות חוקיות.',
-    ]) pensionRequire(text.includes(copy), `assumptions copy missing: ${copy}`);
-  });
-
-  await pensionGroup('C04', async () => {
-    const { win, doc } = pensionNeedRoot(pensionFrame);
-    const blocks = [...doc.querySelectorAll('aside[aria-label="הבהרה"]')];
-    pensionRequire(blocks.length === 1, `disclaimer count ${blocks.length}, expected 1`);
-    pensionRequire(pensionVisible(blocks[0], win), 'disclaimer is not visible');
-    pensionRequire(norm(blocks[0].innerText) === PENSION_DISCLAIMER, 'disclaimer text changed');
-  });
-
-  await pensionGroup('C05', async () => {
-    const { win, doc, root } = pensionNeedRoot(pensionFrame);
-    const target = root.querySelector('#pension-methodology');
-    const link = root.querySelector('a[href="#pension-methodology"]');
-    pensionRequire(link && target, 'same-page methodology link/target missing');
-    pensionRequire(pensionVisible(target, win), 'methodology target is not visible');
-    pensionRequire(norm(target.innerText).includes('תשואות שליליות נבדקו בבדיקות חישוב, אך עדיין אינן מכוסות בתרחישי Excel מאומתים.'),
-      'negative-return evidence limitation missing');
-    pensionRequire(doc.getElementById(link.getAttribute('href').slice(1)) === target, 'methodology link does not resolve');
-  });
-
-  await pensionGroup('C06', async () => {
-    const { win, root } = pensionNeedRoot(pensionFrame);
-    const controls = [...root.querySelectorAll('[data-pension-form] input')];
-    pensionRequire(root.dataset.state === 'ready', `initial state ${root.dataset.state}, expected ready`);
-    pensionRequire(controls.length === 6 && controls.every((el) => !el.matches(':disabled')),
-      'controls not enabled after initialization');
-    pensionRequire(pensionVisible(root.querySelector('[data-pension-results]'), win), 'initial results not visible');
-  });
-
-  await pensionGroup('C07', async () => {
-    await pensionDrive(pensionFrame, PENSION_BASE.inputs);
-    const { root } = pensionNeedRoot(pensionFrame);
-    const balance = root.querySelector('[data-pension-balance]');
-    const raw = pensionNumber(balance);
-    const formatted = new Intl.NumberFormat('he-IL', {
-      style: 'currency', currency: 'ILS', minimumFractionDigits: 2, maximumFractionDigits: 2,
-    }).format(raw).replace(/[\u200e\u200f\u202a-\u202e\u2066-\u2069\s]/g, '');
-    const actual = norm(balance && balance.textContent).replace(/[\u200e\u200f\u202a-\u202e\u2066-\u2069\s]/g, '');
-    pensionRequire(pensionApprox(raw, PENSION_BASE.expected), `base balance ${raw}, expected ${PENSION_BASE.expected}`);
-    pensionRequire(actual.includes(formatted), `formatted balance ${actual}, expected ${formatted}`);
-  });
-
-  await pensionGroup('C08', async () => {
-    await pensionDrive(pensionFrame, PENSION_BASE.inputs);
-    const { root } = pensionNeedRoot(pensionFrame);
-    const table = root.querySelector('[data-pension-years]');
-    const rows = [...table.querySelectorAll('tbody tr')];
-    const headers = [...table.querySelectorAll('thead th')].map((el) => norm(el.textContent));
-    pensionRequire(JSON.stringify(headers) === JSON.stringify(['שנה', 'יתרת פתיחה', 'הפקדה', 'תשואה', 'דמי ניהול מצבירה', 'יתרת סגירה']),
-      `annual headers mismatch: ${JSON.stringify(headers)}`);
-    pensionRequire(rows.length === 10, `annual row count ${rows.length}, expected 10`);
-    rows.forEach((row, index) => {
-      pensionRequire(Number(row.dataset.year) === index + 1, `annual year ${index + 1} missing`);
-      const amounts = [...row.querySelectorAll('td[data-field]')];
-      pensionRequire(amounts.length === 5 && amounts.every((cell) => Number.isFinite(pensionNumber(cell))),
-        `year ${index + 1}: non-finite or missing amount`);
-    });
-    const finalClose = pensionNumber(rows.at(-1).querySelector('[data-field="close"]'));
-    pensionRequire(pensionApprox(finalClose, pensionNumber(root.querySelector('[data-pension-balance]'))),
-      'annual final close does not reconcile with headline');
-  });
-
-  await pensionGroup('C09', async () => {
-    await pensionDrive(pensionFrame, PENSION_BASE.inputs);
-    const { root } = pensionNeedRoot(pensionFrame);
-    const grid = root.querySelector('[data-pension-sensitivity]');
-    const fees = [...grid.querySelectorAll('thead th[data-fee-aum]')].map((el) => Number(el.dataset.feeAum));
-    const returns = [...grid.querySelectorAll('tbody th[data-return]')].map((el) => Number(el.dataset.return));
-    const cells = [...grid.querySelectorAll('td[data-return][data-fee-aum]')];
-    const ascending = (values) => values.length === 5 && new Set(values).size === 5
-      && values.every((value, index) => index === 0 || value > values[index - 1]);
-    pensionRequire(ascending(fees) && ascending(returns), `axes invalid: ${JSON.stringify({ fees, returns })}`);
-    pensionRequire(JSON.stringify(fees) === JSON.stringify([0.003, 0.004, 0.005, 0.006, 0.007]), `default fee axis ${JSON.stringify(fees)}`);
-    pensionRequire(JSON.stringify(returns) === JSON.stringify([0.02, 0.03, 0.04, 0.05, 0.06]), `default return axis ${JSON.stringify(returns)}`);
-    pensionRequire(cells.length === 25 && cells.every((cell) => Number.isFinite(pensionNumber(cell))),
-      `default numeric grid count ${cells.filter((cell) => Number.isFinite(pensionNumber(cell))).length}/25`);
-  });
-
-  await pensionGroup('C10', async () => {
-    const { root } = pensionNeedRoot(pensionFrame);
-    const baseRows = root.querySelectorAll('tbody th[data-return="0.04"][data-base-axis="true"]');
-    const baseColumns = root.querySelectorAll('thead th[data-fee-aum="0.005"][data-base-axis="true"]');
-    const baseCells = root.querySelectorAll('td[data-return="0.04"][data-fee-aum="0.005"][data-base-case="true"]');
-    pensionRequire(baseRows.length === 1 && baseColumns.length === 1 && baseCells.length === 1,
-      `base markers row=${baseRows.length}, column=${baseColumns.length}, cell=${baseCells.length}`);
-    pensionRequire(norm(baseCells[0].textContent).includes('תרחיש הבסיס'), 'base marker lacks visible wording');
-    pensionRequire(pensionApprox(pensionNumber(baseCells[0]), pensionNumber(root.querySelector('[data-pension-balance]'))),
-      'base grid cell does not reconcile with headline');
-  });
-
-  await pensionGroup('C11', async () => {
-    const fixtureByInput = {
-      p0: 'p0-0', deposit: 'deposit-0', salaryGrowth: 'salgrowth-0',
-      ret: 'return-high-fee-base', feeAum: 'return-base-fee-high', years: 'years-30',
-    };
-    for (const [name, id] of Object.entries(fixtureByInput)) {
-      const fixture = PENSION_CASES.find((item) => item.id === id);
-      const { root } = await pensionDrive(pensionFrame, fixture.inputs);
-      pensionRequire(pensionApprox(pensionNumber(root.querySelector('[data-pension-balance]')), fixture.expected),
-        `${name}: output does not match ${id}`);
-      pensionRequire(root.querySelectorAll('[data-pension-years] tbody tr').length === fixture.inputs.years,
-        `${name}: annual horizon does not match input snapshot`);
-    }
-  });
-
-  await pensionGroup('C12', async () => {
-    for (const id of PENSION_EXTRA_IDS) {
-      const fixture = PENSION_CASES.find((item) => item.id === id);
-      const { root } = await pensionDrive(pensionFrame, fixture.inputs);
-      pensionRequire(pensionApprox(pensionNumber(root.querySelector('[data-pension-balance]')), fixture.expected),
-        `${id}: headline differs from Excel cache`);
-      for (const cell of root.querySelectorAll('[data-pension-years] td[data-field]')) {
-        pensionRequire(Number.isFinite(pensionNumber(cell)), `${id}: non-finite raw annual cell`);
-        pensionRequire(norm(cell.textContent).length > 0, `${id}: annual cell has no displayed value`);
-      }
-    }
-  });
-
-  await pensionGroup('C13', async () => {
-    for (const id of PENSION_ORIGINAL_GRID_IDS) {
-      const fixture = PENSION_CASES.find((item) => item.id === id);
-      const { root } = await pensionDrive(pensionFrame, fixture.inputs);
-      pensionRequire(pensionApprox(pensionNumber(root.querySelector('[data-pension-balance]')), fixture.expected),
-        `${id}: percent conversion is not exactly once`);
-      pensionRequire(root.querySelector('#pension-input-ret').valueAsNumber === fixture.inputs.ret * 100,
-        `${id}: return control does not hold UI percent`);
-      pensionRequire(root.querySelector('#pension-input-feeAum').valueAsNumber === fixture.inputs.feeAum * 100,
-        `${id}: fee control does not hold UI percent`);
-    }
-  });
-
-  await pensionGroup('C14', async () => {
-    await pensionDrive(pensionFrame, PENSION_BASE.inputs);
-    const { root } = pensionNeedRoot(pensionFrame);
-    const cells = [...root.querySelectorAll('[data-pension-sensitivity] td[data-return][data-fee-aum]:not([data-invalid="true"])')];
-    pensionRequire(cells.length === 25, `valid default grid count ${cells.length}, expected 25`);
-    for (const cell of cells) {
-      const inputs = {
-        ...PENSION_BASE.inputs,
-        ret: Number(cell.dataset.return),
-        feeAum: Number(cell.dataset.feeAum),
-      };
-      pensionRequire(pensionApprox(pensionNumber(cell), pensionClosedForm(inputs)),
-        `grid cell ${inputs.ret}/${inputs.feeAum} differs from independent closed form`);
-    }
-    const equalityInputs = PENSION_CASES.find((item) => item.id === 'n-equals-g');
-    pensionRequire(pensionApprox(pensionClosedForm(equalityInputs.inputs), equalityInputs.expected),
-      'independent equality-limit branch differs from Excel fixture');
-  });
-
-  await pensionGroup('C15', async () => {
-    await pensionDrive(pensionFrame, PENSION_BASE.inputs);
-    const { win, root } = pensionNeedRoot(pensionFrame);
-    const input = root.querySelector('#pension-input-deposit');
-    input.value = '1';
-    input.dispatchEvent(new win.Event('input', { bubbles: true }));
-    await pensionWait(win);
-    const results = root.querySelector('[data-pension-results]');
-    pensionRequire(root.dataset.state === 'dirty', `edit state ${root.dataset.state}, expected dirty`);
-    pensionRequire(!pensionVisible(results, win), 'stale results remain visible');
-    pensionRequire(norm(root.querySelector('[data-pension-status]').textContent) === 'ההנחות השתנו. לחצו על חישוב מחדש.',
-      'pending status missing');
-    pensionRequire(results.getBoundingClientRect().height === 0, 'hidden results reserve blank height');
-    await pensionDrive(pensionFrame, { ...PENSION_BASE.inputs, deposit: 1 });
-    pensionRequire(root.dataset.state === 'ready' && pensionVisible(results, win), 'successful submit did not replace outputs together');
-  });
-
-  await pensionGroup('C16', async () => {
-    const cases = [
-      ['blank', { deposit: '' }], ['negative amount', { p0: '-1' }],
-      ['fractional year', { years: '1.5' }], ['out of range', { feeAum: '100.01' }],
-      ['invalid net factor', { ret: '-100', feeAum: '1' }],
-    ];
-    for (const [label, raw] of cases) {
-      const { win, root } = await pensionDriveRaw(pensionFrame, raw);
-      const invalid = [...root.querySelectorAll('[data-pension-form] input[aria-invalid="true"]')];
-      pensionRequire(root.dataset.state === 'invalid', `${label}: state is not invalid`);
-      pensionRequire(pensionVisible(root.querySelector('[data-pension-error][role="alert"]'), win), `${label}: alert not visible`);
-      pensionRequire(!pensionVisible(root.querySelector('[data-pension-results]'), win), `${label}: stale result visible`);
-      pensionRequire(invalid.length > 0 && invalid[0] === win.document.activeElement, `${label}: first invalid control not focused`);
-    }
-  });
-
-  await pensionGroup('C17', async () => {
-    const invalid = await pensionDriveRaw(pensionFrame, { deposit: '' });
-    pensionRequire(invalid.root.dataset.state === 'invalid', 'recovery precondition never reached invalid state');
-    const { root } = await pensionDrive(pensionFrame, PENSION_BASE.inputs);
-    pensionRequire(root.dataset.state === 'ready', 'valid correction did not recover to ready');
-    pensionRequire(pensionApprox(pensionNumber(root.querySelector('[data-pension-balance]')), PENSION_BASE.expected),
-      'recovered output differs from base fixture');
-  });
-
-  await pensionGroup('C18', async () => {
-    const inputs = { ...PENSION_BASE.inputs, years: 0 };
-    const { win, root } = await pensionDrive(pensionFrame, inputs);
-    pensionRequire(pensionNumber(root.querySelector('[data-pension-balance]')) === inputs.p0, 'zero-year balance changed');
-    pensionRequire(root.querySelectorAll('[data-pension-years] tbody tr').length === 0, 'zero-year table is not empty');
-    pensionRequire(norm(root.querySelector('[data-pension-years]').textContent).includes('תקופת החישוב היא אפס שנים, ולכן היתרה נשארת ללא שינוי.'),
-      'zero-year explanation missing');
-    pensionRequire(root.querySelectorAll('td[data-base-case="true"]').length === 1, 'zero-year base marker is not unique');
-    pensionRequire(pensionVisible(root.querySelector('[data-pension-results]'), win), 'zero-year result not visible');
-  });
-
-  await pensionGroup('C19', async () => {
-    for (const inputs of [
-      { ...PENSION_BASE.inputs, feeAum: 0 },
-      { ...PENSION_BASE.inputs, ret: -1, feeAum: 0 },
-      { ...PENSION_BASE.inputs, ret: 1, feeAum: 1 },
-    ]) {
-      const { root } = await pensionDrive(pensionFrame, inputs);
-      const fees = [...root.querySelectorAll('thead th[data-fee-aum]')].map((el) => Number(el.dataset.feeAum));
-      const returns = [...root.querySelectorAll('tbody th[data-return]')].map((el) => Number(el.dataset.return));
-      pensionRequire(fees.length === 5 && new Set(fees).size === 5 && fees.includes(inputs.feeAum), 'boundary fee axis invalid');
-      pensionRequire(returns.length === 5 && new Set(returns).size === 5 && returns.includes(inputs.ret), 'boundary return axis invalid');
-      for (const cell of root.querySelectorAll('td[data-invalid="true"]')) {
-        pensionRequire(norm(cell.textContent).includes('—') && !cell.hasAttribute('data-value'), 'invalid pair is not a dash without value');
-        pensionRequire((cell.getAttribute('aria-label') || '').includes('השילוב מחוץ לתחום החישוב'), 'invalid pair reason missing');
-      }
-    }
-  });
-
-  await pensionGroup('C20', async () => {
-    await pensionDrive(pensionFrame, PENSION_CASES.find((item) => item.id === 'years-30').inputs);
-    let { win, root } = pensionNeedRoot(pensionFrame);
-    const edit = root.querySelector('#pension-input-p0');
-    edit.value = '-1';
-    edit.dispatchEvent(new win.Event('input', { bubbles: true }));
-    root.querySelector('[data-pension-form]').requestSubmit();
-    await pensionWait(win);
-    root.querySelector('[data-pension-reset]').click();
-    await pensionWait(win, 80);
-    ({ root } = pensionNeedRoot(pensionFrame));
-    for (const [name, expected] of Object.entries(PENSION_INPUTS)) {
-      pensionRequire(root.querySelector(`#pension-input-${name}`).value === expected.value, `reset ${name} mismatch`);
-    }
-    pensionRequire(root.dataset.state === 'ready', 'reset did not restore ready state');
-    pensionRequire(pensionApprox(pensionNumber(root.querySelector('[data-pension-balance]')), PENSION_BASE.expected), 'reset headline mismatch');
-    pensionRequire(root.querySelectorAll('[data-pension-years] tbody tr').length === 10, 'reset annual rows mismatch');
-  });
-
-  await pensionGroup('C21', async () => {
-    const { doc } = pensionNeedRoot(pensionFrame);
-    const leads = [...doc.querySelectorAll('form.lead-form[data-source="pension-model"]')];
-    pensionRequire(leads.length === 1, `pension-model lead form count ${leads.length}, expected 1`);
-    const fields = [...leads[0].querySelectorAll('[name]')].map((el) => el.name);
-    pensionRequire(JSON.stringify(fields) === JSON.stringify(PRODUCT_FORM.fields.map((field) => field.name)),
-      `lead fields changed: ${JSON.stringify(fields)}`);
-    for (const route of ROUTES) {
-      pensionRequire(page[route].formSource !== 'pension-model', `${route}: existing lead source changed to pension-model`);
-    }
-  });
-
-  await pensionGroup('C22', async () => {
-    await pensionDrive(pensionFrame, PENSION_BASE.inputs);
-    const { win, doc, root, form } = pensionNeedRoot(pensionFrame);
-    const counts = { fetch: 0, xhr: 0, history: 0, storage: 0, leadSubmit: 0 };
-    const before = win.location.href;
-    const original = {
-      fetch: win.fetch, xhrOpen: win.XMLHttpRequest.prototype.open,
-      push: win.history.pushState, replace: win.history.replaceState,
-      storageSet: win.Storage.prototype.setItem,
-    };
-    const onLead = () => { counts.leadSubmit += 1; };
-    doc.querySelector('form.lead-form')?.addEventListener('submit', onLead);
-    try {
-      win.fetch = (...args) => { counts.fetch += 1; return original.fetch(...args); };
-      win.XMLHttpRequest.prototype.open = function (...args) { counts.xhr += 1; return original.xhrOpen.apply(this, args); };
-      win.history.pushState = function (...args) { counts.history += 1; return original.push.apply(this, args); };
-      win.history.replaceState = function (...args) { counts.history += 1; return original.replace.apply(this, args); };
-      win.Storage.prototype.setItem = function (...args) { counts.storage += 1; return original.storageSet.apply(this, args); };
-      form.requestSubmit();
-      root.querySelector('[data-pension-reset]').click();
-      await pensionWait(win, 100);
-    } finally {
-      win.fetch = original.fetch;
-      win.XMLHttpRequest.prototype.open = original.xhrOpen;
-      win.history.pushState = original.push;
-      win.history.replaceState = original.replace;
-      win.Storage.prototype.setItem = original.storageSet;
-      doc.querySelector('form.lead-form')?.removeEventListener('submit', onLead);
-    }
-    pensionRequire(Object.values(counts).every((count) => count === 0), `side effects observed: ${JSON.stringify(counts)}`);
-    pensionRequire(win.location.href === before, `calculator navigated to ${win.location.href}`);
-  });
-
-  await pensionGroup('C23', async () => {
-    for (const route of ['/knowledge/', '/knowledge/agents/', '/knowledge/planners/']) {
-      const response = await fetch(route, { cache: 'no-store' });
-      const parsed = new DOMParser().parseFromString(await response.text(), 'text/html');
-      pensionRequire(response.status === 200, `${route}: status ${response.status}`);
-      pensionRequire(parsed.querySelectorAll(`main a[href="${PENSION_ROUTE}"]`).length >= 1, `${route}: calculator link missing`);
-    }
-    const { doc } = pensionNeedRoot(pensionFrame);
-    pensionRequire(doc.querySelectorAll(`header a[href="${PENSION_ROUTE}"], footer a[href="${PENSION_ROUTE}"]`).length === 0,
-      'calculator leaked into global navigation');
-  });
-
-  await pensionGroup('C24', async () => {
-    const { win, doc, root } = pensionNeedRoot(pensionFrame);
-    const text = norm(doc.querySelector('main')?.innerText);
-    const duplicateIds = [...doc.querySelectorAll('[id]')]
-      .map((el) => el.id).filter((id, index, all) => all.indexOf(id) !== index);
-    pensionRequire(!text.includes('{{calculator:') && !/\b(?:NaN|Infinity)\b/.test(text), 'raw shortcode or non-finite text visible');
-    pensionRequire(duplicateIds.length === 0, `duplicate IDs: ${JSON.stringify([...new Set(duplicateIds)])}`);
-    pensionRequire(pensionVisible(root, win) && root.getBoundingClientRect().height > 200, 'calculator is blank or observer-hidden');
-    pensionRequire([...root.querySelectorAll('.reveal')].every((el) => pensionVisible(el, win)), 'calculator contains a hidden reveal region');
-  });
-
-  await pensionGroup('C25', async () => {
-    const { win, root, form } = pensionNeedRoot(pensionFrame);
-    const submit = form.querySelector('button[type="submit"]');
-    const reset = root.querySelector('[data-pension-reset]');
-    const wrappers = [...root.querySelectorAll('[data-pension-table-scroll]')];
-    pensionRequire(submit && reset && reset.tagName === 'BUTTON', 'semantic calculate/reset buttons missing');
-    pensionRequire(root.querySelector('[data-pension-status][role="status"][aria-live="polite"]'), 'polite status region missing');
-    pensionRequire(root.querySelector('[data-pension-error][role="alert"]'), 'alert region missing');
-    pensionRequire(wrappers.length === 2 && wrappers.every((el) => el.tabIndex === 0 && el.getAttribute('aria-label')),
-      'labelled keyboard-scroll table wrappers missing');
-    pensionRequire(wrappers.every((el) => ['auto', 'scroll'].includes(win.getComputedStyle(el).overflowX)),
-      'table wrappers are not horizontally scrollable');
-    submit.focus();
-    pensionRequire(win.document.activeElement === submit, 'calculate control cannot receive focus');
-    unverified.push('[C25] trusted keyboard activation and visible focus require the active browser review; synthetic console events are not accepted as proof');
-  });
-} catch (error) {
-  const detail = error instanceof Error ? error.message : String(error);
-  for (let number = pensionGroupResults.length + 1; number <= 25; number += 1) {
-    const id = `C${String(number).padStart(2, '0')}`;
-    note(false, `[${id}] browser harness stopped before group: ${detail}`);
-    pensionGroupResults.push({ id, result: 'FAIL', detail });
-  }
-} finally {
-  pensionFrame?.remove();
+// (b) the hub must carry neither the link nor the card.
+let hubHtml = '';
+let hubStatus = null;
+try {
+  const res = await fetch('/knowledge/');
+  hubStatus = res.status;
+  hubHtml = res.status === 200 ? await res.text() : '';
+} catch (e) {
+  hubStatus = `error: ${e.message}`;
+}
+if (hubStatus === 200) {
+  note(!hubHtml.includes(`href="${REMOVED_ROUTE}"`), 'hub still links to the removed calculator');
+  note(!hubHtml.includes(REMOVED_CARD), `hub still renders the "${REMOVED_CARD}" card`);
+} else {
+  // A public build does not emit the hub at all; nothing to link from.
+  note(true, 'hub not served in this build mode');
+  note(true, 'hub not served in this build mode');
 }
 
-const pensionStats = {
-  checks: checks - pensionLegacy.checks,
-  failures: fails.length - pensionLegacy.failures,
-  unverified: unverified.length - pensionLegacy.unverified,
+/*
+  (c) No served page may carry a calculator artefact. A console script cannot
+  walk dist/, so this sweeps an explicit route list: the nine public routes,
+  the hub, and every /knowledge/ link the hub itself offers. The authoritative
+  check is a grep over dist/ in the cleanup evidence; this is the guard that
+  fails a future build if the component is wired back in.
+*/
+const knowledgeLinks = [...new Set(
+  [...hubHtml.matchAll(/href="(\/knowledge\/[^"#?]*)"/g)].map((m) => m[1])
+)];
+const SWEEP = [...new Set([...ROUTES, '/knowledge/', ...knowledgeLinks])];
+for (const route of SWEEP) {
+  let html = '';
+  try {
+    const res = await fetch(route);
+    if (res.status !== 200) continue;
+    html = await res.text();
+  } catch (e) {
+    note(false, `${route}: could not be fetched for the calculator sweep — ${e.message}`);
+    continue;
+  }
+  for (const marker of CALC_MARKERS) {
+    note(!html.includes(marker), `${route}: built HTML still contains "${marker}"`);
+  }
+}
+
+const removalStats = {
+  checks: checks - removalLegacy.checks,
+  failures: fails.length - removalLegacy.failures,
+  routesSwept: SWEEP.length,
 };
-console.log(`EXISTING BASELINE — ${pensionLegacy.failures}/${pensionLegacy.checks} checks failed before calculator assertions`);
-console.log(`PENSION CALCULATOR — ${pensionStats.failures}/${pensionStats.checks} RED groups failed, ${pensionStats.unverified} unverified`);
+console.log(`EXISTING BASELINE — ${removalLegacy.failures}/${removalLegacy.checks} checks failed before the removal assertions`);
+console.log(`CALCULATOR REMOVAL — ${removalStats.failures}/${removalStats.checks} checks failed across ${removalStats.routesSwept} routes`);
 
 /*
   Three outcomes, not two. A run with nothing failing but something unverified is
@@ -1033,8 +586,7 @@ fails.forEach((f) => console.log('  ✗', f));
 unverified.forEach((u) => console.log('  ~', u));
 const contentCheckResult = {
   summary, checks, failures: fails, unverified,
-  existing: pensionLegacy, pensionCalculator: pensionStats,
-  pensionGroups: pensionGroupResults,
+  existing: removalLegacy, calculatorRemoval: removalStats,
 };
 window.__contentCheckResult = contentCheckResult;
 contentCheckResult;

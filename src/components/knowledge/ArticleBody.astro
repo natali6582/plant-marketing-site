@@ -4,7 +4,6 @@ import KeyFigures from './KeyFigures.astro';
 import Layers from './Layers.astro';
 import Compare from './Compare.astro';
 import Timeline from './Timeline.astro';
-import PensionCalculator from './PensionCalculator.astro';
 import { inlineFigures, renderAlerts, splitBlocks } from './render';
 import type { FigureData } from './figures';
 import { CONCEPT_LAYERS, PLANNING_LAYERS } from '../../data/knowledge';
@@ -41,7 +40,6 @@ for (const part of parts) {
   if (name === 'layers' && !LAYER_SETS[arg]) throw new Error(`${slug}: {{layers:${arg}}} — unknown set.`);
   if (name === 'compare' && !COMPARE[arg]) throw new Error(`${slug}: {{compare:${arg}}} — not in knowledge-tables.ts.`);
   if (name === 'timeline' && !TIMELINE[arg]) throw new Error(`${slug}: {{timeline:${arg}}} — not in knowledge-tables.ts.`);
-  if (name === 'calculator' && arg !== 'fee-impact') throw new Error(`${slug}: {{calculator:${arg}}} — unknown calculator.`);
 }
 ---
 
@@ -52,7 +50,6 @@ for (const part of parts) {
       if (part.name === 'keyfigures') return <KeyFigures ids={part.arg.split(',').map((s) => s.trim())} />;
       if (part.name === 'layers') return <Layers items={LAYER_SETS[part.arg]} />;
       if (part.name === 'timeline') return <Timeline items={TIMELINE[part.arg].items} />;
-      if (part.name === 'calculator') return <PensionCalculator />;
       return <Compare {...COMPARE[part.arg]} />;
     })
   }

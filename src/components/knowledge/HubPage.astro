@@ -31,7 +31,6 @@ const latestYear = Math.max(...figures.map((f) => f.data.year));
 
 const articles = await getCollection('knowledge');
 const visibleArticles = articles.filter((article) => !article.data.draft || KNOWLEDGE_DRAFTS);
-const calculatorArticle = visibleArticles.find((article) => article.id === 'fee-impact-calculator');
 const inTrack = (slug: string, article: (typeof articles)[number]) => {
   const audience = article.data.audience;
   return Array.isArray(audience) ? audience.includes(slug as never) : audience === slug;
@@ -141,18 +140,6 @@ const perTrack = (slug: string) =>
           ))
         }
       </ul>
-
-      {calculatorArticle && (
-        <article class="reveal mx-auto mt-10 max-w-3xl rounded-2xl border border-brand-200 bg-white p-6 shadow-sm">
-          <p class="text-sm font-bold text-brand-600">כלי המחשה</p>
-          <h3 class="mt-2 text-xl font-bold text-brand-800">
-            <a href="/knowledge/fee-impact-calculator/" class="hover:underline">
-              {calculatorArticle.data.title}
-            </a>
-          </h3>
-          <p class="mt-2 leading-relaxed text-ink-700">{calculatorArticle.data.summary}</p>
-        </article>
-      )}
 
       <p class="reveal mt-10 text-center">
         <a href={figuresPath(latestYear)} class="font-bold text-brand-600 underline hover:text-brand-800">
